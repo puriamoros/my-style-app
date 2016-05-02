@@ -13,7 +13,7 @@
 
         <Style x:Key="TextStyle" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe WP Light" />
-            <Setter Property="Foreground" Value="{StaticResource TitleColor}" />
+            <Setter Property="Foreground" Value="White" />
             <Setter Property="FontSize" Value="20" />
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>

@@ -5,10 +5,16 @@
 
   <Application.Resources>
     <ResourceDictionary>
+
+      <!-- Colors -->
+      <Color x:Key="TitleColor">Blue</Color>
+      <Color x:Key="SubTitleColor">Red</Color>
+      
+      <!-- Font sizes -->
       <Style x:Key="TextStyle" TargetType="Label">
         <Setter Property="FontFamily" Value="SegoeWP-Light" />
-        <Setter Property="TextColor" Value="White" />
         <Setter Property="FontSize" Value="Default" />
+        <Setter Property="TextColor" Value="White" />
       </Style>
 
       <Style x:Key="MicroTextStyle" TargetType="Label" BasedOn="{StaticResource TextStyle}">

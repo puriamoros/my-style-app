@@ -8,7 +8,10 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-
-    </Grid>
+    <StackPanel>
+        <TextBlock TextWrapping="Wrap" Text="Probando" Style="{StaticResource LargeTextStyle1}" HorizontalAlignment="Center" Foreground="{StaticResource SubTitleColorBrush}"/>
+        <CheckBox Content="Pulsa" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
+        <ComboBox/>
+        <ListView/>
+    </StackPanel>
 </Page>

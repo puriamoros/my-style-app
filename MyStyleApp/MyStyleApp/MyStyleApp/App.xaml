@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyStyleApp.App">
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <Style x:Key="TextStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="SegoeWP-Light" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="Default" />
+      </Style>
+
+      <Style x:Key="MicroTextStyle" TargetType="Label" BasedOn="{StaticResource TextStyle}">
+        <Setter Property="FontSize" Value="Micro" />
+      </Style>
+
+      <Style x:Key="SmallTextStyle" TargetType="Label" BasedOn="{StaticResource TextStyle}">
+        <Setter Property="FontSize" Value="Small" />
+      </Style>
+
+      <Style x:Key="MediumTextStyle" TargetType="Label" BasedOn="{StaticResource TextStyle}">
+        <Setter Property="FontSize" Value="Medium" />
+      </Style>
+
+      <Style x:Key="LargeTextStyle" TargetType="Label" BasedOn="{StaticResource TextStyle}">
+        <Setter Property="FontSize" Value="Large" />
+      </Style>
+      <Style x:Key="LargeTextStyle1" TargetType="Label" BasedOn="{StaticResource TextStyle}">
+        <Setter Property="FontSize">
+          <Setter.Value>
+            <OnPlatform x:TypeArguments="x:Double" iOS="36" Android="36" WinPhone="48" />
+          </Setter.Value>
+        </Setter>
+      </Style>
+
+      <Style x:Key="LargeTextStyle2" TargetType="Label" BasedOn="{StaticResource TextStyle}">
+        <Setter Property="FontSize">
+          <Setter.Value>
+            <OnPlatform x:TypeArguments="x:Double" iOS="42" Android="42" WinPhone="56" />
+          </Setter.Value>
+        </Setter>
+      </Style>
+
+      <Style x:Key="LargeTextStyle3" TargetType="Label" BasedOn="{StaticResource TextStyle}">
+        <Setter Property="FontSize">
+          <Setter.Value>
+            <OnPlatform x:TypeArguments="x:Double" iOS="75" Android="75" WinPhone="100" />
+          </Setter.Value>
+        </Setter>
+      </Style>
+    </ResourceDictionary>
+  </Application.Resources>
+</Application>

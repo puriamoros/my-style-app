@@ -12,7 +12,9 @@
     <OSMaxVersionTested>6.3.1</OSMaxVersionTested>
   </Prerequisites>
   <Resources>
-    <Resource Language="x-generate" />
+    <!--<Resource Language="x-generate" />-->
+    <Resource Language="es" />
+    <Resource Language="en" />
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="FPCL.Windows8.WindowsPhone.App">

@@ -48,5 +48,11 @@
     </array>
     <key>UILaunchStoryboardName</key>
     <string>LaunchScreen</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>es</string>
+	</array>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
   </dict>
 </plist>

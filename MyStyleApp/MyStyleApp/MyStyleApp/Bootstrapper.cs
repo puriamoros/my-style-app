@@ -1,28 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
+﻿using Autofac;
 using XamarinFormsAutofacMvvmStarterKit;
 using MyStyleApp.ViewModels;
 using MyStyleApp.Views;
+using Xamarin.Forms;
+using MyStyleApp.Services;
+using MyStyleApp.Localization;
 
 namespace MyStyleApp
 {
     public class Bootstrapper : CoreAutofacBootstrapper
     {
-        public Bootstrapper(Xamarin.Forms.Application app) : base()
-        {
-            App = app;
-        }
+        private readonly Application _app;
 
-        protected override void ConfigureApplication(IContainer container)
+        public Bootstrapper(Application app) : base()
         {
-            var viewFactory = container.Resolve<IViewFactory>();
-            var mainPage = viewFactory.Resolve<LoginViewModel>();
-            var navigationPage = new NavigationPage(mainPage);
-            App.MainPage = navigationPage;
+            this._app = app;
         }
 
         protected override void ConfigureContainer(ContainerBuilder builder)
@@ -38,6 +30,9 @@ namespace MyStyleApp
             builder.RegisterType<RegisteredStoresViewModel>().SingleInstance();
 
             // Register Services
+            builder.Register(l => DependencyService.Get<ILocalizationService>()).
+                As<ILocalizationService>().SingleInstance();
+            builder.RegisterType<LocalizedStringsService>().SingleInstance();
         }
 
         protected override void RegisterViews(IViewFactory viewFactory)
@@ -49,6 +44,24 @@ namespace MyStyleApp
             viewFactory.Register<RegisteredStoresViewModel, RegisteredStoresView>();
         }
 
-        private readonly Xamarin.Forms.Application App;
+        protected override void ConfigureApplication(IContainer container)
+        {
+            var viewFactory = container.Resolve<IViewFactory>();
+
+            // Configure language for LocalizedStrings (Only needed for Android and iOS
+            // since WinPhone does it automatically)
+            if (Device.OS == TargetPlatform.Android || Device.OS == TargetPlatform.iOS)
+            {
+                var localizationService = container.Resolve<ILocalizationService>();
+                //localizationService.SetLocale();
+                LocalizedStrings.Culture = localizationService.GetCurrentCultureInfo();
+            }
+            
+
+            // First view to show
+            var mainPage = viewFactory.Resolve<LoginViewModel>();
+            var navigationPage = new XamarinFormsAutofacMvvmStarterKit.NavigationPage(mainPage);
+            this._app.MainPage = navigationPage;
+        }
     }
 }

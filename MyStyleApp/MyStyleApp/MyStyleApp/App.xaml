@@ -6,8 +6,15 @@
 
   <Application.Resources>
     <ResourceDictionary>
-      <!--String Resources (localization)-->
+      <!-- String Resources (localization) -->
       <services:LocalizedStringsService x:Key="LocalizedStrings" />
+
+      <!-- iOS needs 20px top padding to avoid overlapping the status bar -->
+      <OnPlatform x:Key="PagePadding"
+                  x:TypeArguments="Thickness"
+                  iOS="5,20,5,0"
+                  Android="5,0,5,0"
+                  WinPhone="5,0,5,0" />
 
       <!-- Colors -->
       <Color x:Key="TitleColor">Blue</Color>

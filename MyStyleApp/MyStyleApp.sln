@@ -133,6 +133,7 @@ Global
 		{F1FE5767-930A-44BF-B1D5-5183C07C6E68}.Debug|iPhone.Build.0 = Debug|iPhone
 		{F1FE5767-930A-44BF-B1D5-5183C07C6E68}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
 		{F1FE5767-930A-44BF-B1D5-5183C07C6E68}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{F1FE5767-930A-44BF-B1D5-5183C07C6E68}.Debug|iPhoneSimulator.Deploy.0 = Debug|iPhoneSimulator
 		{F1FE5767-930A-44BF-B1D5-5183C07C6E68}.Debug|x64.ActiveCfg = Debug|iPhone
 		{F1FE5767-930A-44BF-B1D5-5183C07C6E68}.Debug|x86.ActiveCfg = Debug|iPhone
 		{F1FE5767-930A-44BF-B1D5-5183C07C6E68}.Release|Any CPU.ActiveCfg = Release|iPhone

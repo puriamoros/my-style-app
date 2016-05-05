@@ -13,5 +13,8 @@
     <Button
       Text="{Binding [hello], Source={StaticResource LocalizedStrings}}"
       Command="{Binding NextViewCommand}" />
+    <Button
+      Text="Add appointment"
+      Command="{Binding AddAppointmentCommand}" />
   </StackLayout>
 </ContentPage>

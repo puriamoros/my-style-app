@@ -8,6 +8,7 @@ namespace MyStyleApp.WinPhone.Services
         public System.Globalization.CultureInfo GetCurrentCultureInfo()
         {
             //return System.Threading.Thread.CurrentThread.CurrentUICulture;
+            string asdf = Windows.System.UserProfile.GlobalizationPreferences.Languages[0];
             return new System.Globalization.CultureInfo(Windows.System.UserProfile.GlobalizationPreferences.Languages[0]);
         }
 

@@ -26,17 +26,26 @@ namespace MyStyleApp.Services
         private const string LOCALIZED_STRINGS_RESOURCE_ID = "MyStyleApp.Localization.LocalizedStrings";
         private const string NON_LOCALIZED_STRINGS_RESOURCE_ID = "MyStyleApp.Localization.NonLocalizedStrings";
 
+        private ILocalizationService _localizationService;
         private readonly CultureInfo _ci;
         private ResourceManager _rm;
         private ResourceManager _nonLocalizedRm;
 
-        public LocalizedStringsService()
+        public LocalizedStringsService(/*ILocalizationService localizationService*/)
         {
-            _ci = DependencyService.Get<ILocalizationService>().GetCurrentCultureInfo();
+            // Can not load ILocalizationService from dependency injection container because this class
+            // Is referenced from App.xaml and App.xaml is loaded before App.xaml.cs calls Bootstrapper, so
+            // dependency injection container has not been initialized
+            this._localizationService = DependencyService.Get<ILocalizationService>();//localizationService;
+            this._ci = this._localizationService.GetCurrentCultureInfo();
 
             var assembly = typeof(LocalizedStringsService).GetTypeInfo().Assembly;
-            _rm = new ResourceManager(LOCALIZED_STRINGS_RESOURCE_ID, assembly);
-            _nonLocalizedRm = new ResourceManager(NON_LOCALIZED_STRINGS_RESOURCE_ID, assembly);
+
+            //foreach (var res in assembly.GetManifestResourceNames())
+            //    System.Diagnostics.Debug.WriteLine("found resource: " + res);
+
+            this._rm = new ResourceManager(LOCALIZED_STRINGS_RESOURCE_ID, assembly);
+            this._nonLocalizedRm = new ResourceManager(NON_LOCALIZED_STRINGS_RESOURCE_ID, assembly);
         }
 
         /// <summary>
@@ -64,7 +73,7 @@ namespace MyStyleApp.Services
         private string GetRawString(string key)
         {
             // Try normal string
-            string value = this._rm.GetString(key, _ci);
+            string value = this._nonLocalizedRm.GetString(key, _ci);
 
             if (value == null)
             {

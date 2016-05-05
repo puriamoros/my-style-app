@@ -30,9 +30,11 @@ namespace MyStyleApp
             builder.RegisterType<RegisteredStoresViewModel>().SingleInstance();
 
             // Register Services
+            builder.RegisterType<LocalizedStringsService>().SingleInstance();
             builder.Register(l => DependencyService.Get<ILocalizationService>()).
                 As<ILocalizationService>().SingleInstance();
-            builder.RegisterType<LocalizedStringsService>().SingleInstance();
+            builder.Register(c => DependencyService.Get<ICalendarService>()).
+                As<ICalendarService>().SingleInstance();
         }
 
         protected override void RegisterViews(IViewFactory viewFactory)
@@ -50,13 +52,12 @@ namespace MyStyleApp
 
             // Configure language for LocalizedStrings (Only needed for Android and iOS
             // since WinPhone does it automatically)
-            if (Device.OS == TargetPlatform.Android || Device.OS == TargetPlatform.iOS)
-            {
-                var localizationService = container.Resolve<ILocalizationService>();
-                //localizationService.SetLocale();
-                LocalizedStrings.Culture = localizationService.GetCurrentCultureInfo();
-            }
-            
+            //if (Device.OS == TargetPlatform.Android || Device.OS == TargetPlatform.iOS)
+            //{
+            //    var localizationService = container.Resolve<ILocalizationService>();
+            //    //localizationService.SetLocale();
+            //    LocalizedStrings.Culture = localizationService.GetCurrentCultureInfo();
+            //}
 
             // First view to show
             var mainPage = viewFactory.Resolve<LoginViewModel>();

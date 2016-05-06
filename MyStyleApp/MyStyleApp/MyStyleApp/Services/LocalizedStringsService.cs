@@ -28,8 +28,8 @@ namespace MyStyleApp.Services
 
         private ILocalizationService _localizationService;
         private CultureInfo _ci;
-        private ResourceManager _rm;
-        private ResourceManager _nonLocalizedRm;
+        private static ResourceManager _localizedRm;
+        private static ResourceManager _nonLocalizedRm;
 
         public LocalizedStringsService(/*ILocalizationService localizationService*/)
         {
@@ -41,13 +41,8 @@ namespace MyStyleApp.Services
 
             var assembly = typeof(LocalizedStringsService).GetTypeInfo().Assembly;
 
-            foreach (var res in assembly.GetManifestResourceNames())
-                System.Diagnostics.Debug.WriteLine("found resource: " + res);
-
-            System.Diagnostics.Debug.WriteLine("MyStyleApp.Localization.LocalizedStrings".CompareTo(LOCALIZED_STRINGS_RESOURCE_ID));
-
-            this._rm = new ResourceManager(LOCALIZED_STRINGS_RESOURCE_ID, assembly);
-            this._nonLocalizedRm = new ResourceManager(NON_LOCALIZED_STRINGS_RESOURCE_ID, assembly);
+            //foreach (var res in assembly.GetManifestResourceNames())
+            //    System.Diagnostics.Debug.WriteLine("found resource: " + res);
         }
 
         /// <summary>
@@ -74,8 +69,20 @@ namespace MyStyleApp.Services
         /// </returns>
         private string GetRawString(string key)
         {
+            // Late initilization needed for WinPhone ResourceManager hack (see WindowsRuntimeResourceManager)
+            if (_localizedRm == null)
+            {
+                var assembly = typeof(LocalizedStringsService).GetTypeInfo().Assembly;
+                _localizedRm = new ResourceManager(LOCALIZED_STRINGS_RESOURCE_ID, assembly);
+            }
+            if(_nonLocalizedRm == null)
+            {
+                var assembly = typeof(LocalizedStringsService).GetTypeInfo().Assembly;
+                _nonLocalizedRm = new ResourceManager(NON_LOCALIZED_STRINGS_RESOURCE_ID, assembly);
+            }
+
             // Try normal string
-            string value = this._rm.GetString(key, _ci);
+            string value = _localizedRm.GetString(key, _ci);
 
             if (value == null)
             {
@@ -84,7 +91,7 @@ namespace MyStyleApp.Services
                 string part = null;
                 do
                 {
-                    part = this._rm.GetString(key + "_" + i, _ci);
+                    part = _localizedRm.GetString(key + "_" + i, _ci);
 
                     if(part != null)
                     {
@@ -97,7 +104,7 @@ namespace MyStyleApp.Services
                 if (value == null)
                 {
                     // Try NonLocalized string
-                    value = this._nonLocalizedRm.GetString(key);
+                    value = _nonLocalizedRm.GetString(key);
                 }
             }
 

@@ -50,15 +50,6 @@ namespace MyStyleApp
         {
             var viewFactory = container.Resolve<IViewFactory>();
 
-            // Configure language for LocalizedStrings (Only needed for Android and iOS
-            // since WinPhone does it automatically)
-            //if (Device.OS == TargetPlatform.Android || Device.OS == TargetPlatform.iOS)
-            //{
-            //    var localizationService = container.Resolve<ILocalizationService>();
-            //    //localizationService.SetLocale();
-            //    LocalizedStrings.Culture = localizationService.GetCurrentCultureInfo();
-            //}
-
             // First view to show
             var mainPage = viewFactory.Resolve<LoginViewModel>();
             var navigationPage = new XamarinFormsAutofacMvvmStarterKit.NavigationPage(mainPage);

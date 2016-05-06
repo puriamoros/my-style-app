@@ -33,6 +33,10 @@ namespace MyStyleApp.WinPhone
         /// </summary>
         public App()
         {
+            // Resource Manager hack to workaround the MissingManifestResourceException in WinPhone (see WindowsRuntimeResourceManager)
+            WindowsRuntimeResourceManager.InjectInto(typeof(MyStyleApp.Services.LocalizedStringsService), "_localizedRm", "MyStyleApp.Localization.LocalizedStrings");
+            WindowsRuntimeResourceManager.InjectInto(typeof(MyStyleApp.Services.LocalizedStringsService), "_nonLocalizedRm", "MyStyleApp.Localization.NonLocalizedStrings");
+
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
         }

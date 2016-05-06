@@ -27,7 +27,7 @@ namespace MyStyleApp.Services
         private const string NON_LOCALIZED_STRINGS_RESOURCE_ID = "MyStyleApp.Localization.NonLocalizedStrings";
 
         private ILocalizationService _localizationService;
-        private readonly CultureInfo _ci;
+        private CultureInfo _ci;
         private ResourceManager _rm;
         private ResourceManager _nonLocalizedRm;
 
@@ -41,8 +41,10 @@ namespace MyStyleApp.Services
 
             var assembly = typeof(LocalizedStringsService).GetTypeInfo().Assembly;
 
-            //foreach (var res in assembly.GetManifestResourceNames())
-            //    System.Diagnostics.Debug.WriteLine("found resource: " + res);
+            foreach (var res in assembly.GetManifestResourceNames())
+                System.Diagnostics.Debug.WriteLine("found resource: " + res);
+
+            System.Diagnostics.Debug.WriteLine("MyStyleApp.Localization.LocalizedStrings".CompareTo(LOCALIZED_STRINGS_RESOURCE_ID));
 
             this._rm = new ResourceManager(LOCALIZED_STRINGS_RESOURCE_ID, assembly);
             this._nonLocalizedRm = new ResourceManager(NON_LOCALIZED_STRINGS_RESOURCE_ID, assembly);
@@ -73,7 +75,7 @@ namespace MyStyleApp.Services
         private string GetRawString(string key)
         {
             // Try normal string
-            string value = this._nonLocalizedRm.GetString(key, _ci);
+            string value = this._rm.GetString(key, _ci);
 
             if (value == null)
             {

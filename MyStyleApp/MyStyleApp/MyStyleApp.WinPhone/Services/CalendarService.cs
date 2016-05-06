@@ -15,9 +15,9 @@ namespace MyStyleApp.WinPhone.Services
 
             // StartTime
             var date = appointment.Date;
-            var time = appointment.Date.TimeOfDay;
-            var timeZoneOffset = TimeZoneInfo.Local.GetUtcOffset(DateTime.Now);
-            var startTime = new DateTimeOffset(date.Year, date.Month, date.Day, time.Hours, time.Minutes, time.Seconds, timeZoneOffset);
+            var timeZoneOffset = TimeZoneInfo.Local.GetUtcOffset(date);
+            date.Add(timeZoneOffset);
+            var startTime = new DateTimeOffset(date);
             appointmentRcd.StartTime = startTime;
 
             // Subject

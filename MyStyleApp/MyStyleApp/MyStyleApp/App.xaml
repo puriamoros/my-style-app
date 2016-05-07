@@ -6,8 +6,6 @@
 
   <Application.Resources>
     <ResourceDictionary>
-      <!-- String Resources (localization) -->
-      <services:LocalizedStringsService x:Key="LocalizedStrings" />
 
       <!-- iOS needs 20px top padding to avoid overlapping the status bar -->
       <OnPlatform x:Key="PagePadding"

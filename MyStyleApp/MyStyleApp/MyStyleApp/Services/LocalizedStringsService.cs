@@ -1,5 +1,4 @@
 ﻿using System;
-using Xamarin.Forms;
 using System.Resources;
 using System.Globalization;
 using System.Reflection;
@@ -8,13 +7,13 @@ using System.Collections.Generic;
 namespace MyStyleApp.Services
 {
     /// <summary>
-    /// This class is an alternative to x:Uid based localization.
+    /// This class is an alternative to Xamarin stardard localization.
     ///
-    /// To use it, just add a StaticResource in your App.xaml pointing to to this class. Example:
-    /// <LocalizedStringsServiceNS:LocalizedStringsService x:Key="LocalizedStrings" />
+    /// To use it, just add it to your ViewModels. Example
+    /// public LocalizedStringsService LocalizedStrings { get { return _localizedStringsService; } }
     ///
     /// To bind some text to your ui component, use a binding. Example:
-    /// Text="{Binding [put_the_string_key_inside_the_brackets], Source={StaticResource StringResources}}"
+    /// Text="{Binding LocalizedStrings[put_the_string_key_inside_the_brackets]}"
     ///
     /// To manage long texts that are refused by makepri.exe, it is possible to split the long text in
     /// smaller parts in the language files (Resources.resw). To do that, just split the text in some parts
@@ -31,12 +30,9 @@ namespace MyStyleApp.Services
         private static ResourceManager _localizedRm;
         private static ResourceManager _nonLocalizedRm;
 
-        public LocalizedStringsService(/*ILocalizationService localizationService*/)
+        public LocalizedStringsService(ILocalizationService localizationService)
         {
-            // Can not load ILocalizationService from dependency injection container because this class
-            // Is referenced from App.xaml and App.xaml is loaded before App.xaml.cs calls Bootstrapper, so
-            // dependency injection container has not been initialized
-            this._localizationService = DependencyService.Get<ILocalizationService>();//localizationService;
+            this._localizationService = localizationService;
             this._ci = this._localizationService.GetCurrentCultureInfo();
 
             var assembly = typeof(LocalizedStringsService).GetTypeInfo().Assembly;

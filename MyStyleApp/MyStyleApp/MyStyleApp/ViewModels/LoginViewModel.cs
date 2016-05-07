@@ -10,18 +10,20 @@ namespace MyStyleApp.ViewModels
     public class LoginViewModel : ViewModelBase
     {
         private string _message;
-        private readonly INavigator _navigator;
         private ICalendarService _calendarService;
 
         public ICommand NextViewCommand { get; private set; }
         public ICommand AddAppointmentCommand { get; private set; }
 
-        public LoginViewModel(INavigator navigator, ICalendarService calendarService)
+        public LoginViewModel(
+            INavigator navigator,
+            LocalizedStringsService localizedStringsService,
+            ICalendarService calendarService) :
+            base(navigator, localizedStringsService)
         {
-            this._navigator = navigator;
             this._calendarService = calendarService;
             this.Message = "First Page";
-            this.NextViewCommand = new Command(async () => await this._navigator.PushAsync<RegisteredStoresViewModel>());
+            this.NextViewCommand = new Command(async () => await this.Navigator.PushAsync<RegisteredStoresViewModel>());
 
             Appointment appointment = new Appointment()
             {

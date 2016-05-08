@@ -22,7 +22,7 @@
       <Style x:Key="TextStyle" TargetType="Label">
         <Setter Property="FontFamily" Value="SegoeWP-Light" />
         <Setter Property="FontSize" Value="Default" />
-        <Setter Property="TextColor" Value="White" />
+        <Setter Property="TextColor" Value="Default" />
       </Style>
 
       <Style x:Key="MicroTextStyle" TargetType="Label" BasedOn="{StaticResource TextStyle}">
@@ -43,7 +43,7 @@
       <Style x:Key="LargeTextStyle1" TargetType="Label" BasedOn="{StaticResource TextStyle}">
         <Setter Property="FontSize">
           <Setter.Value>
-            <OnPlatform x:TypeArguments="x:Double" iOS="36" Android="36" WinPhone="48" />
+            <OnPlatform x:TypeArguments="x:Double" iOS="36" Android="36" WinPhone="43" />
           </Setter.Value>
         </Setter>
       </Style>
@@ -51,7 +51,7 @@
       <Style x:Key="LargeTextStyle2" TargetType="Label" BasedOn="{StaticResource TextStyle}">
         <Setter Property="FontSize">
           <Setter.Value>
-            <OnPlatform x:TypeArguments="x:Double" iOS="42" Android="42" WinPhone="56" />
+            <OnPlatform x:TypeArguments="x:Double" iOS="42" Android="42" WinPhone="50" />
           </Setter.Value>
         </Setter>
       </Style>
@@ -59,7 +59,7 @@
       <Style x:Key="LargeTextStyle3" TargetType="Label" BasedOn="{StaticResource TextStyle}">
         <Setter Property="FontSize">
           <Setter.Value>
-            <OnPlatform x:TypeArguments="x:Double" iOS="75" Android="75" WinPhone="100" />
+            <OnPlatform x:TypeArguments="x:Double" iOS="75" Android="75" WinPhone="90" />
           </Setter.Value>
         </Setter>
       </Style>

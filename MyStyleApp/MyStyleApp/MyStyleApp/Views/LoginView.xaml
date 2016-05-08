@@ -3,18 +3,58 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyStyleApp.Views.LoginView"
              Padding="{StaticResource PagePadding}">
-  <StackLayout>
-    <Label
-      Text="{Binding LocalizedStrings[welcome]}"
-      VerticalOptions="Center"
-      HorizontalOptions="Center"
-      Style="{StaticResource LargeTextStyle1}"
-      TextColor="{StaticResource TitleColor}" />
-    <Button
-      Text="{Binding LocalizedStrings[hello]}"
-      Command="{Binding NextViewCommand}" />
-    <Button
-      Text="Add appointment"
-      Command="{Binding AddAppointmentCommand}" />
-  </StackLayout>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="0*" />
+      <RowDefinition Height="100*" />
+    </Grid.RowDefinitions>
+    <StackLayout Grid.Row="1" Spacing="0" Padding="0,15,0,0">
+      <Label
+        Text="{Binding LocalizedStrings[welcome]}"
+        HorizontalOptions="CenterAndExpand"
+        Style="{StaticResource LargeTextStyle}" />
+      <StackLayout Spacing="0" Padding="0,30,0,0" >
+        <Label
+          Text="User"
+          Style="{StaticResource MediumTextStyle}" />
+        <Entry
+          Placeholder="Enter your user name"
+          HorizontalOptions="FillAndExpand"
+          Text="{Binding User}" />
+      </StackLayout>
+      <StackLayout Spacing="0" Padding="0,15,0,0" >
+        <Label
+          Text="Password"
+          Style="{StaticResource SmallTextStyle}" />
+        <Entry
+          IsPassword="True"
+          Placeholder="Enter your password"
+          HorizontalOptions="FillAndExpand"
+          Text="{Binding Password}" />
+      </StackLayout>
+      <StackLayout Spacing="0" Padding="0,15,0,0" Orientation="Horizontal" >
+        <Label
+          Text="Remember me"
+          VerticalOptions="Center"
+          Style="{StaticResource MicroTextStyle}" />
+        <Switch
+          IsToggled="{Binding RememberMe}"/>
+      </StackLayout>
+      <StackLayout Spacing="0" Padding="0,15,0,0">
+        <Button
+          HorizontalOptions="Fill"
+          Text="Login"
+          Command="{Binding LoginCommand}" />
+      </StackLayout>
+      <StackLayout Spacing="0" Padding="0,45,0,0">
+         <Label
+          Text="Don't have an account?"
+          Style="{StaticResource MediumTextStyle}" />
+        <Button
+          HorizontalOptions="Fill"
+          Text="Register"
+          Command="{Binding NewAccountCommand}" />
+      </StackLayout>
+    </StackLayout>
+  </Grid>
 </ContentPage>

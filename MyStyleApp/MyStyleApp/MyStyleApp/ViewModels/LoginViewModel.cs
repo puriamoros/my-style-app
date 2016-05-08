@@ -1,6 +1,7 @@
 ﻿using MyStyleApp.Models;
 using MyStyleApp.Services;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using XamarinFormsAutofacMvvmStarterKit;
@@ -9,36 +10,48 @@ namespace MyStyleApp.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     {
-        private string _message;
-        private ICalendarService _calendarService;
+        public ICommand LoginCommand { get; private set; }
+        public ICommand NewAccountCommand { get; private set; }
 
-        public ICommand NextViewCommand { get; private set; }
-        public ICommand AddAppointmentCommand { get; private set; }
+        private string _user;
+        private string _password;
+        private bool _rememberMe;
 
         public LoginViewModel(
             INavigator navigator,
-            LocalizedStringsService localizedStringsService,
-            ICalendarService calendarService) :
+            LocalizedStringsService localizedStringsService) :
             base(navigator, localizedStringsService)
         {
-            this._calendarService = calendarService;
-            this.Message = "First Page";
-            this.NextViewCommand = new Command(async () => await this.Navigator.PushAsync<RegisteredStoresViewModel>());
-
-            Appointment appointment = new Appointment()
-            {
-                Title = "Título del nuevo evento",
-                Description = "Descripción del nuevo evento",
-                Date = DateTime.UtcNow.Add(TimeSpan.FromHours(1)),
-                Duration = TimeSpan.FromHours(2)
-            };
-            this.AddAppointmentCommand = new Command(async () => await this._calendarService.AddAppointment(appointment));
+            this.LoginCommand = new Command(async () => await Login());
+            this.NewAccountCommand = new Command(async () => await NewAccount());
         }
 
-        public string Message
+        public string User
         {
-            get { return _message; }
-            set { SetProperty(ref _message, value); }
+            get { return _user; }
+            set { SetProperty(ref _user, value); }
+        }
+
+        public string Password
+        {
+            get { return _password; }
+            set { SetProperty(ref _password, value); }
+        }
+
+        public bool RememberMe
+        {
+            get { return _rememberMe; }
+            set { SetProperty(ref _rememberMe, value); }
+        }
+
+        private async Task Login()
+        {
+            await this.Navigator.PushAsync<RegisteredStoresViewModel>();
+        }
+
+        private async Task NewAccount()
+        {
+            await this.Navigator.PushAsync<RegisteredStoresViewModel>();
         }
     }
 }

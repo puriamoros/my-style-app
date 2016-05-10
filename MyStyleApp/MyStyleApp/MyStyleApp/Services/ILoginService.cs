@@ -8,6 +8,6 @@ namespace MyStyleApp.Services
 {
     public interface ILoginService
     {
-
+        Task Login(string email, string password);
     }
 }

@@ -13,24 +13,28 @@ namespace MyStyleApp.ViewModels
         public ICommand LoginCommand { get; private set; }
         public ICommand NewAccountCommand { get; private set; }
 
-        private string _user;
+        private ILoginService _loginService;
+
+        private string _email;
         private string _password;
         private bool _rememberMe;
         private string _errorText;
 
         public LoginViewModel(
             INavigator navigator,
-            LocalizedStringsService localizedStringsService) :
+            LocalizedStringsService localizedStringsService,
+            ILoginService loginService) :
             base(navigator, localizedStringsService)
         {
+            this._loginService = loginService;
             this.LoginCommand = new Command(async () => await Login());
             this.NewAccountCommand = new Command(async () => await NewAccount());
         }
 
-        public string User
+        public string Email
         {
-            get { return _user; }
-            set { SetProperty(ref _user, value); }
+            get { return _email; }
+            set { SetProperty(ref _email, value); }
         }
 
         public string Password
@@ -53,13 +57,27 @@ namespace MyStyleApp.ViewModels
 
         private async Task Login()
         {
-            await this.Navigator.PushAsync<RegisteredStoresViewModel>();
+            ErrorText = "";
+            this.IsBusy = true;
+
+            try
+            {
+                await this._loginService.Login(this.Email, this.Password);
+                await this.Navigator.PushAsync<RegisteredStoresViewModel>();
+            }
+            catch (Exception)
+            {
+                ErrorText = this.LocalizedStrings["login_error"];
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
         }
 
         private async Task NewAccount()
         {
-            this.IsBusy = !this.IsBusy;
-            //await this.Navigator.PushAsync<RegisteredStoresViewModel>();
+            await this.Navigator.PushAsync<RegisteredStoresViewModel>();
         }
     }
 }

@@ -5,6 +5,7 @@ using MyStyleApp.Views;
 using Xamarin.Forms;
 using MyStyleApp.Services;
 using MyStyleApp.Localization;
+using MyStyleApp.Services.Mocks;
 
 namespace MyStyleApp
 {
@@ -35,6 +36,8 @@ namespace MyStyleApp
                 As<ILocalizationService>().SingleInstance();
             builder.Register(c => DependencyService.Get<ICalendarService>()).
                 As<ICalendarService>().SingleInstance();
+            builder.Register(l => new LoginServiceMock()).
+                As<ILoginService>().SingleInstance();
         }
 
         protected override void RegisterViews(IViewFactory viewFactory)

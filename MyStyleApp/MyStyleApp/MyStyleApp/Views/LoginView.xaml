@@ -8,28 +8,28 @@
     <Grid>
       <StackLayout Spacing="15">
         <Label
-          Text="Login"
+          Text="{Binding LocalizedStrings[login]}"
           Style="{StaticResource LargeTextStyle2}" />
         <StackLayout Spacing="0" >
           <Label
-            Text="User"
+            Text="{Binding LocalizedStrings[email]}"
             Style="{StaticResource MediumTextStyle}" />
           <Entry
-            Placeholder="Enter your user name"
-            Text="{Binding User}" />
+            Placeholder="{Binding LocalizedStrings[email_placeholder]}"
+            Text="{Binding Email}" />
         </StackLayout>
         <StackLayout Spacing="0" >
           <Label
-            Text="Password"
+            Text="{Binding LocalizedStrings[password]}"
             Style="{StaticResource MediumTextStyle}" />
           <Entry
             IsPassword="True"
-            Placeholder="Enter your password"
+            Placeholder="{Binding LocalizedStrings[password_placeholder]}"
             Text="{Binding Password}" />
         </StackLayout>
         <StackLayout Spacing="0" >
           <Label
-            Text="Remember me"
+            Text="{Binding LocalizedStrings[remember_me]}"
             Style="{StaticResource MediumTextStyle}" />
           <Switch
             HorizontalOptions="Start"
@@ -37,7 +37,7 @@
         </StackLayout>
         <StackLayout Spacing="5">
           <Button
-            Text="Login"
+            Text="{Binding LocalizedStrings[do_login]}"
             Command="{Binding LoginCommand}" />
           <Label
             Text="{Binding ErrorText}"
@@ -47,37 +47,16 @@
         </StackLayout>
         <StackLayout Spacing="0" Padding="0,30,0,0">
           <Label
-           Text="Don't have an account?"
+           Text="{Binding LocalizedStrings[no_account]}"
            Style="{StaticResource MediumTextStyle}" />
           <Button
-            Text="Register"
+            Text="{Binding LocalizedStrings[create_account]}"
             Command="{Binding NewAccountCommand}" />
         </StackLayout>
       </StackLayout>
       <controls:WaitingOverlayControl
-        IsVisible="True"
-        Text="{Binding LocalizedStrings[hello]}"/>
-      <!-- Start of: loading overlay -->
-      <!--<Grid
-        IsVisible="True">
-        <BoxView
-          BackgroundColor="Black"
-          Opacity="0.75" />
-        <StackLayout
-          Padding="10,0,10,0"
-          VerticalOptions="Center">
-          <Label
-            Text="...waiting..."
-            TextColor="White"
-            HorizontalOptions="Center"
-            Style="{StaticResource LargeTextStyle}" />
-          <ActivityIndicator
-            IsVisible="True"
-            IsRunning="True"
-            Color="White"/>
-        </StackLayout>
-      </Grid>-->
-      <!-- End of: loading overlay -->
+        IsVisible="{Binding IsBusy}"
+        Text="{Binding LocalizedStrings[waiting]}"/>
     </Grid>
   </ScrollView>
 </ContentPage>

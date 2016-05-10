@@ -5,7 +5,7 @@
   <BoxView BackgroundColor="Black" Opacity="0.75" />
   <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
     <Label x:Name="label"
-      Text="...waiting..."
+      Text=""
       TextColor="White"
       HorizontalOptions="Center"
       Style="{StaticResource LargeTextStyle}" />

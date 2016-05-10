@@ -14,23 +14,20 @@ namespace MyStyleApp.Views.Controls
         {
             InitializeComponent();
         }
-
-        //public static readonly BindableProperty TextProperty = BindableProperty.Create(
-        //    "Text",
-        //    typeof(string),
-        //    typeof(WaitingOverlayControl),
-        //    null);
-
-        //public string Text
-        //{
-        //    get { return (string)GetValue(TextProperty); }
-        //    set { SetValue(TextProperty, value); }
-        //}
+        
+        public static readonly BindableProperty TextProperty = BindableProperty.Create(
+            "Text",
+            typeof(string),
+            typeof(WaitingOverlayControl),
+            null,
+            BindingMode.OneWay,
+            (bindable, value) => { return (value == null || value is string); },
+            (bindable, oldValue, newValue) => ((WaitingOverlayControl) bindable).label.Text = (string) newValue);
 
         public string Text
         {
-            get { return label.Text; }
-            set { label.Text = value; }
+            get { return (string)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
         }
     }
 }

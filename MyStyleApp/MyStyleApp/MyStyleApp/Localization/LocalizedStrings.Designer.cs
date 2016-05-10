@@ -62,20 +62,110 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hello.
+        ///   Looks up a localized string similar to Create an account.
         /// </summary>
-        internal static string hello {
+        internal static string create_account {
             get {
-                return ResourceManager.GetString("hello", resourceCulture);
+                return ResourceManager.GetString("create_account", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to ${app_name}.
+        ///   Looks up a localized string similar to Login.
         /// </summary>
-        internal static string welcome {
+        internal static string do_login {
             get {
-                return ResourceManager.GetString("welcome", resourceCulture);
+                return ResourceManager.GetString("do_login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        internal static string email {
+            get {
+                return ResourceManager.GetString("email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid email.
+        /// </summary>
+        internal static string email_not_valid {
+            get {
+                return ResourceManager.GetString("email_not_valid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your email address.
+        /// </summary>
+        internal static string email_placeholder {
+            get {
+                return ResourceManager.GetString("email_placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        internal static string login {
+            get {
+                return ResourceManager.GetString("login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid credentials.
+        /// </summary>
+        internal static string login_error {
+            get {
+                return ResourceManager.GetString("login_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t have an account?.
+        /// </summary>
+        internal static string no_account {
+            get {
+                return ResourceManager.GetString("no_account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        internal static string password {
+            get {
+                return ResourceManager.GetString("password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your password.
+        /// </summary>
+        internal static string password_placeholder {
+            get {
+                return ResourceManager.GetString("password_placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember me.
+        /// </summary>
+        internal static string remember_me {
+            get {
+                return ResourceManager.GetString("remember_me", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ...waiting....
+        /// </summary>
+        internal static string waiting {
+            get {
+                return ResourceManager.GetString("waiting", resourceCulture);
             }
         }
     }

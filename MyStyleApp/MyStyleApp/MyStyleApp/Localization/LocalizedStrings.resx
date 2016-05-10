@@ -117,10 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="hello" xml:space="preserve">
-    <value>Hello</value>
+  <data name="create_account" xml:space="preserve">
+    <value>Create an account</value>
   </data>
-  <data name="welcome" xml:space="preserve">
-    <value>Welcome to ${app_name}</value>
+  <data name="do_login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="email_not_valid" xml:space="preserve">
+    <value>Invalid email</value>
+  </data>
+  <data name="email_placeholder" xml:space="preserve">
+    <value>Enter your email address</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="login_error" xml:space="preserve">
+    <value>Invalid credentials</value>
+  </data>
+  <data name="no_account" xml:space="preserve">
+    <value>Don't have an account?</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="password_placeholder" xml:space="preserve">
+    <value>Enter your password</value>
+  </data>
+  <data name="remember_me" xml:space="preserve">
+    <value>Remember me</value>
+  </data>
+  <data name="waiting" xml:space="preserve">
+    <value>...waiting...</value>
   </data>
 </root>

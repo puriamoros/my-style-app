@@ -16,6 +16,7 @@ namespace MyStyleApp.ViewModels
         private string _user;
         private string _password;
         private bool _rememberMe;
+        private string _errorText;
 
         public LoginViewModel(
             INavigator navigator,
@@ -42,6 +43,12 @@ namespace MyStyleApp.ViewModels
         {
             get { return _rememberMe; }
             set { SetProperty(ref _rememberMe, value); }
+        }
+
+        public string ErrorText
+        {
+            get { return _errorText; }
+            set { SetProperty(ref _errorText, value); }
         }
 
         private async Task Login()

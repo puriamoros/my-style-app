@@ -39,6 +39,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Converters\StringToBoolConverter.cs" />
     <Compile Include="Models\Appointment.cs" />
     <Compile Include="Services\ICalendarService.cs" />
     <Compile Include="Services\ILocalizationService.cs" />

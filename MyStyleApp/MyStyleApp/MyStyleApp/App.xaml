@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:services="clr-namespace:MyStyleApp.Services"
+             xmlns:converters="clr-namespace:MyStyleApp.Converters"
              x:Class="MyStyleApp.App">
 
   <Application.Resources>
     <ResourceDictionary>
+      
+      <!-- Converters -->
+      <converters:StringToBoolConverter x:Key="StringToBoolConverter" />
 
       <!-- iOS needs 20px top padding to avoid overlapping the status bar -->
       <OnPlatform x:Key="PagePadding"
@@ -15,8 +18,7 @@
                   WinPhone="5,0,5,0" />
 
       <!-- Colors -->
-      <Color x:Key="TitleColor">Blue</Color>
-      <Color x:Key="SubTitleColor">Red</Color>
+      <Color x:Key="ErrorColor">Red</Color>
       
       <!-- Font sizes -->
       <Style x:Key="TextStyle" TargetType="Label">

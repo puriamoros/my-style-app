@@ -7,7 +7,6 @@
     <StackLayout Grid.Row="1" Spacing="15">
       <Label
         Text="Login"
-        HorizontalOptions="StartAndExpand"
         Style="{StaticResource LargeTextStyle2}" />
       <StackLayout Spacing="0" >
         <Label
@@ -15,7 +14,6 @@
           Style="{StaticResource MediumTextStyle}" />
         <Entry
           Placeholder="Enter your user name"
-          HorizontalOptions="FillAndExpand"
           Text="{Binding User}" />
       </StackLayout>
       <StackLayout Spacing="0" >
@@ -25,29 +23,30 @@
         <Entry
           IsPassword="True"
           Placeholder="Enter your password"
-          HorizontalOptions="FillAndExpand"
           Text="{Binding Password}" />
       </StackLayout>
       <StackLayout Spacing="0" Orientation="Horizontal" >
         <Label
           Text="Remember me"
-          VerticalOptions="Center"
           Style="{StaticResource MediumTextStyle}" />
         <Switch
           IsToggled="{Binding RememberMe}"/>
       </StackLayout>
-      <StackLayout Spacing="0">
+      <StackLayout Spacing="5">
         <Button
-          HorizontalOptions="Fill"
           Text="Login"
           Command="{Binding LoginCommand}" />
+        <Label
+          Text="{Binding ErrorText}"
+          IsVisible="{Binding ErrorText, Converter={StaticResource StringToBoolConverter}}"
+          TextColor="{StaticResource ErrorColor}"
+          Style="{StaticResource SmallTextStyle}" />
       </StackLayout>
       <StackLayout Spacing="0" Padding="0,30,0,0">
          <Label
           Text="Don't have an account?"
           Style="{StaticResource MediumTextStyle}" />
         <Button
-          HorizontalOptions="Fill"
           Text="Register"
           Command="{Binding NewAccountCommand}" />
       </StackLayout>

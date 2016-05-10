@@ -58,7 +58,8 @@ namespace MyStyleApp.ViewModels
 
         private async Task NewAccount()
         {
-            await this.Navigator.PushAsync<RegisteredStoresViewModel>();
+            this.IsBusy = !this.IsBusy;
+            //await this.Navigator.PushAsync<RegisteredStoresViewModel>();
         }
     }
 }

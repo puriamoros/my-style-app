@@ -1,55 +1,83 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
              x:Class="MyStyleApp.Views.LoginView"
              Padding="{StaticResource PagePadding}">
   <ScrollView>
-    <StackLayout Grid.Row="1" Spacing="15">
-      <Label
-        Text="Login"
-        Style="{StaticResource LargeTextStyle2}" />
-      <StackLayout Spacing="0" >
+    <Grid>
+      <StackLayout Spacing="15">
         <Label
-          Text="User"
-          Style="{StaticResource MediumTextStyle}" />
-        <Entry
-          Placeholder="Enter your user name"
-          Text="{Binding User}" />
-      </StackLayout>
-      <StackLayout Spacing="0" >
-        <Label
-          Text="Password"
-          Style="{StaticResource MediumTextStyle}" />
-        <Entry
-          IsPassword="True"
-          Placeholder="Enter your password"
-          Text="{Binding Password}" />
-      </StackLayout>
-      <StackLayout Spacing="0" Orientation="Horizontal" >
-        <Label
-          Text="Remember me"
-          Style="{StaticResource MediumTextStyle}" />
-        <Switch
-          IsToggled="{Binding RememberMe}"/>
-      </StackLayout>
-      <StackLayout Spacing="5">
-        <Button
           Text="Login"
-          Command="{Binding LoginCommand}" />
-        <Label
-          Text="{Binding ErrorText}"
-          IsVisible="{Binding ErrorText, Converter={StaticResource StringToBoolConverter}}"
-          TextColor="{StaticResource ErrorColor}"
-          Style="{StaticResource SmallTextStyle}" />
+          Style="{StaticResource LargeTextStyle2}" />
+        <StackLayout Spacing="0" >
+          <Label
+            Text="User"
+            Style="{StaticResource MediumTextStyle}" />
+          <Entry
+            Placeholder="Enter your user name"
+            Text="{Binding User}" />
+        </StackLayout>
+        <StackLayout Spacing="0" >
+          <Label
+            Text="Password"
+            Style="{StaticResource MediumTextStyle}" />
+          <Entry
+            IsPassword="True"
+            Placeholder="Enter your password"
+            Text="{Binding Password}" />
+        </StackLayout>
+        <StackLayout Spacing="0" >
+          <Label
+            Text="Remember me"
+            Style="{StaticResource MediumTextStyle}" />
+          <Switch
+            HorizontalOptions="Start"
+            IsToggled="{Binding RememberMe}"/>
+        </StackLayout>
+        <StackLayout Spacing="5">
+          <Button
+            Text="Login"
+            Command="{Binding LoginCommand}" />
+          <Label
+            Text="{Binding ErrorText}"
+            IsVisible="{Binding ErrorText, Converter={StaticResource StringToBoolConverter}}"
+            TextColor="{StaticResource ErrorColor}"
+            Style="{StaticResource SmallTextStyle}" />
+        </StackLayout>
+        <StackLayout Spacing="0" Padding="0,30,0,0">
+          <Label
+           Text="Don't have an account?"
+           Style="{StaticResource MediumTextStyle}" />
+          <Button
+            Text="Register"
+            Command="{Binding NewAccountCommand}" />
+        </StackLayout>
       </StackLayout>
-      <StackLayout Spacing="0" Padding="0,30,0,0">
-         <Label
-          Text="Don't have an account?"
-          Style="{StaticResource MediumTextStyle}" />
-        <Button
-          Text="Register"
-          Command="{Binding NewAccountCommand}" />
-      </StackLayout>
-    </StackLayout>
+      <controls:WaitingOverlayControl
+        IsVisible="True"
+        Text="{Binding LocalizedStrings[hello]}"/>
+      <!-- Start of: loading overlay -->
+      <!--<Grid
+        IsVisible="True">
+        <BoxView
+          BackgroundColor="Black"
+          Opacity="0.75" />
+        <StackLayout
+          Padding="10,0,10,0"
+          VerticalOptions="Center">
+          <Label
+            Text="...waiting..."
+            TextColor="White"
+            HorizontalOptions="Center"
+            Style="{StaticResource LargeTextStyle}" />
+          <ActivityIndicator
+            IsVisible="True"
+            IsRunning="True"
+            Color="White"/>
+        </StackLayout>
+      </Grid>-->
+      <!-- End of: loading overlay -->
+    </Grid>
   </ScrollView>
 </ContentPage>

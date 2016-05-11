@@ -13,9 +13,10 @@
       <!-- iOS needs 20px top padding to avoid overlapping the status bar -->
       <OnPlatform x:Key="PagePadding"
                   x:TypeArguments="Thickness"
-                  iOS="5,20,5,0"
-                  Android="5,0,5,0"
-                  WinPhone="5,0,5,0" />
+                  iOS="0,20,0,0"
+                  Android="0,0,0,0"
+                  WinPhone="0,0,0,0" />
+      <Thickness x:Key="PageContentPadding">5</Thickness>
 
       <!-- Colors -->
       <Color x:Key="ErrorColor">Red</Color>

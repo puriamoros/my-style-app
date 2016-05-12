@@ -16,7 +16,7 @@ class Users
 
     public function get($queryArray)
     {
-		if(count($queryArray) >= 1) {
+		if(count($queryArray) >= 1 && count($queryArray) <= 2) {
 			if ($queryArray[0] == 'login') {
 				return $this->login();
 			} else if ($queryArray[0] == 'users') {
@@ -24,7 +24,12 @@ class Users
 					return $this->getUsers();
 				}
 				else {
-					return $this->getUser($queryArray[1]);
+					if($queryArray[1] == "me") {
+						return $this->getMe();
+					}
+					else {
+						return $this->getUser($queryArray[1]);
+					}
 				}
 			}
 		}
@@ -34,7 +39,7 @@ class Users
 	
 	public function post($queryArray)
     {
-		if(count($queryArray) >= 1) {
+		if(count($queryArray) == 1) {
 			if ($queryArray[0] == 'register') {
 				return $this->register();
 			} else if ($queryArray[0] == 'users') {
@@ -47,7 +52,7 @@ class Users
 	
 	public function put($queryArray)
     {
-		if(count($queryArray) >= 2) {
+		if(count($queryArray) == 2) {
 			if ($queryArray[0] == 'users') {
 				return $this->updateUser($queryArray[1]);
 			}
@@ -58,7 +63,7 @@ class Users
 	
 	public function delete($queryArray)
     {
-		if(count($queryArray) >= 2) {
+		if(count($queryArray) == 2) {
 			if ($queryArray[0] == 'users') {
 				return $this->deleteUser($queryArray[1]);
 			}
@@ -100,6 +105,13 @@ class Users
 			array_push($list, $listItem);
 		}
 		return $list;	
+	}
+	
+	private function getMe()
+	{
+		// Check authorization
+		$id = Authorization::authorizeApiKey();
+		return $this->getUser($id);
 	}
 	
 	private function getUser($id)

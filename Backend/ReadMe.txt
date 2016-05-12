@@ -1,4 +1,7 @@
 This folder has to be copied or linked into a apache public folder.
+Ensure that the following modules are enabled in <dir_apache>\conf\httpd.conf:
+- LoadModule rewrite_module modules/mod_rewrite.so
+
 Example (with symbolic link):
 - Go to apache public folder.
 - Create the link: mklink /D api.mystyleapp.com <dir_repo>\Backend

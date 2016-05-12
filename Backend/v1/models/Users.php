@@ -16,11 +16,11 @@ class Users
 
     public function get($queryArray)
     {
-		if(count($queryArray >= 1)) {
+		if(count($queryArray) >= 1) {
 			if ($queryArray[0] == 'login') {
 				return $this->login();
 			} else if ($queryArray[0] == 'users') {
-				if(count($queryArray == 1)) {
+				if(count($queryArray) == 1) {
 					return $this->getUsers();
 				}
 				else {
@@ -34,7 +34,7 @@ class Users
 	
 	public function post($queryArray)
     {
-		if(count($queryArray >= 1)) {
+		if(count($queryArray) >= 1) {
 			if ($queryArray[0] == 'register') {
 				return $this->register();
 			} else if ($queryArray[0] == 'users') {
@@ -47,7 +47,7 @@ class Users
 	
 	public function put($queryArray)
     {
-		if(count($queryArray >= 2)) {
+		if(count($queryArray) >= 2) {
 			if ($queryArray[0] == 'users') {
 				return $this->updateUser($queryArray[1]);
 			}
@@ -56,9 +56,9 @@ class Users
 		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
     }
 	
-	public function del($queryArray)
+	public function delete($queryArray)
     {
-		if(count($queryArray >= 2)) {
+		if(count($queryArray) >= 2) {
 			if ($queryArray[0] == 'users') {
 				return $this->deleteUser($queryArray[1]);
 			}
@@ -80,27 +80,63 @@ class Users
 	
 	private function getUsers()
 	{
+		// Check authorization
+		Authorization::authorizeApiKey();
+
+		// TODO: Validate fields
+		
+		// Get user
+		$result = $this->dbGet();
+		
+		// Print response
+		http_response_code(200);
+		
+		$list = array();
+		foreach($result as $resultItem) {
+			$listItem = array(
+				"id" => $resultItem["id"],
+				"email" => $resultItem["email"]
+			);
+			array_push($list, $listItem);
+		}
+		return $list;	
 	}
 	
-	private function getUser($email)
+	private function getUser($id)
 	{
+		// Check authorization
+		Authorization::authorizeApiKey();
+
+		// TODO: Validate fields
+		
+		// Get user
+		$result = $this->dbGetOne($id);
+		
+		// Print response
+		http_response_code(200);
+		return array(
+			"id" => $result["id"],
+			"email" => $result["email"]
+		);
 	}
 	
 	private function register()
 	{
+		// No authorization needed
+	
 		$body = file_get_contents('php://input');
 		$user = json_decode($body);
 
 		// TODO: Validate fields
 		
 		// Create user
-		$result = $this->create($user);
+		$result = $this->dbCreate($user);
 		
 		// Print response
 		http_response_code(200);
 		return array(
-				"apiKey" => $result["apiKey"]
-			);
+			"apiKey" => $result["apiKey"]
+		);
 	}
 	
 	private function createUser()
@@ -109,37 +145,118 @@ class Users
 		Authorization::authorizeApiKey();
 		
 		$body = file_get_contents('php://input');
-		$user = json_decode($body);
+		$data = json_decode($body);
 
 		// TODO: Validate fields
 		
 		// Create user
-		$result = $this->create($user);
+		$result = $this->dbCreate($data);
 		
 		// Print response
 		http_response_code(201);
-		return $result;
+		return array(
+			"id" => $result["id"],
+			"email" => $result["email"]
+		);
 	}
 	
-	private function updateUser($email)
+	private function updateUser($id)
 	{
+		// Check authorization
+		Authorization::authorizeApiKey();
+		
+		$body = file_get_contents('php://input');
+		$data = json_decode($body);
+
+		// TODO: Validate fields
+		
+		// Update user
+		$this->dbUpdate($id, $data);
+		
+		// Print response
+		http_response_code(204);
+		return;
 	}
 	
-	private function deleteUser($email)
+	private function deleteUser($id)
 	{
+		// Check authorization
+		Authorization::authorizeApiKey();
+
+		// TODO: Validate fields
+		
+		// Delete user
+		$result = $this->dbDelete($id);
+		
+		// Print response
+		http_response_code(204);
+		return;
+	}
+	
+	private function dbGet()
+	{
+		try {
+			$pdo = DBConnection::getInstance()->getDB();
+
+			$command = "SELECT * FROM " . self::TABLE_NAME;
+
+			$query = $pdo->prepare($command);
+
+			$result = $query->execute();
+
+			if ($result) {
+				$list = array();
+				while($result = $query->fetch()) {
+					$listItem = array(
+						"id" => $result[self::ID],
+						"email" => $result[self::EMAIL],
+						"apiKey" => $result[self::API_KEY]
+					);
+					array_push($list, $listItem);
+				}
+				return $list;
+			} else {
+				throw new ApiException(STATE_DB_ERROR, "DB error");
+			}
+		} catch (PDOException $e) {
+			throw new ApiException(STATE_DB_ERROR, "PDO exception");
+		}
+	}
+	
+	private function dbGetOne($id)
+	{
+		try {
+			$pdo = DBConnection::getInstance()->getDB();
+
+			$command = "SELECT * FROM " . self::TABLE_NAME .
+				" WHERE " . self::ID . "=?";
+
+			$query = $pdo->prepare($command);
+
+			$query->bindParam(1, $id);
+
+			$result = $query->execute();
+
+			if ($result) {
+				$result = $query->fetch();
+				return array(
+					"id" => $result[self::ID],
+					"email" => $result[self::EMAIL],
+					"apiKey" => $result[self::API_KEY]
+				);
+			} else {
+				throw new ApiException(STATE_DB_ERROR, "DB error");
+			}
+		} catch (PDOException $e) {
+			throw new ApiException(STATE_DB_ERROR, "PDO exception");
+		}
 	}
    
-	private function create($userData)
+	private function dbCreate($data)
 	{
-		$email = $userData->email;
-		$password = $userData->password;
-		$encryptedPassword = self::encryptPassword($password);
-
-		$apiKey = $this->generateApiKey();
-
 		try {
-
 			$pdo = DBConnection::getInstance()->getDB();
+			$apiKey = $this->generateApiKey();
 
 			$command = "INSERT INTO " . self::TABLE_NAME . " ( " .
 				self::EMAIL . "," .
@@ -149,8 +266,8 @@ class Users
 
 			$query = $pdo->prepare($command);
 
-			$query->bindParam(1, $email);
-			$query->bindParam(2, $encryptedPassword);
+			$query->bindParam(1, $data->email);
+			$query->bindParam(2, self::encryptPassword($data->password));
 			$query->bindParam(3, $apiKey);
 
 			$result = $query->execute();
@@ -158,16 +275,84 @@ class Users
 			if ($result) {
 				return array(
 					"id" => $pdo->lastInsertId(),
-					"email" => $email,
+					"email" => $data->email,
 					"apiKey" => $apiKey
 				);
 			} else {
-				throw new ApiException(STATE_CREATION_ERROR, "Creation error");
+				throw new ApiException(STATE_DB_ERROR, "DB error");
 			}
 		} catch (PDOException $e) {
 			throw new ApiException(STATE_DB_ERROR, "PDO exception");
 		}
+	}
+	
+	private function dbUpdate($id, $data)
+	{
+		try {
+			$pdo = DBConnection::getInstance()->getDB();
 
+			$command = "UPDATE " . self::TABLE_NAME;
+			$comma = false;
+			if(isset($data->email)) {
+				$command .= $comma ? ", " : " SET ";
+				$command .= self::EMAIL . "=?";
+				$comma = true;
+			}
+			if(isset($data->password)) {
+				$command .= $comma ? ", " : " SET ";
+				$command .= self::PASSWORD . "=?";
+				$comma = true;
+			}
+			$command .= " WHERE " . self::ID . "=?";
+			
+
+			$query = $pdo->prepare($command);
+
+			$count = 1;
+			if(isset($data->email)) {
+				$query->bindParam($count, $data->email);
+				$count++;
+			}
+			if(isset($data->password)) {
+				$query->bindParam($count, self::encryptPassword($data->password));
+				$count++;
+			}
+			$query->bindParam($count, $id);
+
+			$result = $query->execute();
+
+			if ($result) {
+				return;
+			} else {
+				throw new ApiException(STATE_DB_ERROR, "DB error");
+			}
+		} catch (PDOException $e) {
+			throw new ApiException(STATE_DB_ERROR, "PDO exception");
+		}
+	}
+	
+	private function dbDelete($id)
+	{
+		try {
+			$pdo = DBConnection::getInstance()->getDB();
+
+			$command = "DELETE FROM " . self::TABLE_NAME .
+				" WHERE " . self::ID . "=?";
+
+			$query = $pdo->prepare($command);
+
+			$query->bindParam(1, $id);
+
+			$result = $query->execute();
+
+			if ($result) {
+				return;
+			} else {
+				throw new ApiException(STATE_DB_ERROR, "DB error");
+			}
+		} catch (PDOException $e) {
+			throw new ApiException(STATE_DB_ERROR, "PDO exception");
+		}
 	}
 	
 	private static function encryptPassword($plainPassword)
@@ -184,18 +369,24 @@ class Users
 	
 	public static function validateApiKey($apiKey)
 	{
-		$command = "SELECT COUNT(" . self::ID . ")" .
-			" FROM " . self::TABLE_NAME .
-			" WHERE " . self::API_KEY . "=?";
+		try {
+			$command = "SELECT " . self::ID .
+				" FROM " . self::TABLE_NAME .
+				" WHERE " . self::API_KEY . "=?";
 
-		$query = DBConnection::getInstance()->getDB()->prepare($command);
+			$query = DBConnection::getInstance()->getDB()->prepare($command);
 
-		$query->bindParam(1, $apiKey);
+			$query->bindParam(1, $apiKey);
 
-		$query->execute();
+			if($query->execute()) {
+					$result = $query->fetch();
+					return $result[self::ID];
+				}
 
-		
-		return $query->fetchColumn(0) > 0;
+			} catch (PDOException $e) {
+			}
+			
+			return null;
 	}
 	
 	public static function validateBasic($basic)

@@ -27,8 +27,9 @@ class Authorization
 		$apiKey = self::getTokenValueFromHeader("Authorization", "ApiKey");
 
 		if (!is_null($apiKey)) {
-			if (Users::validateApiKey($apiKey)) {
-				return;
+			$id = Users::validateApiKey($apiKey);
+			if(!is_null($id)){
+				return $id;
 			}
 		}
 		

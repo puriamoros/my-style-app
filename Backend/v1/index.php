@@ -30,9 +30,9 @@ $knownResources = array(
 		"login" => "Users",
 		"users" => "Users"
 	);
-
+	
 // Check if the resource exists
-if (!isset($resource, $knownResources)) {
+if (!array_key_exists($resource, $knownResources)) {
 	throw new ApiException(STATE_INVALID_URL, "Invalid URL");
 }
 
@@ -50,13 +50,15 @@ switch ($method) {
     case 'post':
         $view->printResponse($instance->post($queryArray));
         break;
+		
     case 'put':
         $view->printResponse($instance->put($queryArray));
         break;
 
     case 'delete':
-        $view->printResponse($instance->del($queryArray));
+        $view->printResponse($instance->delete($queryArray));
         break;
+		
     default:
         throw new ApiException(STATE_INVALID_METHOD, "Invalid method", 405);
 }

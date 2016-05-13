@@ -4,6 +4,7 @@ require_once(__DIR__.'/views/JsonView.php');
 require_once(__DIR__.'/utilities/ApiException.php');
 require_once(__DIR__.'/models/Users.php');
 require_once(__DIR__.'/data/StatusCodes.php');
+require_once(__DIR__.'/models/Establishments.php');
 
 $view = new JsonView();
 
@@ -28,7 +29,8 @@ $resource = $queryArray[0];//array_shift($queryArray);
 $knownResources = array(
 		"register" => "Users",
 		"login" => "Users",
-		"users" => "Users"
+		"users" => "Users",
+		"establishments" => "Establishments"
 	);
 	
 // Check if the resource exists
@@ -36,7 +38,7 @@ if (!array_key_exists($resource, $knownResources)) {
 	throw new ApiException(STATE_INVALID_URL, "Invalid URL");
 }
 
-// Create class dinamically
+// Create class dynamically
 $className = $knownResources[$resource];
 $instance = new $className();
 

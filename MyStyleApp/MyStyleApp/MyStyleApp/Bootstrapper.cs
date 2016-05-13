@@ -4,8 +4,7 @@ using MyStyleApp.ViewModels;
 using MyStyleApp.Views;
 using Xamarin.Forms;
 using MyStyleApp.Services;
-using MyStyleApp.Localization;
-using MyStyleApp.Services.Mocks;
+using MyStyleApp.Services.Backend;
 
 namespace MyStyleApp
 {
@@ -36,8 +35,11 @@ namespace MyStyleApp
                 As<ILocalizationService>().SingleInstance();
             builder.Register(c => DependencyService.Get<ICalendarService>()).
                 As<ICalendarService>().SingleInstance();
-            builder.Register(l => new LoginServiceMock()).
-                As<ILoginService>().SingleInstance();
+            builder.Register(f => DependencyService.Get<IFileStorageService>()).
+                As<IFileStorageService>().SingleInstance();
+            builder.RegisterGeneric(typeof(ObjectStorageService<>));
+            builder.RegisterType<HttpService>().SingleInstance();
+            builder.RegisterType<LoginService>().As<ILoginService>().SingleInstance();
         }
 
         protected override void RegisterViews(IViewFactory viewFactory)

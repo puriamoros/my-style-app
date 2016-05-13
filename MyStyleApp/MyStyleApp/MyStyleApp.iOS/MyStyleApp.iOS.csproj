@@ -55,7 +55,8 @@
     <CodesignKey>iPhone Developer: helio.huete@gmail.com (73M24TJJH2)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>0b1f500d-155d-475d-9e51-9124273e0b70</CodesignProvision>
+    <CodesignProvision>
+    </CodesignProvision>
     <CodesignResourceRules />
     <CodesignExtraArgs />
   </PropertyGroup>
@@ -97,6 +98,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Services\CalendarService.cs" />
+    <Compile Include="Services\FileStorageService.cs" />
     <Compile Include="Services\LocalizationService.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />

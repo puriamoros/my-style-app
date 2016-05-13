@@ -1,5 +1,6 @@
 ﻿using MyStyleApp.Models;
 using MyStyleApp.Services;
+using MyStyleApp.Services.Backend;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -14,6 +15,7 @@ namespace MyStyleApp.ViewModels
         public ICommand NewAccountCommand { get; private set; }
 
         private ILoginService _loginService;
+        private ObjectStorageService<string> _localStorageService;
 
         private string _email;
         private string _password;
@@ -23,10 +25,12 @@ namespace MyStyleApp.ViewModels
         public LoginViewModel(
             INavigator navigator,
             LocalizedStringsService localizedStringsService,
-            ILoginService loginService) :
+            ILoginService loginService,
+            ObjectStorageService<string> localStorageService) :
             base(navigator, localizedStringsService)
         {
             this._loginService = loginService;
+            this._localStorageService = localStorageService;
             this.LoginCommand = new Command(async () => await Login());
             this.NewAccountCommand = new Command(async () => await NewAccount());
         }

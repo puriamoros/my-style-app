@@ -22,10 +22,12 @@ namespace MyStyleApp
             base.ConfigureContainer(builder);
 
             // Register Views
+            builder.RegisterType<StartView>().SingleInstance();
             builder.RegisterType<LoginView>().SingleInstance();
             builder.RegisterType<RegisteredStoresView>().SingleInstance();
 
             // Register ViewModels
+            builder.RegisterType<StartViewModel>().SingleInstance();
             builder.RegisterType<LoginViewModel>().SingleInstance();
             builder.RegisterType<RegisteredStoresViewModel>().SingleInstance();
 
@@ -47,16 +49,16 @@ namespace MyStyleApp
             base.RegisterViews(viewFactory);
 
             // Register ViewModel <-> View relations
+            viewFactory.Register<StartViewModel, StartView>();
             viewFactory.Register<LoginViewModel, LoginView>();
             viewFactory.Register<RegisteredStoresViewModel, RegisteredStoresView>();
         }
 
         protected override void ConfigureApplication(IContainer container)
         {
-            var viewFactory = container.Resolve<IViewFactory>();
-
             // First view to show
-            var mainPage = viewFactory.Resolve<LoginViewModel>();
+            var viewFactory = container.Resolve<IViewFactory>();
+            var mainPage = viewFactory.Resolve<StartViewModel>();
             var navigationPage = new XamarinFormsAutofacMvvmStarterKit.NavigationPage(mainPage);
             this._app.MainPage = navigationPage;
         }

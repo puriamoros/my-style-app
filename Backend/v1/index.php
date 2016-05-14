@@ -23,8 +23,11 @@ set_exception_handler(function ($exception) use ($view) {
 }
 );
 
+parse_str($_SERVER['QUERY_STRING'], $queryParams);
+$queryArray = explode("/", $queryParams['PATH_INFO']);
+unset($queryParams['PATH_INFO']);
+
 // Get the resource
-$queryArray = explode("/", $_GET['PATH_INFO']);
 $resource = $queryArray[0];//array_shift($queryArray);
 $knownResources = array(
 		"register" => "Users",
@@ -46,7 +49,7 @@ $method = strtolower($_SERVER['REQUEST_METHOD']);
 
 switch ($method) {
     case 'get':
-        $view->printResponse($instance->get($queryArray));
+        $view->printResponse($instance->get($queryArray, $queryParams));
         break;
 
     case 'post':

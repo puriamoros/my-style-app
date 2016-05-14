@@ -1,4 +1,6 @@
 ﻿using MyStyleApp.Services;
+using MyStyleApp.Services.Backend;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using XamarinFormsAutofacMvvmStarterKit;
@@ -7,23 +9,40 @@ namespace MyStyleApp.ViewModels
 {
     public class RegisteredStoresViewModel : ViewModelBase
     {
+        private ILoginService _loginService;
         private string _message;
 
-        public ICommand BackCommand { get; private set; }
+        public ICommand LogoutCommand { get; private set; }
 
         public RegisteredStoresViewModel(
             INavigator navigator,
-            LocalizedStringsService localizedStringsService) : 
+            LocalizedStringsService localizedStringsService,
+            ILoginService loginService) : 
             base(navigator, localizedStringsService)
         {
+            this._loginService = loginService;
             this.Message = "Second Page";
-            this.BackCommand = new Command(async () => await this.Navigator.PopAsync());
+            this.LogoutCommand = new Command(async () => await this.Logout());
+        }
+
+        private async Task Logout()
+        {
+            this.IsBusy = true;
+            await this._loginService.Logout();
+            await this.Navigator.PopToRootAsync();
+            await this.Navigator.PushAsync<LoginViewModel>();
+            this.IsBusy = false;
         }
 
         public string Message
         {
             get { return _message; }
             set { SetProperty(ref _message, value); }
+        }
+
+        public override void OnDisappearing()
+        {
+            //base.OnDisappearing();
         }
     }
 }

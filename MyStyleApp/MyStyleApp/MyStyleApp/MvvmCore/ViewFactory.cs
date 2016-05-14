@@ -53,7 +53,10 @@ namespace XamarinFormsAutofacMvvmStarterKit
 		{
 			var ownedVM = _componentContext.Resolve<Owned<TViewModel>> ();
 			viewModel = ownedVM.Value;
-			_registry.Add(viewModel, ownedVM.Dispose);
+            if(!_registry.ContainsKey(viewModel))
+            {
+                _registry.Add(viewModel, ownedVM.Dispose);
+            }
 
 			var viewType = _map[typeof(TViewModel)];
 			var view = _componentContext.Resolve(viewType) as Page;

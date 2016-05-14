@@ -17,5 +17,12 @@ namespace MyStyleApp.Views
             // Root page, we don't want a back button
             NavigationPage.SetHasNavigationBar(this, false);
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            // Disable hardware back button
+            return true;
+            //return base.OnBackButtonPressed();
+        }
     }
 }

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using MyStyleApp.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace MyStyleApp.Services.Backend.Mocks
 {
     public class LoginServiceMock : ILoginService
     {
-        public async Task Login(string email, string password)
+        public async Task Login(string email, string password, bool rememberLogin)
         {
             await Task.Delay(3000);
 
@@ -14,6 +15,11 @@ namespace MyStyleApp.Services.Backend.Mocks
             {
                 throw new Exception("User or password does not match.");
             }
+        }
+
+        public async Task Logout()
+        {
+            await Task.Delay(1000);
         }
     }
 }

@@ -11,12 +11,12 @@ abstract class ModelWithIdBase
     protected $fields;
 	protected $idField;
 
-    public function get($queryArray)
+    public function get($queryArray, $queryParams)
     {
 		if(count($queryArray) >= 1 && count($queryArray) <= 2) {
 			if ($queryArray[0] == $this->table) {
 				if(count($queryArray) == 1) {
-					return $this->getElements();
+					return $this->getElements($queryParams);
 				}
 				else {
 					return $this->getElement($queryArray[1]);
@@ -60,7 +60,7 @@ abstract class ModelWithIdBase
 		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
     }
 	
-	protected function getElements()
+	protected function getElements($queryParams)
 	{
 		// Check authorization
 		Authorization::authorizeApiKey();
@@ -68,7 +68,7 @@ abstract class ModelWithIdBase
 		// TODO: Validate fields
 		
 		// Get establishments
-		$result = $this->dbGet();
+		$result = $this->dbGet($queryParams);
 		
 		// Print response
 		http_response_code(200);
@@ -150,15 +150,27 @@ abstract class ModelWithIdBase
 		return $item;
 	}
 	
-	private function dbGet()
+	private function dbGet($queryParams)
 	{
 		try {
 			$pdo = DBConnection::getInstance()->getDB();
 
 			$command = "SELECT " . implode(",", $this->fields) .
 				" FROM " . $this->table;
+			$where = false;
+			foreach($queryParams as $key => $value) {
+				$command .= $where ? " AND " : " WHERE ";
+				$command .= $key . "=?";
+				$where = true;
+			}
 
 			$query = $pdo->prepare($command);
+			
+			$count = 1;
+			foreach($queryParams as $key => $value) {
+				$query->bindParam($count, $value);
+				$count++;
+			}
 
 			$result = $query->execute();
 

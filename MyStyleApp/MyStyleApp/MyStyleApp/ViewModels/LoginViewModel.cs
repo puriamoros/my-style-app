@@ -33,6 +33,15 @@ namespace MyStyleApp.ViewModels
             this._localStorageService = localStorageService;
             this.LoginCommand = new Command(async () => await Login());
             this.NewAccountCommand = new Command(async () => await NewAccount());
+
+            // REMOVE!!!
+            FillWithMockData();
+        }
+
+        private void FillWithMockData()
+        {
+            this.Email = "helio.huete@gmail.com";
+            this.Password = "helio";
         }
 
         public string Email
@@ -66,10 +75,11 @@ namespace MyStyleApp.ViewModels
 
             try
             {
-                await this._loginService.Login(this.Email, this.Password);
+                await this._loginService.Login(this.Email, this.Password, this.RememberMe);
+                await this.Navigator.PopToRootAsync();
                 await this.Navigator.PushAsync<RegisteredStoresViewModel>();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 ErrorText = this.LocalizedStrings["login_error"];
             }

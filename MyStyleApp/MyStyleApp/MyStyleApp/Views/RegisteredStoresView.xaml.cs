@@ -18,5 +18,12 @@ namespace MyStyleApp.Views
             if (Device.OS != TargetPlatform.iOS)
                 NavigationPage.SetHasNavigationBar(this, false);
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            // Disable hardware back button
+            return true;
+            //return base.OnBackButtonPressed();
+        }
     }
 }

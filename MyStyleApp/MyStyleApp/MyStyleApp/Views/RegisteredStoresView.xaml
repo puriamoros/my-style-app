@@ -5,6 +5,6 @@
              Padding="{StaticResource PagePadding}">
   <StackLayout>
     <Label Text="{Binding Message}" VerticalOptions="Center" HorizontalOptions="Center" Style="{StaticResource LargeTextStyle1}" />
-    <Button Text="Back" Command="{Binding BackCommand}" />
+    <Button Text="Logout" Command="{Binding LogoutCommand}" />
   </StackLayout>
 </ContentPage>

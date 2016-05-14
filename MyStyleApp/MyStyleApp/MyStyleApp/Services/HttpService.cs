@@ -120,7 +120,8 @@ namespace MyStyleApp.Services
 
             // Get response
             HttpResponseMessage response = await client.SendAsync(message);
-            string resultData = await response.Content.ReadAsStringAsync();
+            byte[] data = await response.Content.ReadAsByteArrayAsync();
+            var resultData = Encoding.UTF8.GetString(data, 0, data.Length);
 
             // Log response
             LogResponse(client, message, tResult, response, resultData);
@@ -159,10 +160,13 @@ namespace MyStyleApp.Services
             return value;
         }
 
-        public async Task SaveApiKeyAuthorization(string apiKey)
+        public async Task SaveApiKeyAuthorization(string apiKey, bool rememberApiKey)
         {
             this._apiKey = apiKey;
-            await this._apiKeyStorageService.SaveToFileAsync(API_KEY_FILE_NAME, apiKey);
+            if (rememberApiKey)
+            {
+                await this._apiKeyStorageService.SaveToFileAsync(API_KEY_FILE_NAME, apiKey);
+            }
         }
 
         public async Task<string> GetApiKeyAuthorization()
@@ -182,6 +186,15 @@ namespace MyStyleApp.Services
             return "ApiKey " + this._apiKey;
         }
 
+        public async Task DeleteApiKeyAuthorization()
+        {
+            try
+            {
+                await this._apiKeyStorageService.DeleteFileAsync(API_KEY_FILE_NAME);
+            }
+            catch (Exception){}
+        }
+
         public string GetBasicAuthorization(string email, string password)
         {
             string str = email + ":" + password;
@@ -198,7 +211,7 @@ namespace MyStyleApp.Services
             client = this.GetHttpClient(credentials);
 
             message = new HttpRequestMessage(method, query);
-
+            
             var result = await HttpSendAsync(client, message);
             HttpResponseMessage response = result.Item1;
             string resultContentString = result.Item2;
@@ -211,5 +224,98 @@ namespace MyStyleApp.Services
                 throw new BackendException(value);
             }
         }
+
+        public async Task<TResult> Invoke<TResult>(HttpMethod method, string url, string credentials, params object[] parameters)
+        {
+            HttpClient client = null;
+            HttpRequestMessage message = null;
+
+            var query = this.GetQuery(url, parameters);
+
+            client = this.GetHttpClient(credentials);
+
+            message = new HttpRequestMessage(method, query);
+
+            var result = await HttpSendAsync(client, message, typeof(TResult));
+            HttpResponseMessage response = result.Item1;
+            string resultContentString = result.Item2;
+
+            if (response.StatusCode != HttpStatusCode.OK &&
+                response.StatusCode != HttpStatusCode.Created &&
+                response.StatusCode != HttpStatusCode.NoContent)
+            {
+                var value = this.DeserializeResponse<BackendError>(resultContentString);
+                throw new BackendException(value);
+            }
+                
+            return this.DeserializeResponse<TResult>(resultContentString);
+        }
+
+        public async Task InvokeWithContent<TContent>(
+            HttpMethod method,
+            string url,
+            string credentials,
+            TContent content,
+            params object[] parameters)
+        {
+            HttpClient client = null;
+            HttpRequestMessage message = null;
+
+            var query = this.GetQuery(url, parameters);
+
+            client = this.GetHttpClient(credentials);
+
+            message = new HttpRequestMessage(method, query);
+
+            string requestContentString = JsonConvert.SerializeObject(content, this.GetJsonSerializerSettings());
+            message.Content = new StringContent(requestContentString, Encoding.UTF8, "application/json");
+
+            var result = await HttpSendAsync(client, message, typeof(TContent), requestContentString);
+            HttpResponseMessage response = result.Item1;
+            string resultContentString = result.Item2;
+
+            if (response.StatusCode != HttpStatusCode.OK &&
+                response.StatusCode != HttpStatusCode.Created &&
+                response.StatusCode != HttpStatusCode.NoContent)
+            {
+                var value = DeserializeResponse<BackendError>(resultContentString);
+                throw new BackendException(value);
+            }
+        }
+
+        public async Task<TResult> InvokeWithContent<TResult, TContent>(
+            HttpMethod method,
+            string url,
+            string credentials,
+            TContent content,
+            params object[] parameters)
+        {
+            HttpClient client = null;
+            HttpRequestMessage message = null;
+
+            var query = this.GetQuery(url, parameters);
+
+            client = this.GetHttpClient(credentials);
+
+            message = new HttpRequestMessage(method, query);
+
+            string requestContentString = JsonConvert.SerializeObject(content, this.GetJsonSerializerSettings());
+            message.Content = new StringContent(requestContentString, Encoding.UTF8, "application/json");
+
+            var result = await HttpSendAsync(client, message, typeof(TContent), requestContentString, typeof(TResult));
+            HttpResponseMessage response = result.Item1;
+            string resultContentString = result.Item2;
+
+            if (response.StatusCode != HttpStatusCode.OK &&
+                response.StatusCode != HttpStatusCode.Created &&
+                response.StatusCode != HttpStatusCode.NoContent)
+            {
+                var value = DeserializeResponse<BackendError>(resultContentString);
+                throw new BackendException(value);
+            }
+
+            return this.DeserializeResponse<TResult>(resultContentString);
+        }
+
     }
 }

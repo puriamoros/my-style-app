@@ -22,6 +22,17 @@ namespace XamarinFormsAutofacMvvmStarterKit
 
 		Task<TViewModel> PushModalAsync<TViewModel>(TViewModel viewModel) 
 			where TViewModel : class, IViewModel;
-	}
+
+        Task InsertPageBefore<TViewModel, TViewModelBefore>(Action<TViewModel> setStateAction = null)
+            where TViewModel : class, IViewModel
+            where TViewModelBefore : class, IViewModel;
+
+        Task InsertPageBefore<TViewModel, TViewModelBefore>(TViewModel viewModel, TViewModelBefore viewModelBefore)
+            where TViewModel : class, IViewModel
+            where TViewModelBefore : class, IViewModel;
+
+        Task RemovePage<TViewModel>()
+            where TViewModel : class, IViewModel;
+    }
 }
 

@@ -18,11 +18,11 @@ namespace MyStyleApp.Views
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        protected override bool OnBackButtonPressed()
-        {
-            // Disable hardware back button
-            return true;
-            //return base.OnBackButtonPressed();
-        }
+        //protected override bool OnBackButtonPressed()
+        //{
+        //    // Disable hardware back button
+        //    return true;
+        //    //return base.OnBackButtonPressed();
+        //}
     }
 }

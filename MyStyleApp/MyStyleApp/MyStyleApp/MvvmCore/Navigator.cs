@@ -109,5 +109,51 @@ namespace XamarinFormsAutofacMvvmStarterKit
 			});
 			return tcs.Task;
 		}
-	}
+
+        public Task InsertPageBefore<TViewModel, TViewModelBefore>(Action<TViewModel> setStateAction = null)
+            where TViewModel : class, IViewModel
+            where TViewModelBefore : class, IViewModel
+        {
+            var tcs = new TaskCompletionSource<object>();
+            _deviceService.BeginInvokeOnMainThread(() =>
+            {
+                TViewModel viewModel;
+                var view = _viewFactory.Resolve<TViewModel>(out viewModel, setStateAction);
+                TViewModelBefore viewModelBefore;
+                var viewBefore = _viewFactory.Resolve<TViewModelBefore>(out viewModelBefore);
+                Navigation.InsertPageBefore(view, viewBefore);
+                tcs.SetResult(null);
+            });
+            return tcs.Task;
+        }
+
+        public Task InsertPageBefore<TViewModel, TViewModelBefore>(TViewModel viewModel, TViewModelBefore viewModelBefore)
+            where TViewModel : class, IViewModel
+            where TViewModelBefore : class, IViewModel
+        {
+            var tcs = new TaskCompletionSource<object>();
+            _deviceService.BeginInvokeOnMainThread(() =>
+            {
+                var view = _viewFactory.Resolve<TViewModel>(viewModel);
+                var viewBefore = _viewFactory.Resolve<TViewModelBefore>(viewModelBefore);
+                Navigation.InsertPageBefore(view, viewBefore);
+                tcs.SetResult(null);
+            });
+            return tcs.Task;
+        }
+
+        public Task RemovePage<TViewModel>()
+            where TViewModel : class, IViewModel
+        {
+            var tcs = new TaskCompletionSource<object>();
+            _deviceService.BeginInvokeOnMainThread(() =>
+            {
+                TViewModel viewModel;
+                var view = _viewFactory.Resolve<TViewModel>(out viewModel);
+                Navigation.RemovePage(view);
+                tcs.SetResult(null);
+            });
+            return tcs.Task;
+        }
+    }
 }

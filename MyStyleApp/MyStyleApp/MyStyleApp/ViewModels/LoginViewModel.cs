@@ -76,8 +76,8 @@ namespace MyStyleApp.ViewModels
             try
             {
                 await this._loginService.Login(this.Email, this.Password, this.RememberMe);
-                await this.Navigator.PopToRootAsync();
-                await this.Navigator.PushAsync<RegisteredStoresViewModel>();
+                await this.Navigator.PushAsync<MainViewModel>();
+                await this.Navigator.RemovePage<LoginViewModel>();
             }
             catch (Exception ex)
             {
@@ -91,7 +91,7 @@ namespace MyStyleApp.ViewModels
 
         private async Task NewAccount()
         {
-            await this.Navigator.PushAsync<RegisteredStoresViewModel>();
+            //await this.Navigator.PushAsync<MainViewModel>();
         }
     }
 }

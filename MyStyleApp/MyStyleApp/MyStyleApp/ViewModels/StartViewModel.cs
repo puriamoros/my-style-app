@@ -27,14 +27,15 @@ namespace MyStyleApp.ViewModels
 
             this.IsBusy = true;
             string apiKey = await this._httpService.GetApiKeyAuthorization();
-            if(apiKey == null)
+            if (apiKey == null)
             {
                 await this.Navigator.PushAsync<LoginViewModel>();
             }
             else
             {
-                await this.Navigator.PushAsync<RegisteredStoresViewModel>();
+                await this.Navigator.PushAsync<MainViewModel>();
             }
+            await this.Navigator.RemovePage<StartViewModel>();
             this.IsBusy = false;
         }
     }

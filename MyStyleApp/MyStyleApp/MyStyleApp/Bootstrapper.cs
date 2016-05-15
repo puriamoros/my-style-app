@@ -24,12 +24,12 @@ namespace MyStyleApp
             // Register Views
             builder.RegisterType<StartView>().SingleInstance();
             builder.RegisterType<LoginView>().SingleInstance();
-            builder.RegisterType<RegisteredStoresView>().SingleInstance();
+            builder.RegisterType<MainView>().SingleInstance();
 
             // Register ViewModels
             builder.RegisterType<StartViewModel>().SingleInstance();
             builder.RegisterType<LoginViewModel>().SingleInstance();
-            builder.RegisterType<RegisteredStoresViewModel>().SingleInstance();
+            builder.RegisterType<MainViewModel>().SingleInstance();
 
             // Register Services
             builder.RegisterType<LocalizedStringsService>().SingleInstance();
@@ -51,7 +51,7 @@ namespace MyStyleApp
             // Register ViewModel <-> View relations
             viewFactory.Register<StartViewModel, StartView>();
             viewFactory.Register<LoginViewModel, LoginView>();
-            viewFactory.Register<RegisteredStoresViewModel, RegisteredStoresView>();
+            viewFactory.Register<MainViewModel, MainView>();
         }
 
         protected override void ConfigureApplication(IContainer container)

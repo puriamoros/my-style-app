@@ -31,7 +31,9 @@ abstract class ModelWithIdBase
     {
 		if(count($queryArray) == 1) {
 			if ($queryArray[0] == $this->table) {
-				return $this->createElement();
+				$body = file_get_contents('php://input');
+				$data = json_decode($body);
+				return $this->createElement($data);
 			}
 		}
 		
@@ -96,8 +98,7 @@ abstract class ModelWithIdBase
 		// Check authorization
 		Authorization::authorizeApiKey();
 		
-		$body = file_get_contents('php://input');
-		$data = json_decode($body);
+		$data = $this->getBodyData();
 
 		// TODO: Validate fields
 		
@@ -114,8 +115,7 @@ abstract class ModelWithIdBase
 		// Check authorization
 		Authorization::authorizeApiKey();
 		
-		$body = file_get_contents('php://input');
-		$data = json_decode($body);
+		$data = $this->getBodyData();
 
 		// TODO: Validate fields
 		
@@ -142,6 +142,11 @@ abstract class ModelWithIdBase
 		return;
 	}
 	
+	protected function getBodyData() {
+		$body = file_get_contents('php://input');
+		return json_decode($body, true);
+	}
+	
 	private function dbFetchToArray($fetch) {
 		$item = array();
 		foreach($this->fields as $field) {
@@ -150,7 +155,7 @@ abstract class ModelWithIdBase
 		return $item;
 	}
 	
-	private function dbGet($queryParams)
+	protected function dbGet($queryParams)
 	{
 		try {
 			$pdo = DBConnection::getInstance()->getDB();
@@ -188,7 +193,7 @@ abstract class ModelWithIdBase
 		}
 	}
 	
-	private function dbGetOne($id)
+	protected function dbGetOne($id)
 	{
 		try {
 			$pdo = DBConnection::getInstance()->getDB();
@@ -204,8 +209,12 @@ abstract class ModelWithIdBase
 			$result = $query->execute();
 
 			if ($result) {
-				$fetch = $query->fetch();
-				return $this->dbFetchToArray($fetch);
+				if($fetch = $query->fetch()) {
+					return $this->dbFetchToArray($fetch);
+				}
+				else {
+					return null;
+				}
 			} else {
 				throw new ApiException(STATE_DB_ERROR, "DB error");
 			}
@@ -214,7 +223,7 @@ abstract class ModelWithIdBase
 		}
 	}
    
-	private function dbCreate($data)
+	protected function dbCreate($data)
 	{
 		try {
 			$fieldsButId = array_diff($this->fields, [$this->idField]);
@@ -230,7 +239,7 @@ abstract class ModelWithIdBase
 
 			$count = 1;
 			foreach($fieldsButId as $field) {
-				$query->bindParam($count, $data->$field);
+				$query->bindParam($count, $data[$field]);
 				$count++;
 			}
 			
@@ -239,7 +248,7 @@ abstract class ModelWithIdBase
 			if ($result) {
 				$item = array();
 				foreach($this->fields as $field) {
-					$item[$field] = $data->$field;
+					$item[$field] = $data[$field];
 				}
 				// Override idField with lastInsertId
 				$item[$this->idField] = $pdo->lastInsertId();
@@ -252,7 +261,7 @@ abstract class ModelWithIdBase
 		}
 	}
 	
-	private function dbUpdate($id, $data)
+	protected function dbUpdate($id, $data)
 	{
 		try {
 			$fieldsButId = array_diff($this->fields, [$this->idField]);
@@ -262,7 +271,7 @@ abstract class ModelWithIdBase
 			$command = "UPDATE " . $this->table;
 			$comma = false;
 			foreach($fieldsButId as $field) {
-				if(isset($data->$field)) {
+				if(isset($data[$field])) {
 					$command .= $comma ? ", " : " SET ";
 					$command .= $field . "=?";
 					$comma = true;
@@ -275,8 +284,8 @@ abstract class ModelWithIdBase
 
 			$count = 1;
 			foreach($this->fields as $field) {
-				if(isset($data->$field)) {
-					$query->bindParam($count, $data->$field);
+				if(isset($data[$field])) {
+					$query->bindParam($count, $data[$field]);
 					$count++;
 				}
 			}
@@ -294,7 +303,7 @@ abstract class ModelWithIdBase
 		}
 	}
 	
-	private function dbDelete($id)
+	protected function dbDelete($id)
 	{
 		try {
 			$pdo = DBConnection::getInstance()->getDB();

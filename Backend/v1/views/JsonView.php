@@ -14,7 +14,12 @@ class JsonView extends ApiView
     public function printResponse($body)
     {
         header('Content-Type: application/json; charset=utf8');
-        echo json_encode($body, JSON_PRETTY_PRINT);
+        if(is_null($body)) {
+			http_response_code(204);
+		}
+		else {
+			echo json_encode($body, JSON_PRETTY_PRINT);
+		}
         exit;
     }
 }

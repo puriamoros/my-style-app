@@ -1,7 +1,9 @@
-﻿using MyStyleApp.Models;
+﻿using MyStyleApp.Constants;
+using MyStyleApp.Models;
 using MyStyleApp.Services;
 using MyStyleApp.Services.Backend;
 using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -11,6 +13,14 @@ namespace MyStyleApp.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     {
+        private const string STRING_ERROR = "error";
+        private const string STRING_ERROR_REQUIRED_FIELD = "error_required_field";
+        private const string STRING_EMAIL = "email";
+        private const string STRING_PASSWORD = "password";
+        private const string STRING_EMAIL_NOT_VALID = "email_not_valid";
+        private const string STRING_ERROR_INSECURE_CHARS = "error_insecure_chars";
+        private const string STRING_LOGIN_ERROR = "login_error";
+
         public ICommand LoginCommand { get; private set; }
         public ICommand NewAccountCommand { get; private set; }
 
@@ -68,8 +78,46 @@ namespace MyStyleApp.ViewModels
             set { SetProperty(ref _errorText, value); }
         }
 
+        private string GetValidationError()
+        {
+            string validationError = null;
+
+            // Email
+            if(string.IsNullOrEmpty(this.Email))
+            {
+                return string.Format(STRING_ERROR_REQUIRED_FIELD, "${" + STRING_EMAIL + "}");
+            }
+            if (Regex.IsMatch(this.Email, RegexConstants.INSECURE_CHARS))
+            {
+                return string.Format(STRING_ERROR_INSECURE_CHARS, "${" + STRING_EMAIL + "}");
+            }
+            if (Regex.IsMatch(this.Email, RegexConstants.EMAIL))
+            {
+                return STRING_EMAIL_NOT_VALID;
+            }
+
+            // Password
+            if (string.IsNullOrEmpty(this.Password))
+            {
+                return string.Format(STRING_ERROR_REQUIRED_FIELD, "${" + STRING_PASSWORD + "}");
+            }
+            if (Regex.IsMatch(this.Password, RegexConstants.INSECURE_CHARS))
+            {
+                return string.Format(STRING_ERROR_INSECURE_CHARS, "${" + STRING_PASSWORD + "}");
+            }
+
+            return validationError;
+        }
+
         private async Task Login()
         {
+            string validationError = this.GetValidationError();
+            if(validationError != null)
+            {
+                ErrorText = this.LocalizedStrings[STRING_ERROR] + ": " + this.LocalizedStrings[validationError];
+                return;
+            }
+
             ErrorText = "";
             this.IsBusy = true;
 
@@ -81,7 +129,7 @@ namespace MyStyleApp.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorText = this.LocalizedStrings["login_error"];
+                ErrorText = this.LocalizedStrings[STRING_LOGIN_ERROR];
             }
             finally
             {

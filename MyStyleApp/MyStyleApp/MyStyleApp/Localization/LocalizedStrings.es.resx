@@ -132,6 +132,15 @@
   <data name="email_placeholder" xml:space="preserve">
     <value>Introduce tu correo electrónico</value>
   </data>
+  <data name="error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="error_insecure_chars" xml:space="preserve">
+    <value>El campo "{0}" no puede contener "&lt;" o "&gt;"</value>
+  </data>
+  <data name="error_required_field" xml:space="preserve">
+    <value>El campo "{0}" es obligatorio</value>
+  </data>
   <data name="login" xml:space="preserve">
     <value>Acceso</value>
   </data>

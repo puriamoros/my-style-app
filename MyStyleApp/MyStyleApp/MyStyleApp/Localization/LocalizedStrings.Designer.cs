@@ -107,6 +107,33 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string error {
+            get {
+                return ResourceManager.GetString("error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field &quot;{0}&quot; can not contain &quot;&lt;&quot; or &quot;&gt;&quot;.
+        /// </summary>
+        internal static string error_insecure_chars {
+            get {
+                return ResourceManager.GetString("error_insecure_chars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field &quot;{0}&quot; is required.
+        /// </summary>
+        internal static string error_required_field {
+            get {
+                return ResourceManager.GetString("error_required_field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
         internal static string login {

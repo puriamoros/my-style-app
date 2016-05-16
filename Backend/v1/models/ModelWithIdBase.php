@@ -163,18 +163,22 @@ abstract class ModelWithIdBase
 			$command = "SELECT " . implode(",", $this->fields) .
 				" FROM " . $this->table;
 			$where = false;
-			foreach($queryParams as $key => $value) {
-				$command .= $where ? " AND " : " WHERE ";
-				$command .= $key . "=?";
-				$where = true;
+			foreach($this->fields as $field) {
+				if(isset($queryParams[$field])) {
+					$command .= $where ? " AND " : " WHERE ";
+					$command .= $field . "=?";
+					$where = true;
+				}
 			}
 
 			$query = $pdo->prepare($command);
 			
 			$count = 1;
-			foreach($queryParams as $key => $value) {
-				$query->bindParam($count, $value);
-				$count++;
+			foreach($this->fields as $field) {
+				if(isset($queryParams[$field])) {
+					$query->bindParam($count, $queryParams[$field]);
+					$count++;
+				}
 			}
 
 			$result = $query->execute();

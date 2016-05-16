@@ -5,20 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using MyStyleApp.Services;
 using XamarinFormsAutofacMvvmStarterKit;
+using MyStyleApp.Services.Backend;
 
 namespace MyStyleApp.ViewModels
 {
     public class StartViewModel : ViewModelBase
     {
-        private HttpService _httpService;
+        private IUsersService _usersService;
 
         public StartViewModel(
             INavigator navigator,
             LocalizedStringsService localizedStringsService,
-            HttpService httpService) :
+            IUsersService usersService) :
             base(navigator, localizedStringsService)
         {
-            this._httpService = httpService;
+            this._usersService = usersService;
         }
 
         public override async void OnAppearing()
@@ -26,17 +27,24 @@ namespace MyStyleApp.ViewModels
             base.OnAppearing();
 
             this.IsBusy = true;
-            string apiKey = await this._httpService.GetApiKeyAuthorization();
-            if (apiKey == null)
+            try
             {
-                await this.Navigator.PushAsync<LoginViewModel>();
-            }
-            else
-            {
+                // Try getting the logged user
+                await this._usersService.Me();
+
+                // There is a logged user, go to main view
                 await this.Navigator.PushAsync<MainViewModel>();
             }
-            await this.Navigator.RemovePage<StartViewModel>();
-            this.IsBusy = false;
+            catch (Exception)
+            {
+                // There is no logged user, go to login view
+                await this.Navigator.PushAsync<LoginViewModel>();
+            }
+            finally
+            {
+                await this.Navigator.RemovePage<StartViewModel>();
+                this.IsBusy = false;
+            }
         }
     }
 }

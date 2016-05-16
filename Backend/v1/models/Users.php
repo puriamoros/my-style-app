@@ -8,8 +8,7 @@ require_once(__DIR__.'/ModelWithIdBase.php');
 
 class Users extends ModelWithIdBase
 {
-    // Data from table "users"
-    const TABLE_NAME = "users";
+	const TABLE_NAME = "users";
 	const ID = "id";
     const EMAIL = "email";
     const PASSWORD = "password";
@@ -17,12 +16,14 @@ class Users extends ModelWithIdBase
 	
 	public function __construct()
     {
-        $this->table = 'users';
+        $this->table = self::TABLE_NAME;
 		$this->fields = array(
-			'id',
-			'email',
-			'password',
-			'apiKey'
+			self::ID,
+			"name",
+			"surname",
+			self::EMAIL,
+			self::PASSWORD,
+			self::API_KEY
 		);
 		$this->idField = $this->fields[0];
     }
@@ -70,7 +71,7 @@ class Users extends ModelWithIdBase
 		
 		http_response_code(200);
 		return array(
-			"apiKey" => $apiKey
+			self::API_KEY => $apiKey
 		);
 	}
 	
@@ -78,8 +79,8 @@ class Users extends ModelWithIdBase
 	{
 		$result = parent::getElements();
 		for ($i = 0; $i < count($result); $i++) {
-			unset($result[$i]["password"]);
-			unset($result[$i]["apiKey"]);
+			unset($result[$i][self::PASSWORD]);
+			unset($result[$i][self::API_KEY]);
 		}
 		return $result;
 	}
@@ -95,8 +96,8 @@ class Users extends ModelWithIdBase
 	{
 		$result = parent::getElement($id);
 		if(!is_null($result)) {
-			unset($result["password"]);
-			unset($result["apiKey"]);
+			unset($result[self::PASSWORD]);
+			unset($result[self::API_KEY]);
 		}
 		return $result;
 	}
@@ -106,8 +107,8 @@ class Users extends ModelWithIdBase
 		// No authorization needed
 	
 		$data = $this->getBodyData();
-		$data["password"] = $this->encryptPassword($data["password"]);
-		$data["apiKey"] = $this->generateApiKey();
+		$data[self::PASSWORD] = $this->encryptPassword($data[self::PASSWORD]);
+		$data[self::API_KEY] = $this->generateApiKey();
 		//throw new ApiException(STATE_DB_ERROR, $data);
 
 		// TODO: Validate fields
@@ -118,7 +119,7 @@ class Users extends ModelWithIdBase
 		// Print response
 		http_response_code(200);
 		return array(
-			"apiKey" => $result["apiKey"]
+			self::API_KEY => $result[self::API_KEY]
 		);
 	}
 	
@@ -128,15 +129,15 @@ class Users extends ModelWithIdBase
 		Authorization::authorizeApiKey();
 		
 		$data = $this->getBodyData();
-		$data["password"] = $this->encryptPassword($data["password"]);
-		$data["apiKey"] = $this->generateApiKey();
+		$data[self::PASSWORD] = $this->encryptPassword($data[self::PASSWORD]);
+		$data[self::API_KEY] = $this->generateApiKey();
 
 		// TODO: Validate fields
 		
 		// Create user
 		$result = $this->dbCreate($data);
-		unset($result["password"]);
-		unset($result["apiKey"]);
+		unset($result[self::PASSWORD]);
+		unset($result[self::API_KEY]);
 		
 		// Print response
 		http_response_code(201);
@@ -150,8 +151,8 @@ class Users extends ModelWithIdBase
 		Authorization::authorizeApiKey();
 		
 		$data = $this->getBodyData();
-		$data["password"] = $this->encryptPassword($data["password"]);
-		unset($data["apiKey"]);
+		$data[self::PASSWORD] = $this->encryptPassword($data[self::PASSWORD]);
+		unset($data[self::API_KEY]);
 
 		// TODO: Validate fields
 		

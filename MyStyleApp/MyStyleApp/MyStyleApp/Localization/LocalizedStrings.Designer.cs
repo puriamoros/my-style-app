@@ -89,15 +89,6 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid email.
-        /// </summary>
-        internal static string email_not_valid {
-            get {
-                return ResourceManager.GetString("email_not_valid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Enter your email address.
         /// </summary>
         internal static string email_placeholder {
@@ -116,7 +107,7 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The field &quot;{0}&quot; can not contain &quot;&lt;&quot; or &quot;&gt;&quot;.
+        ///   Looks up a localized string similar to The field &quot;${FIELD_NAME}&quot; can not contain &quot;&lt;&quot; or &quot;&gt;&quot;.
         /// </summary>
         internal static string error_insecure_chars {
             get {
@@ -125,7 +116,16 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The field &quot;{0}&quot; is required.
+        ///   Looks up a localized string similar to The field &quot;${FIELD_NAME}&quot; is not valid.
+        /// </summary>
+        internal static string error_invalid_field {
+            get {
+                return ResourceManager.GetString("error_invalid_field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field &quot;${FIELD_NAME}&quot; is required.
         /// </summary>
         internal static string error_required_field {
             get {
@@ -148,6 +148,15 @@ namespace MyStyleApp.Localization {
         internal static string login_error {
             get {
                 return ResourceManager.GetString("login_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logout.
+        /// </summary>
+        internal static string logout {
+            get {
+                return ResourceManager.GetString("logout", resourceCulture);
             }
         }
         
@@ -193,6 +202,15 @@ namespace MyStyleApp.Localization {
         internal static string waiting {
             get {
                 return ResourceManager.GetString("waiting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hi ${USER_NAME}!.
+        /// </summary>
+        internal static string welcome_user {
+            get {
+                return ResourceManager.GetString("welcome_user", resourceCulture);
             }
         }
     }

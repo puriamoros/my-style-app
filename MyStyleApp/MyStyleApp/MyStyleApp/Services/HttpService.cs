@@ -51,6 +51,15 @@ namespace MyStyleApp.Services
             return client;
         }
 
+        private HttpRequestMessage GetHttpRequestMessage(HttpMethod method, string requestUri)
+        {
+            // Prevent cached responses by adding a custom parameter to the url
+            string finalRequestUri = requestUri;
+            finalRequestUri += (finalRequestUri.Contains("?")) ? "&" : "?";
+            finalRequestUri += "_ts=" + DateTime.UtcNow.Ticks;
+            return new HttpRequestMessage(method, finalRequestUri);
+        }
+
         private JsonSerializerSettings GetJsonSerializerSettings()
         {
             JsonSerializerSettings serializeSettings = new JsonSerializerSettings();
@@ -155,6 +164,7 @@ namespace MyStyleApp.Services
         }
 
         private TResult DeserializeResponse<TResult>(string content)
+            where TResult: class
         {
             var value = JsonConvert.DeserializeObject<TResult>(content);
             return value;
@@ -210,7 +220,7 @@ namespace MyStyleApp.Services
 
             client = this.GetHttpClient(credentials);
 
-            message = new HttpRequestMessage(method, query);
+            message = this.GetHttpRequestMessage(method, query);
             
             var result = await HttpSendAsync(client, message);
             HttpResponseMessage response = result.Item1;
@@ -226,6 +236,7 @@ namespace MyStyleApp.Services
         }
 
         public async Task<TResult> Invoke<TResult>(HttpMethod method, string url, string credentials, params object[] parameters)
+            where TResult: class
         {
             HttpClient client = null;
             HttpRequestMessage message = null;
@@ -234,7 +245,7 @@ namespace MyStyleApp.Services
 
             client = this.GetHttpClient(credentials);
 
-            message = new HttpRequestMessage(method, query);
+            message = this.GetHttpRequestMessage(method, query);
 
             var result = await HttpSendAsync(client, message, typeof(TResult));
             HttpResponseMessage response = result.Item1;
@@ -247,8 +258,15 @@ namespace MyStyleApp.Services
                 var value = this.DeserializeResponse<BackendError>(resultContentString);
                 throw new BackendException(value);
             }
-                
-            return this.DeserializeResponse<TResult>(resultContentString);
+
+            if (response.StatusCode != HttpStatusCode.NoContent)
+            {
+                return this.DeserializeResponse<TResult>(resultContentString);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public async Task InvokeWithContent<TContent>(
@@ -257,6 +275,7 @@ namespace MyStyleApp.Services
             string credentials,
             TContent content,
             params object[] parameters)
+            where TContent : class
         {
             HttpClient client = null;
             HttpRequestMessage message = null;
@@ -265,7 +284,7 @@ namespace MyStyleApp.Services
 
             client = this.GetHttpClient(credentials);
 
-            message = new HttpRequestMessage(method, query);
+            message = this.GetHttpRequestMessage(method, query);
 
             string requestContentString = JsonConvert.SerializeObject(content, this.GetJsonSerializerSettings());
             message.Content = new StringContent(requestContentString, Encoding.UTF8, "application/json");
@@ -289,6 +308,8 @@ namespace MyStyleApp.Services
             string credentials,
             TContent content,
             params object[] parameters)
+             where TContent : class
+             where TResult : class
         {
             HttpClient client = null;
             HttpRequestMessage message = null;
@@ -297,7 +318,7 @@ namespace MyStyleApp.Services
 
             client = this.GetHttpClient(credentials);
 
-            message = new HttpRequestMessage(method, query);
+            message = this.GetHttpRequestMessage(method, query);
 
             string requestContentString = JsonConvert.SerializeObject(content, this.GetJsonSerializerSettings());
             message.Content = new StringContent(requestContentString, Encoding.UTF8, "application/json");
@@ -314,7 +335,14 @@ namespace MyStyleApp.Services
                 throw new BackendException(value);
             }
 
-            return this.DeserializeResponse<TResult>(resultContentString);
+            if (response.StatusCode != HttpStatusCode.NoContent)
+            {
+                return this.DeserializeResponse<TResult>(resultContentString);
+            }
+            else
+            {
+                return null;
+            }
         }
 
     }

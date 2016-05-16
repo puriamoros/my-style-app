@@ -1,5 +1,7 @@
-﻿using MyStyleApp.Services;
+﻿using MyStyleApp.Models;
+using MyStyleApp.Services;
 using MyStyleApp.Services.Backend;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -9,41 +11,55 @@ namespace MyStyleApp.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private ILoginService _loginService;
-        private string _message;
+        private const string STRING_WELCOME_USER = "welcome_user";
+        private const string TOKEN_USER_NAME = "${USER_NAME}";
+
+        private IUsersService _usersService;
+        private string _welcomeUser;
 
         public ICommand LogoutCommand { get; private set; }
 
         public MainViewModel(
             INavigator navigator,
             LocalizedStringsService localizedStringsService,
-            ILoginService loginService) : 
+            IUsersService usersService) : 
             base(navigator, localizedStringsService)
         {
-            this._loginService = loginService;
-            this.Message = "Second Page";
+            this._usersService = usersService;
             this.LogoutCommand = new Command(async () => await this.Logout());
+        }
+
+        public override void OnPushed()
+        {
+            base.OnPushed();
+
+            this.WelcomeUser = this.LocalizedStrings.GetString(
+                STRING_WELCOME_USER, TOKEN_USER_NAME, this._usersService.LoggedUser.Name);
         }
 
         private async Task Logout()
         {
             this.IsBusy = true;
-            await this._loginService.Logout();
-            await this.Navigator.PopToRootAsync();
-            await this.Navigator.PushAsync<LoginViewModel>();
-            await this.Navigator.RemovePage<MainViewModel>();
-            this.IsBusy = false;
+            try
+            {
+                await this._usersService.Logout();
+            }
+            catch(Exception ex)
+            {
+            }
+            finally
+            {
+                await this.Navigator.PopToRootAsync();
+                await this.Navigator.PushAsync<LoginViewModel>();
+                await this.Navigator.RemovePage<MainViewModel>();
+                this.IsBusy = false;
+            }
         }
 
-        public string Message
+        public string WelcomeUser
         {
-            get { return _message; }
-            set { SetProperty(ref _message, value); }
-        }
-
-        public override void OnDisappearing()
-        {
-            //base.OnDisappearing();
+            get { return _welcomeUser; }
+            set { SetProperty(ref _welcomeUser, value); }
         }
     }
 }

@@ -4,7 +4,7 @@
              x:Class="MyStyleApp.Views.MainView"
              Padding="{StaticResource PagePadding}">
   <StackLayout>
-    <Label Text="{Binding Message}" VerticalOptions="Center" HorizontalOptions="Center" Style="{StaticResource LargeTextStyle1}" />
-    <Button Text="Logout" Command="{Binding LogoutCommand}" />
+    <Label Text="{Binding WelcomeUser}" VerticalOptions="Center" HorizontalOptions="Center" Style="{StaticResource LargeTextStyle1}" />
+    <Button Text="{Binding LocalizedStrings[logout]}" Command="{Binding LogoutCommand}" />
   </StackLayout>
 </ContentPage>

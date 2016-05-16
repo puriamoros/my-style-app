@@ -17,14 +17,15 @@ namespace MyStyleApp.ViewModels
         private const string STRING_ERROR_REQUIRED_FIELD = "error_required_field";
         private const string STRING_EMAIL = "email";
         private const string STRING_PASSWORD = "password";
-        private const string STRING_EMAIL_NOT_VALID = "email_not_valid";
+        private const string STRING_ERROR_INVALID_FIELD = "error_invalid_field";
         private const string STRING_ERROR_INSECURE_CHARS = "error_insecure_chars";
         private const string STRING_LOGIN_ERROR = "login_error";
+        private const string TOKEN_FIELD = "${FIELD_NAME}";
 
         public ICommand LoginCommand { get; private set; }
         public ICommand NewAccountCommand { get; private set; }
 
-        private ILoginService _loginService;
+        private IUsersService _usersService;
         private ObjectStorageService<string> _localStorageService;
 
         private string _email;
@@ -35,11 +36,11 @@ namespace MyStyleApp.ViewModels
         public LoginViewModel(
             INavigator navigator,
             LocalizedStringsService localizedStringsService,
-            ILoginService loginService,
+            IUsersService usersService,
             ObjectStorageService<string> localStorageService) :
             base(navigator, localizedStringsService)
         {
-            this._loginService = loginService;
+            this._usersService = usersService;
             this._localStorageService = localStorageService;
             this.LoginCommand = new Command(async () => await Login());
             this.NewAccountCommand = new Command(async () => await NewAccount());
@@ -80,30 +81,32 @@ namespace MyStyleApp.ViewModels
 
         private string GetValidationError()
         {
-            string validationError = null;
+            string validationError = "";
 
             // Email
-            if(string.IsNullOrEmpty(this.Email))
+            string fieldEmail = this.LocalizedStrings.GetString(STRING_EMAIL);
+            if (string.IsNullOrEmpty(this.Email))
             {
-                return string.Format(STRING_ERROR_REQUIRED_FIELD, "${" + STRING_EMAIL + "}");
+                return this.LocalizedStrings.GetString(
+                    STRING_ERROR_REQUIRED_FIELD, TOKEN_FIELD, fieldEmail);
             }
             if (Regex.IsMatch(this.Email, RegexConstants.INSECURE_CHARS))
             {
-                return string.Format(STRING_ERROR_INSECURE_CHARS, "${" + STRING_EMAIL + "}");
+                return this.LocalizedStrings.GetString(
+                    STRING_ERROR_INSECURE_CHARS, TOKEN_FIELD, fieldEmail);
             }
-            if (Regex.IsMatch(this.Email, RegexConstants.EMAIL))
+            if (!Regex.IsMatch(this.Email, RegexConstants.EMAIL))
             {
-                return STRING_EMAIL_NOT_VALID;
+                return this.LocalizedStrings.GetString(
+                    STRING_ERROR_INVALID_FIELD, TOKEN_FIELD, fieldEmail);
             }
 
             // Password
+            string fieldPassword = this.LocalizedStrings.GetString(STRING_PASSWORD);
             if (string.IsNullOrEmpty(this.Password))
             {
-                return string.Format(STRING_ERROR_REQUIRED_FIELD, "${" + STRING_PASSWORD + "}");
-            }
-            if (Regex.IsMatch(this.Password, RegexConstants.INSECURE_CHARS))
-            {
-                return string.Format(STRING_ERROR_INSECURE_CHARS, "${" + STRING_PASSWORD + "}");
+                return this.LocalizedStrings.GetString(
+                    STRING_ERROR_REQUIRED_FIELD, TOKEN_FIELD, fieldPassword);
             }
 
             return validationError;
@@ -112,18 +115,18 @@ namespace MyStyleApp.ViewModels
         private async Task Login()
         {
             string validationError = this.GetValidationError();
-            if(validationError != null)
+            if(!string.IsNullOrEmpty(validationError))
             {
-                ErrorText = this.LocalizedStrings[STRING_ERROR] + ": " + this.LocalizedStrings[validationError];
+                this.ErrorText = this.LocalizedStrings.GetString(STRING_ERROR) +": " + validationError;
                 return;
             }
 
-            ErrorText = "";
+            this.ErrorText = "";
             this.IsBusy = true;
 
             try
             {
-                await this._loginService.Login(this.Email, this.Password, this.RememberMe);
+                await this._usersService.Login(this.Email, this.Password, this.RememberMe);
                 await this.Navigator.PushAsync<MainViewModel>();
                 await this.Navigator.RemovePage<LoginViewModel>();
             }

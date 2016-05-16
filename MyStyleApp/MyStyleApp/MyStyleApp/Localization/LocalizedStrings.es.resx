@@ -126,9 +126,6 @@
   <data name="email" xml:space="preserve">
     <value>Email</value>
   </data>
-  <data name="email_not_valid" xml:space="preserve">
-    <value>Email no válido</value>
-  </data>
   <data name="email_placeholder" xml:space="preserve">
     <value>Introduce tu correo electrónico</value>
   </data>
@@ -136,16 +133,22 @@
     <value>Error</value>
   </data>
   <data name="error_insecure_chars" xml:space="preserve">
-    <value>El campo "{0}" no puede contener "&lt;" o "&gt;"</value>
+    <value>El campo "${FIELD_NAME}" no puede contener "&lt;" o "&gt;"</value>
+  </data>
+  <data name="error_invalid_field" xml:space="preserve">
+    <value>El campo "${FIELD_NAME}" no es válido</value>
   </data>
   <data name="error_required_field" xml:space="preserve">
-    <value>El campo "{0}" es obligatorio</value>
+    <value>El campo "${FIELD_NAME}" es obligatorio</value>
   </data>
   <data name="login" xml:space="preserve">
     <value>Acceso</value>
   </data>
   <data name="login_error" xml:space="preserve">
     <value>Credenciales no válidas</value>
+  </data>
+  <data name="logout" xml:space="preserve">
+    <value>Desconectar</value>
   </data>
   <data name="no_account" xml:space="preserve">
     <value>¿No tienes cuenta?</value>
@@ -161,5 +164,8 @@
   </data>
   <data name="waiting" xml:space="preserve">
     <value>...esperando...</value>
+  </data>
+  <data name="welcome_user" xml:space="preserve">
+    <value>¡Hola ${USER_NAME}!</value>
   </data>
 </root>

@@ -251,7 +251,7 @@ abstract class ModelWithIdBase
 
 			if ($result) {
 				$item = array();
-				foreach($this->fields as $field) {
+				foreach($fieldsButId as $field) {
 					$item[$field] = $data[$field];
 				}
 				// Override idField with lastInsertId

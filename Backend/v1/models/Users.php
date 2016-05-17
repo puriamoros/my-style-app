@@ -28,14 +28,14 @@ class Users extends ModelWithIdBase
 		$this->idField = $this->fields[0];
     }
 
-    public function get($queryArray)
+    public function get($queryArray, $queryParams)
     {
 		if(count($queryArray) >= 1 && count($queryArray) <= 2) {
 			if ($queryArray[0] == 'login') {
 				return $this->login();
 			} else if ($queryArray[0] == 'users') {
 				if(count($queryArray) == 1) {
-					return $this->getElements();
+					return $this->getElements($queryParams);
 				}
 				else {
 					if($queryArray[1] == "me") {
@@ -75,9 +75,9 @@ class Users extends ModelWithIdBase
 		);
 	}
 	
-	protected function getElements()
+	protected function getElements($queryParams)
 	{
-		$result = parent::getElements();
+		$result = parent::getElements($queryParams);
 		for ($i = 0; $i < count($result); $i++) {
 			unset($result[$i][self::PASSWORD]);
 			unset($result[$i][self::API_KEY]);

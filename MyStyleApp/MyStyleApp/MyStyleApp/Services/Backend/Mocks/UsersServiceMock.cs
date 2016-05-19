@@ -26,8 +26,9 @@ namespace MyStyleApp.Services.Backend.Mocks
             };
         }
 
-        public void Logout()
+        public async Task Logout()
         {
+            await (Task.Delay(1000));
             this.LoggedUser = null;
         }
 

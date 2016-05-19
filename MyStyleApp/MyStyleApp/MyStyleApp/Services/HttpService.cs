@@ -16,8 +16,14 @@ namespace MyStyleApp.Services
     public class HttpService
     {
         private const string API_KEY_FILE_NAME = "apikey.xml";
-        private const string API_KEY_KEY = "apikey";
+        private const string API_KEY_AUTHORIZATION = "ApiKey {0}";
+        private ObjectStorageService<string> _apiKeyStorageService;
         private string _apiKey;
+
+        public HttpService(ObjectStorageService<string> apiKeyStorageService)
+        {
+            this._apiKeyStorageService = apiKeyStorageService;
+        }
 
         private string GetQuery(string url, object[] parameters)
         {
@@ -106,8 +112,27 @@ namespace MyStyleApp.Services
             if (!string.IsNullOrEmpty(resultData))
             {
                 logMsg += "\r\nResponse Content:\r\n";
-                object jsonObj = JsonConvert.DeserializeObject(resultData, tResult);
-                logMsg += JsonConvert.SerializeObject(jsonObj, this.GetJsonSerializerSettings());
+                object jsonObj = null;
+                try
+                {
+                    jsonObj = JsonConvert.DeserializeObject(resultData, tResult);
+                }
+                catch (JsonSerializationException)
+                {
+                    jsonObj = JsonConvert.DeserializeObject(resultData, typeof(BackendError));
+                }
+                catch (Exception)
+                {
+                }
+
+                if(jsonObj != null)
+                {
+                    logMsg += JsonConvert.SerializeObject(jsonObj, this.GetJsonSerializerSettings());
+                }
+                else
+                {
+                    logMsg += resultData;
+                }
             }
             System.Diagnostics.Debug.WriteLine(logMsg);
         }
@@ -165,39 +190,39 @@ namespace MyStyleApp.Services
             return value;
         }
 
-        public void SaveApiKeyAuthorization(string apiKey, bool rememberApiKey)
+        public async Task SaveApiKeyAuthorization(string apiKey, bool rememberApiKey)
         {
             this._apiKey = apiKey;
             if (rememberApiKey)
             {
-                App.Current.Properties[API_KEY_KEY] = apiKey;
+                await this._apiKeyStorageService.SaveToFileAsync(API_KEY_FILE_NAME, apiKey);
             }
-            
         }
 
-        public string GetApiKeyAuthorization()
+        public async Task<string> GetApiKeyAuthorization()
         {
             if (this._apiKey == null)
             {
-                if(App.Current.Properties.ContainsKey(API_KEY_KEY))
+                try
                 {
-                    this._apiKey = (string) App.Current.Properties[API_KEY_KEY];
+                    this._apiKey = await this._apiKeyStorageService.LoadFromFileAsync(API_KEY_FILE_NAME);
                 }
-                else
+                catch (Exception)
                 {
                     return null;
                 }
             }
 
-            return "ApiKey " + this._apiKey;
+            return string.Format(API_KEY_AUTHORIZATION, this._apiKey);
         }
 
-        public void DeleteApiKeyAuthorization()
+        public async Task DeleteApiKeyAuthorization()
         {
-            if (App.Current.Properties.ContainsKey(API_KEY_KEY))
+            try
             {
-                App.Current.Properties.Remove(API_KEY_KEY);
+                await this._apiKeyStorageService.DeleteFileAsync(API_KEY_FILE_NAME);
             }
+            catch (Exception) { }
         }
 
         public string GetBasicAuthorization(string email, string password)

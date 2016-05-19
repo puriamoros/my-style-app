@@ -107,6 +107,42 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The field &quot;${FIELD_NAME}&quot; must have ${FIELD_LENGTH} characters.
+        /// </summary>
+        internal static string error_field_length {
+            get {
+                return ResourceManager.GetString("error_field_length", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field &quot;${FIELD_NAME}&quot; can not have more than ${FIELD_LENGTH_MAX} characters.
+        /// </summary>
+        internal static string error_field_length_max {
+            get {
+                return ResourceManager.GetString("error_field_length_max", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field &quot;${FIELD_NAME}&quot; must have at least ${FIELD_LENGTH_MIN} characters.
+        /// </summary>
+        internal static string error_field_length_min {
+            get {
+                return ResourceManager.GetString("error_field_length_min", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field &quot;${FIELD_NAME}&quot; must have between ${FIELD_LENGTH_MIN} and ${FIELD_LENGTH_MAX} characters.
+        /// </summary>
+        internal static string error_field_length_range {
+            get {
+                return ResourceManager.GetString("error_field_length_range", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The field &quot;${FIELD_NAME}&quot; can not contain &quot;&lt;&quot; or &quot;&gt;&quot;.
         /// </summary>
         internal static string error_insecure_chars {

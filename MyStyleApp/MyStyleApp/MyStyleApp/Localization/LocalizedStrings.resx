@@ -132,6 +132,18 @@
   <data name="error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="error_field_length" xml:space="preserve">
+    <value>The field "${FIELD_NAME}" must have ${FIELD_LENGTH} characters</value>
+  </data>
+  <data name="error_field_length_max" xml:space="preserve">
+    <value>The field "${FIELD_NAME}" can not have more than ${FIELD_LENGTH_MAX} characters</value>
+  </data>
+  <data name="error_field_length_min" xml:space="preserve">
+    <value>The field "${FIELD_NAME}" must have at least ${FIELD_LENGTH_MIN} characters</value>
+  </data>
+  <data name="error_field_length_range" xml:space="preserve">
+    <value>The field "${FIELD_NAME}" must have between ${FIELD_LENGTH_MIN} and ${FIELD_LENGTH_MAX} characters</value>
+  </data>
   <data name="error_insecure_chars" xml:space="preserve">
     <value>The field "${FIELD_NAME}" can not contain "&lt;" or "&gt;"</value>
   </data>

@@ -155,7 +155,7 @@ namespace MyStyleApp.Services
         /// <returns>
         /// The composed string
         /// </returns>
-        private string ComposeStringWithTokenPairs(string value, List<KeyValuePair<string, string>> tokenPairs)
+        private string ComposeStringWithTokenPairs(string value, IList<KeyValuePair<string, string>> tokenPairs)
         {
             string composed = value;
             foreach (KeyValuePair<string, string> tokenPair in tokenPairs)
@@ -200,7 +200,7 @@ namespace MyStyleApp.Services
         /// <returns>
         /// The composed string resource or an empty string if the string resource does not exist
         /// </returns>
-        public string GetString(string key, List<KeyValuePair<string, string>> tokenPairs)
+        public string GetString(string key, IList<KeyValuePair<string, string>> tokenPairs)
         {
             string value = this.GetRawString(key);
 

@@ -27,10 +27,9 @@ namespace MyStyleApp.ViewModels
         {
             this._usersService = usersService;
             this.LogoutCommand = new Command(async () => await this.Logout());
-            this.SetState<MainViewModel>((mvm) => mvm.Initialize());
         }
 
-        private void Initialize()
+        public void Initialize()
         {
             this.WelcomeUser = this.LocalizedStrings.GetString(
                 STRING_WELCOME_USER, TOKEN_USER_NAME, this._usersService.LoggedUser.Name);
@@ -39,7 +38,14 @@ namespace MyStyleApp.ViewModels
         private async Task Logout()
         {
             this.IsBusy = true;
-            this._usersService.Logout();
+            try
+            {
+                await this._usersService.Logout();
+            }
+            catch (Exception)
+            {
+            }
+            
             await this.Navigator.SetMainPage<LoginViewModel>();
         }
 

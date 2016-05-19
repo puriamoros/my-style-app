@@ -2,6 +2,7 @@
 using MyStyleApp.Models;
 using MyStyleApp.Services;
 using MyStyleApp.Services.Backend;
+using MyStyleApp.Validators;
 using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -13,20 +14,18 @@ namespace MyStyleApp.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     {
-        private const string STRING_ERROR = "error";
-        private const string STRING_ERROR_REQUIRED_FIELD = "error_required_field";
-        private const string STRING_EMAIL = "email";
-        private const string STRING_PASSWORD = "password";
         private const string STRING_ERROR_INVALID_FIELD = "error_invalid_field";
         private const string STRING_ERROR_INSECURE_CHARS = "error_insecure_chars";
+        private const string STRING_ERROR = "error";
+        private const string STRING_EMAIL = "email";
+        private const string STRING_PASSWORD = "password";
         private const string STRING_LOGIN_ERROR = "login_error";
-        private const string TOKEN_FIELD = "${FIELD_NAME}";
 
         public ICommand LoginCommand { get; private set; }
         public ICommand NewAccountCommand { get; private set; }
 
         private IUsersService _usersService;
-        private ObjectStorageService<string> _localStorageService;
+        private ValidationService _validationService;
 
         private string _email;
         private string _password;
@@ -37,11 +36,11 @@ namespace MyStyleApp.ViewModels
             INavigator navigator,
             LocalizedStringsService localizedStringsService,
             IUsersService usersService,
-            ObjectStorageService<string> localStorageService) :
+            ValidationService validationService) :
             base(navigator, localizedStringsService)
         {
             this._usersService = usersService;
-            this._localStorageService = localStorageService;
+            this._validationService = validationService;
             this.LoginCommand = new Command(async () => await Login());
             this.NewAccountCommand = new Command(async () => await NewAccount());
 
@@ -81,41 +80,35 @@ namespace MyStyleApp.ViewModels
 
         private string GetValidationError()
         {
-            string validationError = "";
+            // Alwais clear validators before adding
+            this._validationService.ClearValidators();
 
             // Email
-            string fieldEmail = this.LocalizedStrings.GetString(STRING_EMAIL);
-            if (string.IsNullOrEmpty(this.Email))
-            {
-                return this.LocalizedStrings.GetString(
-                    STRING_ERROR_REQUIRED_FIELD, TOKEN_FIELD, fieldEmail);
-            }
-            if (Regex.IsMatch(this.Email, RegexConstants.INSECURE_CHARS))
-            {
-                return this.LocalizedStrings.GetString(
-                    STRING_ERROR_INSECURE_CHARS, TOKEN_FIELD, fieldEmail);
-            }
-            if (!Regex.IsMatch(this.Email, RegexConstants.EMAIL))
-            {
-                return this.LocalizedStrings.GetString(
-                    STRING_ERROR_INVALID_FIELD, TOKEN_FIELD, fieldEmail);
-            }
+            this._validationService.AddValidator(
+                new RequiredValidator(this.Email, STRING_EMAIL));
+            this._validationService.AddValidator(
+                new RegexValidator(
+                    this.Email, RegexConstants.NOT_INSECURE_CHARS,
+                    STRING_ERROR_INSECURE_CHARS, STRING_EMAIL));
+            this._validationService.AddValidator(
+                new RegexValidator(
+                    this.Email, RegexConstants.EMAIL,
+                    STRING_ERROR_INVALID_FIELD, STRING_EMAIL));
 
             // Password
-            string fieldPassword = this.LocalizedStrings.GetString(STRING_PASSWORD);
-            if (string.IsNullOrEmpty(this.Password))
-            {
-                return this.LocalizedStrings.GetString(
-                    STRING_ERROR_REQUIRED_FIELD, TOKEN_FIELD, fieldPassword);
-            }
+            this._validationService.AddValidator(
+                new RequiredValidator(this.Password, STRING_PASSWORD));
+            this._validationService.AddValidator(
+                new LengthValidator(
+                    this.Password, STRING_PASSWORD, 2, 2));
 
-            return validationError;
+            return this._validationService.GetValidationError();
         }
 
         private async Task Login()
         {
             string validationError = this.GetValidationError();
-            if(!string.IsNullOrEmpty(validationError))
+            if(validationError != null)
             {
                 this.ErrorText = this.LocalizedStrings.GetString(STRING_ERROR) +": " + validationError;
                 return;
@@ -127,7 +120,8 @@ namespace MyStyleApp.ViewModels
             try
             {
                 await this._usersService.Login(this.Email, this.Password, this.RememberMe);
-                await this.Navigator.SetMainPage<MainViewModel>();
+                await this.Navigator.SetMainPage<MainViewModel>(
+                    (vm) => ((MainViewModel)vm).Initialize());
             }
             catch (Exception)
             {

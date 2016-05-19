@@ -43,6 +43,7 @@ namespace MyStyleApp
             builder.RegisterGeneric(typeof(ObjectStorageService<>));
             builder.RegisterType<HttpService>().SingleInstance();
             builder.RegisterType<UsersService>().As<IUsersService>().SingleInstance();
+            builder.RegisterType<ValidationService>();
         }
 
         protected override void RegisterViews(IViewFactory viewFactory)

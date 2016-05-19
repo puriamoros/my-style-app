@@ -32,7 +32,8 @@ namespace MyStyleApp.ViewModels
                 await this._usersService.Me();
 
                 // There is a logged user, go to main view
-                await this.Navigator.SetMainPage<MainViewModel>();
+                await this.Navigator.SetMainPage<MainViewModel>(
+                    (vm) => ((MainViewModel) vm).Initialize());
             }
             catch (Exception)
             {

@@ -25,24 +25,30 @@ namespace MyStyleApp.Services.Backend
                 BackendConstants.LOGIN_URL,
                 this.HttpService.GetBasicAuthorization(email, password),
                 null);
-            this.HttpService.SaveApiKeyAuthorization(apiKey.Value, rememberLogin);
+            await this.HttpService.SaveApiKeyAuthorization(apiKey.Value, rememberLogin);
             await this.Me();
         }
 
-        public void Logout()
+        public async Task Logout()
         {
-            this.HttpService.DeleteApiKeyAuthorization();
+            await this.HttpService.DeleteApiKeyAuthorization();
             this.LoggedUser = null;
         }
 
         public async Task<User> Me()
         {
-            string apiKey = this.HttpService.GetApiKeyAuthorization();
+            string apiKey = await this.HttpService.GetApiKeyAuthorization();
+            if(apiKey == null)
+            {
+                throw new Exception("ApiKey not found. User is not logged in.");
+            }
+
             this.LoggedUser = await this.HttpService.Invoke<User>(
                 HttpMethod.Get,
                 BackendConstants.ME_URL,
                 apiKey,
                 null);
+
             return LoggedUser;
         }
     }

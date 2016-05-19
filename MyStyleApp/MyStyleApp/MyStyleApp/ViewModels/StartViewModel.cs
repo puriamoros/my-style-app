@@ -20,12 +20,11 @@ namespace MyStyleApp.ViewModels
             base(navigator, localizedStringsService)
         {
             this._usersService = usersService;
+            this.NavigateToMainPage();
         }
 
-        public override async void OnAppearing()
+        public async void NavigateToMainPage()
         {
-            base.OnAppearing();
-
             this.IsBusy = true;
             try
             {

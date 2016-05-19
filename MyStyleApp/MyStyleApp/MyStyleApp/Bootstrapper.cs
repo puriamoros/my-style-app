@@ -5,6 +5,7 @@ using MyStyleApp.Views;
 using Xamarin.Forms;
 using MyStyleApp.Services;
 using MyStyleApp.Services.Backend;
+using MyStyleApp.Services.Backend.Mocks;
 
 namespace MyStyleApp
 {

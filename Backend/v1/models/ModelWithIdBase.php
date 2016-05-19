@@ -81,7 +81,12 @@ abstract class ModelWithIdBase
 	protected function getElement($id)
 	{
 		// Check authorization
-		Authorization::authorizeApiKey();
+		$idUser = Authorization::authorizeApiKey();
+		
+		// This is to allow users/me using this funcition without passing the user id
+		if(is_null($id)) {
+			$id = $idUser;
+		}
 
 		// TODO: Validate fields
 		

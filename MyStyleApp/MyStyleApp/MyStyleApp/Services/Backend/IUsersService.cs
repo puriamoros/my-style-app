@@ -7,7 +7,7 @@ namespace MyStyleApp.Services.Backend
     {
         User LoggedUser { get; }
         Task Login(string email, string password, bool rememberLogin);
-        Task Logout();
+        void Logout();
         Task<User> Me();
     }
 }

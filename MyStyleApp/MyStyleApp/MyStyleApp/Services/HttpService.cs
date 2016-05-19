@@ -16,13 +16,8 @@ namespace MyStyleApp.Services
     public class HttpService
     {
         private const string API_KEY_FILE_NAME = "apikey.xml";
-        private ObjectStorageService<string> _apiKeyStorageService;
+        private const string API_KEY_KEY = "apikey";
         private string _apiKey;
-
-        public HttpService(ObjectStorageService<string> apiKeyStorageService)
-        {
-            this._apiKeyStorageService = apiKeyStorageService;
-        }
 
         private string GetQuery(string url, object[] parameters)
         {
@@ -170,24 +165,25 @@ namespace MyStyleApp.Services
             return value;
         }
 
-        public async Task SaveApiKeyAuthorization(string apiKey, bool rememberApiKey)
+        public void SaveApiKeyAuthorization(string apiKey, bool rememberApiKey)
         {
             this._apiKey = apiKey;
             if (rememberApiKey)
             {
-                await this._apiKeyStorageService.SaveToFileAsync(API_KEY_FILE_NAME, apiKey);
+                App.Current.Properties[API_KEY_KEY] = apiKey;
             }
+            
         }
 
-        public async Task<string> GetApiKeyAuthorization()
+        public string GetApiKeyAuthorization()
         {
-            if(this._apiKey == null)
+            if (this._apiKey == null)
             {
-                try
+                if(App.Current.Properties.ContainsKey(API_KEY_KEY))
                 {
-                    this._apiKey = await this._apiKeyStorageService.LoadFromFileAsync(API_KEY_FILE_NAME);
+                    this._apiKey = (string) App.Current.Properties[API_KEY_KEY];
                 }
-                catch (Exception)
+                else
                 {
                     return null;
                 }
@@ -196,13 +192,12 @@ namespace MyStyleApp.Services
             return "ApiKey " + this._apiKey;
         }
 
-        public async Task DeleteApiKeyAuthorization()
+        public void DeleteApiKeyAuthorization()
         {
-            try
+            if (App.Current.Properties.ContainsKey(API_KEY_KEY))
             {
-                await this._apiKeyStorageService.DeleteFileAsync(API_KEY_FILE_NAME);
+                App.Current.Properties.Remove(API_KEY_KEY);
             }
-            catch (Exception){}
         }
 
         public string GetBasicAuthorization(string email, string password)

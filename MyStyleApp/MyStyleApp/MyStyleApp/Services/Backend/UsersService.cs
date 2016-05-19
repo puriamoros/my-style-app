@@ -25,19 +25,19 @@ namespace MyStyleApp.Services.Backend
                 BackendConstants.LOGIN_URL,
                 this.HttpService.GetBasicAuthorization(email, password),
                 null);
-            await this.HttpService.SaveApiKeyAuthorization(apiKey.Value, rememberLogin);
+            this.HttpService.SaveApiKeyAuthorization(apiKey.Value, rememberLogin);
             await this.Me();
         }
 
-        public async Task Logout()
+        public void Logout()
         {
-            await this.HttpService.DeleteApiKeyAuthorization();
+            this.HttpService.DeleteApiKeyAuthorization();
             this.LoggedUser = null;
         }
 
         public async Task<User> Me()
         {
-            string apiKey = await this.HttpService.GetApiKeyAuthorization();
+            string apiKey = this.HttpService.GetApiKeyAuthorization();
             this.LoggedUser = await this.HttpService.Invoke<User>(
                 HttpMethod.Get,
                 BackendConstants.ME_URL,

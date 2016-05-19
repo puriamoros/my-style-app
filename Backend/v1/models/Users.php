@@ -87,9 +87,7 @@ class Users extends ModelWithIdBase
 	
 	private function getMe()
 	{
-		// Check authorization
-		$id = Authorization::authorizeApiKey();
-		return $this->getElement($id);
+		return $this->getElement(null);
 	}
 	
 	protected function getElement($id)

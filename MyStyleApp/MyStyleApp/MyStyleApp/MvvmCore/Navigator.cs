@@ -6,57 +6,78 @@ namespace XamarinFormsAutofacMvvmStarterKit
 {
 	public class Navigator : INavigator
 	{
-		private readonly Lazy<INavigation> _navigation;
 		private readonly IViewFactory _viewFactory;
 		private readonly IDeviceService _deviceService;
 
-		public Navigator(Lazy<INavigation> navigation, IViewFactory viewFactory, IDeviceService deviceService)
+		public Navigator(IViewFactory viewFactory, IDeviceService deviceService)
 		{
-			_navigation = navigation;
 			_viewFactory = viewFactory;
 			_deviceService = deviceService;
 		}
 
-		private INavigation Navigation
-		{
-			get { return _navigation.Value; }
-		}
+        public Task<TViewModel> SetMainPage<TViewModel>(Action<TViewModel> setStateAction = null)
+            where TViewModel : class, IViewModel
+        {
+            var tcs = new TaskCompletionSource<TViewModel>();
+            _deviceService.BeginInvokeOnMainThread(() =>
+            {
+                TViewModel viewModel;
+                var view = _viewFactory.Resolve<TViewModel>(out viewModel, setStateAction);
+                Application.Current.MainPage = view;
+                tcs.SetResult(viewModel);
+            });
+            return tcs.Task;
+        }
 
-		public Task<IViewModel> PopAsync()
+        public Task<TViewModel> SetMainPage<TViewModel>(TViewModel viewModel)
+            where TViewModel : class, IViewModel
+        {
+            var tcs = new TaskCompletionSource<TViewModel>();
+            _deviceService.BeginInvokeOnMainThread(() =>
+            {
+                var view = _viewFactory.Resolve(viewModel);
+                Application.Current.MainPage = view;
+                tcs.SetResult(viewModel);
+            });
+            return tcs.Task;
+        }
+
+        public Task<IViewModel> PopAsync(INavigation navigation)
 		{
 			var tcs = new TaskCompletionSource<IViewModel>();
 			_deviceService.BeginInvokeOnMainThread(async () =>
 			{
-				Page view = await Navigation.PopAsync();
+				Page view = await navigation.PopAsync();
 				tcs.SetResult(view.BindingContext as IViewModel);
 
 			});
             return tcs.Task;
 		}
 
-		public Task<IViewModel> PopModalAsync()
+		public Task<IViewModel> PopModalAsync(INavigation navigation)
 		{
 			var tcs = new TaskCompletionSource<IViewModel>();
 			_deviceService.BeginInvokeOnMainThread(async () =>
 			{
-				Page view = await Navigation.PopAsync();
+				Page view = await navigation.PopAsync();
 				tcs.SetResult(view.BindingContext as IViewModel);
 			});
             return tcs.Task;
 		}
 
-		public Task PopToRootAsync()
+		public Task PopToRootAsync(INavigation navigation)
 		{
 			var tcs = new TaskCompletionSource<object>();
 			_deviceService.BeginInvokeOnMainThread(async () =>
 			{
-				await Navigation.PopToRootAsync();
+				await navigation.PopToRootAsync();
 				tcs.SetResult(null);
 			});
 			return tcs.Task;
 		}
 
-		public Task<TViewModel> PushAsync<TViewModel>(Action<TViewModel> setStateAction = null) 
+		public Task<TViewModel> PushAsync<TViewModel>(
+            INavigation navigation, Action<TViewModel> setStateAction = null) 
 			where TViewModel : class, IViewModel
 		{
 			var tcs = new TaskCompletionSource<TViewModel>();
@@ -64,26 +85,28 @@ namespace XamarinFormsAutofacMvvmStarterKit
 			{
 				TViewModel viewModel;
 				var view = _viewFactory.Resolve(out viewModel, setStateAction);
-				await Navigation.PushAsync(view);
+				await navigation.PushAsync(view);
 				tcs.SetResult(viewModel);
 			});
 			return tcs.Task;
 		}
 
-		public Task<TViewModel> PushAsync<TViewModel>(TViewModel viewModel) 
+		public Task<TViewModel> PushAsync<TViewModel>(
+            INavigation navigation, TViewModel viewModel) 
 			where TViewModel : class, IViewModel
 		{
 			var tcs = new TaskCompletionSource<TViewModel>();
 			_deviceService.BeginInvokeOnMainThread(async () =>
 			{
 				var view = _viewFactory.Resolve(viewModel);
-				await Navigation.PushAsync(view);
+				await navigation.PushAsync(view);
 				tcs.SetResult(viewModel);
 			});
 			return tcs.Task;
 		}
 
-		public Task<TViewModel> PushModalAsync<TViewModel>(Action<TViewModel> setStateAction = null) 
+		public Task<TViewModel> PushModalAsync<TViewModel>(
+            INavigation navigation, Action<TViewModel> setStateAction = null) 
 			where TViewModel : class, IViewModel
 		{
 			var tcs = new TaskCompletionSource<TViewModel>();
@@ -91,26 +114,28 @@ namespace XamarinFormsAutofacMvvmStarterKit
 			{
 				TViewModel viewModel;
 				var view = _viewFactory.Resolve<TViewModel>(out viewModel, setStateAction);
-				await Navigation.PushModalAsync(view);
+				await navigation.PushModalAsync(view);
 				tcs.SetResult(viewModel);
 			});
 			return tcs.Task;
 		}
 
-		public Task<TViewModel> PushModalAsync<TViewModel>(TViewModel viewModel) 
+		public Task<TViewModel> PushModalAsync<TViewModel>(
+            INavigation navigation, TViewModel viewModel) 
 			where TViewModel : class, IViewModel
 		{
 			var tcs = new TaskCompletionSource<TViewModel>();
 			_deviceService.BeginInvokeOnMainThread(async () =>
 			{
 				var view = _viewFactory.Resolve(viewModel);
-				await Navigation.PushModalAsync(view);
+				await navigation.PushModalAsync(view);
 				tcs.SetResult(viewModel);
 			});
 			return tcs.Task;
 		}
 
-        public Task InsertPageBefore<TViewModel, TViewModelBefore>(Action<TViewModel> setStateAction = null)
+        public Task InsertPageBefore<TViewModel, TViewModelBefore>(
+            INavigation navigation, Action<TViewModel> setStateAction = null)
             where TViewModel : class, IViewModel
             where TViewModelBefore : class, IViewModel
         {
@@ -121,13 +146,14 @@ namespace XamarinFormsAutofacMvvmStarterKit
                 var view = _viewFactory.Resolve<TViewModel>(out viewModel, setStateAction);
                 TViewModelBefore viewModelBefore;
                 var viewBefore = _viewFactory.Resolve<TViewModelBefore>(out viewModelBefore);
-                Navigation.InsertPageBefore(view, viewBefore);
+                navigation.InsertPageBefore(view, viewBefore);
                 tcs.SetResult(null);
             });
             return tcs.Task;
         }
 
-        public Task InsertPageBefore<TViewModel, TViewModelBefore>(TViewModel viewModel, TViewModelBefore viewModelBefore)
+        public Task InsertPageBefore<TViewModel, TViewModelBefore>(
+            INavigation navigation, TViewModel viewModel, TViewModelBefore viewModelBefore)
             where TViewModel : class, IViewModel
             where TViewModelBefore : class, IViewModel
         {
@@ -136,13 +162,13 @@ namespace XamarinFormsAutofacMvvmStarterKit
             {
                 var view = _viewFactory.Resolve<TViewModel>(viewModel);
                 var viewBefore = _viewFactory.Resolve<TViewModelBefore>(viewModelBefore);
-                Navigation.InsertPageBefore(view, viewBefore);
+                navigation.InsertPageBefore(view, viewBefore);
                 tcs.SetResult(null);
             });
             return tcs.Task;
         }
 
-        public Task RemovePage<TViewModel>()
+        public Task RemovePage<TViewModel>(INavigation navigation)
             where TViewModel : class, IViewModel
         {
             var tcs = new TaskCompletionSource<object>();
@@ -150,7 +176,7 @@ namespace XamarinFormsAutofacMvvmStarterKit
             {
                 TViewModel viewModel;
                 var view = _viewFactory.Resolve<TViewModel>(out viewModel);
-                Navigation.RemovePage(view);
+                navigation.RemovePage(view);
                 tcs.SetResult(null);
             });
             return tcs.Task;

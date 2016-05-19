@@ -44,14 +44,12 @@ namespace MyStyleApp.ViewModels
             {
                 await this._usersService.Logout();
             }
-            catch(Exception ex)
+            catch(Exception)
             {
             }
             finally
             {
-                await this.Navigator.PopToRootAsync();
-                await this.Navigator.PushAsync<LoginViewModel>();
-                await this.Navigator.RemovePage<MainViewModel>();
+                await this.Navigator.SetMainPage<LoginViewModel>();
                 this.IsBusy = false;
             }
         }

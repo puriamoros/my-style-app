@@ -59,8 +59,7 @@ namespace MyStyleApp
             // First view to show
             var viewFactory = container.Resolve<IViewFactory>();
             var mainPage = viewFactory.Resolve<StartViewModel>();
-            var navigationPage = new XamarinFormsAutofacMvvmStarterKit.NavigationPage(mainPage);
-            this._app.MainPage = navigationPage;
+            this._app.MainPage = mainPage;
         }
     }
 }

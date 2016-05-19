@@ -127,10 +127,9 @@ namespace MyStyleApp.ViewModels
             try
             {
                 await this._usersService.Login(this.Email, this.Password, this.RememberMe);
-                await this.Navigator.PushAsync<MainViewModel>();
-                await this.Navigator.RemovePage<LoginViewModel>();
+                await this.Navigator.SetMainPage<MainViewModel>();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ErrorText = this.LocalizedStrings[STRING_LOGIN_ERROR];
             }

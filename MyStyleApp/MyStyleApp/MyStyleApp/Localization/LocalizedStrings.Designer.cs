@@ -62,6 +62,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Appointments.
+        /// </summary>
+        internal static string appointments {
+            get {
+                return ResourceManager.GetString("appointments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create an account.
         /// </summary>
         internal static string create_account {
@@ -170,6 +179,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Favourites.
+        /// </summary>
+        internal static string favourites {
+            get {
+                return ResourceManager.GetString("favourites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
         internal static string login {
@@ -193,6 +211,15 @@ namespace MyStyleApp.Localization {
         internal static string logout {
             get {
                 return ResourceManager.GetString("logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My account.
+        /// </summary>
+        internal static string my_account {
+            get {
+                return ResourceManager.GetString("my_account", resourceCulture);
             }
         }
         
@@ -229,6 +256,15 @@ namespace MyStyleApp.Localization {
         internal static string remember_me {
             get {
                 return ResourceManager.GetString("remember_me", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        internal static string search {
+            get {
+                return ResourceManager.GetString("search", resourceCulture);
             }
         }
         

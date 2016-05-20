@@ -8,15 +8,11 @@ using Xamarin.Forms;
 
 namespace MyStyleApp.Views
 {
-    public partial class MainView : ContentPage
+    public partial class MainView : TabbedPage
     {
         public MainView()
         {
             InitializeComponent();
-
-            // We just want a back button on iOS
-            if (Device.OS != TargetPlatform.iOS)
-                NavigationPage.SetHasNavigationBar(this, false);
         }
 
         //protected override bool OnBackButtonPressed()

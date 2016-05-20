@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyStyleApp.Views.FavouritesView"
+             xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
+             Padding="{StaticResource PagePadding}"
+             Title="{Binding LocalizedStrings[favourites]}" Icon="Star.png"
+             NavigationPage.HasNavigationBar="False">
+  <ScrollView>
+    <Grid>
+      <!-- Put the page contents here -->
+      <controls:WaitingOverlayControl
+        IsVisible="{Binding IsBusy}"
+        Text="{Binding LocalizedStrings[waiting]}"/>
+    </Grid>
+  </ScrollView>
+</ContentPage>

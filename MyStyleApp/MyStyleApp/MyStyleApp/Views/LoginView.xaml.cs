@@ -13,8 +13,6 @@ namespace MyStyleApp.Views
         public LoginView()
         {
             InitializeComponent();
-
-            // Root page, we don't want a back button
             NavigationPage.SetHasNavigationBar(this, false);
         }
 

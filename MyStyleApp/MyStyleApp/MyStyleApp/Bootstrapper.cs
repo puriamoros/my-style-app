@@ -26,11 +26,19 @@ namespace MyStyleApp
             builder.RegisterType<StartView>().SingleInstance();
             builder.RegisterType<LoginView>().SingleInstance();
             builder.RegisterType<MainView>().SingleInstance();
+            builder.RegisterType<AppointmentsView>().SingleInstance();
+            builder.RegisterType<FavouritesView>().SingleInstance();
+            builder.RegisterType<SearchView>().SingleInstance();
+            builder.RegisterType<AccountView>().SingleInstance();
 
             // Register ViewModels
             builder.RegisterType<StartViewModel>().SingleInstance();
             builder.RegisterType<LoginViewModel>().SingleInstance();
             builder.RegisterType<MainViewModel>().SingleInstance();
+            builder.RegisterType<AppointmentsViewModel>().SingleInstance();
+            builder.RegisterType<FavouritesViewModel>().SingleInstance();
+            builder.RegisterType<SearchViewModel>().SingleInstance();
+            builder.RegisterType<AccountViewModel>().SingleInstance();
 
             // Register Services
             builder.RegisterType<LocalizedStringsService>().SingleInstance();
@@ -54,6 +62,10 @@ namespace MyStyleApp
             viewFactory.Register<StartViewModel, StartView>();
             viewFactory.Register<LoginViewModel, LoginView>();
             viewFactory.Register<MainViewModel, MainView>();
+            viewFactory.Register<AppointmentsViewModel, AppointmentsView>();
+            viewFactory.Register<FavouritesViewModel, FavouritesView>();
+            viewFactory.Register<SearchViewModel, SearchView>();
+            viewFactory.Register<AccountViewModel, AccountView>();
         }
 
         protected override void ConfigureApplication(IContainer container)
@@ -61,7 +73,8 @@ namespace MyStyleApp
             // First view to show
             var viewFactory = container.Resolve<IViewFactory>();
             var mainPage = viewFactory.Resolve<StartViewModel>();
-            this._app.MainPage = mainPage;
+            var navigationPage = new CustomNavigationPage(mainPage);
+            this._app.MainPage = navigationPage;
         }
     }
 }

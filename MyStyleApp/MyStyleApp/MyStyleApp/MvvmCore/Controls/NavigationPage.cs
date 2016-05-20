@@ -21,7 +21,7 @@
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
-			var vm = CurrentPage.BindingContext as IViewModel;
+            var vm = CurrentPage.BindingContext as IViewModel;
 			if (vm != null)
 			{
 				vm.OnAppearing();

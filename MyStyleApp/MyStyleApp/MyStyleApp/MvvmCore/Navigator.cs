@@ -24,6 +24,26 @@ namespace XamarinFormsAutofacMvvmStarterKit
                 TViewModel viewModel;
                 var view = _viewFactory.Resolve<TViewModel>(out viewModel, setStateAction);
                 Application.Current.MainPage = view;
+
+                if (viewModel is TabbedViewModelBase)
+                {
+                    var children = (viewModel as TabbedViewModelBase).Children;
+                    foreach (IViewModel child in children)
+                    {
+                        var childView = _viewFactory.Resolve(child);
+                        NavigationPage.SetHasNavigationBar(childView, false);
+                        if (view is TabbedPage)
+                        {
+                            var tabbedPage = (view as TabbedPage);
+                            tabbedPage.Children.Add(new NavigationPage(childView)
+                            {
+                                Title = childView.Title,
+                                Icon = childView.Icon
+                            });
+                        }
+                    }
+                }
+
                 tcs.SetResult(viewModel);
             });
             return tcs.Task;

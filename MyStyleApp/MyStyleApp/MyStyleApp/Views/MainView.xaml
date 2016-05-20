@@ -1,10 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MyStyleApp.Views.MainView"
-             Padding="{StaticResource PagePadding}">
-  <StackLayout>
-    <Label Text="{Binding WelcomeUser}" VerticalOptions="Center" HorizontalOptions="Center" Style="{StaticResource LargeTextStyle1}" />
-    <Button Text="{Binding LocalizedStrings[logout]}" Command="{Binding LogoutCommand}" />
-  </StackLayout>
-</ContentPage>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="MyStyleApp.Views.MainView"
+            xmlns:views="clr-namespace:MyStyleApp.Views"
+            Padding="{StaticResource PagePadding}">
+  <!--<views:CustomNavigationPage Title="{Binding LocalizedStrings[appointments]}" Icon="Calendar.png">
+    <x:Arguments>
+      <views:AppointmentsView Title="{Binding LocalizedStrings[appointments]}" />
+    </x:Arguments>
+  </views:CustomNavigationPage>
+  <views:CustomNavigationPage Title="{Binding LocalizedStrings[favourites]}" Icon="Star.png">
+    <x:Arguments>
+      <views:FavouritesView Title="{Binding LocalizedStrings[favourites]}" />
+    </x:Arguments>
+  </views:CustomNavigationPage>
+  <views:CustomNavigationPage Title="{Binding LocalizedStrings[search]}" Icon="Search.png">
+    <x:Arguments>
+      <views:SearchView Title="{Binding LocalizedStrings[search]}" />
+    </x:Arguments>
+  </views:CustomNavigationPage>
+  <views:CustomNavigationPage Title="{Binding LocalizedStrings[my_account]}" Icon="User.png">
+    <x:Arguments>
+      <views:AccountView Title="{Binding LocalizedStrings[my_account]}" />
+    </x:Arguments>
+  </views:CustomNavigationPage>-->
+</TabbedPage>

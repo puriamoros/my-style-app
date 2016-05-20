@@ -98,9 +98,6 @@ namespace MyStyleApp.ViewModels
             // Password
             this._validationService.AddValidator(
                 new RequiredValidator(this.Password, STRING_PASSWORD));
-            this._validationService.AddValidator(
-                new LengthValidator(
-                    this.Password, STRING_PASSWORD, 2, 2));
 
             return this._validationService.GetValidationError();
         }
@@ -120,8 +117,7 @@ namespace MyStyleApp.ViewModels
             try
             {
                 await this._usersService.Login(this.Email, this.Password, this.RememberMe);
-                await this.Navigator.SetMainPage<MainViewModel>(
-                    (vm) => ((MainViewModel)vm).Initialize());
+                await this.Navigator.SetMainPage<MainViewModel>();
             }
             catch (Exception)
             {
@@ -136,6 +132,16 @@ namespace MyStyleApp.ViewModels
         private async Task NewAccount()
         {
             //await this.Navigator.PushAsync<MainViewModel>();
+        }
+
+        public override void OnAppearing()
+        {
+            base.OnAppearing();
+        }
+
+        public override void OnPushed()
+        {
+            base.OnPushed();
         }
     }
 }

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="appointments" xml:space="preserve">
+    <value>Appointments</value>
+  </data>
   <data name="create_account" xml:space="preserve">
     <value>Create an account</value>
   </data>
@@ -153,6 +156,9 @@
   <data name="error_required_field" xml:space="preserve">
     <value>The field "${FIELD_NAME}" is required</value>
   </data>
+  <data name="favourites" xml:space="preserve">
+    <value>Favourites</value>
+  </data>
   <data name="login" xml:space="preserve">
     <value>Login</value>
   </data>
@@ -161,6 +167,9 @@
   </data>
   <data name="logout" xml:space="preserve">
     <value>Logout</value>
+  </data>
+  <data name="my_account" xml:space="preserve">
+    <value>My account</value>
   </data>
   <data name="no_account" xml:space="preserve">
     <value>Don't have an account?</value>
@@ -173,6 +182,9 @@
   </data>
   <data name="remember_me" xml:space="preserve">
     <value>Remember me</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Search</value>
   </data>
   <data name="waiting" xml:space="preserve">
     <value>...waiting...</value>

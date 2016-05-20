@@ -71,7 +71,7 @@ namespace XamarinFormsAutofacMvvmStarterKit
 		public Page Resolve<TViewModel>(TViewModel viewModel) 
 			where TViewModel : class, IViewModel 
 		{
-			var viewType = _map[typeof(TViewModel)];
+			var viewType = _map[viewModel.GetType()];
 			var view = _componentContext.Resolve(viewType) as Page;
 			view.BindingContext = viewModel;
 			return view;

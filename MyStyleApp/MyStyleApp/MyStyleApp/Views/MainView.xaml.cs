@@ -23,16 +23,17 @@ namespace MyStyleApp.Views
         //{
         //    InitializeComponent();
 
-        //    this.AddNavigationChild(appointmentsView, "LocalizedStrings[appointments]");
-        //    this.AddNavigationChild(favouritesView, "LocalizedStrings[favourites]");
-        //    this.AddNavigationChild(searchView, "LocalizedStrings[search]");
-        //    this.AddNavigationChild(accountView, "LocalizedStrings[my_account]");
+        //    this.AddNavigationChild(appointmentsView, "LocalizedStrings[appointments]", "Calendar.png");
+        //    this.AddNavigationChild(favouritesView, "LocalizedStrings[favourites]", "Star.png");
+        //    this.AddNavigationChild(searchView, "LocalizedStrings[search]", "Search.png");
+        //    this.AddNavigationChild(accountView, "LocalizedStrings[my_account]", "User.png");
         //}
 
-        //private void AddNavigationChild(Page view, string titleBindingExpression)
+        //private void AddNavigationChild(Page view, string titleBinding, string iconBinding)
         //{
         //    var nav = new CustomNavigationPage(view);
-        //    nav.SetBinding(CustomNavigationPage.TitleProperty, titleBindingExpression);
+        //    nav.SetBinding(CustomNavigationPage.TitleProperty, titleBinding);
+        //    nav.SetBinding(CustomNavigationPage.IconProperty, iconBinding);
         //    this.Children.Add(nav);
         //}
     }

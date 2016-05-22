@@ -15,11 +15,25 @@ namespace MyStyleApp.Views
             InitializeComponent();
         }
 
-        //protected override bool OnBackButtonPressed()
+        //public MainView(
+        //    AppointmentsView appointmentsView,
+        //    FavouritesView favouritesView,
+        //    SearchView searchView,
+        //    AccountView accountView)
         //{
-        //    // Disable hardware back button
-        //    return true;
-        //    //return base.OnBackButtonPressed();
+        //    InitializeComponent();
+
+        //    this.AddNavigationChild(appointmentsView, "LocalizedStrings[appointments]");
+        //    this.AddNavigationChild(favouritesView, "LocalizedStrings[favourites]");
+        //    this.AddNavigationChild(searchView, "LocalizedStrings[search]");
+        //    this.AddNavigationChild(accountView, "LocalizedStrings[my_account]");
+        //}
+
+        //private void AddNavigationChild(Page view, string titleBindingExpression)
+        //{
+        //    var nav = new CustomNavigationPage(view);
+        //    nav.SetBinding(CustomNavigationPage.TitleProperty, titleBindingExpression);
+        //    this.Children.Add(nav);
         //}
     }
 }

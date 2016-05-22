@@ -4,7 +4,7 @@ using XamarinFormsAutofacMvvmStarterKit;
 
 namespace MyStyleApp.ViewModels
 {
-    public class AccountViewModel : ViewModelBase
+    public class AccountViewModel : NavigableViewModelBase
     {
         public AccountViewModel(
             INavigator navigator,

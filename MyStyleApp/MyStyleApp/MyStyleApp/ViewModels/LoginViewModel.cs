@@ -12,7 +12,7 @@ using XamarinFormsAutofacMvvmStarterKit;
 
 namespace MyStyleApp.ViewModels
 {
-    public class LoginViewModel : ViewModelBase
+    public class LoginViewModel : NavigableViewModelBase
     {
         private const string STRING_ERROR_INVALID_FIELD = "error_invalid_field";
         private const string STRING_ERROR_INSECURE_CHARS = "error_insecure_chars";
@@ -117,7 +117,7 @@ namespace MyStyleApp.ViewModels
             try
             {
                 await this._usersService.Login(this.Email, this.Password, this.RememberMe);
-                await this.Navigator.SetMainPage<MainViewModel>();
+                await this.SetMainPage<MainViewModel>();
             }
             catch (Exception)
             {
@@ -131,17 +131,7 @@ namespace MyStyleApp.ViewModels
 
         private async Task NewAccount()
         {
-            //await this.Navigator.PushAsync<MainViewModel>();
-        }
-
-        public override void OnAppearing()
-        {
-            base.OnAppearing();
-        }
-
-        public override void OnPushed()
-        {
-            base.OnPushed();
+            //await this.PushAsync<MainViewModel>();
         }
     }
 }

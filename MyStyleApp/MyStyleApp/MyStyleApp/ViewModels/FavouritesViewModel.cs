@@ -5,7 +5,7 @@ using XamarinFormsAutofacMvvmStarterKit;
 
 namespace MyStyleApp.ViewModels
 {
-    public class FavouritesViewModel : ViewModelBase
+    public class FavouritesViewModel : NavigableViewModelBase
     {
         public FavouritesViewModel(
             INavigator navigator,

@@ -5,8 +5,7 @@
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
              xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}"
-             Title="{Binding LocalizedStrings[appointments]}" Icon="Calendar.png"
-             NavigationPage.HasNavigationBar="False">
+             Title="{Binding LocalizedStrings[appointments]}" Icon="Calendar.png">
   <ScrollView>
     <Grid>
       <Button

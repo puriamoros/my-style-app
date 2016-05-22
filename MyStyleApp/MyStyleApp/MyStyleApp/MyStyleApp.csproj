@@ -47,7 +47,6 @@
     <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\BackendError.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="MvvmCore\TabbedViewModelBase.cs" />
     <Compile Include="Services\Backend\BackendServiceBase.cs" />
     <Compile Include="Services\Backend\UsersService.cs" />
     <Compile Include="Services\HttpService.cs" />
@@ -96,7 +95,6 @@
     <Compile Include="ViewModels\FavouritesViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="ViewModels\StartViewModel.cs" />
-    <Compile Include="ViewModels\TabbedViewModelBase.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

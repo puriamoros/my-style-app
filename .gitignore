@@ -12,3 +12,4 @@ WinPhoneUITests/.vs
 WinPhoneUITests/WinPhoneUITests/bin
 WinPhoneUITests/WinPhoneUITests/obj
 *.csproj.user
+Thumbs.db

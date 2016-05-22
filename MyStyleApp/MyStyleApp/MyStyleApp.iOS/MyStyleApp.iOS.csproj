@@ -197,7 +197,7 @@
     <BundleResource Include="Resources\Calendar.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Calendar-100.png" />
+    <BundleResource Include="Resources\Calendar%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\CalendarFilled.png" />

@@ -4,8 +4,7 @@
              x:Class="MyStyleApp.Views.FavouritesView"
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
              Padding="{StaticResource PagePadding}"
-             Title="{Binding LocalizedStrings[favourites]}" Icon="Star.png"
-             NavigationPage.HasNavigationBar="False">
+             Title="{Binding LocalizedStrings[favourites]}" Icon="Star.png">
   <ScrollView>
     <Grid>
       <!-- Put the page contents here -->

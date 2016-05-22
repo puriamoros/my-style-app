@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Xamarin.Forms;
 
 namespace XamarinFormsAutofacMvvmStarterKit
 {
@@ -21,7 +22,9 @@ namespace XamarinFormsAutofacMvvmStarterKit
 			action(this as T);
 		}
 
-		protected virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
+        public INavigation Navigation { get; set; }
+
+        protected virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
 		{
 			if (object.Equals(storage, value)) return false;
 

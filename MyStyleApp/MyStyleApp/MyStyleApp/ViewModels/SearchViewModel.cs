@@ -4,7 +4,7 @@ using XamarinFormsAutofacMvvmStarterKit;
 
 namespace MyStyleApp.ViewModels
 {
-    public class SearchViewModel : ViewModelBase
+    public class SearchViewModel : NavigableViewModelBase
     {
         public SearchViewModel(
             INavigator navigator,

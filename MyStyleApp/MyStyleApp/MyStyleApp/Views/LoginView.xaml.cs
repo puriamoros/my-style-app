@@ -13,7 +13,10 @@ namespace MyStyleApp.Views
         public LoginView()
         {
             InitializeComponent();
-            NavigationPage.SetHasNavigationBar(this, false);
+            if (Device.OS != TargetPlatform.iOS)
+            {
+                NavigationPage.SetHasNavigationBar(this, false);
+            }
         }
 
         //protected override bool OnBackButtonPressed()

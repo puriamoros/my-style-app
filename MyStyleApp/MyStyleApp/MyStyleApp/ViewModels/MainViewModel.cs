@@ -10,24 +10,13 @@ using XamarinFormsAutofacMvvmStarterKit;
 
 namespace MyStyleApp.ViewModels
 {
-    public class MainViewModel : TabbedViewModelBase
+    public class MainViewModel : NavigableViewModelBase
     {
         public MainViewModel(
             INavigator navigator,
-            LocalizedStringsService localizedStringsService,
-            AppointmentsViewModel appointmentsViewModel,
-            FavouritesViewModel favouritesViewModel,
-            SearchViewModel searchViewModel,
-            AccountViewModel accountViewModel) : 
+            LocalizedStringsService localizedStringsService) : 
             base(navigator, localizedStringsService)
         {
-            var childViewModels = new List<IViewModel>(4);
-            childViewModels.Add(appointmentsViewModel);
-            childViewModels.Add(favouritesViewModel);
-            childViewModels.Add(searchViewModel);
-            childViewModels.Add(accountViewModel);
-
-            this.Children = childViewModels;
         }
     }
 }

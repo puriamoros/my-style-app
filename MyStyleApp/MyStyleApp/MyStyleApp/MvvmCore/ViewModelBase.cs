@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 
-namespace XamarinFormsAutofacMvvmStarterKit
+namespace MvvmCore
 {
 	public abstract class ViewModelBase : IViewModel
 	{

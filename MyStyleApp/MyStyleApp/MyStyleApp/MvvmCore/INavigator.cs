@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace XamarinFormsAutofacMvvmStarterKit
+namespace MvvmCore
 {
 	public interface INavigator
 	{

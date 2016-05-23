@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MyStyleApp.Services;
-using XamarinFormsAutofacMvvmStarterKit;
+using MvvmCore;
 
 namespace MyStyleApp.ViewModels
 {
@@ -8,8 +8,9 @@ namespace MyStyleApp.ViewModels
     {
         public SearchViewModel(
             INavigator navigator,
+            IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService) :
-            base(navigator, localizedStringsService)
+            base(navigator, userNotificator, localizedStringsService)
         {
         }
     }

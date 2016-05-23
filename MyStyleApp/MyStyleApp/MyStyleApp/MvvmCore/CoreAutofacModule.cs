@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Xamarin.Forms;
 
-namespace XamarinFormsAutofacMvvmStarterKit
+namespace MvvmCore
 {
 	class CoreAutofacModule : Module
 	{
@@ -16,7 +16,11 @@ namespace XamarinFormsAutofacMvvmStarterKit
 				.As<INavigator>()
 				.SingleInstance();
 
-			builder.RegisterType<XamarinDeviceService>()
+            builder.RegisterType<UserNotificator>()
+                .As<IUserNotificator>()
+                .SingleInstance();
+
+            builder.RegisterType<XamarinDeviceService>()
 				.As<IDeviceService>()
 				.SingleInstance();
 

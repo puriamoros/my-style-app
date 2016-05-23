@@ -41,12 +41,18 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Constants\BackendConstants.cs" />
     <Compile Include="Constants\RegexConstants.cs" />
+    <Compile Include="Converters\ItemTappedEventArgsConverter.cs" />
     <Compile Include="Converters\StringToBoolConverter.cs" />
     <Compile Include="Exceptions\BackendException.cs" />
     <Compile Include="Models\ApiKey.cs" />
     <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\BackendError.cs" />
+    <Compile Include="Models\Favourite.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="MvvmCore\Behaviors\BindableBehavior.cs" />
+    <Compile Include="MvvmCore\Behaviors\EventToCommandBehavior.cs" />
+    <Compile Include="MvvmCore\IUserNotificator.cs" />
+    <Compile Include="MvvmCore\UserNotificator.cs" />
     <Compile Include="Services\Backend\BackendServiceBase.cs" />
     <Compile Include="Services\Backend\UsersService.cs" />
     <Compile Include="Services\HttpService.cs" />
@@ -95,7 +101,7 @@
     <Compile Include="ViewModels\FavouritesViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="ViewModels\StartViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewModels\NavigagleViewModelBase.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\AccountView.xaml.cs">

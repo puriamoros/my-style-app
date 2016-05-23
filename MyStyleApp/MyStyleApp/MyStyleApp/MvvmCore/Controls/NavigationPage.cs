@@ -1,4 +1,4 @@
-﻿namespace XamarinFormsAutofacMvvmStarterKit
+﻿namespace MvvmCore
 {
 	public class NavigationPage : Xamarin.Forms.NavigationPage
 	{

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using Xamarin.Forms;
 
-namespace XamarinFormsAutofacMvvmStarterKit
+namespace MvvmCore
 {
 	public interface IViewModel : INotifyPropertyChanged
 	{

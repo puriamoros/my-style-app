@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using XamarinFormsAutofacMvvmStarterKit;
+using MvvmCore;
 using MyStyleApp.ViewModels;
 using MyStyleApp.Views;
 using Xamarin.Forms;

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace XamarinFormsAutofacMvvmStarterKit
+namespace MvvmCore
 {
 	public abstract class CoreAutofacBootstrapper
 	{

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
 
-namespace XamarinFormsAutofacMvvmStarterKit
+namespace MvvmCore
 {
 	public class ViewFactory : IViewFactory
 	{
@@ -16,7 +16,7 @@ namespace XamarinFormsAutofacMvvmStarterKit
 		{
 			_componentContext = componentContext;
 			_registry = new Dictionary<IViewModel, Action>();
-			Xamarin.Forms.MessagingCenter.Subscribe<XamarinFormsAutofacMvvmStarterKit.NavigationPage, IViewModel>(this
+			Xamarin.Forms.MessagingCenter.Subscribe<MvvmCore.NavigationPage, IViewModel>(this
 				, "IViewModelPopped"
 				, (s, vm) => Dispose(vm));
 		}

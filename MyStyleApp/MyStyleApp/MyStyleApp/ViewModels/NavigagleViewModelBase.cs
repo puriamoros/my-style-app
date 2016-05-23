@@ -1,6 +1,6 @@
 ﻿using MyStyleApp.Services;
 using System.Threading.Tasks;
-using XamarinFormsAutofacMvvmStarterKit;
+using MvvmCore;
 using System;
 using Xamarin.Forms;
 
@@ -11,12 +11,15 @@ namespace MyStyleApp.ViewModels
         private bool _isBusy;
         private LocalizedStringsService _localizedStringsService;
         private INavigator _navigator;
+        private IUserNotificator _userNotificator;
 
         public NavigableViewModelBase(
             INavigator navigator,
+            IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService) : base()
         {
             this._navigator = navigator;
+            this._userNotificator = userNotificator;
             this._localizedStringsService = localizedStringsService;
         }
 
@@ -31,6 +34,14 @@ namespace MyStyleApp.ViewModels
             get
             {
                 return this._navigator;
+            }
+        }
+
+        public IUserNotificator UserNotificator
+        {
+            get
+            {
+                return this._userNotificator;
             }
         }
 

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace MyStyleApp.Views
 {
     public partial class MainView : TabbedPage
     {
+        private const string CURRENT_TOKEN = "Filled";
         public MainView()
         {
             InitializeComponent();
@@ -29,12 +24,36 @@ namespace MyStyleApp.Views
         //    this.AddNavigationChild(accountView, "LocalizedStrings[my_account]", "User.png");
         //}
 
-        //private void AddNavigationChild(Page view, string titleBinding, string iconBinding)
+        //private void AddNavigationChild(Page view, string titleBinding, string icon)
         //{
         //    var nav = new CustomNavigationPage(view);
         //    nav.SetBinding(CustomNavigationPage.TitleProperty, titleBinding);
-        //    nav.SetBinding(CustomNavigationPage.IconProperty, iconBinding);
+        //    nav.Icon = icon;
         //    this.Children.Add(nav);
         //}
+
+        protected override void OnCurrentPageChanged()
+        {
+            base.OnCurrentPageChanged();
+
+            foreach(var child in this.Children)
+            {
+                SetIcon(child, child == this.CurrentPage);
+            }
+        }
+
+        private void SetIcon(Page page, bool isCurrentPage)
+        {
+            string icon = page.Icon;
+            if(!isCurrentPage && icon.Contains(CURRENT_TOKEN))
+            {
+                page.Icon = icon.Replace(CURRENT_TOKEN, "");
+            }
+            else if(isCurrentPage && !icon.Contains(CURRENT_TOKEN))
+            {
+                int pos = icon.LastIndexOf(".");
+                page.Icon = icon.Substring(0, pos) + CURRENT_TOKEN + icon.Substring(pos);
+            }
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using XamarinFormsAutofacMvvmStarterKit;
+using MvvmCore;
 
 namespace MyStyleApp.ViewModels
 {
@@ -14,8 +14,9 @@ namespace MyStyleApp.ViewModels
     {
         public MainViewModel(
             INavigator navigator,
+            IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService) : 
-            base(navigator, localizedStringsService)
+            base(navigator, userNotificator, localizedStringsService)
         {
         }
     }

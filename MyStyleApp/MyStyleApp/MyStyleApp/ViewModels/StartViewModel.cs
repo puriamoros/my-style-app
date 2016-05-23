@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MyStyleApp.Services;
-using XamarinFormsAutofacMvvmStarterKit;
+using MvvmCore;
 using MyStyleApp.Services.Backend;
 
 namespace MyStyleApp.ViewModels
@@ -15,9 +15,10 @@ namespace MyStyleApp.ViewModels
 
         public StartViewModel(
             INavigator navigator,
+            IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
             IUsersService usersService) :
-            base(navigator, localizedStringsService)
+            base(navigator, userNotificator, localizedStringsService)
         {
             this._usersService = usersService;
         }

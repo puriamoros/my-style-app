@@ -110,6 +110,7 @@
     <Compile Include="Views\AppointmentsView.xaml.cs">
       <DependentUpon>AppointmentsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\CustomButton.cs" />
     <Compile Include="Views\Controls\WaitingOverlayControl.xaml.cs">
       <DependentUpon>WaitingOverlayControl.xaml</DependentUpon>
     </Compile>

@@ -8,10 +8,11 @@
              Title="{Binding LocalizedStrings[appointments]}" Icon="Calendar.png">
   <ScrollView>
     <Grid>
-      <Button
-            Text="{Binding LocalizedStrings[create_account]}"
+      <StackLayout Padding="{StaticResource PageContentPadding}" >
+        <controls:CustomButton
+            Text="{Binding LocalizedStrings[logout]}"
             Command="{Binding NewAccountCommand}" />
-      <!-- Put the page contents here -->
+      </StackLayout>
       <controls:WaitingOverlayControl
         IsVisible="{Binding IsBusy}"
         Text="{Binding LocalizedStrings[waiting]}"/>

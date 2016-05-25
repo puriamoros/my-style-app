@@ -55,8 +55,7 @@
     <CodesignKey>iPhone Developer: helio.huete@gmail.com (73M24TJJH2)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>
-    </CodesignProvision>
+    <CodesignProvision>5e92b617-e65b-489b-8990-c023bf38b982</CodesignProvision>
     <CodesignResourceRules />
     <CodesignExtraArgs />
   </PropertyGroup>
@@ -161,10 +160,10 @@
     <BundleResource Include="Resources\Search%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Search-Filled.png" />
+    <BundleResource Include="Resources\SearchFilled.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Search-Filled%402x.png" />
+    <BundleResource Include="Resources\SearchFilled%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Star.png" />
@@ -173,10 +172,10 @@
     <BundleResource Include="Resources\Star%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Star-Filled.png" />
+    <BundleResource Include="Resources\StarFilled.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Star-Filled%402x.png" />
+    <BundleResource Include="Resources\StarFilled%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\User.png" />
@@ -185,10 +184,10 @@
     <BundleResource Include="Resources\User%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\User-Filled.png" />
+    <BundleResource Include="Resources\UserFilled.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\User-Filled%402x.png" />
+    <BundleResource Include="Resources\UserFilled%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\CalendarFilled%402x.png" />

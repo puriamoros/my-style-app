@@ -37,7 +37,7 @@
             IsToggled="{Binding RememberMe}"/>
         </StackLayout>
         <StackLayout Spacing="5">
-          <Button
+          <controls:CustomButton
             Text="{Binding LocalizedStrings[do_login]}"
             Command="{Binding LoginCommand}" />
           <Label
@@ -50,7 +50,7 @@
           <Label
            Text="{Binding LocalizedStrings[no_account]}"
            Style="{StaticResource MediumTextStyle}" />
-          <Button
+          <controls:CustomButton
             Text="{Binding LocalizedStrings[create_account]}"
             Command="{Binding NewAccountCommand}" />
         </StackLayout>

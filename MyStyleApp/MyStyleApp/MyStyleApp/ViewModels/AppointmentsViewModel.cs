@@ -3,6 +3,7 @@ using MyStyleApp.Services;
 using MvvmCore;
 using System.Windows.Input;
 using Xamarin.Forms;
+using MyStyleApp.Services.Backend;
 
 namespace MyStyleApp.ViewModels
 {
@@ -10,18 +11,23 @@ namespace MyStyleApp.ViewModels
     {
         public ICommand NewAccountCommand { get; private set; }
 
+        private IUsersService _userService;
+
         public AppointmentsViewModel(
             INavigator navigator,
             IUserNotificator userNotificator,
-            LocalizedStringsService localizedStringsService) :
+            LocalizedStringsService localizedStringsService,
+            IUsersService userService) :
             base(navigator, userNotificator, localizedStringsService)
         {
+            this._userService = userService;
             this.NewAccountCommand = new Command(async () => await NewAccount());
         }
 
         private async Task NewAccount()
         {
-            await this.PushAsync<LoginViewModel>();
+            await this._userService.Logout();
+            await this.SetMainPage<LoginViewModel>();
         }
     }
 }

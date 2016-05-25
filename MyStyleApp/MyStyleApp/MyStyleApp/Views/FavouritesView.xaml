@@ -7,38 +7,43 @@
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[favourites]}" Icon="Star.png">
   <Grid>
-    <!-- Without HasUnevenRows="True", list items does not render well in Android -->
-    <ListView ItemsSource="{Binding FavouritesList}" HasUnevenRows="True" x:Name="FavouritesList">
-      <!--<ListView.Behaviors>
+    <Grid Padding="{StaticResource PageContentPadding}">
+      <!-- Without HasUnevenRows="True", list items does not render well in Android -->
+      <ListView
+        ItemsSource="{Binding FavouritesList}"
+        HasUnevenRows="True"
+        x:Name="FavouritesList">
+        <!--<ListView.Behaviors>
         <mvvmcorebehaviors:EventToCommandBehavior
           EventName="ItemTapped"
           Command="{Binding FavouriteTappedCommand}"
           EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
       </ListView.Behaviors>-->
-      <ListView.ItemTemplate>
-        <DataTemplate>
-          <!-- This does not need behaviors but needs a x:Name for the ListView -->
-          <TextCell x:Name="Favourite"
-            Text="{Binding Name}"
-            Detail="{Binding Description}"
-            Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.FavouriteTappedCommand}"
-            CommandParameter="{Binding}">
-            <TextCell.ContextActions>
-              <MenuItem Text="Tap"
-                Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.FavouriteTappedCommand}"
-                CommandParameter="{Binding Source={x:Reference Favourite}, Path=BindingContext}" />
-            </TextCell.ContextActions>
-          </TextCell>
-          <!-- This needs behaviors -->
-          <!--<ViewCell>
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <!-- This does not need behaviors but needs a x:Name for the ListView -->
+            <TextCell x:Name="Favourite"
+              Text="{Binding Name}"
+              Detail="{Binding Description}"
+              Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.FavouriteTappedCommand}"
+              CommandParameter="{Binding}">
+              <TextCell.ContextActions>
+                <MenuItem Text="Tap"
+                  Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.FavouriteTappedCommand}"
+                  CommandParameter="{Binding Source={x:Reference Favourite}, Path=BindingContext}" />
+              </TextCell.ContextActions>
+            </TextCell>
+            <!-- This needs behaviors -->
+            <!--<ViewCell>
             <StackLayout Spacing="2" Padding="0,5,0,5" VerticalOptions="StartAndExpand" >
               <Label Text="{Binding Name}" Style="{StaticResource LargeTextStyle}" />
               <Label Text="{Binding Description}" Style="{StaticResource MediumTextStyle}" />
             </StackLayout>
           </ViewCell>-->
-        </DataTemplate>
-      </ListView.ItemTemplate>
-    </ListView>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </Grid>
     <controls:WaitingOverlayControl
       IsVisible="{Binding IsBusy}"
       Text="{Binding LocalizedStrings[waiting]}"/>

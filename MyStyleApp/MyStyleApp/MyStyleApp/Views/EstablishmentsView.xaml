@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:CustomContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MyStyleApp.Views.FavouritesView"
+             x:Class="MyStyleApp.Views.EstablishmentsView"
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
-             xmlns:views="clr-namespace:MyStyleApp.Views"
              xmlns:mvvmcorebehaviors="clr-namespace:MvvmCore.Behaviors"
+             xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}"
-             Title="{Binding LocalizedStrings[favourites]}" Icon="Star.png">
+             Title="{Binding LocalizedStrings[establishments]}">
   <Grid>
     <Grid Padding="{StaticResource PageContentPadding}">
       <!-- Without HasUnevenRows="True", list items does not render well in Android -->
       <ListView
-        ItemsSource="{Binding FavouritesList}"
+        ItemsSource="{Binding EstablishmentsList}"
         HasUnevenRows="True"
-        x:Name="FavouritesList">
+        x:Name="EstablishmentsList">
         <!--<ListView.Behaviors>
         <mvvmcorebehaviors:EventToCommandBehavior
           EventName="ItemTapped"
@@ -23,15 +23,15 @@
         <ListView.ItemTemplate>
           <DataTemplate>
             <!-- This does not need behaviors but needs a x:Name for the ListView -->
-            <TextCell x:Name="Favourite"
+            <TextCell x:Name="Establishment"
               Text="{Binding Name}"
-              Detail="{Binding Description}"
-              Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.FavouriteTappedCommand}"
+              Detail="{Binding Address}"
+              Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.EstablishmentTappedCommand}"
               CommandParameter="{Binding}">
               <TextCell.ContextActions>
                 <MenuItem Text="Tap"
-                  Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.FavouriteTappedCommand}"
-                  CommandParameter="{Binding Source={x:Reference Favourite}, Path=BindingContext}" />
+                  Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.EstablishmentTappedCommand}"
+                  CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
               </TextCell.ContextActions>
             </TextCell>
             <!-- This needs behaviors -->

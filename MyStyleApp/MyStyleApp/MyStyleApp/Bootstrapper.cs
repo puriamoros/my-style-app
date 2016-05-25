@@ -30,6 +30,7 @@ namespace MyStyleApp
             builder.RegisterType<FavouritesView>().SingleInstance();
             builder.RegisterType<SearchView>().SingleInstance();
             builder.RegisterType<AccountView>().SingleInstance();
+            builder.RegisterType<EstablishmentsView>().SingleInstance();
 
             // Register ViewModels
             builder.RegisterType<StartViewModel>().SingleInstance();
@@ -39,6 +40,7 @@ namespace MyStyleApp
             builder.RegisterType<FavouritesViewModel>().SingleInstance();
             builder.RegisterType<SearchViewModel>().SingleInstance();
             builder.RegisterType<AccountViewModel>().SingleInstance();
+            builder.RegisterType<EstablishmentsViewModel>().SingleInstance();
 
             // Register Services
             builder.RegisterType<LocalizedStringsService>().SingleInstance();
@@ -66,6 +68,7 @@ namespace MyStyleApp
             viewFactory.Register<FavouritesViewModel, FavouritesView>();
             viewFactory.Register<SearchViewModel, SearchView>();
             viewFactory.Register<AccountViewModel, AccountView>();
+            viewFactory.Register<EstablishmentsViewModel, EstablishmentsView>();
         }
 
         protected override void ConfigureApplication(IContainer container)
@@ -73,8 +76,7 @@ namespace MyStyleApp
             // First view to show
             var viewFactory = container.Resolve<IViewFactory>();
             var mainPage = viewFactory.Resolve<StartViewModel>();
-            var navigationPage = new CustomNavigationPage(mainPage);
-            this._app.MainPage = navigationPage;
+            this._app.MainPage = mainPage;
         }
     }
 }

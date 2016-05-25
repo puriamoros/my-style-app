@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<views:CustomContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyStyleApp.Views.StartView"
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
+             xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}">
   <ScrollView>
     <Grid>
@@ -12,4 +13,4 @@
         Text="{Binding LocalizedStrings[waiting]}"/>
     </Grid>
   </ScrollView>
-</ContentPage>
+</views:CustomContentPage>

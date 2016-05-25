@@ -29,14 +29,6 @@ namespace MyStyleApp.ViewModels
             set { SetProperty(ref _isBusy, value); }
         }
 
-        public INavigator Navigator
-        {
-            get
-            {
-                return this._navigator;
-            }
-        }
-
         public IUserNotificator UserNotificator
         {
             get

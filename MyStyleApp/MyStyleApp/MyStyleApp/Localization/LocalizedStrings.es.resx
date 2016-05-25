@@ -156,6 +156,9 @@
   <data name="error_required_field" xml:space="preserve">
     <value>El campo "${FIELD_NAME}" es obligatorio</value>
   </data>
+  <data name="establishments" xml:space="preserve">
+    <value>Establecimientos</value>
+  </data>
   <data name="favourites" xml:space="preserve">
     <value>Favoritos</value>
   </data>

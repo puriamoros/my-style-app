@@ -21,10 +21,10 @@ namespace MyStyleApp.ViewModels
             base(navigator, userNotificator, localizedStringsService)
         {
             this._userService = userService;
-            this.NewAccountCommand = new Command(async () => await NewAccount());
+            this.NewAccountCommand = new Command(this.NewAccount);
         }
 
-        private async Task NewAccount()
+        private async void NewAccount()
         {
             await this._userService.Logout();
             await this.SetMainPage<LoginViewModel>();

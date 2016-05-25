@@ -146,9 +146,12 @@ namespace MvvmCore
                 else if (view is NavigationPage)
                 {
                     var navPage = (view as NavigationPage);
-                    children = new List<Page>(1);
-                    // TODO: how to get the child page?!?!?!
-                    children.Add(navPage.CurrentPage);
+                    if(navPage.CurrentPage != null)
+                    {
+                        children = new List<Page>(1);
+                        // TODO: how to get the child page?!?!?!
+                        children.Add(navPage.CurrentPage);
+                    }
                 }
 
                 if (children != null)

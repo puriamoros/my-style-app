@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace MyStyleApp.Views
 {
-    public partial class FavouritesView : ContentPage
+    public partial class FavouritesView : CustomContentPage
     {
         public FavouritesView()
         {

@@ -21,8 +21,8 @@
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
-            var vm = CurrentPage.BindingContext as IViewModel;
-			if (vm != null)
+            var vm = this.CurrentPage.BindingContext as IViewModel;
+            if (vm != null)
 			{
 				vm.OnAppearing();
 			}
@@ -31,8 +31,8 @@
 		protected override void OnDisappearing()
 		{
 			base.OnDisappearing();
-			var vm = CurrentPage.BindingContext as IViewModel;
-			if (vm != null)
+            var vm = this.CurrentPage.BindingContext as IViewModel;
+            if (vm != null)
 			{
 				vm.OnDisappearing();
 			}

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using MyStyleApp.Services;
 using MvvmCore;
@@ -21,13 +18,14 @@ namespace MyStyleApp.ViewModels
             base(navigator, userNotificator, localizedStringsService)
         {
             this._usersService = usersService;
-        }
-
-        public override void OnAppearing()
-        {
-            base.OnAppearing();
             this.NavigateToMainPage();
         }
+
+        //public override void OnAppearing()
+        //{
+        //    base.OnAppearing();
+        //    this.NavigateToMainPage();
+        //}
 
         public async void NavigateToMainPage()
         {

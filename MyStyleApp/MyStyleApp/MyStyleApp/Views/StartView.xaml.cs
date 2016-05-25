@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace MyStyleApp.Views
 {
-    public partial class StartView : ContentPage
+    public partial class StartView : CustomContentPage
     {
         public StartView()
         {

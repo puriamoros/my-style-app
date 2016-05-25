@@ -179,6 +179,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Establishments.
+        /// </summary>
+        internal static string establishments {
+            get {
+                return ResourceManager.GetString("establishments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Favourites.
         /// </summary>
         internal static string favourites {

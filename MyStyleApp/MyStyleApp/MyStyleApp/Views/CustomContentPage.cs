@@ -1,15 +1,16 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace MyStyleApp.Views
 {
-    public class CustomNavigationPage : MvvmCore.NavigationPage
+    public class CustomContentPage: ContentPage
     {
-        public CustomNavigationPage() : base()
+        public CustomContentPage() : base()
         {
-        }
-
-        public CustomNavigationPage(Page root) : base (root)
-		{
         }
 
         protected override void OnAppearing()

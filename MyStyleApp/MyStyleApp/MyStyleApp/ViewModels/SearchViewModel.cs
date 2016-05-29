@@ -26,7 +26,7 @@ namespace MyStyleApp.ViewModels
             LocalizedStringsService localizedStringsService) :
             base(navigator, userNotificator, localizedStringsService)
         {
-            this.SearchCommand = new Command(this.Search);
+            this.SearchCommand = new Command(this.SearchAsync);
 
             // REMOVE!!!
             FillWithMockData();
@@ -109,7 +109,7 @@ namespace MyStyleApp.ViewModels
             }
         }
 
-        private async void Search()
+        private async void SearchAsync()
         {
             await this.PushNavPageAsync<EstablishmentsViewModel>();
         }

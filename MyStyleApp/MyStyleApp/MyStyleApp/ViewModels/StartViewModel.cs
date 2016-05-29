@@ -18,7 +18,7 @@ namespace MyStyleApp.ViewModels
             base(navigator, userNotificator, localizedStringsService)
         {
             this._usersService = usersService;
-            this.NavigateToMainPage();
+            this.NavigateToMainPageAsync();
         }
 
         //public override void OnAppearing()
@@ -27,13 +27,13 @@ namespace MyStyleApp.ViewModels
         //    this.NavigateToMainPage();
         //}
 
-        public async void NavigateToMainPage()
+        public async void NavigateToMainPageAsync()
         {
             this.IsBusy = true;
             try
             {
                 // Try getting the logged user
-                await this._usersService.Me();
+                await this._usersService.MeAsync();
 
                 // There is a logged user, go to main view
                 await this.SetMainPageAsync<MainViewModel>();

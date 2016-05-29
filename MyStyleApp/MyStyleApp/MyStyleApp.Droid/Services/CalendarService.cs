@@ -19,7 +19,7 @@ namespace MyStyleApp.Droid.Services
             _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         }
 
-        public async Task<bool> AddAppointment(CalendarAppointment appointment)
+        public async Task<bool> AddAppointmentAsync(CalendarAppointment appointment)
         {
             Intent intent = new Intent(Intent.ActionInsert);
 

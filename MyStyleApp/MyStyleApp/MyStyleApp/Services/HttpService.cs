@@ -190,7 +190,7 @@ namespace MyStyleApp.Services
             return value;
         }
 
-        public async Task SaveApiKeyAuthorization(string apiKey, bool rememberApiKey)
+        public async Task SaveApiKeyAuthorizationAsync(string apiKey, bool rememberApiKey)
         {
             this._apiKey = apiKey;
             if (rememberApiKey)
@@ -199,7 +199,7 @@ namespace MyStyleApp.Services
             }
         }
 
-        public async Task<string> GetApiKeyAuthorization()
+        public async Task<string> GetApiKeyAuthorizationAsync()
         {
             if (this._apiKey == null)
             {
@@ -216,7 +216,7 @@ namespace MyStyleApp.Services
             return string.Format(API_KEY_AUTHORIZATION, this._apiKey);
         }
 
-        public async Task DeleteApiKeyAuthorization()
+        public async Task DeleteApiKeyAuthorizationAsync()
         {
             try
             {
@@ -231,7 +231,7 @@ namespace MyStyleApp.Services
             return "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(str));
         }
 
-        public async Task Invoke(HttpMethod method, string url, string credentials, params object[] parameters)
+        public async Task InvokeAsync(HttpMethod method, string url, string credentials, params object[] parameters)
         {
             HttpClient client = null;
             HttpRequestMessage message = null;
@@ -255,7 +255,7 @@ namespace MyStyleApp.Services
             }
         }
 
-        public async Task<TResult> Invoke<TResult>(HttpMethod method, string url, string credentials, params object[] parameters)
+        public async Task<TResult> InvokeAsync<TResult>(HttpMethod method, string url, string credentials, params object[] parameters)
             where TResult: class
         {
             HttpClient client = null;
@@ -289,7 +289,7 @@ namespace MyStyleApp.Services
             }
         }
 
-        public async Task InvokeWithContent<TContent>(
+        public async Task InvokeWithContentAsync<TContent>(
             HttpMethod method,
             string url,
             string credentials,
@@ -322,7 +322,7 @@ namespace MyStyleApp.Services
             }
         }
 
-        public async Task<TResult> InvokeWithContent<TResult, TContent>(
+        public async Task<TResult> InvokeWithContentAsync<TResult, TContent>(
             HttpMethod method,
             string url,
             string credentials,

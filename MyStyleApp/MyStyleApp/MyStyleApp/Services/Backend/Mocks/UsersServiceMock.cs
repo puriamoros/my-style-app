@@ -8,7 +8,7 @@ namespace MyStyleApp.Services.Backend.Mocks
     {
         public User LoggedUser { get; private set; }
 
-        public async Task Login(string email, string password, bool rememberLogin)
+        public async Task LoginAsync(string email, string password, bool rememberLogin)
         {
             await Task.Delay(3000);
 
@@ -26,13 +26,13 @@ namespace MyStyleApp.Services.Backend.Mocks
             };
         }
 
-        public async Task Logout()
+        public async Task LogoutAsync()
         {
             await (Task.Delay(1000));
             this.LoggedUser = null;
         }
 
-        public async Task<User> Me()
+        public async Task<User> MeAsync()
         {
             await Task.Delay(1000);
             this.LoggedUser = new User()

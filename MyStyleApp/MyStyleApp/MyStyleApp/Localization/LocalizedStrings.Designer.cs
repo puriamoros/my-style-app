@@ -62,11 +62,38 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Any old.
+        /// </summary>
+        internal static string any_old {
+            get {
+                return ResourceManager.GetString("any_old", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Appointments.
         /// </summary>
         internal static string appointments {
             get {
                 return ResourceManager.GetString("appointments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose an item.
+        /// </summary>
+        internal static string choose_an_item {
+            get {
+                return ResourceManager.GetString("choose_an_item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to City.
+        /// </summary>
+        internal static string city {
+            get {
+                return ResourceManager.GetString("city", resourceCulture);
             }
         }
         
@@ -179,6 +206,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Establishment type.
+        /// </summary>
+        internal static string establishment_type {
+            get {
+                return ResourceManager.GetString("establishment_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Establishments.
         /// </summary>
         internal static string establishments {
@@ -274,6 +310,15 @@ namespace MyStyleApp.Localization {
         internal static string search {
             get {
                 return ResourceManager.GetString("search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service.
+        /// </summary>
+        internal static string service {
+            get {
+                return ResourceManager.GetString("service", resourceCulture);
             }
         }
         

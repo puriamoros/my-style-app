@@ -12,21 +12,33 @@
       <StackLayout>
         <StackLayout Padding="0,0,0,10" Spacing="0">
           <Label 
-            Text="Ciudad"
+            Text="{Binding LocalizedStrings[city]}"
             Style="{StaticResource MediumTextStyle}"/>
-          <fe:BindablePicker ItemsSource="{Binding CityList}" DisplayProperty="Name" SelectedItem="{Binding SelectedCity}"/>
+          <fe:BindablePicker
+            ItemsSource="{Binding CityList}"
+            DisplayProperty="Name"
+            SelectedItem="{Binding SelectedCity}"
+            Title="{Binding ChooseItemPlaceholder}"/>
         </StackLayout>
         <StackLayout Padding="0,0,0,10" Spacing="0">
           <Label 
-            Text="Tipo Establecimiento"
+            Text="{Binding LocalizedStrings[establishment_type]}"
             Style="{StaticResource MediumTextStyle}"/>
-          <fe:BindablePicker ItemsSource="{Binding EstablishmentTypeList}" DisplayProperty="Name" SelectedItem="{Binding SelectedEstablishmentType}"/>
+          <fe:BindablePicker
+            ItemsSource="{Binding EstablishmentTypeList}"
+            DisplayProperty="Name"
+            SelectedItem="{Binding SelectedEstablishmentType}"
+            Title="{Binding ChooseItemPlaceholder}"/>
         </StackLayout>
         <StackLayout Padding="0,0,0,10" Spacing="0">
           <Label 
-            Text="Servicio"
+            Text="{Binding LocalizedStrings[service]}"
             Style="{StaticResource MediumTextStyle}"/>
-          <fe:BindablePicker ItemsSource="{Binding ServiceList}" DisplayProperty="Name" SelectedItem="{Binding SelectedService}"/>
+          <fe:BindablePicker
+            ItemsSource="{Binding ServiceList}"
+            DisplayProperty="Name"
+            SelectedItem="{Binding SelectedService}"
+            Title="{Binding ChooseItemPlaceholder}"/>
         </StackLayout>
         <StackLayout Padding="0,10,0,0">
           <controls:CustomButton

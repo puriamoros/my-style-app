@@ -13,8 +13,8 @@ namespace MyStyleApp.ViewModels
     {
         private ObservableCollection<City> _cityList;
         private City _selectedCity;
-        private ObservableCollection<EstablishmentType> _establishmenttypeList;
-        private EstablishmentType _selectedEstablishmentType;
+        private ObservableCollection<string> _establishmenttypeList;
+        private string _selectedEstablishmentType;
         private ObservableCollection<Service> _serviceList;
         private Service _selectedService;
 
@@ -35,9 +35,9 @@ namespace MyStyleApp.ViewModels
         private void FillWithMockData()
         {
             var listCity = new ObservableCollection<City>();
-            var listEsblishmentType = new ObservableCollection<EstablishmentType>();
+            var listEsblishmentType = new ObservableCollection<string>();
             var listService = new ObservableCollection<Service>();
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 20; i++)
             {
                 listCity.Add(new City()
                     {
@@ -47,17 +47,12 @@ namespace MyStyleApp.ViewModels
                 );
             }
             this.CityList = listCity;
-            for (int i = 0; i < 3; i++)
+            foreach (EstablishmentType establishmentType in Enum.GetValues(typeof(EstablishmentType)))
             {
-                listEsblishmentType.Add(new EstablishmentType()
-                {
-                    Id = i,
-                    Name = "Tipo " + i
-                }
-                );
+                listEsblishmentType.Add(establishmentType.ToString());
             }
             this.EstablishmentTypeList = listEsblishmentType;
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 30; i++)
             {
                 listService.Add(new Service()
                 {
@@ -81,13 +76,13 @@ namespace MyStyleApp.ViewModels
             set { SetProperty(ref _selectedCity, value); }
         }
 
-        public ObservableCollection<EstablishmentType> EstablishmentTypeList
+        public ObservableCollection<string> EstablishmentTypeList
         {
             get { return _establishmenttypeList; }
             set { SetProperty(ref _establishmenttypeList, value); }
         }
 
-        public EstablishmentType SelectedEstablishmentType
+        public string SelectedEstablishmentType
         {
             get { return _selectedEstablishmentType; }
             set { SetProperty(ref _selectedEstablishmentType, value); }
@@ -105,9 +100,18 @@ namespace MyStyleApp.ViewModels
             set { SetProperty(ref _selectedService, value); }
         }
 
+        public string ChooseItemPlaceholder
+        {
+            get
+            {
+                return (Device.OS == TargetPlatform.Android) ?
+                    this.LocalizedStrings.GetString("choose_an_item") : "";
+            }
+        }
+
         private async void Search()
         {
-            await this.PushAsync<EstablishmentsViewModel>();
+            await this.PushNavPageAsync<EstablishmentsViewModel>();
         }
     }
 }

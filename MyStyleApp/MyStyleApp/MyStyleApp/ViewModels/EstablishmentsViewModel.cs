@@ -17,7 +17,8 @@ namespace MyStyleApp.ViewModels
     {
         private ObservableCollection<Establishment> _establishmentList;
 
-        public ICommand EstablishmentTappedCommand { get; private set; }
+        public ICommand ViewDetailsCommand { get; private set; }
+        public ICommand BookCommand { get; private set; }
 
         public EstablishmentsViewModel(
             INavigator navigator, 
@@ -25,8 +26,8 @@ namespace MyStyleApp.ViewModels
             LocalizedStringsService localizedStringsService) : 
             base(navigator, userNotificator, localizedStringsService)
         {
-            this.EstablishmentTappedCommand = new Command<Establishment>(
-                async (establishment) => await EstablishmentTapped(establishment));
+            this.ViewDetailsCommand = new Command<Establishment>(this.ViewDetails);
+            this.BookCommand = new Command<Establishment>(this.Book);
 
             // REMOVE!!!
             FillWithMockData();
@@ -52,12 +53,25 @@ namespace MyStyleApp.ViewModels
             set { SetProperty(ref _establishmentList, value); }
         }
 
-        private async Task EstablishmentTapped(Establishment establishment)
+        private async void ViewDetails(Establishment establishment)
         {
-            await this.UserNotificator.DisplayAlert(
-                "Ver q se hace...", "cuerpo", "ok");
+            await this.PushNavPageAsync<EstablishmentDetailsViewModel>((establishmentDetailsVM) => 
+                {
+                    establishmentDetailsVM.Establishment = establishment;
+                }
+            );
+        }
+
+        private async void Book(Establishment establishment)
+        {
+            //await this.PushAsync<BookViewModel>((bookVM) =>
+            //{
+            //    bookVM.Establishment = establishment;
+            //}
+            //);
         }
     }
 }
+
 
 

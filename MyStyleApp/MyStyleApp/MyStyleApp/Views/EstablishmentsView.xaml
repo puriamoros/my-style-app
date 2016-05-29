@@ -26,11 +26,14 @@
             <TextCell x:Name="Establishment"
               Text="{Binding Name}"
               Detail="{Binding Address}"
-              Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.EstablishmentTappedCommand}"
+              Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.ViewDetailsCommand}"
               CommandParameter="{Binding}">
               <TextCell.ContextActions>
-                <MenuItem Text="Tap"
-                  Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.EstablishmentTappedCommand}"
+                <MenuItem Text="Details"
+                  Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.ViewDetailsCommand}"
+                  CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
+                <MenuItem Text="Book"
+                  Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.BookCommand}"
                   CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
               </TextCell.ContextActions>
             </TextCell>

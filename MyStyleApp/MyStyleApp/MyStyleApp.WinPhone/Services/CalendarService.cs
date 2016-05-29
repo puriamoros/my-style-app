@@ -9,7 +9,7 @@ namespace MyStyleApp.WinPhone.Services
 {
     class CalendarService : MyStyleApp.Services.ICalendarService
     {
-        public async Task<bool> AddAppointment(Models.Appointment appointment)
+        public async Task<bool> AddAppointment(Models.CalendarAppointment appointment)
         {
             var appointmentRcd = new Appointment();
 

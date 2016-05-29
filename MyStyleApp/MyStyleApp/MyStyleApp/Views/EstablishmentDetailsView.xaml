@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:CustomContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyStyleApp.Views.EstablishmentDetailsView"
+             xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
+             xmlns:views="clr-namespace:MyStyleApp.Views"
+             xmlns:fe="clr-namespace:FreshEssentials;assembly=FreshEssentials"
+             Padding="{StaticResource PagePadding}"
+             Title="Establishment Details">
+  <Grid>
+    <StackLayout>
+      <!--<Grid Padding="{StaticResource PageContentPadding}">-->
+      <Label Text="{Binding Establishment.Name}"/>
+        <ListView
+          ItemsSource="{Binding ServicesList}"
+          HasUnevenRows="True"
+          x:Name="ServicesList">
+          <!--<ListView.Behaviors>
+          <mvvmcorebehaviors:EventToCommandBehavior
+            EventName="ItemTapped"
+            Command="{Binding FavouriteTappedCommand}"
+            EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
+        </ListView.Behaviors>-->
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <!-- This does not need behaviors but needs a x:Name for the ListView -->
+              <TextCell x:Name="Service"
+                Text="{Binding NameAndPrice}"
+                Command="{Binding Source={x:Reference ServicesList}, Path=BindingContext.EstablishmentDetailsTappedCommand}"
+                CommandParameter="{Binding}">
+                <TextCell.ContextActions>
+                  <MenuItem Text="Tap"
+                    Command="{Binding Source={x:Reference ServicesList}, Path=BindingContext.EstablishmentDetailsTappedCommand}"
+                    CommandParameter="{Binding Source={x:Reference Service}, Path=BindingContext}" />
+                </TextCell.ContextActions>
+              </TextCell>
+              <!-- This needs behaviors -->
+              <!--<ViewCell>
+              <StackLayout Spacing="2" Padding="0,5,0,5" VerticalOptions="StartAndExpand" >
+                <Label Text="{Binding Name}" Style="{StaticResource LargeTextStyle}" />
+                <Label Text="{Binding Description}" Style="{StaticResource MediumTextStyle}" />
+              </StackLayout>
+            </ViewCell>-->
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+        <StackLayout Padding="0,10,0,0">
+          <controls:CustomButton
+            Text="Pedir cita"
+            Command="{Binding BookCommand}"/>
+          <controls:CustomButton
+            Text="Añadir a favoritos"
+            Command="{Binding FavouriteCommand}"/>
+        </StackLayout>
+      <!--</Grid>-->
+    </StackLayout>
+ 
+    <controls:WaitingOverlayControl
+      IsVisible="{Binding IsBusy}"
+      Text="{Binding LocalizedStrings[waiting]}"/>
+  </Grid>
+ 
+</views:CustomContentPage>
+
+<!--<StackLayout>
+      <StackLayout>
+
+      </StackLayout>
+      <StackLayout Padding="0,0,0,10" Spacing="0">
+        <Label
+          Text="Servicios"
+          Style="{StaticResource MediumTextStyle}"/>
+        <fe:BindablePicker
+          ItemsSource="{Binding ServiceList}"
+          DisplayProperty="NameAndPrice"
+          SelectedItem="{Binding SelectedService}"
+          Title="{Binding ChooseItemPlaceholder}"/>
+      </StackLayout>
+      <StackLayout Padding="0,10,0,0">
+        <controls:CustomButton
+          Text="Añadir a favoritos"
+          Command="{Binding FavouriteCommand}"/>
+      </StackLayout>
+    </StackLayout>-->

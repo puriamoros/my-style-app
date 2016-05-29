@@ -36,7 +36,7 @@ namespace MyStyleApp.Views
         {
             base.OnCurrentPageChanged();
 
-            foreach(var child in this.Children)
+            foreach (var child in this.Children)
             {
                 SetIcon(child, child == this.CurrentPage);
             }
@@ -45,11 +45,11 @@ namespace MyStyleApp.Views
         private void SetIcon(Page page, bool isCurrentPage)
         {
             string icon = page.Icon;
-            if(!isCurrentPage && icon.Contains(CURRENT_TOKEN))
+            if (!isCurrentPage && icon.Contains(CURRENT_TOKEN))
             {
                 page.Icon = icon.Replace(CURRENT_TOKEN, "");
             }
-            else if(isCurrentPage && !icon.Contains(CURRENT_TOKEN))
+            else if (isCurrentPage && !icon.Contains(CURRENT_TOKEN))
             {
                 int pos = icon.LastIndexOf(".");
                 page.Icon = icon.Substring(0, pos) + CURRENT_TOKEN + icon.Substring(pos);

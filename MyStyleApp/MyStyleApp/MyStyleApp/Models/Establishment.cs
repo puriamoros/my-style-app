@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System;
 
-namespace MyStyleApp.ViewModels
+namespace MyStyleApp.Models
 {
     public class Establishment
     {
@@ -13,5 +12,8 @@ namespace MyStyleApp.ViewModels
 
         [JsonProperty(Required = Required.Always, PropertyName = "address")]
         public string Address { get; set; }
-    }
+
+        [JsonProperty(Required = Required.Always, PropertyName = "type")]
+        public EstablishmentType Type { get; set; }
+}
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyStyleApp.Models
 {
-    public class Appointment
+    public class CalendarAppointment
     {
         public string Title { get; set; }
         public string Description { get; set; }

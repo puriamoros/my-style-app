@@ -15,7 +15,7 @@ namespace MvvmCore
 			_deviceService = deviceService;
 		}
 
-        public Task<TViewModel> SetMainPage<TViewModel>(Action<TViewModel> setStateAction = null)
+        public Task<TViewModel> SetMainPageAsync<TViewModel>(Action<TViewModel> setStateAction = null)
             where TViewModel : class, IViewModel
         {
             var tcs = new TaskCompletionSource<TViewModel>();
@@ -30,7 +30,7 @@ namespace MvvmCore
             return tcs.Task;
         }
 
-        public Task<TViewModel> SetMainPage<TViewModel>(TViewModel viewModel)
+        public Task<TViewModel> SetMainPageAsync<TViewModel>(TViewModel viewModel)
             where TViewModel : class, IViewModel
         {
             var tcs = new TaskCompletionSource<TViewModel>();
@@ -43,7 +43,109 @@ namespace MvvmCore
             return tcs.Task;
         }
 
-        public Task<IViewModel> PopAsync(INavigation navigation)
+        public Task<TViewModel> SetMainPageTabAsync<TViewModel>(Action<TViewModel> setStateAction = null)
+            where TViewModel : class, IViewModel
+        {
+            var tcs = new TaskCompletionSource<TViewModel>();
+            _deviceService.BeginInvokeOnMainThread(() =>
+            {
+                TViewModel viewModel;
+                var view = _viewFactory.Resolve<TViewModel>(out viewModel, setStateAction);
+                this.SetTab(Application.Current.MainPage, view);
+                tcs.SetResult(viewModel);
+            });
+            return tcs.Task;
+        }
+
+        public Task<TViewModel> SetMainPageTabAsync<TViewModel>(TViewModel viewModel)
+            where TViewModel : class, IViewModel
+        {
+            var tcs = new TaskCompletionSource<TViewModel>();
+            _deviceService.BeginInvokeOnMainThread(() =>
+            {
+                var view = _viewFactory.Resolve(viewModel);
+                this.SetTab(Application.Current.MainPage, view);
+                tcs.SetResult(viewModel);
+            });
+            return tcs.Task;
+        }
+
+        public Task<TViewModel> SetNavPageTabAsync<TViewModel>(INavigation navigation, Action<TViewModel> setStateAction = null)
+            where TViewModel : class, IViewModel
+        {
+            var tcs = new TaskCompletionSource<TViewModel>();
+            _deviceService.BeginInvokeOnMainThread(() =>
+            {
+                TViewModel viewModel;
+                var view = _viewFactory.Resolve<TViewModel>(out viewModel, setStateAction);
+                bool found = false;
+                for (int i = navigation.NavigationStack.Count - 1; i >= 0 && !found; i++)
+                {
+                    found = this.SetTab(navigation.NavigationStack[i], view);
+                }
+                tcs.SetResult(viewModel);
+            });
+            return tcs.Task;
+        }
+
+        public Task<TViewModel> SetNavPageTabAsync<TViewModel>(INavigation navigation, TViewModel viewModel)
+            where TViewModel : class, IViewModel
+        {
+            var tcs = new TaskCompletionSource<TViewModel>();
+            _deviceService.BeginInvokeOnMainThread(() =>
+            {
+                var view = _viewFactory.Resolve(viewModel);
+                bool found = false;
+                for(int i= navigation.NavigationStack.Count -1; i >= 0 && !found; i++)
+                {
+                    found = this.SetTab(navigation.NavigationStack[i], view);
+                }
+                tcs.SetResult(viewModel);
+            });
+            return tcs.Task;
+        }
+
+        private bool SetTab(Page tabbedPage, Page tab)
+        {
+            if (tabbedPage is TabbedPage)
+            {
+                var tp = tabbedPage as TabbedPage;
+                var child = this.GetTab(tp, tab);
+                if (child != null)
+                {
+                    tp.CurrentPage = child;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private Page GetTab(TabbedPage tabbedPage, Page tab)
+        {
+            foreach(Page child in tabbedPage.Children)
+            {
+                if(child == tab)
+                {
+                    return child;
+                }
+
+                if(child is NavigationPage)
+                {
+                    NavigationPage nav = child as NavigationPage;
+                    // We should compare "nav.CurrentPage == tab" but maybe we have not
+                    // created child pages in code but in xaml, so we compare types instead
+                    if (nav.CurrentPage.GetType() == tab.GetType())
+                    {
+                        return child;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public Task<IViewModel> PopNavPageAsync(INavigation navigation)
 		{
 			var tcs = new TaskCompletionSource<IViewModel>();
 			_deviceService.BeginInvokeOnMainThread(async () =>
@@ -55,7 +157,7 @@ namespace MvvmCore
             return tcs.Task;
 		}
 
-		public Task<IViewModel> PopModalAsync(INavigation navigation)
+		public Task<IViewModel> PopNavPageModalAsync(INavigation navigation)
 		{
 			var tcs = new TaskCompletionSource<IViewModel>();
 			_deviceService.BeginInvokeOnMainThread(async () =>
@@ -66,7 +168,7 @@ namespace MvvmCore
             return tcs.Task;
 		}
 
-		public Task PopToRootAsync(INavigation navigation)
+		public Task PopNavPageToRootAsync(INavigation navigation)
 		{
 			var tcs = new TaskCompletionSource<object>();
 			_deviceService.BeginInvokeOnMainThread(async () =>
@@ -77,7 +179,7 @@ namespace MvvmCore
 			return tcs.Task;
 		}
 
-		public Task<TViewModel> PushAsync<TViewModel>(
+		public Task<TViewModel> PushNavPageAsync<TViewModel>(
             INavigation navigation, Action<TViewModel> setStateAction = null) 
 			where TViewModel : class, IViewModel
 		{
@@ -92,7 +194,7 @@ namespace MvvmCore
 			return tcs.Task;
 		}
 
-		public Task<TViewModel> PushAsync<TViewModel>(
+		public Task<TViewModel> PushNavPageAsync<TViewModel>(
             INavigation navigation, TViewModel viewModel) 
 			where TViewModel : class, IViewModel
 		{
@@ -106,7 +208,7 @@ namespace MvvmCore
 			return tcs.Task;
 		}
 
-		public Task<TViewModel> PushModalAsync<TViewModel>(
+		public Task<TViewModel> PushNavPageModalAsync<TViewModel>(
             INavigation navigation, Action<TViewModel> setStateAction = null) 
 			where TViewModel : class, IViewModel
 		{
@@ -121,7 +223,7 @@ namespace MvvmCore
 			return tcs.Task;
 		}
 
-		public Task<TViewModel> PushModalAsync<TViewModel>(
+		public Task<TViewModel> PushNavPageModalAsync<TViewModel>(
             INavigation navigation, TViewModel viewModel) 
 			where TViewModel : class, IViewModel
 		{
@@ -135,7 +237,7 @@ namespace MvvmCore
 			return tcs.Task;
 		}
 
-        public Task InsertPageBefore<TViewModel, TViewModelBefore>(
+        public Task InsertNavPageBeforeAsync<TViewModel, TViewModelBefore>(
             INavigation navigation, Action<TViewModel> setStateAction = null)
             where TViewModel : class, IViewModel
             where TViewModelBefore : class, IViewModel
@@ -153,7 +255,7 @@ namespace MvvmCore
             return tcs.Task;
         }
 
-        public Task InsertPageBefore<TViewModel, TViewModelBefore>(
+        public Task InsertNavPageBeforeAsync<TViewModel, TViewModelBefore>(
             INavigation navigation, TViewModel viewModel, TViewModelBefore viewModelBefore)
             where TViewModel : class, IViewModel
             where TViewModelBefore : class, IViewModel
@@ -169,7 +271,7 @@ namespace MvvmCore
             return tcs.Task;
         }
 
-        public Task RemovePage<TViewModel>(INavigation navigation)
+        public Task RemoveNavPageAsync<TViewModel>(INavigation navigation)
             where TViewModel : class, IViewModel
         {
             var tcs = new TaskCompletionSource<object>();

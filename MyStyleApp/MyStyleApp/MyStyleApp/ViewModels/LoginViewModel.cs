@@ -118,7 +118,7 @@ namespace MyStyleApp.ViewModels
             try
             {
                 await this._usersService.Login(this.Email, this.Password, this.RememberMe);
-                await this.SetMainPage<MainViewModel>();
+                await this.SetMainPageAsync<MainViewModel>();
             }
             catch (Exception)
             {

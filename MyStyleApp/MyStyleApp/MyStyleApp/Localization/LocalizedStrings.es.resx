@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="any_old" xml:space="preserve">
+    <value>Cualquiera</value>
+  </data>
   <data name="appointments" xml:space="preserve">
     <value>Citas</value>
+  </data>
+  <data name="choose_an_item" xml:space="preserve">
+    <value>Seleccione un elemento</value>
+  </data>
+  <data name="city" xml:space="preserve">
+    <value>Ciudad</value>
   </data>
   <data name="create_account" xml:space="preserve">
     <value>Crear una cuenta</value>
@@ -159,6 +168,9 @@
   <data name="establishments" xml:space="preserve">
     <value>Establecimientos</value>
   </data>
+  <data name="establishment_type" xml:space="preserve">
+    <value>Tipo de establecimiento</value>
+  </data>
   <data name="favourites" xml:space="preserve">
     <value>Favoritos</value>
   </data>
@@ -188,6 +200,9 @@
   </data>
   <data name="search" xml:space="preserve">
     <value>Buscar</value>
+  </data>
+  <data name="service" xml:space="preserve">
+    <value>Servicio</value>
   </data>
   <data name="waiting" xml:space="preserve">
     <value>...esperando...</value>

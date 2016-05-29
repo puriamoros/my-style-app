@@ -45,79 +45,103 @@ namespace MyStyleApp.ViewModels
             }
         }
 
-        public Task<TViewModel> SetMainPage<TViewModel>(Action<TViewModel> setStateAction = null)
+        public Task<TViewModel> SetMainPageAsync<TViewModel>(Action<TViewModel> setStateAction = null)
             where TViewModel : class, IViewModel
         {
-            return this._navigator.SetMainPage(setStateAction);
+            return this._navigator.SetMainPageAsync(setStateAction);
         }
 
-        public Task<TViewModel> SetMainPage<TViewModel>(TViewModel viewModel)
+        public Task<TViewModel> SetMainPageAsync<TViewModel>(TViewModel viewModel)
             where TViewModel : class, IViewModel
         {
-            return this._navigator.SetMainPage(viewModel);
+            return this._navigator.SetMainPageAsync(viewModel);
         }
 
-        public Task<IViewModel> PopAsync()
+        public Task<TViewModel> SetMainPageTabAsync<TViewModel>(Action<TViewModel> setStateAction = null)
+            where TViewModel : class, IViewModel
         {
-            return this._navigator.PopAsync(this.Navigation);
+            return this._navigator.SetMainPageTabAsync(setStateAction);
         }
 
-        public Task<IViewModel> PopModalAsync()
+        public Task<TViewModel> SetMainPageTabAsync<TViewModel>(TViewModel viewModel)
+            where TViewModel : class, IViewModel
         {
-            return this._navigator.PopModalAsync(this.Navigation);
+            return this._navigator.SetMainPageTabAsync(viewModel);
+        }
+
+        public Task<TViewModel> SetNavPageTabAsync<TViewModel>(Action<TViewModel> setStateAction = null)
+            where TViewModel : class, IViewModel
+        {
+            return this._navigator.SetNavPageTabAsync(this.Navigation, setStateAction);
+        }
+
+        public Task<TViewModel> SetNavPageTabAsync<TViewModel>(TViewModel viewModel)
+            where TViewModel : class, IViewModel
+        {
+            return this._navigator.SetNavPageTabAsync(this.Navigation, viewModel);
+        }
+
+        public Task<IViewModel> PopNavPageAsync()
+        {
+            return this._navigator.PopNavPageAsync(this.Navigation);
+        }
+
+        public Task<IViewModel> PopNavPageModalAsync()
+        {
+            return this._navigator.PopNavPageModalAsync(this.Navigation);
         }
 
         public Task PopToRootAsync()
         {
-            return this._navigator.PopToRootAsync(this.Navigation);
+            return this._navigator.PopNavPageToRootAsync(this.Navigation);
         }
 
-        public Task<TViewModel> PushAsync<TViewModel>(Action<TViewModel> setStateAction = null)
+        public Task<TViewModel> PushNavPageAsync<TViewModel>(Action<TViewModel> setStateAction = null)
             where TViewModel : class, IViewModel
         {
-            return this._navigator.PushAsync(this.Navigation, setStateAction);
+            return this._navigator.PushNavPageAsync(this.Navigation, setStateAction);
         }
 
-        public Task<TViewModel> PushAsync<TViewModel>(TViewModel viewModel)
+        public Task<TViewModel> PushNavPageAsync<TViewModel>(TViewModel viewModel)
             where TViewModel : class, IViewModel
         {
-            return this._navigator.PushAsync(this.Navigation, viewModel);
+            return this._navigator.PushNavPageAsync(this.Navigation, viewModel);
         }
 
-        public Task<TViewModel> PushModalAsync<TViewModel>(Action<TViewModel> setStateAction = null)
+        public Task<TViewModel> PushNavPageModalAsync<TViewModel>(Action<TViewModel> setStateAction = null)
             where TViewModel : class, IViewModel
         {
-            return this._navigator.PushModalAsync(this.Navigation, setStateAction);
+            return this._navigator.PushNavPageModalAsync(this.Navigation, setStateAction);
         }
 
-        public Task<TViewModel> PushModalAsync<TViewModel>(TViewModel viewModel)
+        public Task<TViewModel> PushNavPageModalAsync<TViewModel>(TViewModel viewModel)
             where TViewModel : class, IViewModel
         {
-            return this._navigator.PushModalAsync(this.Navigation, viewModel);
+            return this._navigator.PushNavPageModalAsync(this.Navigation, viewModel);
         }
 
-        public Task InsertPageBefore<TViewModel, TViewModelBefore>(
+        public Task InsertNavPageBeforeAsync<TViewModel, TViewModelBefore>(
             Action<TViewModel> setStateAction = null)
             where TViewModel : class, IViewModel
             where TViewModelBefore : class, IViewModel
         {
             return this._navigator.
-                InsertPageBefore<TViewModel, TViewModelBefore>(this.Navigation, setStateAction);
+                InsertNavPageBeforeAsync<TViewModel, TViewModelBefore>(this.Navigation, setStateAction);
         }
 
-        public Task InsertPageBefore<TViewModel, TViewModelBefore>(
+        public Task InsertNavPageBeforeAsync<TViewModel, TViewModelBefore>(
             TViewModel viewModel, TViewModelBefore viewModelBefore)
             where TViewModel : class, IViewModel
             where TViewModelBefore : class, IViewModel
         {
             return this._navigator.
-                InsertPageBefore(this.Navigation, viewModel, viewModelBefore);
+                InsertNavPageBeforeAsync(this.Navigation, viewModel, viewModelBefore);
         }
 
-        public Task RemovePage<TViewModel>()
+        public Task RemoveNavPageAsync<TViewModel>()
             where TViewModel : class, IViewModel
         {
-            return this._navigator.RemovePage<TViewModel>(this.Navigation);
+            return this._navigator.RemoveNavPageAsync<TViewModel>(this.Navigation);
         }
     }
 }

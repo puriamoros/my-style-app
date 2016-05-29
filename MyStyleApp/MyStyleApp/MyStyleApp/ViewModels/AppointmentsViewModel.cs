@@ -27,7 +27,7 @@ namespace MyStyleApp.ViewModels
         private async void NewAccount()
         {
             await this._userService.Logout();
-            await this.SetMainPage<LoginViewModel>();
+            await this.SetMainPageAsync<LoginViewModel>();
         }
     }
 }

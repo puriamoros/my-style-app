@@ -4,18 +4,42 @@
              x:Class="MyStyleApp.Views.AppointmentsView"
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
              xmlns:views="clr-namespace:MyStyleApp.Views"
+             xmlns:mvvmcorebehaviors="clr-namespace:MvvmCore.Behaviors"
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[appointments]}" Icon="Calendar.png">
-  <ScrollView>
+  
     <Grid>
-      <StackLayout Padding="{StaticResource PageContentPadding}" >
+      <!--<StackLayout Padding="{StaticResource PageContentPadding}" >
         <controls:CustomButton
             Text="{Binding LocalizedStrings[logout]}"
             Command="{Binding NewAccountCommand}" />
-      </StackLayout>
+      </StackLayout>-->
+      <Grid Padding="{StaticResource PageContentPadding}">
+        <!-- Without HasUnevenRows="True", list items does not render well in Android -->
+        <ListView>
+          <ListView.Behaviors>
+            <mvvmcorebehaviors:EventToCommandBehavior
+              EventName="ItemTapped"
+              Command="{Binding AppointmentsTappedCommand}"
+              EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
+          </ListView.Behaviors>
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <!-- This needs behaviors -->
+              <ViewCell>
+                <StackLayout Spacing="2" Padding="0,5,0,5" VerticalOptions="StartAndExpand" >
+                  <Label Text="{Binding Date}" Style="{StaticResource LargeTextStyle}" />
+                  <Label Text="{Binding Establishment}" Style="{StaticResource MediumTextStyle}" />
+                  <Label Text="{Binding Service}" Style="{StaticResource MediumTextStyle}" />
+                </StackLayout>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </Grid>
       <controls:WaitingOverlayControl
         IsVisible="{Binding IsBusy}"
         Text="{Binding LocalizedStrings[waiting]}"/>
     </Grid>
-  </ScrollView>
+  
 </views:CustomContentPage>

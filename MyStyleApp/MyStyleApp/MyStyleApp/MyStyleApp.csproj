@@ -45,7 +45,8 @@
     <Compile Include="Converters\StringToBoolConverter.cs" />
     <Compile Include="Exceptions\BackendException.cs" />
     <Compile Include="Models\ApiKey.cs" />
-    <Compile Include="Models\Appointment.cs" />
+    <Compile Include="Models\Appoitment.cs" />
+    <Compile Include="Models\CalendarAppointment.cs" />
     <Compile Include="Models\BackendError.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Favourite.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\AppointmentsViewModel.cs" />
     <Compile Include="Models\Establishment.cs" />
+    <Compile Include="ViewModels\EstablishmentDetailsViewModel.cs" />
     <Compile Include="ViewModels\EstablishmentsViewModel.cs" />
     <Compile Include="ViewModels\FavouritesViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
@@ -120,6 +122,9 @@
       <DependentUpon>WaitingOverlayControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CustomContentPage.cs" />
+    <Compile Include="Views\EstablishmentDetailsView.xaml.cs">
+      <DependentUpon>EstablishmentDetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EstablishmentsView.xaml.cs">
       <DependentUpon>EstablishmentsView.xaml</DependentUpon>
     </Compile>
@@ -245,6 +250,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\EstablishmentsView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EstablishmentDetailsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 
 namespace MyStyleApp.Models
 {
-    public class EstablishmentType
+    public enum EstablishmentType
     {
-        [JsonProperty(Required = Required.Always, PropertyName = "id")]
-        public int Id { get; set; }
-
-        [JsonProperty(Required = Required.Always, PropertyName = "name")]
-        public string Name { get; set; }
+        Hairdresser,
+        Aesthetics,
+        HairdresserAndAesthetics
     }
 }

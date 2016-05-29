@@ -4,6 +4,7 @@
             x:Class="MyStyleApp.Views.MainView"
             xmlns:views="clr-namespace:MyStyleApp.Views"
             Padding="{StaticResource PagePadding}">
+
   <views:CustomNavigationPage Title="{Binding LocalizedStrings[appointments]}" Icon="Calendar.png">
     <x:Arguments>
       <views:AppointmentsView Title="{Binding LocalizedStrings[appointments]}" />
@@ -24,4 +25,5 @@
       <views:AccountView Title="{Binding LocalizedStrings[my_account]}" />
     </x:Arguments>
   </views:CustomNavigationPage>
+
 </TabbedPage>

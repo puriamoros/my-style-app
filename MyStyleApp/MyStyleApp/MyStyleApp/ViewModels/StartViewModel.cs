@@ -36,12 +36,12 @@ namespace MyStyleApp.ViewModels
                 await this._usersService.Me();
 
                 // There is a logged user, go to main view
-                await this.SetMainPage<MainViewModel>();
+                await this.SetMainPageAsync<MainViewModel>();
             }
             catch (Exception)
             {
                 // There is no logged user, go to login view
-                await this.SetMainPage<LoginViewModel>();
+                await this.SetMainPageAsync<LoginViewModel>();
             }
             finally
             {

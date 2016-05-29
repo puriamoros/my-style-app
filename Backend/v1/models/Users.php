@@ -23,7 +23,9 @@ class Users extends ModelWithIdBase
 			"surname",
 			self::EMAIL,
 			self::PASSWORD,
-			self::API_KEY
+			self::API_KEY,
+			"userType",
+			"phone"
 		);
 		$this->idField = $this->fields[0];
     }

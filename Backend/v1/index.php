@@ -5,6 +5,7 @@ require_once(__DIR__.'/utilities/ApiException.php');
 require_once(__DIR__.'/models/Users.php');
 require_once(__DIR__.'/data/StatusCodes.php');
 require_once(__DIR__.'/models/Establishments.php');
+require_once(__DIR__.'/models/Appointments.php');
 
 $view = new JsonView();
 
@@ -33,7 +34,8 @@ $knownResources = array(
 		"register" => "Users",
 		"login" => "Users",
 		"users" => "Users",
-		"establishments" => "Establishments"
+		"establishments" => "Establishments",
+		"appointments" => "Appointments"
 	);
 	
 // Check if the resource exists

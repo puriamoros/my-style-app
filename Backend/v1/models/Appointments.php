@@ -6,18 +6,17 @@ require_once(__DIR__.'/../data/StatusCodes.php');
 require_once(__DIR__.'/../utilities/Authorization.php');
 require_once(__DIR__.'/ModelWithIdBase.php');
 
-class Establishments extends ModelWithIdBase
+class Appointments extends ModelWithIdBase
 {
 	public function __construct()
     {
-        $this->table = 'establishments';
+        $this->table = 'appointments';
 		$this->fields = array(
 			'id',
-			'name',
-			'address',
-			'establishmentType',
-			'idOwner',
-			'idProvince'
+			'idClient',
+			'idEstablishment',
+			'idService',
+			'date'
 		);
 		$this->idField = $this->fields[0];
     }

@@ -18,32 +18,32 @@ namespace MyStyleApp.Services.Backend
 
         public User LoggedUser { get; private set; }
 
-        public async Task Login(string email, string password, bool rememberLogin)
+        public async Task LoginAsync(string email, string password, bool rememberLogin)
         {
-            ApiKey apiKey = await this.HttpService.Invoke<ApiKey>(
+            ApiKey apiKey = await this.HttpService.InvokeAsync<ApiKey>(
                 HttpMethod.Get,
                 BackendConstants.LOGIN_URL,
                 this.HttpService.GetBasicAuthorization(email, password),
                 null);
-            await this.HttpService.SaveApiKeyAuthorization(apiKey.Value, rememberLogin);
-            await this.Me();
+            await this.HttpService.SaveApiKeyAuthorizationAsync(apiKey.Value, rememberLogin);
+            await this.MeAsync();
         }
 
-        public async Task Logout()
+        public async Task LogoutAsync()
         {
-            await this.HttpService.DeleteApiKeyAuthorization();
+            await this.HttpService.DeleteApiKeyAuthorizationAsync();
             this.LoggedUser = null;
         }
 
-        public async Task<User> Me()
+        public async Task<User> MeAsync()
         {
-            string apiKey = await this.HttpService.GetApiKeyAuthorization();
+            string apiKey = await this.HttpService.GetApiKeyAuthorizationAsync();
             if(apiKey == null)
             {
                 throw new Exception("ApiKey not found. User is not logged in.");
             }
 
-            this.LoggedUser = await this.HttpService.Invoke<User>(
+            this.LoggedUser = await this.HttpService.InvokeAsync<User>(
                 HttpMethod.Get,
                 BackendConstants.ME_URL,
                 apiKey,

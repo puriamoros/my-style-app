@@ -18,7 +18,7 @@ namespace MyStyleApp.iOS.Services
             _eventStore = new EKEventStore();
         }
 
-        public async Task<bool> AddAppointment(CalendarAppointment appointment)
+        public async Task<bool> AddAppointmentAsync(CalendarAppointment appointment)
         {
             var granted = await _eventStore.RequestAccessAsync(EKEntityType.Event);//, (bool granted, NSError e) =>
 

@@ -21,8 +21,7 @@ namespace MyStyleApp.ViewModels
             LocalizedStringsService localizedStringsService) :
             base(navigator, userNotificator, localizedStringsService)
         {
-            this.FavouriteTappedCommand = new Command<Favourite>(
-                async (favourite) => await FavouriteTapped(favourite));
+            this.FavouriteTappedCommand = new Command<Favourite>(this.FavouriteTappedAsync);
 
             // REMOVE!!!
             FillWithMockData();
@@ -49,7 +48,7 @@ namespace MyStyleApp.ViewModels
             set { SetProperty(ref _favouritesList, value); }
         }
 
-        private async Task FavouriteTapped(Favourite favourite)
+        private async void FavouriteTappedAsync(Favourite favourite)
         {
             await this.UserNotificator.DisplayAlert(
                 "Favourite tapped!", "Favourite name: " + favourite.Name , "Ok");

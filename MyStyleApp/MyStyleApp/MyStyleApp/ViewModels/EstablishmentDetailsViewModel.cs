@@ -27,9 +27,9 @@ namespace MyStyleApp.ViewModels
             LocalizedStringsService localizedStringsService) :
             base(navigator, userNotificator, localizedStringsService)
         {
-            this.EstablishmentDetailsTappedCommand = new Command<Service>(this.EstablishmentDetailsTapped);
-            this.BookCommand = new Command(this.Book);
-            this.FavouriteCommand = new Command(this.Favourite);
+            this.EstablishmentDetailsTappedCommand = new Command<Service>(this.EstablishmentDetailsTappedAsync);
+            this.BookCommand = new Command(this.BookAsync);
+            this.FavouriteCommand = new Command(this.FavouriteAsync);
 
             // REMOVE!!!
             FillWithMockData();
@@ -63,19 +63,19 @@ namespace MyStyleApp.ViewModels
             set { SetProperty(ref _serviceList, value); }
         }
 
-        private async void EstablishmentDetailsTapped(Service service)
+        private async void EstablishmentDetailsTappedAsync(Service service)
         {
             await this.UserNotificator.DisplayAlert(
                 "Ir a...", "cuerpo", "ok");
         }
 
-        private async void Book()
+        private async void BookAsync()
         {
             //Change the page    
             await this.PushNavPageAsync<SearchViewModel>();
         }
 
-        private async void Favourite()
+        private async void FavouriteAsync()
         {
             await this.UserNotificator.DisplayAlert(
                 "Añadido a favoritos...", "cuerpo", "ok");

@@ -42,8 +42,8 @@ namespace MyStyleApp.ViewModels
         {
             this._usersService = usersService;
             this._validationService = validationService;
-            this.LoginCommand = new Command(this.Login);
-            this.NewAccountCommand = new Command(this.NewAccount);
+            this.LoginCommand = new Command(this.LoginAsync);
+            this.NewAccountCommand = new Command(this.NewAccountAsync);
 
             // REMOVE!!!
             FillWithMockData();
@@ -103,7 +103,7 @@ namespace MyStyleApp.ViewModels
             return this._validationService.GetValidationError();
         }
 
-        private async void Login()
+        private async void LoginAsync()
         {
             string validationError = this.GetValidationError();
             if(validationError != null)
@@ -117,7 +117,7 @@ namespace MyStyleApp.ViewModels
 
             try
             {
-                await this._usersService.Login(this.Email, this.Password, this.RememberMe);
+                await this._usersService.LoginAsync(this.Email, this.Password, this.RememberMe);
                 await this.SetMainPageAsync<MainViewModel>();
             }
             catch (Exception)
@@ -130,7 +130,7 @@ namespace MyStyleApp.ViewModels
             }
         }
 
-        private async void NewAccount()
+        private async void NewAccountAsync()
         {
             //await this.PushAsync<MainViewModel>();
         }

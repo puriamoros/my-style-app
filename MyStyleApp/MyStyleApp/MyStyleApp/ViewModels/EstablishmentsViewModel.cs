@@ -26,8 +26,8 @@ namespace MyStyleApp.ViewModels
             LocalizedStringsService localizedStringsService) : 
             base(navigator, userNotificator, localizedStringsService)
         {
-            this.ViewDetailsCommand = new Command<Establishment>(this.ViewDetails);
-            this.BookCommand = new Command<Establishment>(this.Book);
+            this.ViewDetailsCommand = new Command<Establishment>(this.ViewDetailsAsync);
+            this.BookCommand = new Command<Establishment>(this.BookAsync);
 
             // REMOVE!!!
             FillWithMockData();
@@ -53,7 +53,7 @@ namespace MyStyleApp.ViewModels
             set { SetProperty(ref _establishmentList, value); }
         }
 
-        private async void ViewDetails(Establishment establishment)
+        private async void ViewDetailsAsync(Establishment establishment)
         {
             await this.PushNavPageAsync<EstablishmentDetailsViewModel>((establishmentDetailsVM) => 
                 {
@@ -62,7 +62,7 @@ namespace MyStyleApp.ViewModels
             );
         }
 
-        private async void Book(Establishment establishment)
+        private async void BookAsync(Establishment establishment)
         {
             //await this.PushAsync<BookViewModel>((bookVM) =>
             //{

@@ -16,7 +16,8 @@ class Appointments extends ModelWithIdBase
 			'idClient',
 			'idEstablishment',
 			'idService',
-			'date'
+			'date',
+			'notes'
 		);
 		$this->idField = $this->fields[0];
     }

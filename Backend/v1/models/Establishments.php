@@ -21,4 +21,37 @@ class Establishments extends ModelWithIdBase
 		);
 		$this->idField = $this->fields[0];
     }
+	
+	protected function getElement($id)
+	{
+		// Check authorization
+		Authorization::authorizeApiKey();
+		
+		$result = parent::dbGetOne($id);
+		
+		$queryParams = array(
+			'idEstablishment' => $id
+		);
+		$services = $this->dbGetServices($queryParams);
+		
+		$result['services'] = $services;
+		
+		// Print response
+		http_response_code(200);
+		return $result;
+	}
+	
+	private function dbGetServices($queryParams)
+	{
+		$table = 'offer';
+		$fields = array(
+			'idService',
+			'price'
+		);
+		$searchFields = array(
+			'idEstablishment'
+		);
+		
+		return DBCommands::dbGet($table, $fields, $searchFields, $queryParams);
+	}
 }

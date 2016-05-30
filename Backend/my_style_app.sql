@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-05-2016 a las 21:20:58
+-- Tiempo de generación: 30-05-2016 a las 22:06:50
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.5.35
 
@@ -19,9 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `my_style_app`
 --
-DROP DATABASE `my_style_app`;
-CREATE DATABASE IF NOT EXISTS `my_style_app` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `my_style_app`;
 
 -- --------------------------------------------------------
 
@@ -35,15 +32,16 @@ CREATE TABLE `appointments` (
   `idClient` int(11) NOT NULL,
   `idEstablishment` int(11) NOT NULL,
   `idService` int(11) NOT NULL,
-  `date` varchar(100) NOT NULL
+  `date` varchar(100) NOT NULL,
+  `notes` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `appointments`
 --
 
-INSERT INTO `appointments` (`id`, `idClient`, `idEstablishment`, `idService`, `date`) VALUES
-(1, 2, 3, 3, 'rrrrr');
+INSERT INTO `appointments` (`id`, `idClient`, `idEstablishment`, `idService`, `date`, `notes`) VALUES
+(1, 2, 3, 3, 'rrrrr', 'aaaaaaaaaaaa');
 
 -- --------------------------------------------------------
 
@@ -74,7 +72,8 @@ INSERT INTO `establishments` (`id`, `name`, `address`, `establishmentType`, `idO
 (9, 'peluquería', 'C/. tururu nº3', 0, 0, 0),
 (10, 'peluquería', 'C/. tururu nº3', 0, 0, 0),
 (11, 'peluquería', 'C/. tururu nº3', 0, 0, 0),
-(12, 'peluquería', 'C/. tururu nº3', 0, 0, 0);
+(12, 'peluquería', 'C/. tururu nº3', 0, 0, 0),
+(13, 'peluquería asdf', 'C/. tururu nº3', 1, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -84,9 +83,18 @@ INSERT INTO `establishments` (`id`, `name`, `address`, `establishmentType`, `idO
 
 DROP TABLE IF EXISTS `favourites`;
 CREATE TABLE `favourites` (
+  `id` int(11) NOT NULL,
   `idClient` int(11) NOT NULL,
   `idEstablishment` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `favourites`
+--
+
+INSERT INTO `favourites` (`id`, `idClient`, `idEstablishment`) VALUES
+(2, 1, 5),
+(3, 19, 5);
 
 -- --------------------------------------------------------
 
@@ -100,6 +108,13 @@ CREATE TABLE `offer` (
   `idService` int(11) NOT NULL,
   `price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `offer`
+--
+
+INSERT INTO `offer` (`idEstablishment`, `idService`, `price`) VALUES
+(4, 1, 12);
 
 -- --------------------------------------------------------
 
@@ -116,18 +131,6 @@ CREATE TABLE `provinces` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `service_types`
---
-
-DROP TABLE IF EXISTS `service_types`;
-CREATE TABLE `service_types` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `services`
 --
 
@@ -135,23 +138,27 @@ DROP TABLE IF EXISTS `services`;
 CREATE TABLE `services` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `idServiceType` int(11) NOT NULL,
+  `idServiceCategory` int(11) NOT NULL,
   `duration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `services`
+--
+
+INSERT INTO `services` (`id`, `name`, `idServiceCategory`, `duration`) VALUES
+(1, 'corte caballero', 0, 30);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `services_history`
+-- Estructura de tabla para la tabla `service_categories`
 --
 
-DROP TABLE IF EXISTS `services_history`;
-CREATE TABLE `services_history` (
-  `idClient` int(11) NOT NULL,
-  `idEstablishment` int(11) NOT NULL,
-  `idService` int(11) NOT NULL,
-  `date` varchar(50) NOT NULL,
-  `notes` text NOT NULL
+DROP TABLE IF EXISTS `service_categories`;
+CREATE TABLE `service_categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -212,7 +219,7 @@ ALTER TABLE `establishments`
 -- Indices de la tabla `favourites`
 --
 ALTER TABLE `favourites`
-  ADD PRIMARY KEY (`idClient`,`idEstablishment`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `offer`
@@ -227,22 +234,16 @@ ALTER TABLE `provinces`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `service_types`
---
-ALTER TABLE `service_types`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indices de la tabla `services`
 --
 ALTER TABLE `services`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `services_history`
+-- Indices de la tabla `service_categories`
 --
-ALTER TABLE `services_history`
-  ADD PRIMARY KEY (`idClient`,`idEstablishment`,`idService`);
+ALTER TABLE `service_categories`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `staff`
@@ -271,29 +272,32 @@ ALTER TABLE `appointments`
 -- AUTO_INCREMENT de la tabla `establishments`
 --
 ALTER TABLE `establishments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+--
+-- AUTO_INCREMENT de la tabla `favourites`
+--
+ALTER TABLE `favourites`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `provinces`
 --
 ALTER TABLE `provinces`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `service_types`
---
-ALTER TABLE `service_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT de la tabla `services`
 --
 ALTER TABLE `services`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT de la tabla `service_categories`
+--
+ALTER TABLE `service_categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;--
-
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -6,6 +6,10 @@ require_once(__DIR__.'/models/Users.php');
 require_once(__DIR__.'/data/StatusCodes.php');
 require_once(__DIR__.'/models/Establishments.php');
 require_once(__DIR__.'/models/Appointments.php');
+require_once(__DIR__.'/models/Favourites.php');
+require_once(__DIR__.'/models/Provinces.php');
+require_once(__DIR__.'/models/ServiceCategories.php');
+require_once(__DIR__.'/models/Services.php');
 
 $view = new JsonView();
 
@@ -35,7 +39,11 @@ $knownResources = array(
 		"login" => "Users",
 		"users" => "Users",
 		"establishments" => "Establishments",
-		"appointments" => "Appointments"
+		"appointments" => "Appointments",
+		"favourites" => "Favourites",
+		"provinces" => "Provinces",
+		"servicecategories" => "ServiceCategories",
+		"services" => "Services"
 	);
 	
 // Check if the resource exists

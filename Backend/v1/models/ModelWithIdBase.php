@@ -1,9 +1,9 @@
 <?php
 
-require_once(__DIR__.'/../data/DBConnection.php');
 require_once(__DIR__.'/../utilities/ApiException.php');
 require_once(__DIR__.'/../data/StatusCodes.php');
 require_once(__DIR__.'/../utilities/Authorization.php');
+require_once(__DIR__.'/../utilities/DBCommands.php');
 
 abstract class ModelWithIdBase
 {
@@ -83,7 +83,7 @@ abstract class ModelWithIdBase
 		// Check authorization
 		$idUser = Authorization::authorizeApiKey();
 		
-		// This is to allow users/me using this funcition without passing the user id
+		// This is to allow users/me using this function without passing the user id
 		if(is_null($id)) {
 			$id = $idUser;
 		}
@@ -162,177 +162,26 @@ abstract class ModelWithIdBase
 	
 	protected function dbGet($queryParams)
 	{
-		try {
-			$pdo = DBConnection::getInstance()->getDB();
-
-			$command = "SELECT " . implode(",", $this->fields) .
-				" FROM " . $this->table;
-			$where = false;
-			foreach($this->fields as $field) {
-				if(isset($queryParams[$field])) {
-					$command .= $where ? " AND " : " WHERE ";
-					$command .= $field . "=?";
-					$where = true;
-				}
-			}
-
-			$query = $pdo->prepare($command);
-			
-			$count = 1;
-			foreach($this->fields as $field) {
-				if(isset($queryParams[$field])) {
-					$query->bindParam($count, $queryParams[$field]);
-					$count++;
-				}
-			}
-
-			$result = $query->execute();
-
-			if ($result) {
-				$list = array();
-				while($fetch = $query->fetch()) {
-					array_push($list, $this->dbFetchToArray($fetch));
-				}
-				return $list;
-			} else {
-				throw new ApiException(STATE_DB_ERROR, "DB error");
-			}
-		} catch (PDOException $e) {
-			throw new ApiException(STATE_DB_ERROR, "PDO exception");
-		}
+		return DBCommands::dbGet($this->table, $this->fields, $this->fields, $queryParams);
 	}
 	
 	protected function dbGetOne($id)
 	{
-		try {
-			$pdo = DBConnection::getInstance()->getDB();
-
-			$command = "SELECT " . implode(",", $this->fields) .
-				" FROM " . $this->table .
-				" WHERE " . $this->idField . "=?";
-			
-			$query = $pdo->prepare($command);
-
-			$query->bindParam(1, $id);
-
-			$result = $query->execute();
-
-			if ($result) {
-				if($fetch = $query->fetch()) {
-					return $this->dbFetchToArray($fetch);
-				}
-				else {
-					return null;
-				}
-			} else {
-				throw new ApiException(STATE_DB_ERROR, "DB error");
-			}
-		} catch (PDOException $e) {
-			throw new ApiException(STATE_DB_ERROR, "PDO exception");
-		}
+		return DBCommands::dbGetOne($this->table, $this->fields, $this->idField, $id);
 	}
    
 	protected function dbCreate($data)
 	{
-		try {
-			$fieldsButId = array_diff($this->fields, [$this->idField]);
-			$fieldsButIdParams = array_fill(0, count($fieldsButId), "?");
-			
-			$pdo = DBConnection::getInstance()->getDB();
-			
-			$command = "INSERT INTO " . $this->table .
-				" (" . implode(",", $fieldsButId) . ")" .
-				" VALUES(" . implode(",", $fieldsButIdParams) . ")";
-
-			$query = $pdo->prepare($command);
-
-			$count = 1;
-			foreach($fieldsButId as $field) {
-				$query->bindParam($count, $data[$field]);
-				$count++;
-			}
-			
-			$result = $query->execute();
-
-			if ($result) {
-				$item = array();
-				foreach($fieldsButId as $field) {
-					$item[$field] = $data[$field];
-				}
-				// Override idField with lastInsertId
-				$item[$this->idField] = $pdo->lastInsertId();
-				return $item;
-			} else {
-				throw new ApiException(STATE_DB_ERROR, "DB error");
-			}
-		} catch (PDOException $e) {
-			throw new ApiException(STATE_DB_ERROR, "PDO exception");
-		}
+		return DBCommands::dbCreate($this->table, $this->fields, $this->idField, $data);
 	}
 	
 	protected function dbUpdate($id, $data)
 	{
-		try {
-			$fieldsButId = array_diff($this->fields, [$this->idField]);
-			
-			$pdo = DBConnection::getInstance()->getDB();
-
-			$command = "UPDATE " . $this->table;
-			$comma = false;
-			foreach($fieldsButId as $field) {
-				if(isset($data[$field])) {
-					$command .= $comma ? ", " : " SET ";
-					$command .= $field . "=?";
-					$comma = true;
-				}
-			}
-			$command .= " WHERE " . $this->idField . "=?";
-			
-
-			$query = $pdo->prepare($command);
-
-			$count = 1;
-			foreach($this->fields as $field) {
-				if(isset($data[$field])) {
-					$query->bindParam($count, $data[$field]);
-					$count++;
-				}
-			}
-			$query->bindParam($count, $id);
-
-			$result = $query->execute();
-
-			if ($result) {
-				return;
-			} else {
-				throw new ApiException(STATE_DB_ERROR, "DB error");
-			}
-		} catch (PDOException $e) {
-			throw new ApiException(STATE_DB_ERROR, "PDO exception");
-		}
+		return DBCommands::dbUpdate($this->table, $this->fields, $this->idField, $id, $data);
 	}
 	
 	protected function dbDelete($id)
 	{
-		try {
-			$pdo = DBConnection::getInstance()->getDB();
-
-			$command = "DELETE FROM " . $this->table.
-				" WHERE " . $this->idField . "=?";
-
-			$query = $pdo->prepare($command);
-
-			$query->bindParam(1, $id);
-
-			$result = $query->execute();
-
-			if ($result) {
-				return;
-			} else {
-				throw new ApiException(STATE_DB_ERROR, "DB error");
-			}
-		} catch (PDOException $e) {
-			throw new ApiException(STATE_DB_ERROR, "PDO exception");
-		}
+		return DBCommands::dbDelete($this->table, $this->idField, $id);
 	}
 }

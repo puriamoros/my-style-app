@@ -20,6 +20,15 @@ class Establishments extends ModelWithIdBase
 			'idProvince'
 		);
 		$this->idField = $this->fields[0];
+		
+		// Services
+		$this->servicesTable = 'offer';
+		$this->servicesFields = array(
+			'idEstablishment',
+			'idService',
+			'price'
+		);
+		$this->idEstablishment = $this->servicesFields[0];
     }
 	
 	protected function getElement($id)
@@ -27,31 +36,112 @@ class Establishments extends ModelWithIdBase
 		// Check authorization
 		Authorization::authorizeApiKey();
 		
-		$result = parent::dbGetOne($id);
+		$result = $this->dbGetOne($id);
 		
-		$queryParams = array(
-			'idEstablishment' => $id
-		);
-		$services = $this->dbGetServices($queryParams);
-		
-		$result['services'] = $services;
+		if(!is_null($result)) {
+			$queryParams = array(
+				'idEstablishment' => $id
+			);
+			$services = $this->dbGetServices($queryParams);
+			
+			$result['services'] = $services;
+		}
 		
 		// Print response
 		http_response_code(200);
 		return $result;
 	}
 	
+	protected function createElement()
+	{
+		// Check authorization
+		Authorization::authorizeApiKey();
+		
+		$data = $this->getBodyData();
+		$services = $data['services'];
+		unset($data['services']);
+
+		// TODO: Validate fields
+		
+		// Create
+		$result = $this->dbCreate($data);
+		
+		// Create services
+		$id = $result[$this->idField];
+		$this->dbCreateServices($id, $services);
+		
+		// Print response
+		http_response_code(201);
+		return $result;
+	}
+	
+	protected function updateElement($id)
+	{
+		// Check authorization
+		Authorization::authorizeApiKey();
+		
+		$data = $this->getBodyData();
+		$services = $data['services'];
+		unset($data['services']);
+
+		// TODO: Validate fields
+		
+		// Update
+		$this->dbUpdate($id, $data);
+		
+		// Update services
+		$this->dbUpdateServices($id, $services);
+		
+		// Print response
+		http_response_code(204);
+		return;
+	}
+	
+	protected function deleteElement($id)
+	{
+		// Check authorization
+		Authorization::authorizeApiKey();
+
+		// TODO: Validate fields
+		
+		// Delete
+		$result = $this->dbDelete($id);
+		
+		// Delete services
+		$this->dbDeleteServices($id);
+		
+		// Print response
+		http_response_code(204);
+		return;
+	}
+	
 	private function dbGetServices($queryParams)
 	{
-		$table = 'offer';
-		$fields = array(
-			'idService',
-			'price'
-		);
+		$servicesFieldsButId = array_diff($this->servicesFields, [$this->idEstablishment]);
 		$searchFields = array(
-			'idEstablishment'
+			$this->idEstablishment
 		);
 		
-		return DBCommands::dbGet($table, $fields, $searchFields, $queryParams);
+		return DBCommands::dbGet($this->servicesTable, $servicesFieldsButId, $searchFields, $queryParams);
+	}
+	
+	private function dbCreateServices($idEstablishment, $services)
+	{
+		foreach($services as $service) {
+			$data = $service;
+			$data[$this->idEstablishment] = $idEstablishment;
+			DBCommands::dbCreateNoId($this->servicesTable, $this->servicesFields, $data);
+		}
+	}
+	
+	private function dbUpdateServices($idEstablishment, $services)
+	{
+		$this->dbDeleteServices($idEstablishment);
+		$this->dbCreateServices($idEstablishment, $services);
+	}
+	
+	private function dbDeleteServices($idEstablishment)
+	{
+		DBCommands::dbDelete($this->servicesTable, $this->idEstablishment, $idEstablishment);
 	}
 }

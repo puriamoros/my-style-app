@@ -69,7 +69,7 @@ abstract class ModelWithIdBase
 
 		// TODO: Validate fields
 		
-		// Get establishments
+		// Get
 		$result = $this->dbGet($queryParams);
 		
 		// Print response
@@ -90,7 +90,7 @@ abstract class ModelWithIdBase
 
 		// TODO: Validate fields
 		
-		// Get establishment
+		// Get
 		$result = $this->dbGetOne($id);
 		
 		// Print response
@@ -107,7 +107,7 @@ abstract class ModelWithIdBase
 
 		// TODO: Validate fields
 		
-		// Create user
+		// Create
 		$result = $this->dbCreate($data);
 		
 		// Print response
@@ -124,7 +124,7 @@ abstract class ModelWithIdBase
 
 		// TODO: Validate fields
 		
-		// Update user
+		// Update
 		$this->dbUpdate($id, $data);
 		
 		// Print response
@@ -139,7 +139,7 @@ abstract class ModelWithIdBase
 
 		// TODO: Validate fields
 		
-		// Delete user
+		// Delete
 		$result = $this->dbDelete($id);
 		
 		// Print response

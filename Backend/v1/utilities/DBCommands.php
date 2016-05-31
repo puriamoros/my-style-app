@@ -85,6 +85,37 @@ class DBCommands
 			throw new ApiException(STATE_DB_ERROR, "PDO exception");
 		}
 	}
+	
+	public static function dbCreateNoId($table, $fields, $data)
+	{
+		try {
+			$fieldsParams = array_fill(0, count($fields), "?");
+			
+			$pdo = DBConnection::getInstance()->getDB();
+			
+			$command = "INSERT INTO " . $table .
+				" (" . implode(",", $fields) . ")" .
+				" VALUES(" . implode(",", $fieldsParams) . ")";
+
+			$query = $pdo->prepare($command);
+
+			$count = 1;
+			foreach($fields as $field) {
+				$query->bindParam($count, $data[$field]);
+				$count++;
+			}
+			
+			$result = $query->execute();
+
+			if ($result) {
+				return $data;
+			} else {
+				throw new ApiException(STATE_DB_ERROR, "DB error");
+			}
+		} catch (PDOException $e) {
+			throw new ApiException(STATE_DB_ERROR, "PDO exception");
+		}
+	}
    
 	public static function dbCreate($table, $fields, $idField, $data)
 	{

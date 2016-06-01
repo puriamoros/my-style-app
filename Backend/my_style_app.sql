@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-05-2016 a las 22:06:50
+-- Tiempo de generación: 01-06-2016 a las 12:00:04
 -- Versión del servidor: 10.1.13-MariaDB
--- Versión de PHP: 5.5.35
+-- Versión de PHP: 5.6.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -64,16 +64,7 @@ CREATE TABLE `establishments` (
 --
 
 INSERT INTO `establishments` (`id`, `name`, `address`, `establishmentType`, `idOwner`, `idProvince`) VALUES
-(4, 'peluquería', 'C/. tururu nº3', 0, 0, 0),
-(5, 'peluquería', 'C/. tururu nº3', 0, 0, 0),
-(6, 'peluquería', 'C/. tururu nº3', 0, 0, 0),
-(7, 'peluquería', 'C/. tururu nº3', 0, 0, 0),
-(8, 'peluquería', 'C/. tururu nº3', 0, 0, 0),
-(9, 'peluquería', 'C/. tururu nº3', 0, 0, 0),
-(10, 'peluquería', 'C/. tururu nº3', 0, 0, 0),
-(11, 'peluquería', 'C/. tururu nº3', 0, 0, 0),
-(12, 'peluquería', 'C/. tururu nº3', 0, 0, 0),
-(13, 'peluquería asdf', 'C/. tururu nº3', 1, 1, 2);
+(4, 'peluquería asdf', 'C/. Tururu nº4 asdf', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -106,7 +97,7 @@ DROP TABLE IF EXISTS `offer`;
 CREATE TABLE `offer` (
   `idEstablishment` int(11) NOT NULL,
   `idService` int(11) NOT NULL,
-  `price` int(11) NOT NULL
+  `price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -114,7 +105,9 @@ CREATE TABLE `offer` (
 --
 
 INSERT INTO `offer` (`idEstablishment`, `idService`, `price`) VALUES
-(4, 1, 12);
+(4, 3, 12.5),
+(4, 4, 25.5),
+(4, 5, 16);
 
 -- --------------------------------------------------------
 
@@ -152,11 +145,38 @@ INSERT INTO `services` (`id`, `name`, `idServiceCategory`, `duration`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `services_history`
+--
+
+DROP TABLE IF EXISTS `services_history`;
+CREATE TABLE `services_history` (
+  `idClient` int(11) NOT NULL,
+  `idEstablishment` int(11) NOT NULL,
+  `idService` int(11) NOT NULL,
+  `date` varchar(50) NOT NULL,
+  `notes` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `service_categories`
 --
 
 DROP TABLE IF EXISTS `service_categories`;
 CREATE TABLE `service_categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `service_types`
+--
+
+DROP TABLE IF EXISTS `service_types`;
+CREATE TABLE `service_types` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -240,9 +260,21 @@ ALTER TABLE `services`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `services_history`
+--
+ALTER TABLE `services_history`
+  ADD PRIMARY KEY (`idClient`,`idEstablishment`,`idService`);
+
+--
 -- Indices de la tabla `service_categories`
 --
 ALTER TABLE `service_categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `service_types`
+--
+ALTER TABLE `service_types`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -272,7 +304,7 @@ ALTER TABLE `appointments`
 -- AUTO_INCREMENT de la tabla `establishments`
 --
 ALTER TABLE `establishments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `favourites`
 --
@@ -294,10 +326,15 @@ ALTER TABLE `services`
 ALTER TABLE `service_categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `service_types`
+--
+ALTER TABLE `service_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -33,11 +33,9 @@ class Establishments extends ModelWithIdBase
 	
 	protected function getElement($id)
 	{
-		// Check authorization
-		Authorization::authorizeApiKey();
+		$result = parent::getElement($id);
 		
-		$result = $this->dbGetOne($id);
-		
+		// Add services to $result
 		if(!is_null($result)) {
 			$queryParams = array(
 				'idEstablishment' => $id
@@ -47,71 +45,41 @@ class Establishments extends ModelWithIdBase
 			$result['services'] = $services;
 		}
 		
-		// Print response
-		http_response_code(200);
 		return $result;
 	}
 	
 	protected function createElement()
 	{
-		// Check authorization
-		Authorization::authorizeApiKey();
-		
-		$data = $this->getBodyData();
-		$services = $data['services'];
-		unset($data['services']);
-
-		// TODO: Validate fields
-		
-		// Create
-		$result = $this->dbCreate($data);
+		$result = parent::createElement();
 		
 		// Create services
+		$data = $this->getBodyData();
+		$services = $data['services'];
 		$id = $result[$this->idField];
 		$this->dbCreateServices($id, $services);
 		
-		// Print response
-		http_response_code(201);
 		return $result;
 	}
 	
 	protected function updateElement($id)
 	{
-		// Check authorization
-		Authorization::authorizeApiKey();
-		
-		$data = $this->getBodyData();
-		$services = $data['services'];
-		unset($data['services']);
-
-		// TODO: Validate fields
-		
-		// Update
-		$this->dbUpdate($id, $data);
+		parent::updateElement($id);
 		
 		// Update services
+		$data = $this->getBodyData();
+		$services = $data['services'];
 		$this->dbUpdateServices($id, $services);
 		
-		// Print response
-		http_response_code(204);
 		return;
 	}
 	
 	protected function deleteElement($id)
 	{
-		// Check authorization
-		Authorization::authorizeApiKey();
-
-		// TODO: Validate fields
-		
-		// Delete
-		$result = $this->dbDelete($id);
+		parent::deleteElement($id);
 		
 		// Delete services
 		$this->dbDeleteServices($id);
 		
-		// Print response
-		http_response_code(204);
 		return;
 	}
 	

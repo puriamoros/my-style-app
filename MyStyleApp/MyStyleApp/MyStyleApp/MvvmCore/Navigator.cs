@@ -151,7 +151,7 @@ namespace MvvmCore
 			_deviceService.BeginInvokeOnMainThread(async () =>
 			{
 				Page view = await navigation.PopAsync();
-				tcs.SetResult(view.BindingContext as IViewModel);
+                tcs.SetResult(view.BindingContext as IViewModel);
 
 			});
             return tcs.Task;
@@ -171,9 +171,18 @@ namespace MvvmCore
 		public Task PopNavPageToRootAsync(INavigation navigation)
 		{
 			var tcs = new TaskCompletionSource<object>();
-			_deviceService.BeginInvokeOnMainThread(async () =>
+			_deviceService.BeginInvokeOnMainThread( () =>
 			{
-				await navigation.PopToRootAsync();
+                // If count <= 1, we are already on the top of the navigation stack
+                if (navigation.NavigationStack.Count > 1)
+                {
+                    INavigation rootNavigation = navigation.NavigationStack[0].Navigation;
+                    while (rootNavigation.NavigationStack.Count > 1)
+                    {
+                        rootNavigation.RemovePage(
+                            rootNavigation.NavigationStack[rootNavigation.NavigationStack.Count - 1]);
+                    }
+                }
 				tcs.SetResult(null);
 			});
 			return tcs.Task;

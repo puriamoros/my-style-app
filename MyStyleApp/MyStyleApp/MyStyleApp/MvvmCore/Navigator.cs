@@ -171,18 +171,24 @@ namespace MvvmCore
 		public Task PopNavPageToRootAsync(INavigation navigation)
 		{
 			var tcs = new TaskCompletionSource<object>();
-			_deviceService.BeginInvokeOnMainThread( () =>
+			_deviceService.BeginInvokeOnMainThread(async () =>
 			{
-                // If count <= 1, we are already on the top of the navigation stack
-                if (navigation.NavigationStack.Count > 1)
+                // WinPhone hack: navigation PopToRootAsync is not working as
+                // spected on WinPhone, so I have to use a workaround
+                if (_deviceService.OS == TargetPlatform.Windows ||
+                    _deviceService.OS == TargetPlatform.WinPhone)
                 {
                     INavigation rootNavigation = navigation.NavigationStack[0].Navigation;
                     while (rootNavigation.NavigationStack.Count > 1)
                     {
-                        rootNavigation.RemovePage(
-                            rootNavigation.NavigationStack[rootNavigation.NavigationStack.Count - 1]);
+                        await rootNavigation.PopAsync();
                     }
                 }
+                else
+                {
+                    await navigation.PopToRootAsync();
+                }
+                
 				tcs.SetResult(null);
 			});
 			return tcs.Task;

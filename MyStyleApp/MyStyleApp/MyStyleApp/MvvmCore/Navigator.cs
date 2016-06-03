@@ -178,15 +178,10 @@ namespace MvvmCore
                 if (_deviceService.OS == TargetPlatform.Windows ||
                     _deviceService.OS == TargetPlatform.WinPhone)
                 {
-                    // If count <= 1, we are already on the top of the navigation stack
-                    if (navigation.NavigationStack.Count > 1)
+                    INavigation rootNavigation = navigation.NavigationStack[0].Navigation;
+                    while (rootNavigation.NavigationStack.Count > 1)
                     {
-                        INavigation rootNavigation = navigation.NavigationStack[0].Navigation;
-                        while (rootNavigation.NavigationStack.Count > 1)
-                        {
-                            rootNavigation.RemovePage(
-                                rootNavigation.NavigationStack[rootNavigation.NavigationStack.Count - 1]);
-                        }
+                        await rootNavigation.PopAsync();
                     }
                 }
                 else

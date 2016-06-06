@@ -69,5 +69,455 @@ namespace MyStyleApp.Localization {
                 return ResourceManager.GetString("app_name", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Álava.
+        /// </summary>
+        internal static string province_1 {
+            get {
+                return ResourceManager.GetString("province_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cáceres.
+        /// </summary>
+        internal static string province_10 {
+            get {
+                return ResourceManager.GetString("province_10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cádiz.
+        /// </summary>
+        internal static string province_11 {
+            get {
+                return ResourceManager.GetString("province_11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cantabria.
+        /// </summary>
+        internal static string province_12 {
+            get {
+                return ResourceManager.GetString("province_12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Castellón.
+        /// </summary>
+        internal static string province_13 {
+            get {
+                return ResourceManager.GetString("province_13", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ciudad Real.
+        /// </summary>
+        internal static string province_14 {
+            get {
+                return ResourceManager.GetString("province_14", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Córdoba.
+        /// </summary>
+        internal static string province_15 {
+            get {
+                return ResourceManager.GetString("province_15", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cuenca.
+        /// </summary>
+        internal static string province_16 {
+            get {
+                return ResourceManager.GetString("province_16", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gerona.
+        /// </summary>
+        internal static string province_17 {
+            get {
+                return ResourceManager.GetString("province_17", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Granada.
+        /// </summary>
+        internal static string province_18 {
+            get {
+                return ResourceManager.GetString("province_18", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guadalajara.
+        /// </summary>
+        internal static string province_19 {
+            get {
+                return ResourceManager.GetString("province_19", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Albacete.
+        /// </summary>
+        internal static string province_2 {
+            get {
+                return ResourceManager.GetString("province_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guipúzcoa.
+        /// </summary>
+        internal static string province_20 {
+            get {
+                return ResourceManager.GetString("province_20", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Huelva.
+        /// </summary>
+        internal static string province_21 {
+            get {
+                return ResourceManager.GetString("province_21", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Huesca.
+        /// </summary>
+        internal static string province_22 {
+            get {
+                return ResourceManager.GetString("province_22", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Islas Baleares.
+        /// </summary>
+        internal static string province_23 {
+            get {
+                return ResourceManager.GetString("province_23", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jaén.
+        /// </summary>
+        internal static string province_24 {
+            get {
+                return ResourceManager.GetString("province_24", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La Coruña.
+        /// </summary>
+        internal static string province_25 {
+            get {
+                return ResourceManager.GetString("province_25", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La Rioja.
+        /// </summary>
+        internal static string province_26 {
+            get {
+                return ResourceManager.GetString("province_26", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Las Palmas.
+        /// </summary>
+        internal static string province_27 {
+            get {
+                return ResourceManager.GetString("province_27", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to León.
+        /// </summary>
+        internal static string province_28 {
+            get {
+                return ResourceManager.GetString("province_28", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lérida.
+        /// </summary>
+        internal static string province_29 {
+            get {
+                return ResourceManager.GetString("province_29", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alicante.
+        /// </summary>
+        internal static string province_3 {
+            get {
+                return ResourceManager.GetString("province_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lugo.
+        /// </summary>
+        internal static string province_30 {
+            get {
+                return ResourceManager.GetString("province_30", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Madrid.
+        /// </summary>
+        internal static string province_31 {
+            get {
+                return ResourceManager.GetString("province_31", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Málaga.
+        /// </summary>
+        internal static string province_32 {
+            get {
+                return ResourceManager.GetString("province_32", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Murcia.
+        /// </summary>
+        internal static string province_33 {
+            get {
+                return ResourceManager.GetString("province_33", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navarra.
+        /// </summary>
+        internal static string province_34 {
+            get {
+                return ResourceManager.GetString("province_34", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Orense.
+        /// </summary>
+        internal static string province_35 {
+            get {
+                return ResourceManager.GetString("province_35", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palencia.
+        /// </summary>
+        internal static string province_36 {
+            get {
+                return ResourceManager.GetString("province_36", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pontevedra.
+        /// </summary>
+        internal static string province_37 {
+            get {
+                return ResourceManager.GetString("province_37", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Salamanca.
+        /// </summary>
+        internal static string province_38 {
+            get {
+                return ResourceManager.GetString("province_38", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Segovia.
+        /// </summary>
+        internal static string province_39 {
+            get {
+                return ResourceManager.GetString("province_39", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Almería.
+        /// </summary>
+        internal static string province_4 {
+            get {
+                return ResourceManager.GetString("province_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sevilla.
+        /// </summary>
+        internal static string province_40 {
+            get {
+                return ResourceManager.GetString("province_40", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Soria.
+        /// </summary>
+        internal static string province_41 {
+            get {
+                return ResourceManager.GetString("province_41", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarragona.
+        /// </summary>
+        internal static string province_42 {
+            get {
+                return ResourceManager.GetString("province_42", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tenerife.
+        /// </summary>
+        internal static string province_43 {
+            get {
+                return ResourceManager.GetString("province_43", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teruel.
+        /// </summary>
+        internal static string province_44 {
+            get {
+                return ResourceManager.GetString("province_44", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toledo.
+        /// </summary>
+        internal static string province_45 {
+            get {
+                return ResourceManager.GetString("province_45", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valencia.
+        /// </summary>
+        internal static string province_46 {
+            get {
+                return ResourceManager.GetString("province_46", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valladolid.
+        /// </summary>
+        internal static string province_47 {
+            get {
+                return ResourceManager.GetString("province_47", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vizcaya.
+        /// </summary>
+        internal static string province_48 {
+            get {
+                return ResourceManager.GetString("province_48", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zamora.
+        /// </summary>
+        internal static string province_49 {
+            get {
+                return ResourceManager.GetString("province_49", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Asturias.
+        /// </summary>
+        internal static string province_5 {
+            get {
+                return ResourceManager.GetString("province_5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zaragoza.
+        /// </summary>
+        internal static string province_50 {
+            get {
+                return ResourceManager.GetString("province_50", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Asturias.
+        /// </summary>
+        internal static string province_6 {
+            get {
+                return ResourceManager.GetString("province_6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Badajoz.
+        /// </summary>
+        internal static string province_7 {
+            get {
+                return ResourceManager.GetString("province_7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barcelona.
+        /// </summary>
+        internal static string province_8 {
+            get {
+                return ResourceManager.GetString("province_8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Burgos.
+        /// </summary>
+        internal static string province_9 {
+            get {
+                return ResourceManager.GetString("province_9", resourceCulture);
+            }
+        }
     }
 }

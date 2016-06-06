@@ -91,7 +91,7 @@ namespace MyStyleApp.ViewModels
             return this._navigator.PopNavPageModalAsync(this.Navigation);
         }
 
-        public Task PopToRootAsync()
+        public Task PopNavPageToRootAsync()
         {
             return this._navigator.PopNavPageToRootAsync(this.Navigation);
         }

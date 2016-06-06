@@ -44,7 +44,7 @@ namespace MyStyleApp.ViewModels
                 {
                     Id = i,
                     Name = "Name " + i,
-                    Price = i
+                    //Price = i
                 }
                 );
             }
@@ -72,7 +72,8 @@ namespace MyStyleApp.ViewModels
         private async void BookAsync()
         {
             //Change the page    
-            await this.PushNavPageAsync<SearchViewModel>();
+            //await this.PushNavPageAsync<SearchViewModel>();
+            await this.PopNavPageToRootAsync();
         }
 
         private async void FavouriteAsync()

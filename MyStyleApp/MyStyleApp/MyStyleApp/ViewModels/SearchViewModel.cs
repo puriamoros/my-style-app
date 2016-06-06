@@ -1,20 +1,27 @@
-﻿using System.Threading.Tasks;
-using MyStyleApp.Services;
+﻿using MyStyleApp.Services;
 using MvvmCore;
 using System.Collections.ObjectModel;
 using MyStyleApp.Models;
 using System.Windows.Input;
 using Xamarin.Forms;
 using System;
+using MyStyleApp.Services.Backend;
 
 namespace MyStyleApp.ViewModels
 {
     public class SearchViewModel : NavigableViewModelBase
     {
-        private ObservableCollection<City> _cityList;
-        private City _selectedCity;
-        private ObservableCollection<string> _establishmenttypeList;
-        private string _selectedEstablishmentType;
+        private ProvincesService _provincesService;
+        private EstablishmentTypesService _establishmentTypesService;
+        private ServiceCategoriesService _serviceCategoriesService;
+        private ServicesService _servicesService;
+
+        private ObservableCollection<Province> _provinceList;
+        private Province _selectedProvince;
+        private ObservableCollection<EstablishmentType> _establishmentTypeList;
+        private EstablishmentType _selectedEstablishmentType;
+        private ObservableCollection<ServiceCategory> _servicecategoryList;
+        private string _selectedServiceCategory;
         private ObservableCollection<Service> _serviceList;
         private Service _selectedService;
 
@@ -23,71 +30,63 @@ namespace MyStyleApp.ViewModels
         public SearchViewModel(
             INavigator navigator,
             IUserNotificator userNotificator,
-            LocalizedStringsService localizedStringsService) :
+            LocalizedStringsService localizedStringsService,
+            ProvincesService provincesService,
+            EstablishmentTypesService establishmentTypesService,
+            ServiceCategoriesService serviceCategoriesService,
+            ServicesService servicesService) :
             base(navigator, userNotificator, localizedStringsService)
         {
+            this._provincesService = provincesService;
+            this._establishmentTypesService = establishmentTypesService;
+            this._serviceCategoriesService = serviceCategoriesService;
+            this._servicesService = servicesService;
+
             this.SearchCommand = new Command(this.SearchAsync);
 
-            // REMOVE!!!
-            FillWithMockData();
+            this._provinceList = new ObservableCollection<Province>(this._provincesService.GetProvinces());
+            this._establishmentTypeList = new ObservableCollection<EstablishmentType>(
+                this._establishmentTypesService.GetEstablishmentTypes());
+            this._servicecategoryList = new ObservableCollection<ServiceCategory>(
+                this._serviceCategoriesService.GetServiceCategories());
         }
 
-        private void FillWithMockData()
+        public ObservableCollection<Province> ProvinceList
         {
-            var listCity = new ObservableCollection<City>();
-            var listEsblishmentType = new ObservableCollection<string>();
-            var listService = new ObservableCollection<Service>();
-            for (int i = 0; i < 20; i++)
-            {
-                listCity.Add(new City()
-                    {
-                        Id = i,
-                        Name = "Ciudad " + i
-                    }
-                );
-            }
-            this.CityList = listCity;
-            foreach (EstablishmentType establishmentType in Enum.GetValues(typeof(EstablishmentType)))
-            {
-                listEsblishmentType.Add(establishmentType.ToString());
-            }
-            this.EstablishmentTypeList = listEsblishmentType;
-            for (int i = 0; i < 30; i++)
-            {
-                listService.Add(new Service()
-                {
-                    Id = i,
-                    Name = "Servicio " + i
-                }
-                );
-            }
-            this.ServiceList = listService;
+            get { return _provinceList; }
+            set { SetProperty(ref _provinceList, value); }
         }
 
-        public ObservableCollection<City> CityList
+        public Province SelectedProvince
         {
-            get { return _cityList; }
-            set { SetProperty(ref _cityList, value); }
+            get { return _selectedProvince; }
+            set { SetProperty(ref _selectedProvince, value); }
         }
 
-        public City SelectedCity
+        public ObservableCollection<EstablishmentType> EstablishmentTypeList
         {
-            get { return _selectedCity; }
-            set { SetProperty(ref _selectedCity, value); }
+            get { return _establishmentTypeList; }
+            set { SetProperty(ref _establishmentTypeList, value); }
         }
 
-        public ObservableCollection<string> EstablishmentTypeList
-        {
-            get { return _establishmenttypeList; }
-            set { SetProperty(ref _establishmenttypeList, value); }
-        }
-
-        public string SelectedEstablishmentType
+        public EstablishmentType SelectedEstablishmentType
         {
             get { return _selectedEstablishmentType; }
             set { SetProperty(ref _selectedEstablishmentType, value); }
         }
 
+        public ObservableCollection<ServiceCategory> ServiceCategoryList
+        {
+            get { return _servicecategoryList; }
+            set { SetProperty(ref _servicecategoryList, value); }
+        }
+
+        public string SelectedServiceCategory
+        {
+            get { return _selectedServiceCategory; }
+            set { SetProperty(ref _selectedServiceCategory, value); }
+        }
+        
         public ObservableCollection<Service> ServiceList
         {
             get { return _serviceList; }

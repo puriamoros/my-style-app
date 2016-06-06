@@ -15,5 +15,11 @@ namespace MyStyleApp.Models
 
         [JsonProperty(Required = Required.Always, PropertyName = "email")]
         public string Email { get; set; }
+
+        [JsonProperty(Required = Required.Always, PropertyName = "userType")]
+        public int UserType { get; set; }
+
+        [JsonProperty(Required = Required.Always, PropertyName = "phone")]
+        public string Phone { get; set; }
     }
 }

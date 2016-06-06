@@ -12,12 +12,12 @@
       <StackLayout>
         <StackLayout Padding="0,0,0,10" Spacing="0">
           <Label 
-            Text="{Binding LocalizedStrings[city]}"
+            Text="{Binding LocalizedStrings[province]}"
             Style="{StaticResource MediumTextStyle}"/>
           <fe:BindablePicker
-            ItemsSource="{Binding CityList}"
+            ItemsSource="{Binding ProvinceList}"
             DisplayProperty="Name"
-            SelectedItem="{Binding SelectedCity}"
+            SelectedItem="{Binding SelectedProvince}"
             Title="{Binding ChooseItemPlaceholder}"/>
         </StackLayout>
         <StackLayout Padding="0,0,0,10" Spacing="0">
@@ -28,6 +28,16 @@
             ItemsSource="{Binding EstablishmentTypeList}"
             DisplayProperty="Name"
             SelectedItem="{Binding SelectedEstablishmentType}"
+            Title="{Binding ChooseItemPlaceholder}"/>
+        </StackLayout>
+        <StackLayout Padding="0,0,0,10" Spacing="0">
+          <Label
+            Text="{Binding LocalizedStrings[service_category]}"
+            Style="{StaticResource MediumTextStyle}"/>
+          <fe:BindablePicker
+            ItemsSource="{Binding ServiceCategoryList}"
+            DisplayProperty="Name"
+            SelectedItem="{Binding SelectedServiceCategory}"
             Title="{Binding ChooseItemPlaceholder}"/>
         </StackLayout>
         <StackLayout Padding="0,0,0,10" Spacing="0">

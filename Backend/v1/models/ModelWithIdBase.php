@@ -14,13 +14,11 @@ abstract class ModelWithIdBase
     public function get($queryArray, $queryParams)
     {
 		if(count($queryArray) >= 1 && count($queryArray) <= 2) {
-			if ($queryArray[0] == $this->table) {
-				if(count($queryArray) == 1) {
-					return $this->getElements($queryParams);
-				}
-				else {
-					return $this->getElement($queryArray[1]);
-				}
+			if(count($queryArray) == 1) {
+				return $this->getElements($queryParams);
+			}
+			else {
+				return $this->getElement($queryArray[1]);
 			}
 		}
 		
@@ -30,11 +28,9 @@ abstract class ModelWithIdBase
 	public function post($queryArray)
     {
 		if(count($queryArray) == 1) {
-			if ($queryArray[0] == $this->table) {
-				$body = file_get_contents('php://input');
-				$data = json_decode($body);
-				return $this->createElement($data);
-			}
+			$body = file_get_contents('php://input');
+			$data = json_decode($body);
+			return $this->createElement($data);
 		}
 		
 		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
@@ -43,9 +39,7 @@ abstract class ModelWithIdBase
 	public function put($queryArray)
     {
 		if(count($queryArray) == 2) {
-			if ($queryArray[0] == $this->table) {
-				return $this->updateElement($queryArray[1]);
-			}
+			return $this->updateElement($queryArray[1]);
 		}
 		
 		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
@@ -54,9 +48,7 @@ abstract class ModelWithIdBase
 	public function delete($queryArray)
     {
 		if(count($queryArray) == 2) {
-			if ($queryArray[0] == $this->table) {
-				return $this->deleteElement($queryArray[1]);
-			}
+			return $this->deleteElement($queryArray[1]);
 		}
 		
 		throw new ApiException(STATE_INVALID_URL, "Invalid URL");

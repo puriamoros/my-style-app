@@ -56,6 +56,10 @@ namespace MyStyleApp
             builder.RegisterType<HttpService>().SingleInstance();
             builder.RegisterType<UsersService>().As<IUsersService>().SingleInstance();
             builder.RegisterType<ValidationService>();
+            builder.RegisterType<ProvincesService>().SingleInstance();
+            builder.RegisterType<EstablishmentTypesService>().SingleInstance();
+            builder.RegisterType<ServiceCategoriesService>().SingleInstance();
+            builder.RegisterType<ServicesService>().As<IServicesService>().SingleInstance();
         }
 
         protected override void RegisterViews(IViewFactory viewFactory)

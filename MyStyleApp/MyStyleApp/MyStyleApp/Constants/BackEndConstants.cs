@@ -10,5 +10,6 @@
         public const string USERS_URL = "users";
         public const string USER_URL = "users/{0}";
         public const string ME_URL = "users/me";
+        public const string SERVICES_URL = "services";
     }
 }

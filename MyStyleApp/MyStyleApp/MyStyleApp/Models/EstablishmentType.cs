@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace MyStyleApp.Models
 {
-    public enum EstablishmentType
+    public class EstablishmentType
     {
-        Hairdresser,
-        Aesthetics,
-        HairdresserAndAesthetics
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

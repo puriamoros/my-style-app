@@ -15,5 +15,5 @@ namespace MyStyleApp.Models
 
         [JsonProperty(Required = Required.Always, PropertyName = "type")]
         public EstablishmentType Type { get; set; }
-}
+    }
 }

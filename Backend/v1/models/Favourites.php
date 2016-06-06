@@ -22,13 +22,11 @@ class Favourites extends ModelWithIdBase
 	public function get($queryArray, $queryParams)
     {
 		if(count($queryArray) >= 1 && count($queryArray) <= 2) {
-			if ($queryArray[0] == $this->table) {
-				if(count($queryArray) == 1) {
-					return parent::getElements($queryParams);
-				}
-				else {
-					throw new ApiException(STATE_INVALID_OPERATION, "Invalid Operation");
-				}
+			if(count($queryArray) == 1) {
+				return parent::getElements($queryParams);
+			}
+			else {
+				throw new ApiException(STATE_INVALID_OPERATION, "Invalid Operation");
 			}
 		}
 		

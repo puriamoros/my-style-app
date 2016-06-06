@@ -89,15 +89,6 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to City.
-        /// </summary>
-        internal static string city {
-            get {
-                return ResourceManager.GetString("city", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Create an account.
         /// </summary>
         internal static string create_account {
@@ -215,6 +206,33 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hairdresser.
+        /// </summary>
+        internal static string establishment_type_1 {
+            get {
+                return ResourceManager.GetString("establishment_type_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aesthetics.
+        /// </summary>
+        internal static string establishment_type_2 {
+            get {
+                return ResourceManager.GetString("establishment_type_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hairdresser and aesthetics.
+        /// </summary>
+        internal static string establishment_type_3 {
+            get {
+                return ResourceManager.GetString("establishment_type_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Establishments.
         /// </summary>
         internal static string establishments {
@@ -296,6 +314,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Province.
+        /// </summary>
+        internal static string province {
+            get {
+                return ResourceManager.GetString("province", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remember me.
         /// </summary>
         internal static string remember_me {
@@ -319,6 +346,114 @@ namespace MyStyleApp.Localization {
         internal static string service {
             get {
                 return ResourceManager.GetString("service", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service category.
+        /// </summary>
+        internal static string service_category {
+            get {
+                return ResourceManager.GetString("service_category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hair Styles.
+        /// </summary>
+        internal static string service_category_1 {
+            get {
+                return ResourceManager.GetString("service_category_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Facial Laser.
+        /// </summary>
+        internal static string service_category_10 {
+            get {
+                return ResourceManager.GetString("service_category_10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Makeups.
+        /// </summary>
+        internal static string service_category_11 {
+            get {
+                return ResourceManager.GetString("service_category_11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Haircuts.
+        /// </summary>
+        internal static string service_category_2 {
+            get {
+                return ResourceManager.GetString("service_category_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Colouring and Streaks.
+        /// </summary>
+        internal static string service_category_3 {
+            get {
+                return ResourceManager.GetString("service_category_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Permanents.
+        /// </summary>
+        internal static string service_category_4 {
+            get {
+                return ResourceManager.GetString("service_category_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hair Extensions.
+        /// </summary>
+        internal static string service_category_5 {
+            get {
+                return ResourceManager.GetString("service_category_5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hair Removal.
+        /// </summary>
+        internal static string service_category_6 {
+            get {
+                return ResourceManager.GetString("service_category_6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hands and Feet.
+        /// </summary>
+        internal static string service_category_7 {
+            get {
+                return ResourceManager.GetString("service_category_7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eyes.
+        /// </summary>
+        internal static string service_category_8 {
+            get {
+                return ResourceManager.GetString("service_category_8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Facial.
+        /// </summary>
+        internal static string service_category_9 {
+            get {
+                return ResourceManager.GetString("service_category_9", resourceCulture);
             }
         }
         

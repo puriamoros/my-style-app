@@ -126,8 +126,8 @@
   <data name="choose_an_item" xml:space="preserve">
     <value>Seleccione un elemento</value>
   </data>
-  <data name="city" xml:space="preserve">
-    <value>Ciudad</value>
+  <data name="province" xml:space="preserve">
+    <value>Provincia</value>
   </data>
   <data name="create_account" xml:space="preserve">
     <value>Crear una cuenta</value>
@@ -209,5 +209,50 @@
   </data>
   <data name="welcome_user" xml:space="preserve">
     <value>¡Hola ${USER_NAME}!</value>
+  </data>
+  <data name="service_category" xml:space="preserve">
+    <value>Categoría de servicio</value>
+  </data>
+  <data name="establishment_type_1" xml:space="preserve">
+    <value>Peluquería</value>
+  </data>
+  <data name="establishment_type_2" xml:space="preserve">
+    <value>Estética</value>
+  </data>
+  <data name="establishment_type_3" xml:space="preserve">
+    <value>Peluquería y estética</value>
+  </data>
+  <data name="service_category_1" xml:space="preserve">
+    <value>Peinados</value>
+  </data>
+  <data name="service_category_10" xml:space="preserve">
+    <value>Láser facial</value>
+  </data>
+  <data name="service_category_11" xml:space="preserve">
+    <value>Maquillajes</value>
+  </data>
+  <data name="service_category_2" xml:space="preserve">
+    <value>Cortes</value>
+  </data>
+  <data name="service_category_3" xml:space="preserve">
+    <value>Coloración y mechas</value>
+  </data>
+  <data name="service_category_4" xml:space="preserve">
+    <value>Permanentes</value>
+  </data>
+  <data name="service_category_5" xml:space="preserve">
+    <value>Extensiones</value>
+  </data>
+  <data name="service_category_6" xml:space="preserve">
+    <value>Depilación</value>
+  </data>
+  <data name="service_category_7" xml:space="preserve">
+    <value>Belleza manos-pies</value>
+  </data>
+  <data name="service_category_8" xml:space="preserve">
+    <value>Belleza ojos</value>
+  </data>
+  <data name="service_category_9" xml:space="preserve">
+    <value>Facial</value>
   </data>
 </root>

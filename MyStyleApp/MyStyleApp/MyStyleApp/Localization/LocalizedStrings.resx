@@ -126,8 +126,8 @@
   <data name="choose_an_item" xml:space="preserve">
     <value>Choose an item</value>
   </data>
-  <data name="city" xml:space="preserve">
-    <value>City</value>
+  <data name="province" xml:space="preserve">
+    <value>Province</value>
   </data>
   <data name="create_account" xml:space="preserve">
     <value>Create an account</value>
@@ -209,5 +209,50 @@
   </data>
   <data name="welcome_user" xml:space="preserve">
     <value>Hi ${USER_NAME}!</value>
+  </data>
+  <data name="service_category" xml:space="preserve">
+    <value>Service category</value>
+  </data>
+  <data name="establishment_type_1" xml:space="preserve">
+    <value>Hairdresser</value>
+  </data>
+  <data name="establishment_type_2" xml:space="preserve">
+    <value>Aesthetics</value>
+  </data>
+  <data name="establishment_type_3" xml:space="preserve">
+    <value>Hairdresser and aesthetics</value>
+  </data>
+  <data name="service_category_1" xml:space="preserve">
+    <value>Hair Styles</value>
+  </data>
+  <data name="service_category_10" xml:space="preserve">
+    <value>Facial Laser</value>
+  </data>
+  <data name="service_category_11" xml:space="preserve">
+    <value>Makeups</value>
+  </data>
+  <data name="service_category_2" xml:space="preserve">
+    <value>Haircuts</value>
+  </data>
+  <data name="service_category_3" xml:space="preserve">
+    <value>Colouring and Streaks</value>
+  </data>
+  <data name="service_category_4" xml:space="preserve">
+    <value>Permanents</value>
+  </data>
+  <data name="service_category_5" xml:space="preserve">
+    <value>Hair Extensions</value>
+  </data>
+  <data name="service_category_6" xml:space="preserve">
+    <value>Hair Removal</value>
+  </data>
+  <data name="service_category_7" xml:space="preserve">
+    <value>Hands and Feet</value>
+  </data>
+  <data name="service_category_8" xml:space="preserve">
+    <value>Eyes</value>
+  </data>
+  <data name="service_category_9" xml:space="preserve">
+    <value>Facial</value>
   </data>
 </root>

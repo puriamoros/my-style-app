@@ -120,4 +120,154 @@
   <data name="app_name" xml:space="preserve">
     <value>My Style App</value>
   </data>
+  <data name="province_1" xml:space="preserve">
+    <value>Álava</value>
+  </data>
+  <data name="province_10" xml:space="preserve">
+    <value>Cáceres</value>
+  </data>
+  <data name="province_11" xml:space="preserve">
+    <value>Cádiz</value>
+  </data>
+  <data name="province_12" xml:space="preserve">
+    <value>Cantabria</value>
+  </data>
+  <data name="province_13" xml:space="preserve">
+    <value>Castellón</value>
+  </data>
+  <data name="province_14" xml:space="preserve">
+    <value>Ciudad Real</value>
+  </data>
+  <data name="province_15" xml:space="preserve">
+    <value>Córdoba</value>
+  </data>
+  <data name="province_16" xml:space="preserve">
+    <value>Cuenca</value>
+  </data>
+  <data name="province_17" xml:space="preserve">
+    <value>Gerona</value>
+  </data>
+  <data name="province_18" xml:space="preserve">
+    <value>Granada</value>
+  </data>
+  <data name="province_19" xml:space="preserve">
+    <value>Guadalajara</value>
+  </data>
+  <data name="province_2" xml:space="preserve">
+    <value>Albacete</value>
+  </data>
+  <data name="province_20" xml:space="preserve">
+    <value>Guipúzcoa</value>
+  </data>
+  <data name="province_21" xml:space="preserve">
+    <value>Huelva</value>
+  </data>
+  <data name="province_22" xml:space="preserve">
+    <value>Huesca</value>
+  </data>
+  <data name="province_23" xml:space="preserve">
+    <value>Islas Baleares</value>
+  </data>
+  <data name="province_24" xml:space="preserve">
+    <value>Jaén</value>
+  </data>
+  <data name="province_25" xml:space="preserve">
+    <value>La Coruña</value>
+  </data>
+  <data name="province_26" xml:space="preserve">
+    <value>La Rioja</value>
+  </data>
+  <data name="province_27" xml:space="preserve">
+    <value>Las Palmas</value>
+  </data>
+  <data name="province_28" xml:space="preserve">
+    <value>León</value>
+  </data>
+  <data name="province_29" xml:space="preserve">
+    <value>Lérida</value>
+  </data>
+  <data name="province_3" xml:space="preserve">
+    <value>Alicante</value>
+  </data>
+  <data name="province_30" xml:space="preserve">
+    <value>Lugo</value>
+  </data>
+  <data name="province_31" xml:space="preserve">
+    <value>Madrid</value>
+  </data>
+  <data name="province_32" xml:space="preserve">
+    <value>Málaga</value>
+  </data>
+  <data name="province_33" xml:space="preserve">
+    <value>Murcia</value>
+  </data>
+  <data name="province_34" xml:space="preserve">
+    <value>Navarra</value>
+  </data>
+  <data name="province_35" xml:space="preserve">
+    <value>Orense</value>
+  </data>
+  <data name="province_36" xml:space="preserve">
+    <value>Palencia</value>
+  </data>
+  <data name="province_37" xml:space="preserve">
+    <value>Pontevedra</value>
+  </data>
+  <data name="province_38" xml:space="preserve">
+    <value>Salamanca</value>
+  </data>
+  <data name="province_39" xml:space="preserve">
+    <value>Segovia</value>
+  </data>
+  <data name="province_4" xml:space="preserve">
+    <value>Almería</value>
+  </data>
+  <data name="province_40" xml:space="preserve">
+    <value>Sevilla</value>
+  </data>
+  <data name="province_41" xml:space="preserve">
+    <value>Soria</value>
+  </data>
+  <data name="province_42" xml:space="preserve">
+    <value>Tarragona</value>
+  </data>
+  <data name="province_43" xml:space="preserve">
+    <value>Tenerife</value>
+  </data>
+  <data name="province_44" xml:space="preserve">
+    <value>Teruel</value>
+  </data>
+  <data name="province_45" xml:space="preserve">
+    <value>Toledo</value>
+  </data>
+  <data name="province_46" xml:space="preserve">
+    <value>Valencia</value>
+  </data>
+  <data name="province_47" xml:space="preserve">
+    <value>Valladolid</value>
+  </data>
+  <data name="province_48" xml:space="preserve">
+    <value>Vizcaya</value>
+  </data>
+  <data name="province_49" xml:space="preserve">
+    <value>Zamora</value>
+  </data>
+  <data name="province_5" xml:space="preserve">
+    <value>Asturias</value>
+  </data>
+  <data name="province_50" xml:space="preserve">
+    <value>Zaragoza</value>
+  </data>
+  <data name="province_6" xml:space="preserve">
+    <value>Asturias</value>
+  </data>
+  <data name="province_7" xml:space="preserve">
+    <value>Badajoz</value>
+  </data>
+  <data name="province_8" xml:space="preserve">
+    <value>Barcelona</value>
+  </data>
+  <data name="province_9" xml:space="preserve">
+    <value>Burgos</value>
+  </data>
 </root>

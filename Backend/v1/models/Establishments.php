@@ -15,21 +15,49 @@ class Establishments extends ModelWithIdBase
 			'id',
 			'name',
 			'address',
-			'idEstablishmentType',
+			'establishmentType',
 			'idOwner',
 			'idProvince'
 		);
 		$this->idField = $this->fields[0];
 		
+		// Establishments related tables
+		// -------------------------------------
+		$this->idEstablishment = 'idEstablishment';
+		
 		// Services
 		$this->servicesTable = 'offer';
 		$this->servicesFields = array(
-			'idEstablishment',
+			$this->idEstablishment,
 			'idService',
 			'price'
 		);
-		$this->idEstablishment = $this->servicesFields[0];
+		
+		// Staff
+		/*$this->staffTable = 'staff';
+		$this->staffFields = array(
+			$this->idEstablishment,
+			'idUser'
+		);*/
     }
+	
+	/*public function get($queryArray, $queryParams)
+    {
+		if(count($queryArray) >= 3 && count($queryArray) <= 4) {
+			// Staff
+			if ($queryArray[2] == $this->staffTable) {
+				if(count($queryArray) == 3) {
+					return $this->getEmployees($queryArray[1], $queryParams);
+				}
+				else {
+					return $this->getEmployee($queryArray[1], $queryArray[3]);
+				}
+			}
+		}
+		
+		// Establishments
+		return parent::get($queryArray, $queryParams);
+    }*/
 	
 	protected function getElement($id)
 	{
@@ -111,5 +139,35 @@ class Establishments extends ModelWithIdBase
 	private function dbDeleteServices($idEstablishment)
 	{
 		DBCommands::dbDelete($this->servicesTable, $this->idEstablishment, $idEstablishment);
+	}
+	
+	private function dbGetEmployees($queryParams)
+	{
+		$servicesFieldsButId = array_diff($this->servicesFields, [$this->idEstablishment]);
+		$searchFields = array(
+			$this->idEstablishment
+		);
+		
+		return DBCommands::dbGet($this->servicesTable, $servicesFieldsButId, $searchFields, $queryParams);
+	}
+	
+	private function dbCreateEmployee($idEstablishment, $services)
+	{
+		foreach($services as $service) {
+			$data = $service;
+			$data[$this->idEstablishment] = $idEstablishment;
+			DBCommands::dbCreateNoId($this->servicesTable, $this->servicesFields, $data);
+		}
+	}
+	
+	private function dbUpdateEmployee($idEstablishment, $services)
+	{
+		$this->dbDeleteServices($idEstablishment);
+		$this->dbCreateServices($idEstablishment, $services);
+	}
+	
+	private function dbDeleteEmployee($idEstablishment, $idUser)
+	{
+		DBCommands::dbDelete($this->staffTable, $this->idEstablishment, $idEstablishment);
 	}
 }

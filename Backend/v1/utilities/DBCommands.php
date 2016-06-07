@@ -58,16 +58,35 @@ class DBCommands
 	
 	public static function dbGetOne($table, $fields, $idField, $id)
 	{
+		$idMap = array();
+		$idMap[$idField] = $id;
+		return self::dbGetOneMultiId($table, $fields, $idMap);
+	}
+	
+	public static function dbGetOneMultiId($table, $fields, $idMap)
+	{
+		if(count($idMap) <= 0) {
+			throw new ApiException(STATE_DB_ERROR, "DB error");
+		}
+		
 		try {
 			$pdo = DBConnection::getInstance()->getDB();
 
 			$command = "SELECT " . implode(",", $fields) .
-				" FROM " . $table .
-				" WHERE " . $idField . "=?";
-			
+				" FROM " . $table;
+			$where = false;
+			foreach($idMap as $key => $value) {
+				$command .= $where ? " AND " : " WHERE ";
+				$command .= $key . "=?";
+				$where = true;
+			}
 			$query = $pdo->prepare($command);
 
-			$query->bindParam(1, $id);
+			$count = 1;
+			foreach($idMap as $key => $value) {
+				$query->bindParam($count, $value);
+				$count++;
+			}
 
 			$result = $query->execute();
 
@@ -157,22 +176,41 @@ class DBCommands
 	
 	public static function dbUpdate($table, $fields, $idField, $id, $data)
 	{
+		$idMap = array();
+		$idMap[$idField] = $id;
+		self::dbUpdateMultiId($table, $fields, $idMap, $data);
+	}
+	
+	public static function dbUpdateMultiId($table, $fields, $idMap, $data)
+	{
+		if(count($idMap) <= 0) {
+			throw new ApiException(STATE_DB_ERROR, "DB error");
+		}
+		
 		try {
-			$fieldsButId = array_diff($fields, [$idField]);
+			$idFields = array();
+			foreach($idMap as $key => $value) {
+				array_push($idFields, $key);
+			}
+			$fieldsButIds = array_diff($fields, $idFields);
 			
 			$pdo = DBConnection::getInstance()->getDB();
 
 			$command = "UPDATE " . $table;
 			$comma = false;
-			foreach($fieldsButId as $field) {
+			foreach($fieldsButIds as $field) {
 				if(isset($data[$field])) {
 					$command .= $comma ? ", " : " SET ";
 					$command .= $field . "=?";
 					$comma = true;
 				}
 			}
-			$command .= " WHERE " . $idField . "=?";
-			
+			$where = false;
+			foreach($idMap as $key => $value) {
+				$command .= $where ? " AND " : " WHERE ";
+				$command .= $key . "=?";
+				$where = true;
+			}
 
 			$query = $pdo->prepare($command);
 
@@ -183,7 +221,10 @@ class DBCommands
 					$count++;
 				}
 			}
-			$query->bindParam($count, $id);
+			foreach($idMap as $key => $value) {
+				$query->bindParam($count, $value);
+				$count++;
+			}
 
 			$result = $query->execute();
 
@@ -199,15 +240,35 @@ class DBCommands
 	
 	public static function dbDelete($table, $idField, $id)
 	{
+		$idMap = array();
+		$idMap[$idField] = $id;
+		self::dbDeleteMultiId($table, $idMap);
+	}
+	
+	public static function dbDeleteMultiId($table, $idMap)
+	{
+		if(count($idMap) <= 0) {
+			throw new ApiException(STATE_DB_ERROR, "DB error");
+		}
+		
 		try {
 			$pdo = DBConnection::getInstance()->getDB();
 
-			$command = "DELETE FROM " . $table .
-				" WHERE " . $idField . "=?";
+			$command = "DELETE FROM " . $table;
+			$where = false;
+			foreach($idMap as $key => $value) {
+				$command .= $where ? " AND " : " WHERE ";
+				$command .= $key . "=?";
+				$where = true;
+			}
 
 			$query = $pdo->prepare($command);
 
-			$query->bindParam(1, $id);
+			$count = 1;
+			foreach($idMap as $key => $value) {
+				$query->bindParam($count, $value);
+				$count++;
+			}
 
 			$result = $query->execute();
 

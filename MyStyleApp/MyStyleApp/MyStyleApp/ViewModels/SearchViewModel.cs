@@ -53,8 +53,19 @@ namespace MyStyleApp.ViewModels
 
         private async void InitializeAsync()
         {
-            this.ServiceCategoryList = new ObservableCollection<ServiceCategory>(
-                await this._serviceCategoriesService.GetServiceCategories());
+            this.IsBusy = true;
+            try
+            {
+                this.ServiceCategoryList = new ObservableCollection<ServiceCategory>(
+                    await this._serviceCategoriesService.GetServiceCategories());
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
         }
 
         public ObservableCollection<Province> ProvinceList

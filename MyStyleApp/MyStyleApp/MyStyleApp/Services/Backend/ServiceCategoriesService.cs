@@ -1,39 +1,48 @@
-﻿using MyStyleApp.Enums;
+﻿using MyStyleApp.Constants;
 using MyStyleApp.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MyStyleApp.Services.Backend
 {
-    public class ServiceCategoriesService
+    public class ServiceCategoriesService : BackendServiceBase, IServiceCategoriesService
     {
-        private const string LOCALIZATION_TOKEN = "service_category_";
+        private const string LANGUAGE_CODE_TOKEN = "language_code";
+        private DateTime _lastUpdate;
+        private string _lastLanguaje;
+        private IList<ServiceCategory> _serviceCategoryList;
         private LocalizedStringsService _localizedStrings;
-        private List<ServiceCategory> _serviceCategoryList;
 
         public ServiceCategoriesService(
-            LocalizedStringsService localizedStrings)
+            HttpService httpService,
+            LocalizedStringsService localizedStrings) :
+            base(httpService)
         {
             this._localizedStrings = localizedStrings;
-
-            this._serviceCategoryList = new List<ServiceCategory>();
-            foreach (ServiceCategoryEnum serviceCategory in Enum.GetValues(typeof(ServiceCategoryEnum)))
-            {
-                int id = (int)serviceCategory;
-                this._serviceCategoryList.Add(new ServiceCategory()
-                {
-                    Id = id,
-                    Name = localizedStrings.GetString(LOCALIZATION_TOKEN + id)
-                }
-                );
-            }
         }
 
-        public IList<ServiceCategory> GetServiceCategories()
+        public async Task<IList<ServiceCategory>> GetServiceCategories()
         {
+            // Check if there is a better way to get the current app language (without using LocalizedStringsService)
+            string language = this._localizedStrings.GetString(LANGUAGE_CODE_TOKEN);
+
+            if (this._serviceCategoryList == null || language != this._lastLanguaje ||
+                (DateTime.UtcNow - this._lastUpdate) > TimeSpan.FromHours(1))
+            {
+                string credentials = await this.HttpService.GetApiKeyAuthorizationAsync();
+
+                this._serviceCategoryList = await this.HttpService.InvokeAsync<IList<ServiceCategory>>(
+                    HttpMethod.Get,
+                    BackendConstants.SERVICE_CATEGORIES_URL,
+                    credentials,
+                    new object[] { language });
+
+                this._lastLanguaje = language;
+                this._lastUpdate = DateTime.UtcNow;
+            }
+            
             return this._serviceCategoryList;
         }
     }

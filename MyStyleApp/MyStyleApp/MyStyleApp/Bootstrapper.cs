@@ -58,7 +58,7 @@ namespace MyStyleApp
             builder.RegisterType<ValidationService>();
             builder.RegisterType<ProvincesService>().SingleInstance();
             builder.RegisterType<EstablishmentTypesService>().SingleInstance();
-            builder.RegisterType<ServiceCategoriesService>().SingleInstance();
+            builder.RegisterType<ServiceCategoriesService>().As<IServiceCategoriesService>().SingleInstance();
             builder.RegisterType<ServicesService>().As<IServicesService>().SingleInstance();
         }
 

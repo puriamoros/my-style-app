@@ -222,37 +222,7 @@
   <data name="establishment_type_3" xml:space="preserve">
     <value>Hairdresser and aesthetics</value>
   </data>
-  <data name="service_category_1" xml:space="preserve">
-    <value>Hair Styles</value>
-  </data>
-  <data name="service_category_10" xml:space="preserve">
-    <value>Facial Laser</value>
-  </data>
-  <data name="service_category_11" xml:space="preserve">
-    <value>Makeups</value>
-  </data>
-  <data name="service_category_2" xml:space="preserve">
-    <value>Haircuts</value>
-  </data>
-  <data name="service_category_3" xml:space="preserve">
-    <value>Colouring and Streaks</value>
-  </data>
-  <data name="service_category_4" xml:space="preserve">
-    <value>Permanents</value>
-  </data>
-  <data name="service_category_5" xml:space="preserve">
-    <value>Hair Extensions</value>
-  </data>
-  <data name="service_category_6" xml:space="preserve">
-    <value>Hair Removal</value>
-  </data>
-  <data name="service_category_7" xml:space="preserve">
-    <value>Hands and Feet</value>
-  </data>
-  <data name="service_category_8" xml:space="preserve">
-    <value>Eyes</value>
-  </data>
-  <data name="service_category_9" xml:space="preserve">
-    <value>Facial</value>
+  <data name="language_code" xml:space="preserve">
+    <value>en</value>
   </data>
 </root>

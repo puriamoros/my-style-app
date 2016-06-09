@@ -13,14 +13,14 @@ namespace MyStyleApp.ViewModels
     {
         private ProvincesService _provincesService;
         private EstablishmentTypesService _establishmentTypesService;
-        private ServiceCategoriesService _serviceCategoriesService;
-        private ServicesService _servicesService;
+        private IServiceCategoriesService _serviceCategoriesService;
+        private IServicesService _servicesService;
 
         private ObservableCollection<Province> _provinceList;
         private Province _selectedProvince;
         private ObservableCollection<EstablishmentType> _establishmentTypeList;
         private EstablishmentType _selectedEstablishmentType;
-        private ObservableCollection<ServiceCategory> _servicecategoryList;
+        private ObservableCollection<ServiceCategory> _serviceCategoryList;
         private string _selectedServiceCategory;
         private ObservableCollection<Service> _serviceList;
         private Service _selectedService;
@@ -33,8 +33,8 @@ namespace MyStyleApp.ViewModels
             LocalizedStringsService localizedStringsService,
             ProvincesService provincesService,
             EstablishmentTypesService establishmentTypesService,
-            ServiceCategoriesService serviceCategoriesService,
-            ServicesService servicesService) :
+            IServiceCategoriesService serviceCategoriesService,
+            IServicesService servicesService) :
             base(navigator, userNotificator, localizedStringsService)
         {
             this._provincesService = provincesService;
@@ -44,11 +44,17 @@ namespace MyStyleApp.ViewModels
 
             this.SearchCommand = new Command(this.SearchAsync);
 
-            this._provinceList = new ObservableCollection<Province>(this._provincesService.GetProvinces());
-            this._establishmentTypeList = new ObservableCollection<EstablishmentType>(
+            this.ProvinceList = new ObservableCollection<Province>(this._provincesService.GetProvinces());
+            this.EstablishmentTypeList = new ObservableCollection<EstablishmentType>(
                 this._establishmentTypesService.GetEstablishmentTypes());
-            this._servicecategoryList = new ObservableCollection<ServiceCategory>(
-                this._serviceCategoriesService.GetServiceCategories());
+
+            this.InitializeAsync();
+        }
+
+        private async void InitializeAsync()
+        {
+            this.ServiceCategoryList = new ObservableCollection<ServiceCategory>(
+                await this._serviceCategoriesService.GetServiceCategories());
         }
 
         public ObservableCollection<Province> ProvinceList
@@ -77,8 +83,8 @@ namespace MyStyleApp.ViewModels
 
         public ObservableCollection<ServiceCategory> ServiceCategoryList
         {
-            get { return _servicecategoryList; }
-            set { SetProperty(ref _servicecategoryList, value); }
+            get { return _serviceCategoryList; }
+            set { SetProperty(ref _serviceCategoryList, value); }
         }
 
         public string SelectedServiceCategory

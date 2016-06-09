@@ -45,7 +45,6 @@
     <Compile Include="Converters\StringToBoolConverter.cs" />
     <Compile Include="Enums\EstablishmentTypeEnum.cs" />
     <Compile Include="Enums\ProvinceEnum.cs" />
-    <Compile Include="Enums\ServiceCategoryEnum.cs" />
     <Compile Include="Exceptions\BackendException.cs" />
     <Compile Include="Models\ApiKey.cs" />
     <Compile Include="Models\Appointment.cs" />
@@ -63,7 +62,9 @@
     <Compile Include="MvvmCore\UserNotificator.cs" />
     <Compile Include="Services\Backend\BackendServiceBase.cs" />
     <Compile Include="Services\Backend\EstablishmentTypesService.cs" />
+    <Compile Include="Services\Backend\IServiceCategoriesService.cs" />
     <Compile Include="Services\Backend\IServicesService.cs" />
+    <Compile Include="Services\Backend\Mocks\ServiceCategoriesServiceMock.cs" />
     <Compile Include="Services\Backend\Mocks\ServicesServiceMock.cs" />
     <Compile Include="Services\Backend\ServiceCategoriesService.cs" />
     <Compile Include="Services\Backend\ServicesService.cs" />

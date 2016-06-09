@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-06-2016 a las 10:48:18
+-- Tiempo de generación: 09-06-2016 a las 16:46:46
 -- Versión del servidor: 10.1.13-MariaDB
--- Versión de PHP: 5.6.21
+-- Versión de PHP: 5.6.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -35,6 +35,13 @@ CREATE TABLE `appointments` (
   `date` varchar(100) NOT NULL,
   `notes` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `appointments`
+--
+
+INSERT INTO `appointments` (`id`, `idClient`, `idEstablishment`, `idService`, `date`, `notes`) VALUES
+(1232, 1, 1, 1, 'asdf', 'asdf');
 
 -- --------------------------------------------------------
 
@@ -176,7 +183,7 @@ INSERT INTO `provinces` (`id`, `name`) VALUES
 DROP TABLE IF EXISTS `services`;
 CREATE TABLE `services` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
+  `idTranslation` int(11) NOT NULL,
   `idServiceCategory` int(11) NOT NULL,
   `duration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -185,53 +192,53 @@ CREATE TABLE `services` (
 -- Volcado de datos para la tabla `services`
 --
 
-INSERT INTO `services` (`id`, `name`, `idServiceCategory`, `duration`) VALUES
-(1, 'Peinar corto', 1, 30),
-(2, 'Peinar mediano', 1, 30),
-(3, 'Peinar largo', 1, 45),
-(4, 'Semirecogido', 1, 45),
-(5, 'Recogido', 1, 60),
-(6, 'Trenzados completos', 1, 45),
-(7, 'Corte señora', 2, 30),
-(8, 'Corte caballero', 2, 30),
-(9, 'Maquinilla', 2, 30),
-(10, 'Corte infantil', 2, 30),
-(11, 'Retoque flequillo', 2, 15),
-(12, 'Arreglo barba', 2, 15),
-(13, 'Coloración (Tinte o baño de color)', 3, 60),
-(14, 'Mechas enteras', 3, 60),
-(15, 'Mechas enteras bicolor', 3, 60),
-(16, '1/2 Mechas', 3, 45),
-(17, '1/2 Mechas bicolor', 3, 45),
-(18, 'Mechas californianas', 3, 60),
-(19, 'Alisado Japonés', 4, 90),
-(20, 'Moldeador o ahuecador', 4, 90),
-(21, 'Colocación extensiones de clip', 5, 45),
-(22, 'Medias piernas tibias o calientes', 6, 30),
-(23, 'Piernas enteras tibias o calientes', 6, 45),
-(24, 'Pecho o espalda', 6, 30),
-(25, 'Brazos', 6, 30),
-(26, 'Ingles', 6, 30),
-(27, 'Ingles brasileñas ', 6, 30),
-(28, 'Axilas', 6, 30),
-(29, 'Labio superior', 6, 30),
-(30, 'Maquillado permanente de uñas manos o pies', 7, 60),
-(31, 'Manicura', 7, 60),
-(32, 'Pedicura', 7, 60),
-(33, 'Permanente de pestañas', 8, 45),
-(34, 'Tinte de pestañas', 8, 30),
-(35, 'Extensiones de pestañas', 8, 90),
-(36, 'Tinte de cejas', 8, 30),
-(37, 'Aplicación de pestañas postizas', 8, 45),
-(38, 'Permanente + Tinte de pestañas', 8, 60),
-(39, 'Higiene facial completa', 9, 60),
-(40, 'Exfoliación e hidratación facial', 9, 60),
-(41, 'Fotorejuvenecimiento', 10, 60),
-(42, 'Manchas faciales', 10, 60),
-(43, 'Acné', 10, 60),
-(44, 'Maquillaje social', 11, 45),
-(45, 'Maquillaje fiesta', 11, 45),
-(46, 'Maquillaje carnaval o fantasía', 11, 45);
+INSERT INTO `services` (`id`, `idTranslation`, `idServiceCategory`, `duration`) VALUES
+(1, 12, 1, 30),
+(2, 13, 1, 30),
+(3, 14, 1, 45),
+(4, 15, 1, 45),
+(5, 16, 1, 60),
+(6, 17, 1, 45),
+(7, 18, 2, 30),
+(8, 19, 2, 30),
+(9, 20, 2, 30),
+(10, 21, 2, 30),
+(11, 22, 2, 15),
+(12, 23, 2, 15),
+(13, 24, 3, 60),
+(14, 25, 3, 60),
+(15, 26, 3, 60),
+(16, 27, 3, 45),
+(17, 28, 3, 45),
+(18, 29, 3, 60),
+(19, 30, 4, 90),
+(20, 31, 4, 90),
+(21, 32, 5, 45),
+(22, 33, 6, 30),
+(23, 34, 6, 45),
+(24, 35, 6, 30),
+(25, 36, 6, 30),
+(26, 37, 6, 30),
+(27, 38, 6, 30),
+(28, 39, 6, 30),
+(29, 40, 6, 30),
+(30, 41, 7, 60),
+(31, 42, 7, 60),
+(32, 43, 7, 60),
+(33, 44, 8, 45),
+(34, 45, 8, 30),
+(35, 46, 8, 90),
+(36, 47, 8, 30),
+(37, 48, 8, 45),
+(38, 49, 8, 60),
+(39, 50, 9, 60),
+(40, 51, 9, 60),
+(41, 52, 10, 60),
+(42, 53, 10, 60),
+(43, 54, 10, 60),
+(44, 55, 11, 45),
+(45, 56, 11, 45),
+(46, 57, 11, 45);
 
 -- --------------------------------------------------------
 
@@ -257,7 +264,7 @@ CREATE TABLE `services_history` (
 DROP TABLE IF EXISTS `service_categories`;
 CREATE TABLE `service_categories` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
+  `idTranslation` int(11) NOT NULL,
   `idEstablishmentType` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -265,18 +272,18 @@ CREATE TABLE `service_categories` (
 -- Volcado de datos para la tabla `service_categories`
 --
 
-INSERT INTO `service_categories` (`id`, `name`, `idEstablishmentType`) VALUES
-(1, 'Peinados', 1),
-(2, 'Cortes', 1),
-(3, 'Coloración y mechas', 1),
-(4, 'Permanentes', 1),
-(5, 'Extensiones', 1),
-(6, 'Depilación', 2),
-(7, 'Belleza manos-pies', 2),
-(8, 'Belleza ojos', 2),
-(9, 'Facial', 2),
-(10, 'Láser facial', 2),
-(11, 'Maquillajes', 2);
+INSERT INTO `service_categories` (`id`, `idTranslation`, `idEstablishmentType`) VALUES
+(1, 1, 1),
+(2, 2, 1),
+(3, 3, 1),
+(4, 4, 1),
+(5, 5, 1),
+(6, 6, 2),
+(7, 7, 2),
+(8, 8, 2),
+(9, 9, 2),
+(10, 10, 2),
+(11, 11, 2);
 
 -- --------------------------------------------------------
 
@@ -289,6 +296,82 @@ CREATE TABLE `staff` (
   `idUser` int(11) NOT NULL,
   `idEstablishment` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `translations`
+--
+
+DROP TABLE IF EXISTS `translations`;
+CREATE TABLE `translations` (
+  `id` int(11) NOT NULL,
+  `en` text NOT NULL,
+  `es` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `translations`
+--
+
+INSERT INTO `translations` (`id`, `en`, `es`) VALUES
+(1, 'Hair Styles', 'Peluquería'),
+(2, 'Haircuts', 'Cortes'),
+(3, 'Colouring and streaks', 'Coloración y mechas'),
+(4, 'Permanents', 'Permanentes'),
+(5, 'Hair extensions', 'Extensiones'),
+(6, 'Hair removal', 'Depilación'),
+(7, 'Hands and feet', 'Belleza manos-pies'),
+(8, 'Eyes', 'Belleza ojos'),
+(9, 'Facial', 'Facial'),
+(10, 'Facial laser', 'Láser facial'),
+(11, 'Makeups', 'Maquillajes'),
+(12, '', 'Peinar corto'),
+(13, '', 'Peinar mediano'),
+(14, '', 'Peinar largo'),
+(15, '', 'Semirecogido'),
+(16, '', 'Recogido'),
+(17, '', 'Trenzados completos'),
+(18, '', 'Corte señora'),
+(19, '', 'Corte caballero'),
+(20, '', 'Maquinilla'),
+(21, '', 'Corte infantil'),
+(22, '', 'Retoque flequillo'),
+(23, '', 'Arreglo barba'),
+(24, '', 'Coloración (Tinte o baño de color)'),
+(25, '', 'Mechas enteras'),
+(26, '', 'Mechas enteras bicolor'),
+(27, '', '1/2 Mechas'),
+(28, '', '1/2 Mechas bicolor'),
+(29, '', 'Mechas californianas'),
+(30, '', 'Alisado Japonés'),
+(31, '', 'Moldeador o ahuecador'),
+(32, '', 'Colocación extensiones de clip'),
+(33, '', 'Medias piernas tibias o calientes'),
+(34, '', 'Piernas enteras tibias o calientes'),
+(35, '', 'Pecho o espalda'),
+(36, '', 'Brazos'),
+(37, '', 'Ingles'),
+(38, '', 'Ingles brasileñas'),
+(39, '', 'Axilas'),
+(40, '', 'Labio superior'),
+(41, '', 'Maquillado permanente de uñas manos o pies'),
+(42, '', 'Manicura'),
+(43, '', 'Pedicura'),
+(44, '', 'Permanente de pestañas'),
+(45, '', 'Tinte de pestañas'),
+(46, '', 'Extensiones de pestañas'),
+(47, '', 'Tinte de cejas'),
+(48, '', 'Aplicación de pestañas postizas'),
+(49, '', 'Permanente + Tinte de pestañas'),
+(50, '', 'Higiene facial completa'),
+(51, '', 'Exfoliación e hidratación facial'),
+(52, '', 'Fotorejuvenecimiento'),
+(53, '', 'Manchas faciales'),
+(54, '', 'Acné'),
+(55, '', 'Maquillaje social'),
+(56, '', 'Maquillaje fiesta'),
+(57, '', 'Maquillaje carnaval o fantasía');
 
 -- --------------------------------------------------------
 
@@ -381,6 +464,12 @@ ALTER TABLE `staff`
   ADD PRIMARY KEY (`idUser`,`idEstablishment`);
 
 --
+-- Indices de la tabla `translations`
+--
+ALTER TABLE `translations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `users`
 --
 ALTER TABLE `users`
@@ -396,7 +485,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `establishments`
 --

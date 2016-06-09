@@ -55,8 +55,8 @@
             Text="Buscar"
             Command="{Binding SearchCommand}"/>
         </StackLayout>
-             
-      </StackLayout>
+
+          </StackLayout>
       
       
       <controls:WaitingOverlayControl

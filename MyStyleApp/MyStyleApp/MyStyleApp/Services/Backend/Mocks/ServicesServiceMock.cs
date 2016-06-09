@@ -16,17 +16,17 @@ namespace MyStyleApp.Services.Backend.Mocks
 
             listServices.Add(new Service()
             {
-                    Id = 1,
-                    Name = "Peinar corto",
-                    Type = ServiceCategoryEnum.HairStyles,
-                    Duration = 30    
+                Id = 1,
+                Name = "Peinar corto",
+                Type = 1,
+                Duration = 30    
             }
             );
             listServices.Add(new Service()
             {
                 Id = 7,
                 Name = "Corte señora",
-                Type = ServiceCategoryEnum.Haircuts,
+                Type = 2,
                 Duration = 30
             }
             );
@@ -34,7 +34,7 @@ namespace MyStyleApp.Services.Backend.Mocks
             {
                 Id = 15,
                 Name = "Mechas enteras bicolor",
-                Type = ServiceCategoryEnum.ColouringAndStreaks,
+                Type = 3,
                 Duration = 60
             }
             );

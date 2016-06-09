@@ -8,8 +8,5 @@ MyStyleApp/MyStyleApp/MyStyleApp.iOS/bin
 MyStyleApp/MyStyleApp/MyStyleApp.iOS/obj
 MyStyleApp/MyStyleApp/MyStyleApp.WinPhone/bin
 MyStyleApp/MyStyleApp/MyStyleApp.WinPhone/obj
-WinPhoneUITests/.vs
-WinPhoneUITests/WinPhoneUITests/bin
-WinPhoneUITests/WinPhoneUITests/obj
 *.csproj.user
 Thumbs.db

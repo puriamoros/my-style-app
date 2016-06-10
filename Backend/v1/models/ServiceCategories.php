@@ -37,20 +37,10 @@ class ServiceCategories extends ModelWithIdBase
 		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
     }
 	
-	protected function getElements($queryParams)
+	protected function dbGet($queryParams)
 	{
-		// Get
-		$result = parent::getElements($queryParams);
-		
-		$lang = isset($queryParams['lang']) ? $queryParams['lang'] : 'none';
-		for ($i = 0; $i < count($result); $i++) {
-			if(isset($result[$i][$this->idTranslation])) {
-				$result[$i][$this->translationField] = Translations::getInstance()->getTranslation($result[$i][$this->idTranslation], $lang);
-				unset($result[$i][$this->idTranslation]);
-			}
-		}
-		
-		return $result;	
+		return Translations::getInstance()->getTranslated(
+			$this->table, $this->fields, $this->idField, $this->idTranslation, $this->translationField, $queryParams);
 	}
 	
 	public function post($queryArray)

@@ -35,4 +35,42 @@ class Translations
 			return isset($result[$lang]) ? $result[$lang] : '[to_be_translated]';
 		}
 	}
+	
+	public function getTranslated($table, $fields, $idField, $idTranslation, $translationField, $queryParams)
+	{
+		$mixedFields = $fields;
+		
+		$idIndex = array_search($idField, $mixedFields);
+		$sameIdField = $idIndex !== false && strcmp(strtolower($this->idField), strtolower($idField)) == 0;
+		if($sameIdField) {
+			$mixedFields[$idIndex] = $table . "." . $idField; // table also have a field called "id"
+		}
+		
+		$fieldsButId = array_diff($this->fields, [$this->idField]);
+		$lang = isset($queryParams['lang']) && in_array($queryParams['lang'], $fieldsButId) ? $queryParams['lang'] : null;
+		if(!is_null($lang)) {
+			array_push($mixedFields, $lang);
+		}
+		
+		$result = DBCommands::dbGetInnerJoin(
+			$table, $this->table, $idTranslation, $this->idField, $mixedFields, $mixedFields, $queryParams);
+		
+		for ($i = 0; $i < count($result); $i++) {
+			if($sameIdField) {
+				$result[$i][$idField] = $result[$i][$mixedFields[$idIndex]]; // restore original field name
+				unset($result[$i][$mixedFields[$idIndex]]);
+			}
+			unset($result[$i][$idTranslation]);
+			
+			$translation = '';
+			if(isset($result[$i][$lang])) {
+				$translation = $result[$i][$lang];
+				unset($result[$i][$lang]);
+			}
+
+			$result[$i][$translationField] = ($translation !== '') ? $translation : '[to_be_translated]';
+		}		
+			
+		return $result;
+	}
 }

@@ -8,8 +8,8 @@ class DBCommands
 {
 	private static function dbFetchToArray($fields, $fetch) {
 		$item = array();
-		foreach($fields as $field) {
-			$item[$field] = $fetch[$field];
+		for ($i = 0; $i < count($fields); $i++) {
+			$item[$fields[$i]] = $fetch[$i];
 		}
 		return $item;
 	}
@@ -21,6 +21,49 @@ class DBCommands
 
 			$command = "SELECT " . implode(",", $fields) .
 				" FROM " . $table;
+			$where = false;
+			foreach($searchFields as $field) {
+				if(isset($queryParams[$field])) {
+					$command .= $where ? " AND " : " WHERE ";
+					$command .= $field . "=?";
+					$where = true;
+				}
+			}
+
+			$query = $pdo->prepare($command);
+			
+			$count = 1;
+			foreach($searchFields as $field) {
+				if(isset($queryParams[$field])) {
+					$query->bindParam($count, $queryParams[$field]);
+					$count++;
+				}
+			}
+
+			$result = $query->execute();
+
+			if ($result) {
+				$list = array();
+				while($fetch = $query->fetch()) {
+					array_push($list, DBCommands::dbFetchToArray($fields, $fetch));
+				}
+				return $list;
+			} else {
+				throw new ApiException(STATE_DB_ERROR, "DB error");
+			}
+		} catch (PDOException $e) {
+			throw new ApiException(STATE_DB_ERROR, "PDO exception");
+		}
+	}
+	
+	public static function dbGetInnerJoin($table1, $table2, $joinField1, $joinField2, $fields, $searchFields, $queryParams)
+	{
+		try {
+			$pdo = DBConnection::getInstance()->getDB();
+
+			$command = "SELECT " . implode(",", $fields) .
+				" FROM " . $table1 . " INNER JOIN " . $table2 .
+				" ON " . $table1 . "." . $joinField1 . "=" . $table2 . "." . $joinField2;
 			$where = false;
 			foreach($searchFields as $field) {
 				if(isset($queryParams[$field])) {

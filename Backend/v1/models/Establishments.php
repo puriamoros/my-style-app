@@ -15,7 +15,7 @@ class Establishments extends ModelWithIdBase
 			'id',
 			'name',
 			'address',
-			'establishmentType',
+			'idEstablishmentType',
 			'idOwner',
 			'idProvince'
 		);
@@ -24,12 +24,13 @@ class Establishments extends ModelWithIdBase
 		// Establishments related tables
 		// -------------------------------------
 		$this->idEstablishment = 'idEstablishment';
+		$this->idService = 'idService';
 		
 		// Services
 		$this->servicesTable = 'offer';
 		$this->servicesFields = array(
 			$this->idEstablishment,
-			'idService',
+			$this->idService,
 			'price'
 		);
 		
@@ -58,6 +59,20 @@ class Establishments extends ModelWithIdBase
 		// Establishments
 		return parent::get($queryArray, $queryParams);
     }*/
+	
+	protected function dbGet($queryParams)
+	{
+		if(isset($queryParams[$this->idService])) {
+			// Request is looking for establishmets offering a specific service => join with table offer
+			$mixedFields = $this->fields;
+			array_push($mixedFields, $this->idService);
+			return DBCommands::dbGetInnerJoin($this->table, $this->servicesTable, $this->idField, $this->idEstablishment, $mixedFields, $mixedFields, $queryParams);
+		}
+		else
+		{
+			return parent::dbGet($queryParams);
+		}
+	}
 	
 	protected function getElement($id)
 	{

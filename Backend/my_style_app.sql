@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-06-2016 a las 12:48:11
+-- Tiempo de generación: 14-06-2016 a las 16:48:21
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.20
 
@@ -59,6 +59,16 @@ CREATE TABLE `establishments` (
   `idProvince` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `establishments`
+--
+
+INSERT INTO `establishments` (`id`, `name`, `address`, `idEstablishmentType`, `idOwner`, `idProvince`) VALUES
+(1, 'peluquería 1', 'C/. Tururu nº1', 1, 1, 1),
+(2, 'peluquería 2', 'C/. tururu nº2', 2, 1, 1),
+(3, 'peluquería 3', 'C/. tururu nº3', 1, 1, 2),
+(4, 'peluquería 4', 'C/. tururu nº4', 3, 2, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -105,6 +115,31 @@ CREATE TABLE `offer` (
   `idService` int(11) NOT NULL,
   `price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `offer`
+--
+
+INSERT INTO `offer` (`idEstablishment`, `idService`, `price`) VALUES
+(1, 1, 12.5),
+(1, 4, 25.5),
+(1, 5, 16),
+(2, 22, 12.5),
+(2, 23, 25.5),
+(2, 24, 16),
+(3, 1, 12.5),
+(3, 3, 25.5),
+(3, 4, 16),
+(4, 1, 12.5),
+(4, 2, 25.5),
+(4, 3, 16),
+(4, 4, 25.5),
+(4, 5, 16),
+(4, 21, 12.5),
+(4, 22, 25.5),
+(4, 23, 16),
+(4, 24, 25.5),
+(4, 25, 16);
 
 -- --------------------------------------------------------
 
@@ -490,7 +525,7 @@ ALTER TABLE `appointments`
 -- AUTO_INCREMENT de la tabla `establishments`
 --
 ALTER TABLE `establishments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `establishment_types`
 --

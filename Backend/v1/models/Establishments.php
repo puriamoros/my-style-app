@@ -63,10 +63,14 @@ class Establishments extends ModelWithIdBase
 	protected function dbGet($queryParams)
 	{
 		if(isset($queryParams[$this->idService])) {
-			// Request is looking for establishmets offering a specific service => join with table offer
+			// Request is looking for establishments offering a specific service => join with table offer
 			$mixedFields = $this->fields;
 			array_push($mixedFields, $this->idService);
-			return DBCommands::dbGetInnerJoin($this->table, $this->servicesTable, $this->idField, $this->idEstablishment, $mixedFields, $mixedFields, $queryParams);
+			$result = DBCommands::dbGetInnerJoin($this->table, $this->servicesTable, $this->idField, $this->idEstablishment, $mixedFields, $mixedFields, $queryParams);
+			for ($i = 0; $i < count($result); $i++) {
+				unset($result[$i][$this->idService]);
+			}
+			return $result;
 		}
 		else
 		{

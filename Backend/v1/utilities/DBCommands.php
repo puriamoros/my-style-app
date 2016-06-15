@@ -8,8 +8,10 @@ class DBCommands
 {
 	private static function dbFetchToArray($fields, $fetch) {
 		$item = array();
-		for ($i = 0; $i < count($fields); $i++) {
-			$item[$fields[$i]] = $fetch[$i];
+		$i = 0;
+		foreach($fields as $field) {
+			$item[$field] = $fetch[$i];
+			$i++;
 		}
 		return $item;
 	}

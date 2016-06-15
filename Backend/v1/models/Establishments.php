@@ -33,6 +33,7 @@ class Establishments extends ModelWithIdBase
 			$this->idService,
 			'price'
 		);
+		$this->servicesExtraField = 'services';
 		
 		// Staff
 		/*$this->staffTable = 'staff';
@@ -81,11 +82,11 @@ class Establishments extends ModelWithIdBase
 		// Add services to $result
 		if(!is_null($result)) {
 			$queryParams = array(
-				'idEstablishment' => $id
+				$this->idEstablishment => $id
 			);
 			$services = $this->dbGetServices($queryParams);
 			
-			$result['services'] = $services;
+			$result[$this->servicesExtraField] = $services;
 		}
 		
 		return $result;
@@ -97,7 +98,7 @@ class Establishments extends ModelWithIdBase
 		
 		// Create services
 		$data = $this->getBodyData();
-		$services = $data['services'];
+		$services = $data[$this->servicesExtraField];
 		$id = $result[$this->idField];
 		$this->dbCreateServices($id, $services);
 		
@@ -110,7 +111,7 @@ class Establishments extends ModelWithIdBase
 		
 		// Update services
 		$data = $this->getBodyData();
-		$services = $data['services'];
+		$services = $data[$this->servicesExtraField];
 		$this->dbUpdateServices($id, $services);
 		
 		return;

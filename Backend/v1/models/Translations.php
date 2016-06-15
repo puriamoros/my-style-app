@@ -36,7 +36,7 @@ class Translations
 		}
 	}
 	
-	public function getTranslated($table, $fields, $idField, $idTranslation, $translationField, $queryParams)
+	public function getTranslated($table, $fields, $idField, $idTranslation, $translationExtraField, $queryParams)
 	{
 		$mixedFields = $fields;
 		
@@ -68,7 +68,7 @@ class Translations
 				unset($result[$i][$lang]);
 			}
 
-			$result[$i][$translationField] = ($translation !== '') ? $translation : '[to_be_translated]';
+			$result[$i][$translationExtraField] = ($translation !== '') ? $translation : '[to_be_translated]';
 		}		
 			
 		return $result;

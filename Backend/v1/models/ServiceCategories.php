@@ -20,7 +20,7 @@ class ServiceCategories extends ModelWithIdBase
 		$this->idField = $this->fields[0];
 		
 		$this->idTranslation = $this->fields[1];
-		$this->translationField = 'name';
+		$this->translationExtraField = 'name';
     }
 	
 	public function get($queryArray, $queryParams)
@@ -40,7 +40,7 @@ class ServiceCategories extends ModelWithIdBase
 	protected function dbGet($queryParams)
 	{
 		return Translations::getInstance()->getTranslated(
-			$this->table, $this->fields, $this->idField, $this->idTranslation, $this->translationField, $queryParams);
+			$this->table, $this->fields, $this->idField, $this->idTranslation, $this->translationExtraField, $queryParams);
 	}
 	
 	public function post($queryArray)

@@ -12,7 +12,7 @@ namespace MyStyleApp.Models
         public string Name { get; set; }
 
         [JsonProperty(Required = Required.Always, PropertyName = "idServiceCategory")]
-        public int Type { get; set; }
+        public int IdServiceCategory { get; set; }
 
         [JsonProperty(Required = Required.Always, PropertyName = "duration")]
         public int Duration { get; set; }

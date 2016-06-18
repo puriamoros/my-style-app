@@ -23,7 +23,7 @@ namespace MyStyleApp.Services.Backend
             this._localizedStrings = localizedStrings;
         }
 
-        public async Task<IList<ServiceCategory>> GetServiceCategories()
+        public async Task<IList<ServiceCategory>> GetServiceCategoriesAsync()
         {
             // Check if there is a better way to get the current app language (without using LocalizedStringsService)
             string language = this._localizedStrings.GetString(LANGUAGE_CODE_TOKEN);

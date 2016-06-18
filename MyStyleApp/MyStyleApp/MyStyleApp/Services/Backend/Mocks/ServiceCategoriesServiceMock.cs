@@ -9,7 +9,7 @@ namespace MyStyleApp.Services.Backend.Mocks
 {
     public class ServiceCategoriesServiceMock : IServiceCategoriesService
     {
-        public async Task<IList<ServiceCategory>> GetServiceCategories()
+        public async Task<IList<ServiceCategory>> GetServiceCategoriesAsync()
         {
             List<ServiceCategory> listServiceCateogries = new List<ServiceCategory>();
 

@@ -6,6 +6,6 @@ namespace MyStyleApp.Services.Backend
 {
     public interface IServiceCategoriesService
     {
-        Task<IList<ServiceCategory>> GetServiceCategories();
+        Task<IList<ServiceCategory>> GetServiceCategoriesAsync();
     }
 }

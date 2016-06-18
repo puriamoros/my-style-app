@@ -60,6 +60,8 @@ namespace MyStyleApp
             builder.RegisterType<EstablishmentTypesService>().SingleInstance();
             builder.RegisterType<ServiceCategoriesService>().As<IServiceCategoriesService>().SingleInstance();
             builder.RegisterType<ServicesService>().As<IServicesService>().SingleInstance();
+            builder.RegisterType<EstablishmentsService>().As<IEstablishmentsService>().SingleInstance();
+            builder.RegisterType<FavouritesService>().As<IFavouritesService>().SingleInstance();
         }
 
         protected override void RegisterViews(IViewFactory viewFactory)

@@ -10,40 +10,57 @@
   <Grid>
     <Grid Padding="{StaticResource PageContentPadding}">
       <!-- Without HasUnevenRows="True", list items does not render well in Android -->
-      <ListView
+      <ListView x:Name="EstablishmentsList"
         ItemsSource="{Binding EstablishmentsList}"
-        HasUnevenRows="True"
-        x:Name="EstablishmentsList">
-        <!--<ListView.Behaviors>
-        <mvvmcorebehaviors:EventToCommandBehavior
-          EventName="ItemTapped"
-          Command="{Binding FavouriteTappedCommand}"
-          EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
-      </ListView.Behaviors>-->
+        HasUnevenRows="True">
+        <ListView.Behaviors>
+          <mvvmcorebehaviors:EventToCommandBehavior
+            EventName="ItemTapped"
+            Command="{Binding BookCommand}"
+            EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
+        </ListView.Behaviors>
         <ListView.ItemTemplate>
           <DataTemplate>
-            <!-- This does not need behaviors but needs a x:Name for the ListView -->
-            <TextCell x:Name="Establishment"
-              Text="{Binding Name}"
-              Detail="{Binding Address}"
-              Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.ViewDetailsCommand}"
-              CommandParameter="{Binding}">
-              <TextCell.ContextActions>
-                <MenuItem Text="Details"
-                  Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.ViewDetailsCommand}"
-                  CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
-                <MenuItem Text="Book"
+            <ViewCell x:Name="Establishment">
+                <RelativeLayout>
+                  <StackLayout Spacing="2" Padding="0,5,0,5"
+                    RelativeLayout.XConstraint=
+                      "{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+                    RelativeLayout.WidthConstraint=
+                      "{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.92}"
+                    RelativeLayout.YConstraint=
+                      "{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}">
+                      <Label Text="{Binding Name}" Style="{StaticResource MediumTextStyle}" />
+                      <Label Text="{Binding Address}" Style="{StaticResource SmallTextStyle}" />
+                  </StackLayout>
+                  <Image Aspect="AspectFit" Source="Favourite.png"
+                    RelativeLayout.XConstraint=
+                      "{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.92}"
+                    RelativeLayout.WidthConstraint=
+                      "{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
+                    RelativeLayout.YConstraint=
+                      "{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}">
+                    <Image.GestureRecognizers>
+                      <TapGestureRecognizer
+                        Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.AddToFavouritesCommand}"
+                        CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
+                    </Image.GestureRecognizers>
+                  </Image>
+                </RelativeLayout>
+              <ViewCell.ContextActions>
+                <MenuItem Text="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.LocalizedStrings[book]}"
                   Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.BookCommand}"
                   CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
-              </TextCell.ContextActions>
-            </TextCell>
-            <!-- This needs behaviors -->
-            <!--<ViewCell>
-            <StackLayout Spacing="2" Padding="0,5,0,5" VerticalOptions="StartAndExpand" >
-              <Label Text="{Binding Name}" Style="{StaticResource LargeTextStyle}" />
-              <Label Text="{Binding Description}" Style="{StaticResource MediumTextStyle}" />
-            </StackLayout>
-          </ViewCell>-->
+
+                <MenuItem Text="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.LocalizedStrings[view_details]}"
+                  Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.ViewDetailsCommand}"
+                  CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
+
+                <MenuItem Text="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.LocalizedStrings[add_to_favourites]}}"
+                  Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.AddToFavouritesCommand}"
+                  CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
+              </ViewCell.ContextActions>
+            </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>

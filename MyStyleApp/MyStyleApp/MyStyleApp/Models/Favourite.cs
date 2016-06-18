@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,13 @@ namespace MyStyleApp.Models
 {
     public class Favourite
     {
-        public string Name { get; set; }
+        [JsonProperty(Required = Required.Always, PropertyName = "id")]
+        public int Id { get; set; }
 
-        public string Description { get; set; }
+        [JsonProperty(Required = Required.Always, PropertyName = "idClient")]
+        public int IdClient { get; set; }
+
+        [JsonProperty(Required = Required.Always, PropertyName = "idEstablishment")]
+        public int IdEstablishment { get; set; }   
     }
 }

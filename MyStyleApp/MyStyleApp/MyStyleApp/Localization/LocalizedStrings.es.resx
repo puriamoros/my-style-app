@@ -225,4 +225,22 @@
   <data name="language_code" xml:space="preserve">
     <value>es</value>
   </data>
+  <data name="no_search_results" xml:space="preserve">
+    <value>No se han encontrado resultados para su búsqueda. Modifique las opciones de búsqueda y vuelva a intentarlo.</value>
+  </data>
+  <data name="ok" xml:space="preserve">
+    <value>Aceptar</value>
+  </data>
+  <data name="warning" xml:space="preserve">
+    <value>Aviso</value>
+  </data>
+  <data name="add_to_favourites" xml:space="preserve">
+    <value>Añadir a favoritos</value>
+  </data>
+  <data name="book" xml:space="preserve">
+    <value>Pedir cita</value>
+  </data>
+  <data name="view_details" xml:space="preserve">
+    <value>Ver detalles</value>
+  </data>
 </root>

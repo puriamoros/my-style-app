@@ -18,7 +18,7 @@ namespace MyStyleApp.Services.Backend.Mocks
             {
                 Id = 1,
                 Name = "Peinar corto",
-                Type = 1,
+                IdServiceCategory = 1,
                 Duration = 30    
             }
             );
@@ -26,7 +26,7 @@ namespace MyStyleApp.Services.Backend.Mocks
             {
                 Id = 7,
                 Name = "Corte señora",
-                Type = 2,
+                IdServiceCategory = 2,
                 Duration = 30
             }
             );
@@ -34,7 +34,7 @@ namespace MyStyleApp.Services.Backend.Mocks
             {
                 Id = 15,
                 Name = "Mechas enteras bicolor",
-                Type = 3,
+                IdServiceCategory = 3,
                 Duration = 60
             }
             );

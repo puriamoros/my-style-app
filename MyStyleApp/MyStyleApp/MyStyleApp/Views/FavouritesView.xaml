@@ -14,33 +14,24 @@
         ItemsSource="{Binding FavouritesList}"
         HasUnevenRows="True"
         x:Name="FavouritesList">
-        <!--<ListView.Behaviors>
-        <mvvmcorebehaviors:EventToCommandBehavior
-          EventName="ItemTapped"
-          Command="{Binding FavouriteTappedCommand}"
-          EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
-      </ListView.Behaviors>-->
         <ListView.ItemTemplate>
           <DataTemplate>
             <!-- This does not need behaviors but needs a x:Name for the ListView -->
             <TextCell x:Name="Favourite"
               Text="{Binding Name}"
-              Detail="{Binding Description}"
-              Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.FavouriteTappedCommand}"
+              Detail="{Binding Address}"
+              Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.ViewDetailsCommand}"
               CommandParameter="{Binding}">
               <TextCell.ContextActions>
-                <MenuItem Text="Tap"
-                  Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.FavouriteTappedCommand}"
+                <MenuItem Text="Ver detalles"
+                  Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.ViewDetailsCommand}"
                   CommandParameter="{Binding Source={x:Reference Favourite}, Path=BindingContext}" />
+                <MenuItem Text="Borrar favorito"
+                  Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.DeleteFavouriteCommand}"
+                  CommandParameter="{Binding Source={x:Reference Favourite}, Path=BindingContext}" />
+                
               </TextCell.ContextActions>
-            </TextCell>
-            <!-- This needs behaviors -->
-            <!--<ViewCell>
-            <StackLayout Spacing="2" Padding="0,5,0,5" VerticalOptions="StartAndExpand" >
-              <Label Text="{Binding Name}" Style="{StaticResource LargeTextStyle}" />
-              <Label Text="{Binding Description}" Style="{StaticResource MediumTextStyle}" />
-            </StackLayout>
-          </ViewCell>-->
+            </TextCell> 
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>

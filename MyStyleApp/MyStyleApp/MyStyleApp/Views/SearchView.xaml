@@ -35,7 +35,7 @@
             Text="{Binding LocalizedStrings[service_category]}"
             Style="{StaticResource MediumTextStyle}"/>
           <fe:BindablePicker
-            ItemsSource="{Binding ServiceCategoryList}"
+            ItemsSource="{Binding ServiceCategoryList, Mode=TwoWay}"
             DisplayProperty="Name"
             SelectedItem="{Binding SelectedServiceCategory}"
             Title="{Binding ChooseItemPlaceholder}"/>
@@ -45,7 +45,7 @@
             Text="{Binding LocalizedStrings[service]}"
             Style="{StaticResource MediumTextStyle}"/>
           <fe:BindablePicker
-            ItemsSource="{Binding ServiceList}"
+            ItemsSource="{Binding ServiceList, Mode=TwoWay}"
             DisplayProperty="Name"
             SelectedItem="{Binding SelectedService}"
             Title="{Binding ChooseItemPlaceholder}"/>

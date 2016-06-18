@@ -62,6 +62,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add to favourites.
+        /// </summary>
+        internal static string add_to_favourites {
+            get {
+                return ResourceManager.GetString("add_to_favourites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Any old.
         /// </summary>
         internal static string any_old {
@@ -76,6 +85,15 @@ namespace MyStyleApp.Localization {
         internal static string appointments {
             get {
                 return ResourceManager.GetString("appointments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Book.
+        /// </summary>
+        internal static string book {
+            get {
+                return ResourceManager.GetString("book", resourceCulture);
             }
         }
         
@@ -305,6 +323,24 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The search returned no results. Please change the criteria and try again..
+        /// </summary>
+        internal static string no_search_results {
+            get {
+                return ResourceManager.GetString("no_search_results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        internal static string ok {
+            get {
+                return ResourceManager.GetString("ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         internal static string password {
@@ -368,11 +404,29 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View details.
+        /// </summary>
+        internal static string view_details {
+            get {
+                return ResourceManager.GetString("view_details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ...waiting....
         /// </summary>
         internal static string waiting {
             get {
                 return ResourceManager.GetString("waiting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        internal static string warning {
+            get {
+                return ResourceManager.GetString("warning", resourceCulture);
             }
         }
         

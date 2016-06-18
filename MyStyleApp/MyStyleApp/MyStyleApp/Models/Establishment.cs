@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MyStyleApp.Models;
+using Newtonsoft.Json;
 
 namespace MyStyleApp.Models
 {
@@ -13,7 +14,10 @@ namespace MyStyleApp.Models
         [JsonProperty(Required = Required.Always, PropertyName = "address")]
         public string Address { get; set; }
 
-        [JsonProperty(Required = Required.Always, PropertyName = "type")]
-        public EstablishmentType Type { get; set; }
+        [JsonProperty(Required = Required.Always, PropertyName = "idEstablishmentType")]
+        public int IdEstablishmentType { get; set; }
+
+        [JsonProperty(Required = Required.Default, PropertyName = "idFavourite")]
+        public int IdFavourite { get; set; }
     }
 }

@@ -35,6 +35,11 @@ class Establishments extends ModelWithIdBase
 		);
 		$this->servicesExtraField = 'services';
 		
+		// Favourites
+		$this->favouritesTable = 'favourites';
+		$this->favouritesIdField = 'id';
+		$this->favouritesExtraField = 'idFavourite';
+		
 		// Staff
 		/*$this->staffTable = 'staff';
 		$this->staffFields = array(
@@ -65,9 +70,33 @@ class Establishments extends ModelWithIdBase
 	{
 		if(isset($queryParams[$this->idService])) {
 			// Request is looking for establishments offering a specific service => join with table offer
+			// We also need to know if the establishment is a favourite => join with table favourites
+			
+			// both tables favourites and establishments have a field called "id", so we need to rename them
+			$establismentsIdFieldRenamed = $this->table . '.' . $this->idField;
+			$favouritesIdFieldRenamed = $this->favouritesTable . '.' . $this->favouritesIdField;
+			
 			$mixedFields = $this->fields;
-			array_push($mixedFields, $this->idService);
-			return DBCommands::dbGetInnerJoin($this->table, $this->servicesTable, $this->idField, $this->idEstablishment, $this->fields, $mixedFields, $queryParams);
+			$mixedFields[0] = $establismentsIdFieldRenamed;
+			array_push($mixedFields, $favouritesIdFieldRenamed);
+			$searchFields = $mixedFields;
+			array_push($searchFields, $this->idService);
+			$result = DBCommands::dbGetJoin(
+				[$this->table, $this->servicesTable, $this->favouritesTable],
+				[$this->idField, $this->idEstablishment, $this->idEstablishment],
+				['INNER', 'LEFT'],
+				$mixedFields, $searchFields, $queryParams);
+				
+			// restore original field names
+			for ($i = 0; $i < count($result); $i++) {
+				$result[$i][$this->idField] = $result[$i][$establismentsIdFieldRenamed];
+				unset($result[$i][$establismentsIdFieldRenamed]);
+				
+				$result[$i][$this->favouritesExtraField] = $result[$i][$favouritesIdFieldRenamed];
+				unset($result[$i][$favouritesIdFieldRenamed]);
+			}
+			
+			return $result;
 		}
 		else
 		{

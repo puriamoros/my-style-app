@@ -62,7 +62,11 @@ class Favourites extends ModelWithIdBase
 		$mixedFields[0] = $establismentsIdFieldRenamed;
 		array_push($mixedFields, $favouritesIdFieldRenamed);
 		
-		$result = DBCommands::dbGetInnerJoin($this->table, $this->establishmentsTable, $this->idEstablishment, $this->establishmentsIdField, $mixedFields, [$this->idClient], $queryParams);
+		$result = DBCommands::dbGetJoin(
+			[$this->table, $this->establishmentsTable],
+			[$this->idEstablishment, $this->establishmentsIdField],
+			['INNER'],
+			$mixedFields, [$this->idClient], $queryParams);
 		
 		// restore original field names
 		for ($i = 0; $i < count($result); $i++) {

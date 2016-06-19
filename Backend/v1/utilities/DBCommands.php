@@ -58,14 +58,17 @@ class DBCommands
 		}
 	}
 	
-	public static function dbGetInnerJoin($table1, $table2, $joinField1, $joinField2, $fields, $searchFields, $queryParams)
+	public static function dbGetJoin($joinTables, $joinFields, $joinTypes, $fields, $searchFields, $queryParams)
 	{
 		try {
 			$pdo = DBConnection::getInstance()->getDB();
 
-			$command = "SELECT " . implode(",", $fields) .
-				" FROM " . $table1 . " INNER JOIN " . $table2 .
-				" ON " . $table1 . "." . $joinField1 . "=" . $table2 . "." . $joinField2;
+			$command = "SELECT " . implode(",", $fields) . " FROM ";
+			for ($i = 0; $i < count($joinTables)-1; $i++) {
+				$command .= ($i == 0) ? $joinTables[$i] . " " : " ";
+				$command .= $joinTypes[$i] . " JOIN " . $joinTables[$i+1];
+				$command .= " ON " . $joinTables[$i] . "." . $joinFields[$i] . "=" . $joinTables[$i+1] . "." . $joinFields[$i+1];
+			}
 			$where = false;
 			foreach($searchFields as $field) {
 				if(isset($queryParams[$field])) {

@@ -52,8 +52,11 @@ class Translations
 			array_push($mixedFields, $lang);
 		}
 		
-		$result = DBCommands::dbGetInnerJoin(
-			$table, $this->table, $idTranslation, $this->idField, $mixedFields, $mixedFields, $queryParams);
+		$result = DBCommands::dbGetJoin(
+			[$table, $this->table],
+			[$idTranslation, $this->idField],
+			['INNER'],
+			$mixedFields, $mixedFields, $queryParams);
 		
 		for ($i = 0; $i < count($result); $i++) {
 			if($sameIdField) {

@@ -243,4 +243,7 @@
   <data name="view_details" xml:space="preserve">
     <value>View details</value>
   </data>
+  <data name="delete_favourite" xml:space="preserve">
+    <value>Delete favourite</value>
+  </data>
 </root>

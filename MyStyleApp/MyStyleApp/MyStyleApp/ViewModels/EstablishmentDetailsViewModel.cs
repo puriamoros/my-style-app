@@ -1,14 +1,11 @@
 ﻿using MvvmCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MyStyleApp.Models;
 using System.Collections.ObjectModel;
 using MyStyleApp.Services;
 using Xamarin.Forms;
 using System.Windows.Input;
+using MyStyleApp.Services.Backend;
 
 namespace MyStyleApp.ViewModels
 {
@@ -16,39 +13,27 @@ namespace MyStyleApp.ViewModels
     {
         private ObservableCollection<Service> _serviceList;
         private Establishment _establishment;
-
-        public ICommand EstablishmentDetailsTappedCommand { get; private set; }
+        private IFavouritesService _favouritesService;
+        
         public ICommand BookCommand { get; private set; }
-        public ICommand FavouriteCommand { get; private set; }
+        public ICommand AddToFavouritesCommand { get; private set; }
+        public ICommand DeleteFavouriteCommand { get; private set; }
 
         public EstablishmentDetailsViewModel(
             INavigator navigator,
             IUserNotificator userNotificator,
-            LocalizedStringsService localizedStringsService) :
+            LocalizedStringsService localizedStringsService,
+            IFavouritesService favouritesService) :
             base(navigator, userNotificator, localizedStringsService)
         {
-            this.EstablishmentDetailsTappedCommand = new Command<Service>(this.EstablishmentDetailsTappedAsync);
             this.BookCommand = new Command(this.BookAsync);
-            this.FavouriteCommand = new Command(this.FavouriteAsync);
+            this.AddToFavouritesCommand = new Command(this.AddToFavouritesAsync);
+            this.DeleteFavouriteCommand = new Command(this.DeleteFavouriteAsync);
 
-            // REMOVE!!!
-            FillWithMockData();
-        }
+            this._favouritesService = favouritesService;
 
-        private void FillWithMockData()
-        {
-            var list = new ObservableCollection<Service>();
-            for (int i = 0; i < 20; i++)
-            {
-                list.Add(new Service()
-                {
-                    Id = i,
-                    Name = "Name " + i,
-                    //Price = i
-                }
-                );
-            }
-            this.ServicesList = list;
+            MessagingCenter.Subscribe<Establishment>(this, "favouriteAdded", this.OnFavouriteAdded);
+            MessagingCenter.Subscribe<Establishment>(this, "favouriteDeleted", this.OnFavouriteDeleted);
         }
 
         public Establishment Establishment
@@ -62,26 +47,79 @@ namespace MyStyleApp.ViewModels
             get { return _serviceList; }
             set { SetProperty(ref _serviceList, value); }
         }
-
-        private async void EstablishmentDetailsTappedAsync(Service service)
-        {
-            await this.UserNotificator.DisplayAlert(
-                "Ir a...", "cuerpo", "ok");
-        }
-
+        
         private async void BookAsync()
         {
-            //Change the page    
-            //await this.PushNavPageAsync<SearchViewModel>();
-            await this.PopNavPageToRootAsync();
+            this.IsBusy = true;
+            try
+            {
+                await this.PushNavPageAsync<BookViewModel>();
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }             
         }
-
-        private async void FavouriteAsync()
+        
+        private async void AddToFavouritesAsync()
         {
-            await this.UserNotificator.DisplayAlert(
-                "Añadido a favoritos...", "cuerpo", "ok");
+            this.IsBusy = true;
+            try
+            {
+                await this._favouritesService.AddFavouriteAsync(this.Establishment);
+                MessagingCenter.Send<Establishment>(this.Establishment, "favouriteAdded");
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
         }
 
+        private async void DeleteFavouriteAsync()
+        {
+            this.IsBusy = true;
+            try
+            {
+                await this._favouritesService.DeleteFavouriteAsync(this.Establishment);
+                MessagingCenter.Send<Establishment>(this.Establishment, "favouriteDeleted");
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
+        }
+
+        private void RefreshEstablishment()
+        {
+            this.OnPropertyChanged(nameof(this.Establishment));
+        }
+
+        private void OnFavouriteAdded(Establishment favourite)
+        {
+            if (this.Establishment.Id == favourite.Id)
+            {
+                this.Establishment.IdFavourite = favourite.IdFavourite;
+                this.RefreshEstablishment();
+            }
+        }
+
+        private void OnFavouriteDeleted(Establishment favourite)
+        {
+            if (this.Establishment.Id == favourite.Id)
+            {
+                this.Establishment.IdFavourite = 0;
+                this.RefreshEstablishment();
+            }
+        }
     }
 }
 

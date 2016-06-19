@@ -23,10 +23,10 @@
               Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.ViewDetailsCommand}"
               CommandParameter="{Binding}">
               <TextCell.ContextActions>
-                <MenuItem Text="Ver detalles"
+                <MenuItem Text="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.LocalizedStrings[view_details]}"
                   Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.ViewDetailsCommand}"
                   CommandParameter="{Binding Source={x:Reference Favourite}, Path=BindingContext}" />
-                <MenuItem Text="Borrar favorito"
+                <MenuItem Text="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.LocalizedStrings[delete_favourite]}"
                   Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.DeleteFavouriteCommand}"
                   CommandParameter="{Binding Source={x:Reference Favourite}, Path=BindingContext}" />
                 

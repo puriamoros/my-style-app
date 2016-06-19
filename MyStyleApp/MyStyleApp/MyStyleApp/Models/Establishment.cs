@@ -1,5 +1,4 @@
-﻿using MyStyleApp.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace MyStyleApp.Models
 {

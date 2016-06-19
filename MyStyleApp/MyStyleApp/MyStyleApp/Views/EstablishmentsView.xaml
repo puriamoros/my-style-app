@@ -39,10 +39,25 @@
                     RelativeLayout.WidthConstraint=
                       "{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
                     RelativeLayout.YConstraint=
-                      "{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}">
+                      "{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
+                    IsVisible="{Binding IdFavourite, Converter={StaticResource IntToBoolConverter}, ConverterParameter=True}">
                     <Image.GestureRecognizers>
                       <TapGestureRecognizer
                         Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.AddToFavouritesCommand}"
+                        CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
+                    </Image.GestureRecognizers>
+                  </Image>
+                  <Image Aspect="AspectFit" Source="FavouriteFilled.png"
+                    RelativeLayout.XConstraint=
+                      "{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.92}"
+                    RelativeLayout.WidthConstraint=
+                      "{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
+                    RelativeLayout.YConstraint=
+                      "{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
+                    IsVisible="{Binding IdFavourite, Converter={StaticResource IntToBoolConverter}}">
+                    <Image.GestureRecognizers>
+                      <TapGestureRecognizer
+                        Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.DeleteFavouriteCommand}"
                         CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
                     </Image.GestureRecognizers>
                   </Image>
@@ -58,7 +73,11 @@
 
                 <MenuItem Text="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.LocalizedStrings[add_to_favourites]}}"
                   Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.AddToFavouritesCommand}"
-                  CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
+                  CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}"/>
+
+                <MenuItem Text="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.LocalizedStrings[delete_favourite]}}"
+                  Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.DeleteFavouriteCommand}"
+                  CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}"/>
               </ViewCell.ContextActions>
             </ViewCell>
           </DataTemplate>

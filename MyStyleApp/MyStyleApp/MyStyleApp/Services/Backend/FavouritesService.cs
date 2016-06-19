@@ -11,13 +11,15 @@ namespace MyStyleApp.Services.Backend
     public class FavouritesService : BackendServiceBase, IFavouritesService
     {
         private IList<Establishment> _list;
+        private IUsersService _userService;
 
-        public FavouritesService(HttpService httpService):
+        public FavouritesService(HttpService httpService, IUsersService userService):
             base(httpService)
         {
+            this._userService = userService;
         }
 
-        public async Task<IList<Establishment>> GetFavouritesAsync(int idClient)
+        public async Task<IList<Establishment>> GetFavouritesAsync()
         {
             if(this._list == null)
             {
@@ -27,27 +29,48 @@ namespace MyStyleApp.Services.Backend
                     HttpMethod.Get,
                     BackendConstants.GET_FAVOURITES_URL,
                     credentials,
-                    new object[] { idClient });
+                    new object[] { this._userService.LoggedUser.Id });
             }
             return this._list;
         }
 
-        public async Task AddFavouriteAsync(Favourite favourite)
+        public async Task<Establishment> AddFavouriteAsync(Establishment establishment)
         {
             string credentials = await this.HttpService.GetApiKeyAuthorizationAsync();
 
-            await this.HttpService.InvokeWithContentAsync(HttpMethod.Post, BackendConstants.ADD_FAVOURITES_URL, credentials, favourite, null);
+            Favourite favourite = new Favourite()
+            {
+                Id = 0,
+                IdClient = this._userService.LoggedUser.Id,
+                IdEstablishment = establishment.Id
+            };
+
+            Favourite fav = await this.HttpService.InvokeWithContentAsync<Favourite,Favourite>(
+                HttpMethod.Post,
+                BackendConstants.ADD_FAVOURITES_URL,
+                credentials,
+                favourite,
+                null);
 
             this._list = null;
+
+            establishment.IdFavourite = fav.Id;
+            return establishment;
         }
 
-        public async Task DeleteFavouriteAsync(Favourite favourite)
+        public async Task DeleteFavouriteAsync(Establishment establishment)
         {
             string credentials = await this.HttpService.GetApiKeyAuthorizationAsync();
 
-            await this.HttpService.InvokeAsync(HttpMethod.Delete, BackendConstants.DELETE_FAVOURITES_URL, credentials, new object[] { favourite.Id });
+            await this.HttpService.InvokeAsync(
+                HttpMethod.Delete,
+                BackendConstants.DELETE_FAVOURITES_URL,
+                credentials,
+                new object[] { establishment.IdFavourite });
 
             this._list = null;
+
+            establishment.IdFavourite = 0;
         }  
     }
 }

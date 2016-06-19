@@ -92,7 +92,8 @@ class Establishments extends ModelWithIdBase
 				$result[$i][$this->idField] = $result[$i][$establismentsIdFieldRenamed];
 				unset($result[$i][$establismentsIdFieldRenamed]);
 				
-				$result[$i][$this->favouritesExtraField] = $result[$i][$favouritesIdFieldRenamed];
+				// idFavourite can be null => set it to 0 if it is null
+				$result[$i][$this->favouritesExtraField] = is_null($result[$i][$favouritesIdFieldRenamed]) ? '0' : $result[$i][$favouritesIdFieldRenamed];
 				unset($result[$i][$favouritesIdFieldRenamed]);
 			}
 			

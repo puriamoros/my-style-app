@@ -116,6 +116,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete favourite.
+        /// </summary>
+        internal static string delete_favourite {
+            get {
+                return ResourceManager.GetString("delete_favourite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
         internal static string do_login {

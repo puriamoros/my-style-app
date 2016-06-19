@@ -8,51 +8,39 @@
              Padding="{StaticResource PagePadding}"
              Title="Establishment Details">
   <Grid>
-    <StackLayout>
-      <!--<Grid Padding="{StaticResource PageContentPadding}">-->
-      <Label Text="{Binding Establishment.Name}"/>
-        <ListView
-          ItemsSource="{Binding ServicesList}"
-          HasUnevenRows="True"
-          x:Name="ServicesList">
-          <!--<ListView.Behaviors>
-          <mvvmcorebehaviors:EventToCommandBehavior
-            EventName="ItemTapped"
-            Command="{Binding FavouriteTappedCommand}"
-            EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
-        </ListView.Behaviors>-->
-          <ListView.ItemTemplate>
-            <DataTemplate>
-              <!-- This does not need behaviors but needs a x:Name for the ListView -->
-              <TextCell x:Name="Service"
-                Text="{Binding NameAndPrice}"
-                Command="{Binding Source={x:Reference ServicesList}, Path=BindingContext.EstablishmentDetailsTappedCommand}"
-                CommandParameter="{Binding}">
-                <TextCell.ContextActions>
-                  <MenuItem Text="Tap"
-                    Command="{Binding Source={x:Reference ServicesList}, Path=BindingContext.EstablishmentDetailsTappedCommand}"
-                    CommandParameter="{Binding Source={x:Reference Service}, Path=BindingContext}" />
-                </TextCell.ContextActions>
-              </TextCell>
-              <!-- This needs behaviors -->
-              <!--<ViewCell>
-              <StackLayout Spacing="2" Padding="0,5,0,5" VerticalOptions="StartAndExpand" >
-                <Label Text="{Binding Name}" Style="{StaticResource LargeTextStyle}" />
-                <Label Text="{Binding Description}" Style="{StaticResource MediumTextStyle}" />
+    <StackLayout Padding="{StaticResource PageContentPadding}">
+      <Label Text="{Binding Establishment.Name}" Style="{StaticResource MediumTextStyle}"/>
+      <Label Text="{Binding Establishment.Address}" Style="{StaticResource MediumTextStyle}"/> 
+      <ListView
+        ItemsSource="{Binding ServicesList}"
+        HasUnevenRows="True"
+        x:Name="ServicesList">
+         
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <StackLayout Orientation="Horizontal" Spacing="2" Padding="0,5,0,5">
+                <Label Text="{Binding Name}" Style="{StaticResource MediumTextStyle}" />
+                <Label Text="{Binding Price}" Style="{StaticResource MediumTextStyle}" />
               </StackLayout>
-            </ViewCell>-->
-            </DataTemplate>
-          </ListView.ItemTemplate>
-        </ListView>
-        <StackLayout Padding="0,10,0,0">
-          <controls:CustomButton
-            Text="Pedir cita"
-            Command="{Binding BookCommand}"/>
-          <controls:CustomButton
-            Text="Añadir a favoritos"
-            Command="{Binding FavouriteCommand}"/>
-        </StackLayout>
-      <!--</Grid>-->
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+      
+      <StackLayout Padding="0,10,0,0">
+        <controls:CustomButton
+          Text="{Binding LocalizedStrings[book]}"
+          Command="{Binding BookCommand}"/>
+        <controls:CustomButton
+          Text="{Binding LocalizedStrings[add_to_favourites]}"
+          Command="{Binding AddToFavouritesCommand}"
+          IsVisible="{Binding Establishment.IdFavourite, Converter={StaticResource IntToBoolConverter}, ConverterParameter=True}"/>
+        <controls:CustomButton
+          Text="{Binding LocalizedStrings[delete_favourite]}"
+          Command="{Binding DeleteFavouriteCommand}"
+          IsVisible="{Binding Establishment.IdFavourite, Converter={StaticResource IntToBoolConverter}}"/>
+      </StackLayout>
     </StackLayout>
  
     <controls:WaitingOverlayControl
@@ -62,23 +50,3 @@
  
 </views:CustomContentPage>
 
-<!--<StackLayout>
-      <StackLayout>
-
-      </StackLayout>
-      <StackLayout Padding="0,0,0,10" Spacing="0">
-        <Label
-          Text="Servicios"
-          Style="{StaticResource MediumTextStyle}"/>
-        <fe:BindablePicker
-          ItemsSource="{Binding ServiceList}"
-          DisplayProperty="NameAndPrice"
-          SelectedItem="{Binding SelectedService}"
-          Title="{Binding ChooseItemPlaceholder}"/>
-      </StackLayout>
-      <StackLayout Padding="0,10,0,0">
-        <controls:CustomButton
-          Text="Añadir a favoritos"
-          Command="{Binding FavouriteCommand}"/>
-      </StackLayout>
-    </StackLayout>-->

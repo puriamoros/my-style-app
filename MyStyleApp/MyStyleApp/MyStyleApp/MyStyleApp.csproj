@@ -41,6 +41,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Constants\BackendConstants.cs" />
     <Compile Include="Constants\RegexConstants.cs" />
+    <Compile Include="Converters\IntToBoolConverter.cs" />
     <Compile Include="Converters\ItemTappedEventArgsConverter.cs" />
     <Compile Include="Converters\StringToBoolConverter.cs" />
     <Compile Include="Enums\EstablishmentTypeEnum.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\AppointmentsViewModel.cs" />
     <Compile Include="Models\Establishment.cs" />
+    <Compile Include="ViewModels\BookViewModel.cs" />
     <Compile Include="ViewModels\EstablishmentDetailsViewModel.cs" />
     <Compile Include="ViewModels\EstablishmentsViewModel.cs" />
     <Compile Include="ViewModels\FavouritesViewModel.cs" />
@@ -132,6 +134,9 @@
     </Compile>
     <Compile Include="Views\AppointmentsView.xaml.cs">
       <DependentUpon>AppointmentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BookView.xaml.cs">
+      <DependentUpon>BookView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\CustomButton.cs" />
     <Compile Include="Views\Controls\WaitingOverlayControl.xaml.cs">
@@ -272,6 +277,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\EstablishmentDetailsView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\BookView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

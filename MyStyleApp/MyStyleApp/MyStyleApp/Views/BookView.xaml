@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:CustomContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyStyleApp.Views.BookView"
+             xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
+             xmlns:views="clr-namespace:MyStyleApp.Views"
+             xmlns:fe="clr-namespace:FreshEssentials;assembly=FreshEssentials"
+             Padding="{StaticResource PagePadding}"
+             Title="Book">
+  <Grid>
+    <StackLayout>
+
+      <StackLayout Padding="0,10,0,0">
+        <controls:CustomButton
+          Text="{Binding LocalizedStrings[book]}"
+          Command="{Binding BookCommand}"/>
+      </StackLayout>
+
+    </StackLayout>
+
+    <controls:WaitingOverlayControl
+      IsVisible="{Binding IsBusy}"
+      Text="{Binding LocalizedStrings[waiting]}"/>
+  </Grid>
+</views:CustomContentPage>

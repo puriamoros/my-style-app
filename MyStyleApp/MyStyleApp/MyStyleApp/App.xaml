@@ -10,6 +10,7 @@
       <!-- Converters -->
       <converters:StringToBoolConverter x:Key="StringToBoolConverter" />
       <converters:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter" />
+      <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
 
       <!-- iOS needs 20px top padding to avoid overlapping the status bar -->
       <OnPlatform x:Key="PagePadding"

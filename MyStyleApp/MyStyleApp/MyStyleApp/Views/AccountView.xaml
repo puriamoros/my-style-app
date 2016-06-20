@@ -6,12 +6,82 @@
              xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[my_account]}" Icon="User.png">
+  
   <ScrollView>
     <Grid>
-      <!-- Put the page contents here -->
+      <StackLayout Spacing="15" Padding="{StaticResource PageContentPadding}">
+        <StackLayout Spacing="0" >
+          <Label
+            Text="{Binding LocalizedStrings[name]}"
+            Style="{StaticResource MediumTextStyle}" />
+          <Entry
+            Placeholder="{Binding LocalizedStrings[name_placeholder]}"
+            Text="{Binding Name}"
+            Keyboard="Text"/>
+        </StackLayout>
+        <StackLayout Spacing="0" >
+          <Label
+            Text="{Binding LocalizedStrings[surname]}"
+            Style="{StaticResource MediumTextStyle}" />
+          <Entry
+            Placeholder="{Binding LocalizedStrings[surname_placeholder]}"
+            Text="{Binding Surname}"
+            Keyboard="Text"/>
+        </StackLayout>
+        <StackLayout Spacing="0" >
+          <Label
+                Text="{Binding LocalizedStrings[phone]}"
+                Style="{StaticResource MediumTextStyle}" />
+          <Entry
+            Placeholder="{Binding LocalizedStrings[phone_placeholder]}"
+            Text="{Binding Phone}"
+            Keyboard="Text"/>
+        </StackLayout>
+
+      <StackLayout Spacing="0" >
+          <Label
+            Text="{Binding LocalizedStrings[email]}"
+            Style="{StaticResource MediumTextStyle}" />
+          <Entry
+            Placeholder="{Binding LocalizedStrings[email_placeholder]}"
+            Text="{Binding Email}"
+            Keyboard="Email"/>
+        </StackLayout>
+        <StackLayout Spacing="0" >
+          <Label
+            Text="{Binding LocalizedStrings[password]}"
+            Style="{StaticResource MediumTextStyle}" />
+          <Entry
+            IsPassword="True"
+            Placeholder="{Binding LocalizedStrings[password_placeholder]}"
+            Text="{Binding Password}" />
+        </StackLayout>
+        <StackLayout Spacing="0" >
+          <Label
+            Text="{Binding LocalizedStrings[repeat_password]}"
+            Style="{StaticResource MediumTextStyle}" />
+          <Entry
+            IsPassword="True"
+            Placeholder="{Binding LocalizedStrings[password_placeholder]}"
+            Text="{Binding Password}" />
+        </StackLayout>
+
+        <StackLayout Padding="0,10,0,0">
+          <controls:CustomButton
+            Text="{Binding LocalizedStrings[create_account]}"
+            Command="{Binding CreateAccountCommand}"/>
+        </StackLayout>
+        <StackLayout Padding="0,10,0,0">
+          <controls:CustomButton
+            Text="{Binding LocalizedStrings[save_changes]}"
+            Command="{Binding EditAccountCommand}"/>
+        </StackLayout>
+                    
       <controls:WaitingOverlayControl
         IsVisible="{Binding IsBusy}"
         Text="{Binding LocalizedStrings[waiting]}"/>
+      </StackLayout>
     </Grid>
   </ScrollView>
+  
 </views:CustomContentPage>

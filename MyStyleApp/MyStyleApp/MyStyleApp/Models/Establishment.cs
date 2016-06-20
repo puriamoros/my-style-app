@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace MyStyleApp.Models
 {
@@ -18,5 +19,8 @@ namespace MyStyleApp.Models
 
         [JsonProperty(Required = Required.Default, PropertyName = "idFavourite")]
         public int IdFavourite { get; set; }
+
+        [JsonProperty(Required = Required.Default, PropertyName = "services")]
+        public IList<Service> Services { get; set; }
     }
 }

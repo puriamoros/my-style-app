@@ -29,24 +29,23 @@ namespace MyStyleApp.ViewModels
 
         public async void NavigateToMainPageAsync()
         {
-            this.IsBusy = true;
-            try
-            {
-                // Try getting the logged user
-                await this._usersService.MeAsync();
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    try
+                    {
+                        // Try getting the logged user
+                        await this._usersService.MeAsync();
 
-                // There is a logged user, go to main view
-                await this.SetMainPageAsync<MainViewModel>();
-            }
-            catch (Exception)
-            {
-                // There is no logged user, go to login view
-                await this.SetMainPageAsync<LoginViewModel>();
-            }
-            finally
-            {
-                this.IsBusy = false;
-            }
+                        // There is a logged user, go to main view
+                        await this.SetMainPageAsync<MainViewModel>();
+                    }
+                    catch (Exception)
+                    {
+                        // There is no logged user, go to login view
+                        await this.SetMainPageAsync<LoginViewModel>();
+                    }
+                });
         }
     }
 }

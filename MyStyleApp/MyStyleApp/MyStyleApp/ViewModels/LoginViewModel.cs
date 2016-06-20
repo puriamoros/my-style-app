@@ -127,26 +127,11 @@ namespace MyStyleApp.ViewModels
                         ErrorText = this.LocalizedStrings[STRING_LOGIN_ERROR];
                     }
                 });
-
-            //this.IsBusy = true;
-            //try
-            //{
-            //    await this._usersService.LoginAsync(this.Email, this.Password, this.RememberMe);
-            //    await this.SetMainPageAsync<MainViewModel>();
-            //}
-            //catch (Exception)
-            //{
-            //    ErrorText = this.LocalizedStrings[STRING_LOGIN_ERROR];
-            //}
-            //finally
-            //{
-            //    this.IsBusy = false;
-            //}
         }
 
         private async void NewAccountAsync()
         {
-            //await this.PushAsync<MainViewModel>();
+            //await this.PushNavPageAsync<AccountViewModel>();
         }
     }
 }

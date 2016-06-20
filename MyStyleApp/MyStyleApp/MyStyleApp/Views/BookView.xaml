@@ -6,7 +6,7 @@
              xmlns:views="clr-namespace:MyStyleApp.Views"
              xmlns:fe="clr-namespace:FreshEssentials;assembly=FreshEssentials"
              Padding="{StaticResource PagePadding}"
-             Title="Book">
+             Title="{Binding LocalizedStrings[book]}">
   <Grid>
     <StackLayout>
 

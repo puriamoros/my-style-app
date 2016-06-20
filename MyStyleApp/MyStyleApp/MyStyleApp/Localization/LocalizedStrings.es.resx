@@ -249,4 +249,37 @@
   <data name="generic_error" xml:space="preserve">
     <value>Se ha produciod un error.\nCompruebe que está conectado a internet o inténtelo de nuevo más tarde.</value>
   </data>
+  <data name="booking_requested" xml:space="preserve">
+    <value>Reserva solicitada</value>
+  </data>
+  <data name="email_confirmation" xml:space="preserve">
+    <value>Recibirás un correo electrónico de confirmación</value>
+  </data>
+  <data name="establishment_details" xml:space="preserve">
+    <value>Detalles del establecimiento</value>
+  </data>
+  <data name="name" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="name_placeholder" xml:space="preserve">
+    <value>Introduce tu nombre</value>
+  </data>
+  <data name="phone" xml:space="preserve">
+    <value>Teléfono</value>
+  </data>
+  <data name="phone_placeholder" xml:space="preserve">
+    <value>Introduce tu número de teléfono</value>
+  </data>
+  <data name="repeat_password" xml:space="preserve">
+    <value>Repite tu contraseña</value>
+  </data>
+  <data name="save_changes" xml:space="preserve">
+    <value>Guardar los cambios</value>
+  </data>
+  <data name="surname" xml:space="preserve">
+    <value>Apellidos</value>
+  </data>
+  <data name="surname_placeholder" xml:space="preserve">
+    <value>Introduce tus apellidos</value>
+  </data>
 </root>

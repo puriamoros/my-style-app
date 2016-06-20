@@ -62,6 +62,7 @@ namespace MyStyleApp.ViewModels
             {
                 await this.PushNavPageAsync<EstablishmentDetailsViewModel>((establishmentDetailsVM) =>
                 {
+                    //establishmentDetailsVM.SetData(establishment.Id, this.SelectedService.IdServiceCategory, this.SelectedService.Id);
                     establishmentDetailsVM.Establishment = establishment;
                 }
                 );

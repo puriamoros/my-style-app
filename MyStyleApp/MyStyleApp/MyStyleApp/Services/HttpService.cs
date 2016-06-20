@@ -119,7 +119,13 @@ namespace MyStyleApp.Services
                 }
                 catch (JsonSerializationException)
                 {
-                    jsonObj = JsonConvert.DeserializeObject(resultData, typeof(BackendError));
+                    try
+                    {
+                        jsonObj = JsonConvert.DeserializeObject(resultData, typeof(BackendError));
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
                 catch (Exception)
                 {

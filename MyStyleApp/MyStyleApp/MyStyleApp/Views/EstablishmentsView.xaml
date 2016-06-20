@@ -70,14 +70,6 @@
                 <MenuItem Text="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.LocalizedStrings[view_details]}"
                   Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.ViewDetailsCommand}"
                   CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
-
-                <MenuItem Text="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.LocalizedStrings[add_to_favourites]}}"
-                  Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.AddToFavouritesCommand}"
-                  CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}"/>
-
-                <MenuItem Text="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.LocalizedStrings[delete_favourite]}}"
-                  Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.DeleteFavouriteCommand}"
-                  CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}"/>
               </ViewCell.ContextActions>
             </ViewCell>
           </DataTemplate>

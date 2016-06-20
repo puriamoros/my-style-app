@@ -69,6 +69,7 @@ namespace MyStyleApp.ViewModels
                     await searchVM.PopNavPageToRootAsync();
                     await searchVM.PushNavPageAsync<EstablishmentDetailsViewModel>((establishmentDetailsVM) =>
                     {
+                        establishmentDetailsVM.SetData(establishment.Id, 0, 0);
                         establishmentDetailsVM.Establishment = establishment;
                     }
                     );
@@ -86,19 +87,26 @@ namespace MyStyleApp.ViewModels
 
         private async void DeleteFavouriteAsync(Establishment establishment)
         {
-            this.IsBusy = true;
-            try
-            {
-                await this._favouritesService.DeleteFavouriteAsync(establishment);
-                MessagingCenter.Send<Establishment>(establishment, "favouriteDeleted");
-            }
-            catch (Exception)
-            {
-            }
-            finally
-            {
-                this.IsBusy = false;
-            }
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    await this._favouritesService.DeleteFavouriteAsync(establishment);
+                    MessagingCenter.Send<Establishment>(establishment, "favouriteDeleted");
+                });
+            
+            //this.IsBusy = true;
+            //try
+            //{
+            //    await this._favouritesService.DeleteFavouriteAsync(establishment);
+            //    MessagingCenter.Send<Establishment>(establishment, "favouriteDeleted");
+            //}
+            //catch (Exception)
+            //{
+            //}
+            //finally
+            //{
+            //    this.IsBusy = false;
+            //}
         }
 
         private void RefreshFavouritesList()

@@ -6,12 +6,35 @@
              xmlns:views="clr-namespace:MyStyleApp.Views"
              xmlns:fe="clr-namespace:FreshEssentials;assembly=FreshEssentials"
              Padding="{StaticResource PagePadding}"
-             Title="Establishment Details">
+             Title="{Binding LocalizedStrings[establishment_details]}">
   <Grid>
     <StackLayout Padding="{StaticResource PageContentPadding}">
       <Label Text="{Binding Establishment.Name}" Style="{StaticResource MediumTextStyle}"/>
       <Label Text="{Binding Establishment.Address}" Style="{StaticResource MediumTextStyle}"/> 
-      <ListView
+     
+      <StackLayout Padding="0,0,0,10" Spacing="0">
+        <Label
+          Text="{Binding LocalizedStrings[service_category]}"
+          Style="{StaticResource MediumTextStyle}"/>
+        <fe:BindablePicker
+          ItemsSource="{Binding ServiceCategoryList, Mode=TwoWay}"
+          DisplayProperty="Name"
+          SelectedItem="{Binding SelectedServiceCategory}"
+          Title="{Binding ChooseItemPlaceholder}"/>
+      </StackLayout>
+      
+      <StackLayout Padding="0,0,0,10" Spacing="0">
+        <Label
+          Text="{Binding LocalizedStrings[service]}"
+          Style="{StaticResource MediumTextStyle}"/>
+        <fe:BindablePicker
+          ItemsSource="{Binding ServiceList, Mode=TwoWay}"
+          DisplayProperty="Name"
+          SelectedItem="{Binding SelectedService}"
+          Title="{Binding ChooseItemPlaceholder}"/>
+      </StackLayout>
+
+      <!--<ListView
         ItemsSource="{Binding ServicesList}"
         HasUnevenRows="True"
         x:Name="ServicesList">
@@ -26,7 +49,7 @@
             </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>
-      </ListView>
+      </ListView>-->
       
       <StackLayout Padding="0,10,0,0">
         <controls:CustomButton

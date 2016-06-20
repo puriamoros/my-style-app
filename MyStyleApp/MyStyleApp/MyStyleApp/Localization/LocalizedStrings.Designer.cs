@@ -98,6 +98,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Booking Requested.
+        /// </summary>
+        internal static string booking_requested {
+            get {
+                return ResourceManager.GetString("booking_requested", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose an item.
         /// </summary>
         internal static string choose_an_item {
@@ -139,6 +148,15 @@ namespace MyStyleApp.Localization {
         internal static string email {
             get {
                 return ResourceManager.GetString("email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A confirmation email will be send you.
+        /// </summary>
+        internal static string email_confirmation {
+            get {
+                return ResourceManager.GetString("email_confirmation", resourceCulture);
             }
         }
         
@@ -220,6 +238,15 @@ namespace MyStyleApp.Localization {
         internal static string error_required_field {
             get {
                 return ResourceManager.GetString("error_required_field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Establishment details.
+        /// </summary>
+        internal static string establishment_details {
+            get {
+                return ResourceManager.GetString("establishment_details", resourceCulture);
             }
         }
         
@@ -332,6 +359,24 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string name {
+            get {
+                return ResourceManager.GetString("name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your name.
+        /// </summary>
+        internal static string name_placeholder {
+            get {
+                return ResourceManager.GetString("name_placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Don&apos;t have an account?.
         /// </summary>
         internal static string no_account {
@@ -377,6 +422,24 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Phone.
+        /// </summary>
+        internal static string phone {
+            get {
+                return ResourceManager.GetString("phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your telephone number.
+        /// </summary>
+        internal static string phone_placeholder {
+            get {
+                return ResourceManager.GetString("phone_placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Province.
         /// </summary>
         internal static string province {
@@ -391,6 +454,24 @@ namespace MyStyleApp.Localization {
         internal static string remember_me {
             get {
                 return ResourceManager.GetString("remember_me", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repeat your password.
+        /// </summary>
+        internal static string repeat_password {
+            get {
+                return ResourceManager.GetString("repeat_password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save changes.
+        /// </summary>
+        internal static string save_changes {
+            get {
+                return ResourceManager.GetString("save_changes", resourceCulture);
             }
         }
         
@@ -418,6 +499,24 @@ namespace MyStyleApp.Localization {
         internal static string service_category {
             get {
                 return ResourceManager.GetString("service_category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Surname.
+        /// </summary>
+        internal static string surname {
+            get {
+                return ResourceManager.GetString("surname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your surname.
+        /// </summary>
+        internal static string surname_placeholder {
+            get {
+                return ResourceManager.GetString("surname_placeholder", resourceCulture);
             }
         }
         

@@ -17,7 +17,7 @@ namespace MyStyleApp.Models
         [JsonProperty(Required = Required.Always, PropertyName = "duration")]
         public int Duration { get; set; }
 
-        [JsonProperty(Required = Required.Always, PropertyName = "price")]
+        [JsonProperty(Required = Required.Default, PropertyName = "price")]
         public float Price { get; set; }
     }
 }

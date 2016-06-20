@@ -52,7 +52,7 @@
         </StackLayout>
         <StackLayout Padding="0,10,0,0">
           <controls:CustomButton
-            Text="Buscar"
+            Text="{Binding LocalizedStrings[search]}"
             Command="{Binding SearchCommand}"/>
         </StackLayout>
 

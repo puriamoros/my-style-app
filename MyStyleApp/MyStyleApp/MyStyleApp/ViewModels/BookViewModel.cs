@@ -27,8 +27,12 @@ namespace MyStyleApp.ViewModels
 
         private async void BookAsync()
         {
+            //await this.UserNotificator.DisplayAlert(
+            //   "Reserva solicitada", "Recibirás un correo electrónico de confirmación.", "Aceptar");
             await this.UserNotificator.DisplayAlert(
-               "Reserva solicitada", "Recibirás un correo electrónico de confirmación.", "Aceptar");
+               this.LocalizedStrings.GetString("booking_requested"),
+               this.LocalizedStrings.GetString("email_confirmation"), 
+               this.LocalizedStrings.GetString("establishments"));
         }
     }
 }

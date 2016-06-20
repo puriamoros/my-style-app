@@ -121,6 +121,7 @@
     <Compile Include="ViewModels\AppointmentsViewModel.cs" />
     <Compile Include="Models\Establishment.cs" />
     <Compile Include="ViewModels\BookViewModel.cs" />
+    <Compile Include="ViewModels\ErrorViewModel.cs" />
     <Compile Include="ViewModels\EstablishmentDetailsViewModel.cs" />
     <Compile Include="ViewModels\EstablishmentsViewModel.cs" />
     <Compile Include="ViewModels\FavouritesViewModel.cs" />
@@ -143,6 +144,9 @@
       <DependentUpon>WaitingOverlayControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CustomContentPage.cs" />
+    <Compile Include="Views\ErrorView.xaml.cs">
+      <DependentUpon>ErrorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EstablishmentDetailsView.xaml.cs">
       <DependentUpon>EstablishmentDetailsView.xaml</DependentUpon>
     </Compile>
@@ -283,6 +287,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\BookView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ErrorView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

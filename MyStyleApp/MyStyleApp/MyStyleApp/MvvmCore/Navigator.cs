@@ -170,7 +170,7 @@ namespace MvvmCore
 			var tcs = new TaskCompletionSource<IViewModel>();
 			_deviceService.BeginInvokeOnMainThread(async () =>
 			{
-				Page view = await navigation.PopAsync();
+				Page view = await navigation.PopModalAsync();
 				tcs.SetResult(view.BindingContext as IViewModel);
 			});
             return tcs.Task;

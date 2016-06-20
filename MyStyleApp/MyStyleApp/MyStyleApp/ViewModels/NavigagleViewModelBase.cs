@@ -45,6 +45,31 @@ namespace MyStyleApp.ViewModels
             }
         }
 
+        public async Task ExecuteBlockingUIAsync(Func<Task> action)
+        {
+            this.IsBusy = true;
+            try
+            {
+                if (action != null)
+                {
+                    await action();
+                }
+            }
+            catch (Exception)
+            {
+                await this.PushNavPageModalAsync<ErrorViewModel>((errorVM) =>
+                {
+                    errorVM.ErrorText = this.LocalizedStrings.GetString("generic_error");
+                });
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
+        }
+
+        #region Navigation
+
         public Task<TViewModel> SetMainPageAsync<TViewModel>(Action<TViewModel> setStateAction = null)
             where TViewModel : class, IViewModel
         {
@@ -143,5 +168,7 @@ namespace MyStyleApp.ViewModels
         {
             return this._navigator.RemoveNavPageAsync<TViewModel>(this.Navigation);
         }
+
+        #endregion
     }
 }

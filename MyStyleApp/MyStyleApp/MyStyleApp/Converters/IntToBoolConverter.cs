@@ -11,22 +11,19 @@ namespace MyStyleApp.Converters
             if (value is int)
             {
                 int valueInt = (int)value;
+                bool result = (valueInt > 0);
 
                 bool reverse = false;
                 if (parameter is string)
                 {
                     reverse = bool.Parse(parameter as string);
                 }
-
-                bool result = (valueInt > 0);
                 if(reverse)
                 {
-                    return !result;
+                    result = !result;
                 }
-                else
-                {
-                    return result;
-                }
+
+                return result;
             }
             return false;
         }

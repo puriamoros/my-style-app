@@ -278,6 +278,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There has been an error.\nPlease, check your internet connection or try again later..
+        /// </summary>
+        internal static string generic_error {
+            get {
+                return ResourceManager.GetString("generic_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to en.
         /// </summary>
         internal static string language_code {

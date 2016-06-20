@@ -33,6 +33,7 @@ namespace MyStyleApp
             builder.RegisterType<EstablishmentsView>().SingleInstance();
             builder.RegisterType<EstablishmentDetailsView>().SingleInstance();
             builder.RegisterType<BookView>().SingleInstance();
+            builder.RegisterType<ErrorView>().SingleInstance();
 
             // Register ViewModels
             builder.RegisterType<StartViewModel>().SingleInstance();
@@ -45,6 +46,7 @@ namespace MyStyleApp
             builder.RegisterType<EstablishmentsViewModel>().SingleInstance();
             builder.RegisterType<EstablishmentDetailsViewModel>().SingleInstance();
             builder.RegisterType<BookViewModel>().SingleInstance();
+            builder.RegisterType<ErrorViewModel>().SingleInstance();
 
             // Register Services
             builder.RegisterType<LocalizedStringsService>().SingleInstance();
@@ -81,6 +83,7 @@ namespace MyStyleApp
             viewFactory.Register<EstablishmentsViewModel, EstablishmentsView>();
             viewFactory.Register<EstablishmentDetailsViewModel, EstablishmentDetailsView>();
             viewFactory.Register<BookViewModel, BookView>();
+            viewFactory.Register<ErrorViewModel, ErrorView>();
         }
 
         protected override void ConfigureApplication(IContainer container)

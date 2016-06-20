@@ -5,32 +5,32 @@ namespace MyStyleApp.Views
     public partial class MainView : TabbedPage
     {
         private const string CURRENT_TOKEN = "Filled";
-        public MainView()
-        {
-            InitializeComponent();
-        }
-
-        //public MainView(
-        //    AppointmentsView appointmentsView,
-        //    FavouritesView favouritesView,
-        //    SearchView searchView,
-        //    AccountView accountView)
+        //public MainView()
         //{
         //    InitializeComponent();
-
-        //    this.AddNavigationChild(appointmentsView, "LocalizedStrings[appointments]", "Calendar.png");
-        //    this.AddNavigationChild(favouritesView, "LocalizedStrings[favourites]", "Star.png");
-        //    this.AddNavigationChild(searchView, "LocalizedStrings[search]", "Search.png");
-        //    this.AddNavigationChild(accountView, "LocalizedStrings[my_account]", "User.png");
         //}
 
-        //private void AddNavigationChild(Page view, string titleBinding, string icon)
-        //{
-        //    var nav = new CustomNavigationPage(view);
-        //    nav.SetBinding(CustomNavigationPage.TitleProperty, titleBinding);
-        //    nav.Icon = icon;
-        //    this.Children.Add(nav);
-        //}
+        public MainView(
+            AppointmentsView appointmentsView,
+            FavouritesView favouritesView,
+            SearchView searchView,
+            AccountView accountView)
+        {
+            InitializeComponent();
+
+            this.AddNavigationChild(appointmentsView, "LocalizedStrings[appointments]", "Calendar.png");
+            this.AddNavigationChild(favouritesView, "LocalizedStrings[favourites]", "Star.png");
+            this.AddNavigationChild(searchView, "LocalizedStrings[establishments]", "Search.png");
+            this.AddNavigationChild(accountView, "LocalizedStrings[my_account]", "User.png");
+        }
+
+        private void AddNavigationChild(Page view, string titleBinding, string icon)
+        {
+            var nav = new CustomNavigationPage(view);
+            nav.SetBinding(CustomNavigationPage.TitleProperty, titleBinding);
+            nav.Icon = icon;
+            this.Children.Add(nav);
+        }
 
         protected override void OnCurrentPageChanged()
         {

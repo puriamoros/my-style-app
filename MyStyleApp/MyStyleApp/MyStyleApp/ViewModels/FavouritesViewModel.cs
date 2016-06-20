@@ -64,9 +64,14 @@ namespace MyStyleApp.ViewModels
             this.IsBusy = true;
             try
             {
-                await this.PushNavPageAsync<EstablishmentDetailsViewModel>((establishmentDetailsVM) =>
+                await this.SetMainPageTabAsync<SearchViewModel>(async (searchVM) =>
                 {
-                    establishmentDetailsVM.Establishment = establishment;
+                    await searchVM.PopNavPageToRootAsync();
+                    await searchVM.PushNavPageAsync<EstablishmentDetailsViewModel>((establishmentDetailsVM) =>
+                    {
+                        establishmentDetailsVM.Establishment = establishment;
+                    }
+                    );
                 }
                 );
             }

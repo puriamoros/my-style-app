@@ -133,11 +133,19 @@ namespace MvvmCore
                 if(child is NavigationPage)
                 {
                     NavigationPage nav = child as NavigationPage;
-                    // We should compare "nav.CurrentPage == tab" but maybe we have not
-                    // created child pages in code but in xaml, so we compare types instead
-                    if (nav.CurrentPage.GetType() == tab.GetType())
+                    foreach(Page page in nav.Navigation.NavigationStack)
                     {
-                        return child;
+                        // We should compare "page == tab" but maybe we have not
+                        // created child pages in code but in xaml, so we compare types instead
+                        //if (page.GetType() == tab.GetType())
+                        //{
+                        //    return child;
+                        //}
+
+                        if (page == tab)
+                        {
+                            return child;
+                        }
                     }
                 }
             }

@@ -122,6 +122,34 @@ class Establishments extends ModelWithIdBase
 		return $result;
 	}
 	
+	protected function dbGetOne($id)
+	{
+		// We also need to know if the establishment is a favourite => join with table favourites
+			
+		// both tables favourites and establishments have a field called "id", so we need to rename them
+		$establismentsIdFieldRenamed = $this->table . '.' . $this->idField;
+		$favouritesIdFieldRenamed = $this->favouritesTable . '.' . $this->favouritesIdField;
+		
+		$mixedFields = $this->fields;
+		$mixedFields[0] = $establismentsIdFieldRenamed;
+		array_push($mixedFields, $favouritesIdFieldRenamed);
+		
+		$result = DBCommands::dbGetOneJoin(
+			[$this->table, $this->favouritesTable],
+			[$this->idField, $this->idEstablishment],
+			['LEFT'],
+			$mixedFields, $establismentsIdFieldRenamed, $id);
+			
+		// restore original field names
+		$result[$this->idField] = $result[$establismentsIdFieldRenamed];
+		unset($result[$establismentsIdFieldRenamed]);
+		// idFavourite can be null => set it to 0 if it is null
+		$result[$this->favouritesExtraField] = is_null($result[$favouritesIdFieldRenamed]) ? '0' : $result[$favouritesIdFieldRenamed];
+		unset($result[$favouritesIdFieldRenamed]);
+			
+		return $result;
+	}
+	
 	protected function createElement()
 	{
 		$result = parent::createElement();

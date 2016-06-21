@@ -153,6 +153,60 @@ class DBCommands
 		}
 	}
 	
+	public static function dbGetOneJoin($joinTables, $joinFields, $joinTypes, $fields, $idField, $id)
+	{
+		$idMap = array();
+		$idMap[$idField] = $id;
+		return self::dbGetOneMultiIdJoin($joinTables, $joinFields, $joinTypes, $fields, $idMap);
+	}
+	
+	public static function dbGetOneMultiIdJoin($joinTables, $joinFields, $joinTypes, $fields, $idMap)
+	{
+		if(count($idMap) <= 0) {
+			throw new ApiException(STATE_DB_ERROR, "DB error");
+		}
+		
+		try {
+			$pdo = DBConnection::getInstance()->getDB();
+
+			$command = "SELECT " . implode(",", $fields) . " FROM ";
+			for ($i = 0; $i < count($joinTables)-1; $i++) {
+				$command .= ($i == 0) ? $joinTables[$i] . " " : " ";
+				$command .= $joinTypes[$i] . " JOIN " . $joinTables[$i+1];
+				$command .= " ON " . $joinTables[$i] . "." . $joinFields[$i] . "=" . $joinTables[$i+1] . "." . $joinFields[$i+1];
+			}
+			$where = false;
+			foreach($idMap as $key => $value) {
+				$command .= $where ? " AND " : " WHERE ";
+				$command .= $key . "=?";
+				$where = true;
+			}
+			
+			$query = $pdo->prepare($command);
+
+			$count = 1;
+			foreach($idMap as $key => $value) {
+				$query->bindParam($count, $value);
+				$count++;
+			}
+
+			$result = $query->execute();
+
+			if ($result) {
+				if($fetch = $query->fetch()) {
+					return DBCommands::dbFetchToArray($fields, $fetch);
+				}
+				else {
+					return null;
+				}
+			} else {
+				throw new ApiException(STATE_DB_ERROR, "DB error");
+			}
+		} catch (PDOException $e) {
+			throw new ApiException(STATE_DB_ERROR, "PDO exception");
+		}
+	}
+	
 	public static function dbCreateNoId($table, $fields, $data)
 	{
 		try {

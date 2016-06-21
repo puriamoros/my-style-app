@@ -14,6 +14,9 @@ namespace MyStyleApp.Models
         [JsonProperty(Required = Required.Always, PropertyName = "address")]
         public string Address { get; set; }
 
+        [JsonProperty(Required = Required.Always, PropertyName = "phone")]
+        public string Phone { get; set; }
+
         [JsonProperty(Required = Required.Always, PropertyName = "idEstablishmentType")]
         public int IdEstablishmentType { get; set; }
 
@@ -21,6 +24,6 @@ namespace MyStyleApp.Models
         public int IdFavourite { get; set; }
 
         [JsonProperty(Required = Required.Default, PropertyName = "services")]
-        public IList<Service> Services { get; set; }
+        public IList<ShortenService> ShortenServices { get; set; }
     }
 }

@@ -10,8 +10,9 @@
   <Grid>
     <StackLayout Padding="{StaticResource PageContentPadding}">
       <Label Text="{Binding Establishment.Name}" Style="{StaticResource MediumTextStyle}"/>
-      <Label Text="{Binding Establishment.Address}" Style="{StaticResource MediumTextStyle}"/> 
-     
+      <Label Text="{Binding Establishment.Address}" Style="{StaticResource MediumTextStyle}"/>
+      <Label Text="{Binding Establishment.Phone}" Style="{StaticResource MediumTextStyle}"/>
+
       <StackLayout Padding="0,0,0,10" Spacing="0">
         <Label
           Text="{Binding LocalizedStrings[service_category]}"

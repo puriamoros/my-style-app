@@ -55,7 +55,7 @@ namespace MyStyleApp.ViewModels
                     await action();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 await this.PushNavPageModalAsync<ErrorViewModel>((errorVM) =>
                 {

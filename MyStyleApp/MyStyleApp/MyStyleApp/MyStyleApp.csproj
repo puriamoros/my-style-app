@@ -56,6 +56,7 @@
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\EstablishmentType.cs" />
     <Compile Include="Models\ServiceCategory.cs" />
+    <Compile Include="Models\ShortenService.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="MvvmCore\Behaviors\BindableBehavior.cs" />
     <Compile Include="MvvmCore\Behaviors\EventToCommandBehavior.cs" />

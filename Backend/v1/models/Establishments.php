@@ -15,6 +15,7 @@ class Establishments extends ModelWithIdBase
 			'id',
 			'name',
 			'address',
+			'phone',
 			'idEstablishmentType',
 			'idOwner',
 			'idProvince'

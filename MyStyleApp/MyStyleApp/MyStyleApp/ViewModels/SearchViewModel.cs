@@ -61,19 +61,12 @@ namespace MyStyleApp.ViewModels
 
         private async void InitializeAsync()
         {
-            this.IsBusy = true;
-            try
-            {
-                await this._serviceCategoriesService.GetServiceCategoriesAsync();
-                await this._servicesService.GetServicesAsync();
-            }
-            catch (Exception)
-            {
-            }
-            finally
-            {
-                this.IsBusy = false;
-            }
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    await this._serviceCategoriesService.GetServiceCategoriesAsync();
+                    await this._servicesService.GetServicesAsync();
+                });
         }
 
         public ObservableCollection<Province> ProvinceList
@@ -110,36 +103,30 @@ namespace MyStyleApp.ViewModels
 
         private async void OnSelectedEstablishmentTypeChanged(EstablishmentType selectedEstablishmentType)
         {
-            this.IsBusy = true;
-            try
-            {
-                var all = await this._serviceCategoriesService.GetServiceCategoriesAsync();
-                if (selectedEstablishmentType.Id != (int)EstablishmentTypeEnum.HairdresserAndAesthetics)
+            await this.ExecuteBlockingUIAsync(
+                async () =>
                 {
-                    /*List<ServiceCategory> selected = new List<ServiceCategory>();
-                    foreach (ServiceCategory item in all)
+                    if(selectedEstablishmentType != null)
                     {
-                        if (item.IdEstablishmentType == selectedEstablishmentType.Id)
-                            selected.Add(item);
-                    }*/
-                    var selected = from item in all
-                                   where item.IdEstablishmentType == selectedEstablishmentType.Id
-                                   select item;
-                    
-                    this.ServiceCategoryList = new ObservableCollection<ServiceCategory>(selected);
-                }  
-                else
-                {
-                    this.ServiceCategoryList = new ObservableCollection<ServiceCategory>(all);
-                }
-            }
-            catch(Exception ex)
-            {
-            }
-            finally
-            {
-                this.IsBusy = false;
-            }
+                        var all = await this._serviceCategoriesService.GetServiceCategoriesAsync();
+                        if (selectedEstablishmentType.Id != (int)EstablishmentTypeEnum.HairdresserAndAesthetics)
+                        {
+                            var selected = from item in all
+                                           where item.IdEstablishmentType == selectedEstablishmentType.Id
+                                           select item;
+
+                            this.ServiceCategoryList = new ObservableCollection<ServiceCategory>(selected);
+                        }
+                        else
+                        {
+                            this.ServiceCategoryList = new ObservableCollection<ServiceCategory>(all);
+                        }
+                    }
+                    else
+                    {
+                        this.ServiceCategoryList.Clear();
+                    }
+                });
         }
 
         public ObservableCollection<ServiceCategory> ServiceCategoryList
@@ -160,25 +147,25 @@ namespace MyStyleApp.ViewModels
 
         private async void OnSelectedServiceCategoryChanged(ServiceCategory selectedServiceCategory)
         {
-            this.IsBusy = true;
-            try
-            {
-                var all = await this._servicesService.GetServicesAsync();
-                List<Service> selected = new List<Service>();
-                foreach (Service item in all)
+            await this.ExecuteBlockingUIAsync(
+                async () =>
                 {
-                    if (item.IdServiceCategory == selectedServiceCategory.Id)
-                        selected.Add(item);
-                }
-                this.ServiceList = new ObservableCollection<Service>(selected);
-            }
-            catch (Exception ex)
-            {
-            }
-            finally
-            {
-                this.IsBusy = false;
-            }
+                    if(selectedServiceCategory != null)
+                    {
+                        var all = await this._servicesService.GetServicesAsync();
+
+                        var selected = from item in all
+                                       where item.IdServiceCategory == selectedServiceCategory.Id
+                                       select item;
+
+                        this.ServiceList = new ObservableCollection<Service>(selected);
+                    }
+                    else
+                    {
+                        this.ServiceList.Clear();
+                    }
+                    
+                });
         }
 
         public ObservableCollection<Service> ServiceList
@@ -208,41 +195,34 @@ namespace MyStyleApp.ViewModels
         
         private async void SearchAsync()
         {
-            this.IsBusy = true;
-            try
-            {
-                //var list = await this._establishmentsService.GetEstablishmentsAsync(this.SelectedProvince, this.SelectedService);
-                var list = await this._establishmentsService.GetEstablishmentsAsync(new Province(){ Id = 1 }, new Service() { Id = 1 });
-                if (list.Count <= 0)
+            await this.ExecuteBlockingUIAsync(
+                async () =>
                 {
-                    this.IsBusy = false;
-                    await this.UserNotificator.DisplayAlert(
-                        this.LocalizedStrings.GetString("warning"),
-                        this.LocalizedStrings.GetString("no_search_results"), 
-                        this.LocalizedStrings.GetString("ok"));
-                }
-                else
-                {
-                    await this.PushNavPageAsync<EstablishmentsViewModel>((establishmentsVM) =>
+                    var list = await this._establishmentsService.GetEstablishmentsAsync(this.SelectedProvince, this.SelectedService);
+                    //var list = await this._establishmentsService.GetEstablishmentsAsync(new Province() { Id = 1 }, new Service() { Id = 1 });
+                    if (list.Count <= 0)
                     {
-                        establishmentsVM.EstablishmentsList = new ObservableCollection<Establishment>(list);
-                        establishmentsVM.SelectedService = this.SelectedService;
-                    });
-                }
-            }
-            catch (Exception)
-            {
-                //TODO: Handle exception
-            }    
-            finally
-            {
-                this.IsBusy = false;
-            }  
+                        this.IsBusy = false;
+                        await this.UserNotificator.DisplayAlert(
+                            this.LocalizedStrings.GetString("warning"),
+                            this.LocalizedStrings.GetString("no_search_results"),
+                            this.LocalizedStrings.GetString("ok"));
+                    }
+                    else
+                    {
+                        await this.PushNavPageAsync<EstablishmentsViewModel>((establishmentsVM) =>
+                        {
+                            establishmentsVM.EstablishmentsList = new ObservableCollection<Establishment>(list);
+                            establishmentsVM.SelectedService = this.SelectedService;
+                        });
+                    }
+                }); 
         }
 
         private bool CanSearch()
         {
-            return true;//this.SelectedProvince != null && this.SelectedService != null;
+            //return true;
+            return this.SelectedProvince != null && this.SelectedService != null;
         }
     }
 }

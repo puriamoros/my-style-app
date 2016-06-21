@@ -57,73 +57,44 @@ namespace MyStyleApp.ViewModels
 
         private async void ViewDetailsAsync(Establishment establishment)
         {
-            this.IsBusy = true;
-            try
-            {
-                await this.PushNavPageAsync<EstablishmentDetailsViewModel>((establishmentDetailsVM) =>
+            await this.ExecuteBlockingUIAsync(
+                async () =>
                 {
-                    //establishmentDetailsVM.SetData(establishment.Id, this.SelectedService.IdServiceCategory, this.SelectedService.Id);
-                    establishmentDetailsVM.Establishment = establishment;
-                }
-                );
-            }
-            catch (Exception)
-            {
-            }
-            finally
-            {
-                this.IsBusy = false;
-            }
+                    await this.PushNavPageAsync<EstablishmentDetailsViewModel>(async (establishmentDetailsVM) =>
+                    {
+                        await establishmentDetailsVM.InitilizeAsync(establishment.Id, this.SelectedService.IdServiceCategory, this.SelectedService.Id);
+                    }
+                    );
+                });
         }
 
         private async void BookAsync(Establishment establishment)
         {
-            this.IsBusy = true;
-            try
-            {
-                await this.PushNavPageAsync<BookViewModel>();
-            }
-            catch (Exception)
-            {
-            }
-            finally
-            {
-                this.IsBusy = false;
-            }
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    await this.PushNavPageAsync<BookViewModel>();
+                });
         }
 
         private async void AddToFavouritesAsync(Establishment establishment)
         {
-            this.IsBusy = true;
-            try
-            {
-                await this._favouritesService.AddFavouriteAsync(establishment);
-                MessagingCenter.Send<Establishment>(establishment, "favouriteAdded");
-            }
-            catch (Exception)
-            {
-            }
-            finally
-            {
-                this.IsBusy = false;
-            }
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    await this._favouritesService.AddFavouriteAsync(establishment);
+                    MessagingCenter.Send<Establishment>(establishment, "favouriteAdded");
+                });
         }
 
         private async void DeleteFavouriteAsync(Establishment establishment)
         {
-            this.IsBusy = true;
-            try
-            {
-                await this._favouritesService.DeleteFavouriteAsync(establishment);
-                MessagingCenter.Send<Establishment>(establishment, "favouriteDeleted");
-            }
-            catch (Exception)
-            {
-            }
-            finally
-            {
-                this.IsBusy = false;
-            }
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    await this._favouritesService.DeleteFavouriteAsync(establishment);
+                    MessagingCenter.Send<Establishment>(establishment, "favouriteDeleted");
+                });
         }
 
         private void RefreshEstablishmentList()

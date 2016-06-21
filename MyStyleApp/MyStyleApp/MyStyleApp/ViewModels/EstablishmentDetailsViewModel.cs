@@ -7,6 +7,9 @@ using Xamarin.Forms;
 using System.Windows.Input;
 using MyStyleApp.Services.Backend;
 using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyStyleApp.ViewModels
 {
@@ -15,18 +18,21 @@ namespace MyStyleApp.ViewModels
         private IFavouritesService _favouritesService;
         private IServiceCategoriesService _serviceCategoriesService;
         private IServicesService _servicesService;
+        private IEstablishmentsService _establishmentsService;
 
         private Establishment _establishment;
-
+        
         private ObservableCollection<Service> _serviceList;
         private Service _selectedService;
         
         private ObservableCollection<ServiceCategory> _serviceCategoryList;
         private ServiceCategory _selectedServiceCategory;
 
-        private int _idEstablishment;
-        private int _idServiceCategory;
-        private int _idService;
+        private List<Service> _establishmentServicesList;
+
+        private bool _initializing;
+
+        private object lockObj;
         
         public ICommand BookCommand { get; private set; }
         public ICommand AddToFavouritesCommand { get; private set; }
@@ -38,9 +44,12 @@ namespace MyStyleApp.ViewModels
             LocalizedStringsService localizedStringsService,
             IFavouritesService favouritesService,
             IServiceCategoriesService serviceCategoriesService,
-            IServicesService servicesService) :
+            IServicesService servicesService,
+            IEstablishmentsService establishmentsService) :
             base(navigator, userNotificator, localizedStringsService)
         {
+            this.lockObj = new object();
+
             this.BookCommand = new Command(this.BookAsync);
             this.AddToFavouritesCommand = new Command(this.AddToFavouritesAsync);
             this.DeleteFavouriteCommand = new Command(this.DeleteFavouriteAsync);
@@ -48,23 +57,106 @@ namespace MyStyleApp.ViewModels
             this._favouritesService = favouritesService;
             this._serviceCategoriesService = serviceCategoriesService;
             this._servicesService = servicesService;
+            this._establishmentsService = establishmentsService;
 
             MessagingCenter.Subscribe<Establishment>(this, "favouriteAdded", this.OnFavouriteAdded);
             MessagingCenter.Subscribe<Establishment>(this, "favouriteDeleted", this.OnFavouriteDeleted);
         }
 
-        public void SetData(int idEstablishment, int idServiceCategory, int idService)
+        public async Task InitilizeAsync(int idEstablishment, int idServiceCategory, int idService)
         {
-            this._idEstablishment = idEstablishment;
-            this._idServiceCategory = idServiceCategory;
-            this._idService = idService;
+            lock(lockObj)
+            {
+                this._initializing = true;
+            }
 
-            //TODO:
-            // - llamar a backend establishments/{idEstablishment}
-            // - asignar el resultado a selectedEstablishment
-            // - guardar la lista de servicios
-            // - asignar selectedCategory a idServiceCategory
+            this.Establishment = null;
+            if(this.ServiceCategoryList != null)
+            {
+                this.ServiceCategoryList.Clear();
+            }
+            this.SelectedServiceCategory = null;
+            if (this.ServiceList != null)
+            {
+                this.ServiceList.Clear();
+            }
+            this.SelectedService = null;
+
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    // Get selected establishment from BE
+                    this.Establishment = await this._establishmentsService.GetEstablishmentAsync(idEstablishment);
+
+                    // Get all the services and services categories from BE
+                    var allServicesList = await this._servicesService.GetServicesAsync();
+                    var allServiceCategoriesList = await this._serviceCategoriesService.GetServiceCategoriesAsync();
+
+                    // Get a list with all the services offered by the establishment
+                    this._establishmentServicesList = new List<Service>();
+                    foreach (ShortenService item in this.Establishment.ShortenServices)
+                    {
+                        var result = from service in allServicesList
+                                     where service.Id == item.Id
+                                     select service;
+
+                        if(result.Count() > 0)
+                        {
+                            this._establishmentServicesList.Add(result.ElementAt(0));
+                        }
+                    }
+
+                    // Get a list with all the service categories of the services offered by the establishment
+                    List<ServiceCategory> establishmentServiceCategoriesList = new List<ServiceCategory>();
+                    foreach (Service item in this._establishmentServicesList)
+                    {
+                        var result = from serviceCategory in allServiceCategoriesList
+                                     where serviceCategory.Id == item.IdServiceCategory
+                                     select serviceCategory;
+
+                        if (result.Count() > 0)
+                        {
+                            var sc = establishmentServiceCategoriesList.Find((serviceCategory) =>
+                            {
+                                return serviceCategory.Id == result.ElementAt(0).Id;
+                            });
+
+                            if (sc == null)
+                            {
+                                establishmentServiceCategoriesList.Add(result.ElementAt(0));
+                            }
+                        }
+                    }
+
+                    this.ServiceCategoryList = new ObservableCollection<ServiceCategory>(establishmentServiceCategoriesList);
+
+                    var result2 = from item in this.ServiceCategoryList
+                                 where item.Id == idServiceCategory
+                                 select item;
+
+                    if (result2.Count() > 0)
+                    {
+                        this.SelectedServiceCategory = result2.ElementAt(0);
+                        this.OnSelectedServiceCategoryChanged(this.SelectedServiceCategory);
+
+                        var result3 = from item in this.ServiceList
+                                      where item.Id == idService
+                                      select item;
+
+                        if (result3.Count() > 0)
+                        {
+                            this.SelectedService = result3.ElementAt(0);
+                        }
+                    }
+                });
+
+            lock (lockObj)
+            {
+                this._initializing = false;
+            }
         }
+
+        
 
         public Establishment Establishment
         {
@@ -84,30 +176,31 @@ namespace MyStyleApp.ViewModels
             set
             {
                 SetProperty(ref _selectedServiceCategory, value);
-                this.OnSelectedServiceCategoryChanged(value);
+
+                lock (lockObj)
+                {
+                    if (!this._initializing)
+                    {
+                        this.OnSelectedServiceCategoryChanged(value);
+                    }
+                }
             }
         }
 
-        private async void OnSelectedServiceCategoryChanged(ServiceCategory selectedServiceCategory)
+        private void OnSelectedServiceCategoryChanged(ServiceCategory selectedServiceCategory)
         {
-            this.IsBusy = true;
-            try
+            if(selectedServiceCategory != null)
             {
-                var all = await this._servicesService.GetServicesAsync();
-                List<Service> selected = new List<Service>();
-                foreach (Service item in all)
-                {
-                    if (item.IdServiceCategory == selectedServiceCategory.Id)
-                        selected.Add(item);
-                }
+                var all = this._establishmentServicesList;
+                var selected = from item in all
+                               where item.IdServiceCategory == selectedServiceCategory.Id
+                               select item;
+
                 this.ServiceList = new ObservableCollection<Service>(selected);
             }
-            catch (Exception ex)
+            else
             {
-            }
-            finally
-            {
-                this.IsBusy = false;
+                this.ServiceList.Clear();
             }
         }
 
@@ -117,15 +210,15 @@ namespace MyStyleApp.ViewModels
             set { SetProperty(ref _serviceList, value); }
         }
 
-        //public Service SelectedService
-        //{
-        //    get { return _selectedService; }
-        //    set
-        //    {
-        //        SetProperty(ref _selectedService, value);
-        //        this.SearchCommand.ChangeCanExecute();
-        //    }
-        //}
+        public Service SelectedService
+        {
+            get { return _selectedService; }
+            set
+            {
+                SetProperty(ref _selectedService, value);
+                //this.SearchCommand.ChangeCanExecute();
+            }
+        }
 
         public string ChooseItemPlaceholder
         {
@@ -138,52 +231,31 @@ namespace MyStyleApp.ViewModels
 
         private async void BookAsync()
         {
-            this.IsBusy = true;
-            try
-            {
-                await this.PushNavPageAsync<BookViewModel>();
-            }
-            catch (Exception)
-            {
-            }
-            finally
-            {
-                this.IsBusy = false;
-            }             
+            /*await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    await this.PushNavPageAsync<BookViewModel>();
+                });   */      
         }
         
         private async void AddToFavouritesAsync()
         {
-            this.IsBusy = true;
-            try
-            {
-                await this._favouritesService.AddFavouriteAsync(this.Establishment);
-                MessagingCenter.Send<Establishment>(this.Establishment, "favouriteAdded");
-            }
-            catch (Exception)
-            {
-            }
-            finally
-            {
-                this.IsBusy = false;
-            }
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    await this._favouritesService.AddFavouriteAsync(this.Establishment);
+                    MessagingCenter.Send<Establishment>(this.Establishment, "favouriteAdded");
+                });
         }
 
         private async void DeleteFavouriteAsync()
         {
-            this.IsBusy = true;
-            try
-            {
-                await this._favouritesService.DeleteFavouriteAsync(this.Establishment);
-                MessagingCenter.Send<Establishment>(this.Establishment, "favouriteDeleted");
-            }
-            catch (Exception)
-            {
-            }
-            finally
-            {
-                this.IsBusy = false;
-            }
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    await this._favouritesService.DeleteFavouriteAsync(this.Establishment);
+                    MessagingCenter.Send<Establishment>(this.Establishment, "favouriteDeleted");
+                });
         }
 
         private void RefreshEstablishment()

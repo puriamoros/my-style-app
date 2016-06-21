@@ -29,6 +29,7 @@ class Favourites extends ModelWithIdBase
 			'id',
 			'name',
 			'address',
+			'phone',
 			'idEstablishmentType',
 			'idOwner',
 			'idProvince'

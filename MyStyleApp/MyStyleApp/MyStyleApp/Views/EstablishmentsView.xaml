@@ -16,7 +16,7 @@
         <ListView.Behaviors>
           <mvvmcorebehaviors:EventToCommandBehavior
             EventName="ItemTapped"
-            Command="{Binding BookCommand}"
+            Command="{Binding ViewDetailsCommand}"
             EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
         </ListView.Behaviors>
         <ListView.ItemTemplate>
@@ -32,6 +32,7 @@
                       "{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}">
                       <Label Text="{Binding Name}" Style="{StaticResource MediumTextStyle}" />
                       <Label Text="{Binding Address}" Style="{StaticResource SmallTextStyle}" />
+                      <Label Text="10.50€" Style="{StaticResource SmallTextStyle}" />
                   </StackLayout>
                   <Image Aspect="AspectFit" Source="Favourite.png"
                     RelativeLayout.XConstraint=

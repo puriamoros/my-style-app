@@ -29,5 +29,18 @@ namespace MyStyleApp.Services.Backend
 
             return list;
         }
+
+        public async Task<Establishment> GetEstablishmentAsync(int id)
+        {
+            string credentials = await this.HttpService.GetApiKeyAuthorizationAsync();
+
+           Establishment establishment = await this.HttpService.InvokeAsync<Establishment>(
+                   HttpMethod.Get,
+                   BackendConstants.GET_ESTABLISHMENT_URL,
+                   credentials,
+                   new object[] { id });
+
+            return establishment;
+        }
     }
 }

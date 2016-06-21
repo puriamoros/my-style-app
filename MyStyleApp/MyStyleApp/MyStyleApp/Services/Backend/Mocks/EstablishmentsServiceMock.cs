@@ -9,6 +9,11 @@ namespace MyStyleApp.Services.Backend.Mocks
 {
     public class EstablishmentsServiceMock : IEstablishmentsService
     {
+        public Task<Establishment> GetEstablishmentAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IList<Establishment>> GetEstablishmentsAsync(
             Province province,
             Service service)

@@ -11,16 +11,18 @@ class Services extends ModelWithIdBase
 {
 	public function __construct()
     {
-        $this->table = 'services';
-		$this->fields = array(
-			'id',
-			'idTranslation',
-			'idServiceCategory',
-			'duration'
-		);
-		$this->idField = $this->fields[0];
+		// Services table data
+		$this->services = Tables::getInstance()->services;
 		
-		$this->idTranslation = $this->fields[1];
+		// Data for base class
+        $this->table = $this->services->table;
+		$this->fields = $this->services->fields;
+		$this->idField = $this->services->id;
+		
+		// Translations table data
+		$this->translations = Tables::getInstance()->translations;
+		
+		// Fields for extra data
 		$this->translationExtraField = 'name';
     }
 	
@@ -41,7 +43,7 @@ class Services extends ModelWithIdBase
 	protected function dbGet($queryParams)
 	{
 		return Translations::getInstance()->getTranslated(
-			$this->table, $this->fields, $this->idField, $this->idTranslation, $this->translationExtraField, $queryParams);
+			$this->services->table, $this->services->fields, $this->services->id, $this->translations->id, $this->translationExtraField, $queryParams);
 	}
 	
 	public function post($queryArray)

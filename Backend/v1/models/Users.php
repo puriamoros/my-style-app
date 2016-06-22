@@ -4,30 +4,20 @@ require_once(__DIR__.'/../data/DBConnection.php');
 require_once(__DIR__.'/../utilities/ApiException.php');
 require_once(__DIR__.'/../data/StatusCodes.php');
 require_once(__DIR__.'/../utilities/Authorization.php');
+require_once(__DIR__.'/../utilities/Tables.php');
 require_once(__DIR__.'/ModelWithIdBase.php');
 
 class Users extends ModelWithIdBase
 {
-	const TABLE_NAME = "users";
-	const ID = "id";
-    const EMAIL = "email";
-    const PASSWORD = "password";
-	const API_KEY = "apiKey";
-	
 	public function __construct()
     {
-        $this->table = self::TABLE_NAME;
-		$this->fields = array(
-			self::ID,
-			"name",
-			"surname",
-			self::EMAIL,
-			self::PASSWORD,
-			self::API_KEY,
-			"userType",
-			"phone"
-		);
-		$this->idField = $this->fields[0];
+		// Users table data
+		$this->users = Tables::getInstance()->users;
+		
+		// Data for base class
+        $this->table = $this->users->table;
+		$this->fields = $this->users->fields;
+		$this->idField = $this->users->id;
     }
 
     public function get($queryArray, $queryParams)
@@ -73,7 +63,7 @@ class Users extends ModelWithIdBase
 		
 		http_response_code(200);
 		return array(
-			self::API_KEY => $apiKey
+			Tables::getInstance()->users->apiKey => $apiKey
 		);
 	}
 	
@@ -81,8 +71,8 @@ class Users extends ModelWithIdBase
 	{
 		$result = parent::getElements($queryParams);
 		for ($i = 0; $i < count($result); $i++) {
-			unset($result[$i][self::PASSWORD]);
-			unset($result[$i][self::API_KEY]);
+			unset($result[$i][Tables::getInstance()->users->password]);
+			unset($result[$i][Tables::getInstance()->users->apiKey]);
 		}
 		return $result;
 	}
@@ -96,8 +86,8 @@ class Users extends ModelWithIdBase
 	{
 		$result = parent::getElement($id);
 		if(!is_null($result)) {
-			unset($result[self::PASSWORD]);
-			unset($result[self::API_KEY]);
+			unset($result[Tables::getInstance()->users->password]);
+			unset($result[Tables::getInstance()->users->apiKey]);
 		}
 		return $result;
 	}
@@ -107,8 +97,8 @@ class Users extends ModelWithIdBase
 		// No authorization needed
 	
 		$data = $this->getBodyData();
-		$data[self::PASSWORD] = $this->encryptPassword($data[self::PASSWORD]);
-		$data[self::API_KEY] = $this->generateApiKey();
+		$data[Tables::getInstance()->users->password] = $this->encryptPassword($data[Tables::getInstance()->users->password]);
+		$data[Tables::getInstance()->users->apiKey] = $this->generateApiKey();
 		//throw new ApiException(STATE_DB_ERROR, $data);
 
 		// TODO: Validate fields
@@ -119,7 +109,7 @@ class Users extends ModelWithIdBase
 		// Print response
 		http_response_code(200);
 		return array(
-			self::API_KEY => $result[self::API_KEY]
+			Tables::getInstance()->users->apiKey => $result[Tables::getInstance()->users->apiKey]
 		);
 	}
 	
@@ -129,15 +119,15 @@ class Users extends ModelWithIdBase
 		Authorization::authorizeApiKey();
 		
 		$data = $this->getBodyData();
-		$data[self::PASSWORD] = $this->encryptPassword($data[self::PASSWORD]);
-		$data[self::API_KEY] = $this->generateApiKey();
+		$data[Tables::getInstance()->users->password] = $this->encryptPassword($data[Tables::getInstance()->users->password]);
+		$data[Tables::getInstance()->users->apiKey] = $this->generateApiKey();
 
 		// TODO: Validate fields
 		
 		// Create user
 		$result = $this->dbCreate($data);
-		unset($result[self::PASSWORD]);
-		unset($result[self::API_KEY]);
+		unset($result[Tables::getInstance()->users->password]);
+		unset($result[Tables::getInstance()->users->apiKey]);
 		
 		// Print response
 		http_response_code(201);
@@ -151,8 +141,8 @@ class Users extends ModelWithIdBase
 		Authorization::authorizeApiKey();
 		
 		$data = $this->getBodyData();
-		$data[self::PASSWORD] = $this->encryptPassword($data[self::PASSWORD]);
-		unset($data[self::API_KEY]);
+		$data[Tables::getInstance()->users->password] = $this->encryptPassword($data[Tables::getInstance()->users->password]);
+		unset($data[Tables::getInstance()->users->apiKey]);
 
 		// TODO: Validate fields
 		
@@ -179,9 +169,9 @@ class Users extends ModelWithIdBase
 	public static function validateApiKey($apiKey)
 	{
 		try {
-			$command = "SELECT " . self::ID .
-				" FROM " . self::TABLE_NAME .
-				" WHERE " . self::API_KEY . "=?";
+			$command = "SELECT " . Tables::getInstance()->users->id .
+				" FROM " . Tables::getInstance()->users->table .
+				" WHERE " . Tables::getInstance()->users->apiKey . "=?";
 
 			$query = DBConnection::getInstance()->getDB()->prepare($command);
 
@@ -189,7 +179,7 @@ class Users extends ModelWithIdBase
 
 			if($query->execute()) {
 					$result = $query->fetch();
-					return $result[self::ID];
+					return $result[Tables::getInstance()->users->id];
 				}
 
 			} catch (PDOException $e) {
@@ -208,9 +198,9 @@ class Users extends ModelWithIdBase
 			$password = $basicArray[1];
 			
 			try {
-				$command = "SELECT " . self::PASSWORD . ", " .self::API_KEY .
-					" FROM " . self::TABLE_NAME .
-					" WHERE " . self::EMAIL . "=?";
+				$command = "SELECT " . Tables::getInstance()->users->password . ", " .Tables::getInstance()->users->apiKey .
+					" FROM " . Tables::getInstance()->users->table .
+					" WHERE " . Tables::getInstance()->users->email . "=?";
 
 				$query = DBConnection::getInstance()->getDB()->prepare($command);
 
@@ -218,8 +208,8 @@ class Users extends ModelWithIdBase
 
 				if($query->execute()) {
 					$result = $query->fetch();
-					if(password_verify($password, $result[self::PASSWORD])) {
-						return $result[self::API_KEY];
+					if(password_verify($password, $result[Tables::getInstance()->users->password])) {
+						return $result[Tables::getInstance()->users->apiKey];
 					}
 				}
 

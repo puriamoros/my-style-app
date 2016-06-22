@@ -10,12 +10,13 @@ class Provinces extends ModelWithIdBase
 {
 	public function __construct()
     {
-        $this->table = 'provinces';
-		$this->fields = array(
-			'id',
-			'name'
-		);
-		$this->idField = $this->fields[0];
+		// Provinces table data
+		$this->provinces = Tables::getInstance()->provinces;
+		
+        // Data for base class
+        $this->table = $this->provinces->table;
+		$this->fields = $this->provinces->fields;
+		$this->idField = $this->provinces->id;
     }
 	
 	public function get($queryArray, $queryParams)

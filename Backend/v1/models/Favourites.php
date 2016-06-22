@@ -4,13 +4,28 @@ require_once(__DIR__.'/../data/DBConnection.php');
 require_once(__DIR__.'/../utilities/ApiException.php');
 require_once(__DIR__.'/../data/StatusCodes.php');
 require_once(__DIR__.'/../utilities/Authorization.php');
+require_once(__DIR__.'/../utilities/Tables.php');
 require_once(__DIR__.'/ModelWithIdBase.php');
 
 class Favourites extends ModelWithIdBase
 {
 	public function __construct()
     {
-        $this->table = 'favourites';
+		// Favourites table data
+		$this->favourites = Tables::getInstance()->favourites;
+		
+		// Data for base class
+        $this->table = $this->favourites->table;
+		$this->fields = $this->favourites->fields;
+		$this->idField = $this->favourites->id;
+		
+		// Establishments table data
+		$this->establishments = Tables::getInstance()->establishments;
+		
+		// Fields for extra data
+		$this->favouritesExtraField = 'idFavourite';
+		
+        /*$this->table = 'favourites';
 		$this->idClient = 'idClient';
 		$this->idEstablishment = 'idEstablishment';
 		$this->fields = array(
@@ -35,13 +50,13 @@ class Favourites extends ModelWithIdBase
 			'idProvince'
 		);
 		$this->establishmentsIdField = $this->establishmentsFields[0];
-		$this->favouritesExtraField = 'idFavourite';
+		$this->favouritesExtraField = 'idFavourite';*/
     }
 	
 	public function get($queryArray, $queryParams)
     {
 		if(count($queryArray) >= 1 && count($queryArray) <= 2) {
-			if(count($queryArray) == 1 && isset($queryParams[$this->idClient])) {
+			if(count($queryArray) == 1 && isset($queryParams[$this->favourites->idClient])) {
 				return $this->getElements($queryParams);
 			}
 			else {
@@ -54,24 +69,24 @@ class Favourites extends ModelWithIdBase
 	
 	protected function dbGet($queryParams)
 	{
-		$mixedFields = $this->establishmentsFields;
+		$mixedFields = $this->establishments->fields;
 		
 		// both tables favourites and establishments have a field called "id", so we need to rename them
-		$establismentsIdFieldRenamed = $this->establishmentsTable . "." . $this->establishmentsIdField;
-		$favouritesIdFieldRenamed = $this->table . "." . $this->idField;
+		$establismentsIdFieldRenamed = $this->establishments->table . "." . $this->establishments->id;
+		$favouritesIdFieldRenamed = $this->favourites->table . "." . $this->favourites->id;
 		
 		$mixedFields[0] = $establismentsIdFieldRenamed;
 		array_push($mixedFields, $favouritesIdFieldRenamed);
 		
 		$result = DBCommands::dbGetJoin(
-			[$this->table, $this->establishmentsTable],
-			[$this->idEstablishment, $this->establishmentsIdField],
+			[$this->favourites->table, $this->establishments->table],
+			[$this->favourites->idEstablishment, $this->establishments->id],
 			['INNER'],
-			$mixedFields, [$this->idClient], $queryParams);
+			$mixedFields, [$this->favourites->idClient], $queryParams);
 		
 		// restore original field names
 		for ($i = 0; $i < count($result); $i++) {
-			$result[$i][$this->establishmentsIdField] = $result[$i][$establismentsIdFieldRenamed];
+			$result[$i][$this->establishments->id] = $result[$i][$establismentsIdFieldRenamed];
 			unset($result[$i][$establismentsIdFieldRenamed]);
 			
 			$result[$i][$this->favouritesExtraField] = $result[$i][$favouritesIdFieldRenamed];

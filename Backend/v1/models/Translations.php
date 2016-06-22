@@ -8,13 +8,13 @@ class Translations
 
 	private function __construct()
     {
-        $this->table = 'translations';
-		$this->fields = array(
-			'id',
-			'en',
-			'es'
-		);
-		$this->idField = $this->fields[0];
+        // Translations table data
+		$this->translations = Tables::getInstance()->translations;
+		
+		// Data for base class
+        $this->table = $this->translations->table;
+		$this->fields = $this->translations->fields;
+		$this->idField = $this->translations->id;
     }
 	
 	public static function getInstance()
@@ -27,11 +27,11 @@ class Translations
 	}
 	
 	public function getTranslation($id, $lang) {
-		if(strcmp(strtolower($lang), $this->idField) == 0 || !in_array($lang, $this->fields)) {
+		if(strcmp(strtolower($lang), $this->translations->id) == 0 || !in_array($lang, $this->translations->fields)) {
 			return '[to_be_translated]';
 		}
 		else {
-			$result = DBCommands::dbGetOne($this->table, $this->fields, $this->idField, $id);
+			$result = DBCommands::dbGetOne($this->translations->table, $this->translations->fields, $this->translations->id, $id);
 			return isset($result[$lang]) ? $result[$lang] : '[to_be_translated]';
 		}
 	}
@@ -41,20 +41,20 @@ class Translations
 		$mixedFields = $fields;
 		
 		$idIndex = array_search($idField, $mixedFields);
-		$sameIdField = $idIndex !== false && strcmp(strtolower($this->idField), strtolower($idField)) == 0;
+		$sameIdField = $idIndex !== false && strcmp(strtolower($this->translations->id), strtolower($idField)) == 0;
 		if($sameIdField) {
 			$mixedFields[$idIndex] = $table . "." . $idField; // table also have a field called "id"
 		}
 		
-		$fieldsButId = array_diff($this->fields, [$this->idField]);
+		$fieldsButId = array_diff($this->translations->fields, [$this->translations->id]);
 		$lang = isset($queryParams['lang']) && in_array($queryParams['lang'], $fieldsButId) ? $queryParams['lang'] : null;
 		if(!is_null($lang)) {
 			array_push($mixedFields, $lang);
 		}
 		
 		$result = DBCommands::dbGetJoin(
-			[$table, $this->table],
-			[$idTranslation, $this->idField],
+			[$table, $this->translations->table],
+			[$idTranslation, $this->translations->id],
 			['INNER'],
 			$mixedFields, $mixedFields, $queryParams);
 		

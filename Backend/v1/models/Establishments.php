@@ -4,41 +4,29 @@ require_once(__DIR__.'/../data/DBConnection.php');
 require_once(__DIR__.'/../utilities/ApiException.php');
 require_once(__DIR__.'/../data/StatusCodes.php');
 require_once(__DIR__.'/../utilities/Authorization.php');
+require_once(__DIR__.'/../utilities/Tables.php');
 require_once(__DIR__.'/ModelWithIdBase.php');
 
 class Establishments extends ModelWithIdBase
 {
 	public function __construct()
     {
-        $this->table = 'establishments';
-		$this->fields = array(
-			'id',
-			'name',
-			'address',
-			'phone',
-			'idEstablishmentType',
-			'idOwner',
-			'idProvince'
-		);
-		$this->idField = $this->fields[0];
+		// Establishments table data
+		$this->establishments = Tables::getInstance()->establishments;
 		
-		// Establishments related tables
-		// -------------------------------------
-		$this->idEstablishment = 'idEstablishment';
-		$this->idService = 'idService';
+		// Data for base class
+        $this->table = $this->establishments->table;
+		$this->fields = $this->establishments->fields;
+		$this->idField = $this->establishments->id;
 		
-		// Services
-		$this->servicesTable = 'offer';
-		$this->servicesFields = array(
-			$this->idEstablishment,
-			$this->idService,
-			'price'
-		);
+		// Offer table data
+		$this->offer = Tables::getInstance()->offer;
+		
+		// Favourites table data
+		$this->favourites = Tables::getInstance()->favourites;
+		
+		// Fields for extra data
 		$this->servicesExtraField = 'services';
-		
-		// Favourites
-		$this->favouritesTable = 'favourites';
-		$this->favouritesIdField = 'id';
 		$this->favouritesExtraField = 'idFavourite';
 		
 		// Staff
@@ -69,33 +57,42 @@ class Establishments extends ModelWithIdBase
 	
 	protected function dbGet($queryParams)
 	{
-		if(isset($queryParams[$this->idService])) {
+		if(isset($queryParams[$this->offer->idService])) {
 			// Request is looking for establishments offering a specific service => join with table offer
 			// We also need to know if the establishment is a favourite => join with table favourites
 			
 			// both tables favourites and establishments have a field called "id", so we need to rename them
-			$establismentsIdFieldRenamed = $this->table . '.' . $this->idField;
-			$favouritesIdFieldRenamed = $this->favouritesTable . '.' . $this->favouritesIdField;
+			$establismentsIdFieldRenamed = $this->establishments->table . '.' . $this->establishments->id;
+			$favouritesIdFieldRenamed = $this->favourites->table . '.' . $this->favourites->id;
 			
-			$mixedFields = $this->fields;
+			$mixedFields = $this->establishments->fields;
 			$mixedFields[0] = $establismentsIdFieldRenamed;
 			array_push($mixedFields, $favouritesIdFieldRenamed);
+			array_push($mixedFields, $this->offer->price);
 			$searchFields = $mixedFields;
-			array_push($searchFields, $this->idService);
+			array_push($searchFields, $this->offer->idService);
 			$result = DBCommands::dbGetJoin(
-				[$this->table, $this->servicesTable, $this->favouritesTable],
-				[$this->idField, $this->idEstablishment, $this->idEstablishment],
+				[$this->establishments->table, $this->offer->table, $this->favourites->table],
+				[$this->establishments->id, $this->offer->idEstablishment, $this->favourites->idEstablishment],
 				['INNER', 'LEFT'],
 				$mixedFields, $searchFields, $queryParams);
 				
 			// restore original field names
 			for ($i = 0; $i < count($result); $i++) {
-				$result[$i][$this->idField] = $result[$i][$establismentsIdFieldRenamed];
+				$result[$i][$this->establishments->id] = $result[$i][$establismentsIdFieldRenamed];
 				unset($result[$i][$establismentsIdFieldRenamed]);
 				
 				// idFavourite can be null => set it to 0 if it is null
 				$result[$i][$this->favouritesExtraField] = is_null($result[$i][$favouritesIdFieldRenamed]) ? '0' : $result[$i][$favouritesIdFieldRenamed];
 				unset($result[$i][$favouritesIdFieldRenamed]);
+				
+				// move idService and price to services
+				$service = array(
+					$this->offer->idService => $queryParams[$this->offer->idService],
+					$this->offer->price => $result[$i][$this->offer->price]
+				);
+				unset($result[$i][$this->offer->price]);
+				$result[$i][$this->servicesExtraField] = [$service];
 			}
 			
 			return $result;
@@ -113,7 +110,7 @@ class Establishments extends ModelWithIdBase
 		// Add services to $result
 		if(!is_null($result)) {
 			$queryParams = array(
-				$this->idEstablishment => $id
+				$this->offer->idEstablishment => $id
 			);
 			$services = $this->dbGetServices($queryParams);
 			
@@ -128,21 +125,21 @@ class Establishments extends ModelWithIdBase
 		// We also need to know if the establishment is a favourite => join with table favourites
 			
 		// both tables favourites and establishments have a field called "id", so we need to rename them
-		$establismentsIdFieldRenamed = $this->table . '.' . $this->idField;
-		$favouritesIdFieldRenamed = $this->favouritesTable . '.' . $this->favouritesIdField;
+		$establismentsIdFieldRenamed = $this->establishments->table . '.' . $this->establishments->id;
+		$favouritesIdFieldRenamed = $this->favourites->table . '.' . $this->favourites->id;
 		
-		$mixedFields = $this->fields;
+		$mixedFields = $this->establishments->fields;
 		$mixedFields[0] = $establismentsIdFieldRenamed;
 		array_push($mixedFields, $favouritesIdFieldRenamed);
 		
 		$result = DBCommands::dbGetOneJoin(
-			[$this->table, $this->favouritesTable],
-			[$this->idField, $this->idEstablishment],
+			[$this->establishments->table, $this->favourites->table],
+			[$this->establishments->id, $this->favourites->id],
 			['LEFT'],
 			$mixedFields, $establismentsIdFieldRenamed, $id);
 			
 		// restore original field names
-		$result[$this->idField] = $result[$establismentsIdFieldRenamed];
+		$result[$this->establishments->id] = $result[$establismentsIdFieldRenamed];
 		unset($result[$establismentsIdFieldRenamed]);
 		// idFavourite can be null => set it to 0 if it is null
 		$result[$this->favouritesExtraField] = is_null($result[$favouritesIdFieldRenamed]) ? '0' : $result[$favouritesIdFieldRenamed];
@@ -158,7 +155,7 @@ class Establishments extends ModelWithIdBase
 		// Create services
 		$data = $this->getBodyData();
 		$services = $data[$this->servicesExtraField];
-		$id = $result[$this->idField];
+		$id = $result[$this->establishments->id];
 		$this->dbCreateServices($id, $services);
 		
 		return $result;
@@ -188,20 +185,20 @@ class Establishments extends ModelWithIdBase
 	
 	private function dbGetServices($queryParams)
 	{
-		$servicesFieldsButId = array_diff($this->servicesFields, [$this->idEstablishment]);
+		$servicesFieldsButId = array_diff($this->offer->fields, [$this->offer->idEstablishment]);
 		$searchFields = array(
-			$this->idEstablishment
+			$this->offer->idEstablishment
 		);
 		
-		return DBCommands::dbGet($this->servicesTable, $servicesFieldsButId, $searchFields, $queryParams);
+		return DBCommands::dbGet($this->offer->table, $servicesFieldsButId, $searchFields, $queryParams);
 	}
 	
 	private function dbCreateServices($idEstablishment, $services)
 	{
 		foreach($services as $service) {
 			$data = $service;
-			$data[$this->idEstablishment] = $idEstablishment;
-			DBCommands::dbCreateNoId($this->servicesTable, $this->servicesFields, $data);
+			$data[$this->offer->idEstablishment] = $idEstablishment;
+			DBCommands::dbCreateNoId($this->offer->table, $this->offer->fields, $data);
 		}
 	}
 	
@@ -213,25 +210,25 @@ class Establishments extends ModelWithIdBase
 	
 	private function dbDeleteServices($idEstablishment)
 	{
-		DBCommands::dbDelete($this->servicesTable, $this->idEstablishment, $idEstablishment);
+		DBCommands::dbDelete($this->offer->table, $this->offer->idEstablishment, $idEstablishment);
 	}
 	
-	private function dbGetEmployees($queryParams)
+	/*private function dbGetEmployees($queryParams)
 	{
-		$servicesFieldsButId = array_diff($this->servicesFields, [$this->idEstablishment]);
+		$servicesFieldsButId = array_diff($this->offer->fields, [$this->offer->idEstablishment]);
 		$searchFields = array(
-			$this->idEstablishment
+			$this->offer->idEstablishment
 		);
 		
-		return DBCommands::dbGet($this->servicesTable, $servicesFieldsButId, $searchFields, $queryParams);
+		return DBCommands::dbGet($this->offer->table, $servicesFieldsButId, $searchFields, $queryParams);
 	}
 	
 	private function dbCreateEmployee($idEstablishment, $services)
 	{
 		foreach($services as $service) {
 			$data = $service;
-			$data[$this->idEstablishment] = $idEstablishment;
-			DBCommands::dbCreateNoId($this->servicesTable, $this->servicesFields, $data);
+			$data[$this->offer->idEstablishment] = $idEstablishment;
+			DBCommands::dbCreateNoId($this->offer->table, $this->offer->fields, $data);
 		}
 	}
 	
@@ -243,6 +240,6 @@ class Establishments extends ModelWithIdBase
 	
 	private function dbDeleteEmployee($idEstablishment, $idUser)
 	{
-		DBCommands::dbDelete($this->staffTable, $this->idEstablishment, $idEstablishment);
-	}
+		DBCommands::dbDelete($this->staffTable, $this->offer->idEstablishment, $idEstablishment);
+	}*/
 }

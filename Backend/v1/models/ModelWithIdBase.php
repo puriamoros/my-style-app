@@ -62,27 +62,27 @@ abstract class ModelWithIdBase
 		return Authorization::authorizeApiKey();
 	}
 	
-	protected function authorizeGetElements()
+	protected function authorizeGetElements($queryParams)
 	{
 		return $this->authorizeDefault();
 	}
 	
-	protected function authorizeGetElement()
+	protected function authorizeGetElement($id)
 	{
 		return $this->authorizeDefault();
 	}
 	
-	protected function authorizeCreateElement()
+	protected function authorizeCreateElement($data)
 	{
 		return $this->authorizeDefault();
 	}
 	
-	protected function authorizeUpdateElement()
+	protected function authorizeUpdateElement($id, $data)
 	{
 		return $this->authorizeDefault();
 	}
 	
-	protected function authorizeDeleteElement()
+	protected function authorizeDeleteElement($id)
 	{
 		return $this->authorizeDefault();
 	}
@@ -90,7 +90,7 @@ abstract class ModelWithIdBase
 	protected function getElements($queryParams)
 	{
 		// Check authorization
-		$this->authorizeGetElements();
+		$this->authorizeGetElements($queryParams);
 
 		// TODO: Validate fields
 		
@@ -106,7 +106,7 @@ abstract class ModelWithIdBase
 	protected function getElement($id)
 	{
 		// Check authorization
-		$idUser = $this->authorizeGetElement()[Tables::getInstance()->users->id];
+		$idUser = $this->authorizeGetElement($id)[Tables::getInstance()->users->id];
 		
 		// This is to allow users/me using this function without passing the user id
 		if(is_null($id)) {
@@ -125,10 +125,10 @@ abstract class ModelWithIdBase
 	
 	protected function createElement()
 	{
-		// Check authorization
-		$this->authorizeCreateElement();
-		
 		$data = $this->getBodyData();
+		
+		// Check authorization
+		$this->authorizeCreateElement($data);
 
 		// TODO: Validate fields
 		
@@ -142,10 +142,10 @@ abstract class ModelWithIdBase
 	
 	protected function updateElement($id)
 	{
-		// Check authorization
-		$this->authorizeUpdateElement();
-		
 		$data = $this->getBodyData();
+		
+		// Check authorization
+		$this->authorizeUpdateElement($id, $data);
 
 		// TODO: Validate fields
 		
@@ -160,7 +160,7 @@ abstract class ModelWithIdBase
 	protected function deleteElement($id)
 	{
 		// Check authorization
-		$this->authorizeDeleteElement();
+		$this->authorizeDeleteElement($id);
 
 		// TODO: Validate fields
 		

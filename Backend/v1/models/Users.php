@@ -25,7 +25,7 @@ class Users extends ModelWithIdBase
 				return $this->login();
 			} else if ($queryArray[0] == 'users') {
 				if(count($queryArray) == 1) {
-					return $this->getElements($queryParams);
+					//return $this->getElements($queryParams);
 				}
 				else {
 					if($queryArray[1] == "me") {
@@ -41,16 +41,30 @@ class Users extends ModelWithIdBase
 		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
     }
 	
+	protected function authorizeGetElement($id)
+	{
+		$user = $this->authorizeDefault();
+		
+		if($user[$this->users->id] !== $id) {
+			throw new ApiException(STATE_NOT_AUTHORIZED, "Not authorized", 401);
+		}
+	}
+	
 	public function post($queryArray)
     {
 		if(count($queryArray) == 1) {
 			if ($queryArray[0] == 'register') {
 				return $this->register();
 			} else {
-				return $this->createElement($queryArray);
+				//return $this->createElement($queryArray);
 			}
 		}
 		
+		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
+    }
+	
+	public function delete($queryArray)
+    {
 		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
     }
 	

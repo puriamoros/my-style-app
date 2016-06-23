@@ -6,6 +6,19 @@ require_once(__DIR__.'/Tables.php');
 
 class Authorization
 {
+	private static function getTokenValueFromHeader($header, $token) {
+		$headers = apache_request_headers();
+
+		if (isset($headers[$header])) {
+
+			$headerValue = $headers[$header];
+			if(strtolower(substr($headerValue, 0, strlen($token))) === strtolower($token)) {
+				return trim(substr($headerValue, strlen($token)));
+			}
+		}
+		
+		return null;
+	}
 
     public static function authorizeBasic()
     {
@@ -37,17 +50,14 @@ class Authorization
 		throw new ApiException(STATE_NOT_AUTHORIZED, "Not authorized", 401);
     }
 	
-	private static function getTokenValueFromHeader($header, $token) {
-		$headers = apache_request_headers();
-
-		if (isset($headers[$header])) {
-
-			$headerValue = $headers[$header];
-			if(strtolower(substr($headerValue, 0, strlen($token))) === strtolower($token)) {
-				return trim(substr($headerValue, strlen($token)));
-			}
+	public static function authorizeApiKeySameUser($id)
+    {
+		$auth = $this->authorizeApiKey();
+		
+		if($auth[$this->users->id] === $id) {
+			return $auth;
 		}
 		
-		return null;
-	}
+		throw new ApiException(STATE_NOT_AUTHORIZED, "Not authorized", 401);
+    }
 }

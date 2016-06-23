@@ -10,11 +10,6 @@ class Translations
     {
         // Translations table data
 		$this->translations = Tables::getInstance()->translations;
-		
-		// Data for base class
-        $this->table = $this->translations->table;
-		$this->fields = $this->translations->fields;
-		$this->idField = $this->translations->id;
     }
 	
 	public static function getInstance()

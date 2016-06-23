@@ -14,10 +14,8 @@ class Users extends ModelWithIdBase
 		// Users table data
 		$this->users = Tables::getInstance()->users;
 		
-		// Data for base class
-        $this->table = $this->users->table;
-		$this->fields = $this->users->fields;
-		$this->idField = $this->users->id;
+		// Call parent ctor
+		parent::__construct($this->users->table, $this->users->fields, $this->users->id);
     }
 
     public function get($queryArray, $queryParams)

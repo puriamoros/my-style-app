@@ -14,10 +14,8 @@ class Establishments extends ModelWithIdBase
 		// Establishments table data
 		$this->establishments = Tables::getInstance()->establishments;
 		
-		// Data for base class
-        $this->table = $this->establishments->table;
-		$this->fields = $this->establishments->fields;
-		$this->idField = $this->establishments->id;
+		// Call parent ctor
+		parent::__construct($this->establishments->table, $this->establishments->fields, $this->establishments->id);
 		
 		// Offer table data
 		$this->offer = Tables::getInstance()->offer;

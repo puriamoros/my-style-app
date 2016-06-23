@@ -7,9 +7,12 @@ require_once(__DIR__.'/../utilities/DBCommands.php');
 
 abstract class ModelWithIdBase
 {
-	protected $table;
-    protected $fields;
-	protected $idField;
+	public function __construct($table, $fields, $idField)
+	{
+		$this->table = $table;
+		$this->fields = $fields;
+		$this->idField = $idField;
+	}
 
     public function get($queryArray, $queryParams)
     {

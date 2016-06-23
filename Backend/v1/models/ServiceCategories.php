@@ -14,10 +14,8 @@ class ServiceCategories extends ModelWithIdBase
 		// ServiceCategories table data
 		$this->serviceCategories = Tables::getInstance()->service_categories;
 		
-		// Data for base class
-        $this->table = $this->serviceCategories->table;
-		$this->fields = $this->serviceCategories->fields;
-		$this->idField = $this->serviceCategories->id;
+		// Call parent ctor
+		parent::__construct($this->serviceCategories->table, $this->serviceCategories->fields, $this->serviceCategories->id);
 		
 		// Translations table data
 		$this->translations = Tables::getInstance()->translations;

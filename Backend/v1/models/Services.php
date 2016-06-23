@@ -14,10 +14,8 @@ class Services extends ModelWithIdBase
 		// Services table data
 		$this->services = Tables::getInstance()->services;
 		
-		// Data for base class
-        $this->table = $this->services->table;
-		$this->fields = $this->services->fields;
-		$this->idField = $this->services->id;
+		// Call parent ctor
+		parent::__construct($this->services->table, $this->services->fields, $this->services->id);
 		
 		// Translations table data
 		$this->translations = Tables::getInstance()->translations;

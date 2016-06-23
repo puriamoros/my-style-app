@@ -14,9 +14,7 @@ class Appointments extends ModelWithIdBase
 		// Appointments table data
 		$this->appointments = Tables::getInstance()->appointments;
 		
-		// Data for base class
-        $this->table = $this->appointments->table;
-		$this->fields = $this->appointments->fields;
-		$this->idField = $this->appointments->id;
+		// Call parent ctor
+		parent::__construct($this->appointments->table, $this->appointments->fields, $this->appointments->id);
     }
 }

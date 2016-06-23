@@ -14,10 +14,8 @@ class Favourites extends ModelWithIdBase
 		// Favourites table data
 		$this->favourites = Tables::getInstance()->favourites;
 		
-		// Data for base class
-        $this->table = $this->favourites->table;
-		$this->fields = $this->favourites->fields;
-		$this->idField = $this->favourites->id;
+		// Call parent ctor
+		parent::__construct($this->favourites->table, $this->favourites->fields, $this->favourites->id);
 		
 		// Establishments table data
 		$this->establishments = Tables::getInstance()->establishments;

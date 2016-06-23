@@ -22,13 +22,13 @@ namespace MyStyleApp.ViewModels
 
         private Establishment _establishment;
         
-        private ObservableCollection<Service> _serviceList;
-        private Service _selectedService;
+        private ObservableCollection<ServiceNameAndPrice> _serviceList;
+        private ServiceNameAndPrice _selectedService;
         
         private ObservableCollection<ServiceCategory> _serviceCategoryList;
         private ServiceCategory _selectedServiceCategory;
 
-        private List<Service> _establishmentServicesList;
+        private List<ServiceNameAndPrice> _establishmentServicesList;
 
         private bool _initializing;
 
@@ -93,7 +93,7 @@ namespace MyStyleApp.ViewModels
                     var allServiceCategoriesList = await this._serviceCategoriesService.GetServiceCategoriesAsync();
 
                     // Get a list with all the services offered by the establishment
-                    this._establishmentServicesList = new List<Service>();
+                    this._establishmentServicesList = new List<ServiceNameAndPrice>();
                     foreach (ShortenService item in this.Establishment.ShortenServices)
                     {
                         var result = from service in allServicesList
@@ -102,13 +102,19 @@ namespace MyStyleApp.ViewModels
 
                         if(result.Count() > 0)
                         {
-                            this._establishmentServicesList.Add(result.ElementAt(0));
+                            ServiceNameAndPrice snp = new ServiceNameAndPrice();
+                            snp.Id = result.ElementAt(0).Id;
+                            snp.Name = result.ElementAt(0).Name;
+                            snp.IdServiceCategory = result.ElementAt(0).IdServiceCategory;
+                            snp.Price = item.Price;
+                             
+                            this._establishmentServicesList.Add(snp);
                         }
                     }
 
                     // Get a list with all the service categories of the services offered by the establishment
                     List<ServiceCategory> establishmentServiceCategoriesList = new List<ServiceCategory>();
-                    foreach (Service item in this._establishmentServicesList)
+                    foreach (ServiceNameAndPrice item in this._establishmentServicesList)
                     {
                         var result = from serviceCategory in allServiceCategoriesList
                                      where serviceCategory.Id == item.IdServiceCategory
@@ -196,7 +202,7 @@ namespace MyStyleApp.ViewModels
                                where item.IdServiceCategory == selectedServiceCategory.Id
                                select item;
 
-                this.ServiceList = new ObservableCollection<Service>(selected);
+                this.ServiceList = new ObservableCollection<ServiceNameAndPrice>(selected);
             }
             else
             {
@@ -204,13 +210,13 @@ namespace MyStyleApp.ViewModels
             }
         }
 
-        public ObservableCollection<Service> ServiceList
+        public ObservableCollection<ServiceNameAndPrice> ServiceList
         {
             get { return _serviceList; }
             set { SetProperty(ref _serviceList, value); }
         }
 
-        public Service SelectedService
+        public ServiceNameAndPrice SelectedService
         {
             get { return _selectedService; }
             set
@@ -231,11 +237,11 @@ namespace MyStyleApp.ViewModels
 
         private async void BookAsync()
         {
-            /*await this.ExecuteBlockingUIAsync(
+            await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
                     await this.PushNavPageAsync<BookViewModel>();
-                });   */      
+                });     
         }
         
         private async void AddToFavouritesAsync()

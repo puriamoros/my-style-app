@@ -256,7 +256,7 @@
     <value>A confirmation email will be send you</value>
   </data>
   <data name="establishment_details" xml:space="preserve">
-    <value>Establishment details</value>
+    <value>Details</value>
   </data>
   <data name="name" xml:space="preserve">
     <value>Name</value>
@@ -281,5 +281,8 @@
   </data>
   <data name="surname_placeholder" xml:space="preserve">
     <value>Enter your surname</value>
+  </data>
+  <data name="results" xml:space="preserve">
+    <value>Results</value>
   </data>
 </root>

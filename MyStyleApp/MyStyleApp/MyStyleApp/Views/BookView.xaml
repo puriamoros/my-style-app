@@ -8,9 +8,14 @@
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[book]}">
   <Grid>
-    <StackLayout>
-
-      <StackLayout Padding="0,10,0,0">
+    <StackLayout Padding="{StaticResource PageContentPadding}">
+      <Label
+            Text="{Binding LocalizedStrings[book]}"
+            Style="{StaticResource LargeTextStyle}"
+            HorizontalOptions="Center"
+            IsVisible="{Binding Converter={StaticResource PlatformToBoolNegatedConverter}, ConverterParameter=iOS}"/>
+      
+      <StackLayout VerticalOptions="EndAndExpand" Padding="0,10,0,0">
         <controls:CustomButton
           Text="{Binding LocalizedStrings[book]}"
           Command="{Binding BookCommand}"/>

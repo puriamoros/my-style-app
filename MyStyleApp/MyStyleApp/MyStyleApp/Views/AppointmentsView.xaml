@@ -9,12 +9,7 @@
              Title="{Binding LocalizedStrings[appointments]}" Icon="Calendar.png">
   
     <Grid>
-      <!--<StackLayout Padding="{StaticResource PageContentPadding}" >
-        <controls:CustomButton
-            Text="{Binding LocalizedStrings[logout]}"
-            Command="{Binding NewAccountCommand}" />
-      </StackLayout>-->
-      <Grid Padding="{StaticResource PageContentPadding}">
+      <StackLayout Padding="{StaticResource PageContentPadding}">
         <!-- Without HasUnevenRows="True", list items does not render well in Android -->
         <ListView>
           <ListView.Behaviors>
@@ -36,7 +31,7 @@
             </DataTemplate>
           </ListView.ItemTemplate>
         </ListView>
-      </Grid>
+      </StackLayout>
       <controls:WaitingOverlayControl
         IsVisible="{Binding IsBusy}"
         Text="{Binding LocalizedStrings[waiting]}"/>

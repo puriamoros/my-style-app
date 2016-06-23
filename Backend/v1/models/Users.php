@@ -72,7 +72,7 @@ class Users extends ModelWithIdBase
 	{
 		// Check authorization
 		$apiKey = Authorization::authorizeBasic()[$this->users->apiKey];
-		
+
 		http_response_code(200);
 		return array(
 			$this->users->apiKey => $apiKey
@@ -91,7 +91,10 @@ class Users extends ModelWithIdBase
 	
 	private function getMe()
 	{
-		return $this->getElement(null);
+		// Get id from apiKey
+		$id = Authorization::authorizeApiKey()[$this->users->id];
+
+		return $this->getElement($id);
 	}
 	
 	protected function getElement($id)

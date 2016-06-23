@@ -7,70 +7,62 @@
              xmlns:fe="clr-namespace:FreshEssentials;assembly=FreshEssentials"
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[establishment_details]}">
-  <Grid>
-    <StackLayout Padding="{StaticResource PageContentPadding}">
-      <Label Text="{Binding Establishment.Name}" Style="{StaticResource MediumTextStyle}"/>
-      <Label Text="{Binding Establishment.Address}" Style="{StaticResource MediumTextStyle}"/>
-      <Label Text="{Binding Establishment.Phone}" Style="{StaticResource MediumTextStyle}"/>
+  <ScrollView>
+    <Grid>
+        <StackLayout Padding="{StaticResource PageContentPadding}">
+          <Label
+            Text="{Binding LocalizedStrings[establishment_details]}"
+            Style="{StaticResource LargeTextStyle}"
+            HorizontalOptions="Center"
+            IsVisible="{Binding Converter={StaticResource PlatformToBoolNegatedConverter}, ConverterParameter=iOS}"/>
 
-      <StackLayout Padding="0,0,0,10" Spacing="0">
-        <Label
-          Text="{Binding LocalizedStrings[service_category]}"
-          Style="{StaticResource MediumTextStyle}"/>
-        <fe:BindablePicker
-          ItemsSource="{Binding ServiceCategoryList, Mode=TwoWay}"
-          DisplayProperty="Name"
-          SelectedItem="{Binding SelectedServiceCategory}"
-          Title="{Binding ChooseItemPlaceholder}"/>
-      </StackLayout>
-      
-      <StackLayout Padding="0,0,0,10" Spacing="0">
-        <Label
-          Text="{Binding LocalizedStrings[service]}"
-          Style="{StaticResource MediumTextStyle}"/>
-        <fe:BindablePicker
-          ItemsSource="{Binding ServiceList, Mode=TwoWay}"
-          DisplayProperty="Name"
-          SelectedItem="{Binding SelectedService}"
-          Title="{Binding ChooseItemPlaceholder}"/>
-      </StackLayout>
+          <StackLayout Padding="0,0,0,10" Spacing="0">
+            <Label Text="{Binding Establishment.Name}" Style="{StaticResource LargeTextStyle}"/>
+            <Label Text="{Binding Establishment.Address}" Style="{StaticResource SmallTextStyle}"/>
+            <Label Text="{Binding Establishment.Phone}" Style="{StaticResource SmallTextStyle}"/>
+          </StackLayout>
 
-      <!--<ListView
-        ItemsSource="{Binding ServicesList}"
-        HasUnevenRows="True"
-        x:Name="ServicesList">
-         
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <ViewCell>
-              <StackLayout Orientation="Horizontal" Spacing="2" Padding="0,5,0,5">
-                <Label Text="{Binding Name}" Style="{StaticResource MediumTextStyle}" />
-                <Label Text="{Binding Price}" Style="{StaticResource MediumTextStyle}" />
-              </StackLayout>
-            </ViewCell>
-          </DataTemplate>
-        </ListView.ItemTemplate>
-      </ListView>-->
+          <StackLayout Padding="0,0,0,10" Spacing="0">
+            <Label
+              Text="{Binding LocalizedStrings[service_category]}"
+              Style="{StaticResource MediumTextStyle}"/>
+            <fe:BindablePicker
+              ItemsSource="{Binding ServiceCategoryList, Mode=TwoWay}"
+              DisplayProperty="Name"
+              SelectedItem="{Binding SelectedServiceCategory}"
+              Title="{Binding ChooseItemPlaceholder}"/>
+          </StackLayout>
       
-      <StackLayout Padding="0,10,0,0">
-        <controls:CustomButton
-          Text="{Binding LocalizedStrings[book]}"
-          Command="{Binding BookCommand}"/>
-        <controls:CustomButton
-          Text="{Binding LocalizedStrings[add_to_favourites]}"
-          Command="{Binding AddToFavouritesCommand}"
-          IsVisible="{Binding Establishment.IdFavourite, Converter={StaticResource IntToBoolConverter}, ConverterParameter=True}"/>
-        <controls:CustomButton
-          Text="{Binding LocalizedStrings[delete_favourite]}"
-          Command="{Binding DeleteFavouriteCommand}"
-          IsVisible="{Binding Establishment.IdFavourite, Converter={StaticResource IntToBoolConverter}}"/>
-      </StackLayout>
-    </StackLayout>
- 
-    <controls:WaitingOverlayControl
-      IsVisible="{Binding IsBusy}"
-      Text="{Binding LocalizedStrings[waiting]}"/>
-  </Grid>
- 
+          <StackLayout Padding="0,0,0,10" Spacing="0">
+            <Label
+              Text="{Binding LocalizedStrings[service]}"
+              Style="{StaticResource MediumTextStyle}"/>
+            <fe:BindablePicker
+              ItemsSource="{Binding ServiceList, Mode=TwoWay}"
+              DisplayProperty="NameAndPrice"
+              SelectedItem="{Binding SelectedService}"
+              Title="{Binding ChooseItemPlaceholder}"/>
+          </StackLayout>
+              
+          <StackLayout VerticalOptions="EndAndExpand" Padding="0,10,0,0">
+            <controls:CustomButton
+              Text="{Binding LocalizedStrings[book]}"
+              Command="{Binding BookCommand}"/>
+            <controls:CustomButton
+              Text="{Binding LocalizedStrings[add_to_favourites]}"
+              Command="{Binding AddToFavouritesCommand}"
+              IsVisible="{Binding Establishment.IdFavourite, Converter={StaticResource IntToBoolConverter}, ConverterParameter=True}"/>
+            <controls:CustomButton
+              Text="{Binding LocalizedStrings[delete_favourite]}"
+              Command="{Binding DeleteFavouriteCommand}"
+              IsVisible="{Binding Establishment.IdFavourite, Converter={StaticResource IntToBoolConverter}}"/>
+          </StackLayout>
+        </StackLayout>
+      
+      <controls:WaitingOverlayControl
+        IsVisible="{Binding IsBusy}"
+        Text="{Binding LocalizedStrings[waiting]}"/>
+    </Grid>
+  </ScrollView>
 </views:CustomContentPage>
 

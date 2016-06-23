@@ -41,8 +41,11 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Constants\BackendConstants.cs" />
     <Compile Include="Constants\RegexConstants.cs" />
+    <Compile Include="Converters\FloatToPriceConverter.cs" />
     <Compile Include="Converters\IntToBoolConverter.cs" />
     <Compile Include="Converters\ItemTappedEventArgsConverter.cs" />
+    <Compile Include="Converters\PlatformToBoolConverter.cs" />
+    <Compile Include="Converters\PlatformToBoolNegatedConverter.cs" />
     <Compile Include="Converters\StringToBoolConverter.cs" />
     <Compile Include="Enums\EstablishmentTypeEnum.cs" />
     <Compile Include="Enums\ProvinceEnum.cs" />
@@ -56,6 +59,7 @@
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\EstablishmentType.cs" />
     <Compile Include="Models\ServiceCategory.cs" />
+    <Compile Include="Models\ServiceNameAndPrice.cs" />
     <Compile Include="Models\ShortenService.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="MvvmCore\Behaviors\BindableBehavior.cs" />

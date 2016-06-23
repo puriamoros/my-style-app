@@ -35,10 +35,13 @@ class Translations
 	{
 		$mixedFields = $fields;
 		
+		$idFieldRenamed = null;
 		$idIndex = array_search($idField, $mixedFields);
 		$sameIdField = $idIndex !== false && strcmp(strtolower($this->translations->id), strtolower($idField)) == 0;
 		if($sameIdField) {
-			$mixedFields[$idIndex] = $table . "." . $idField; // table also have a field called "id"
+			// table also have a field called "id"
+			$idFieldRenamed = $table . "." . $idField;
+			$mixedFields[$idIndex] = $idFieldRenamed;
 		}
 		
 		$fieldsButId = array_diff($this->translations->fields, [$this->translations->id]);
@@ -55,8 +58,9 @@ class Translations
 		
 		for ($i = 0; $i < count($result); $i++) {
 			if($sameIdField) {
-				$result[$i][$idField] = $result[$i][$mixedFields[$idIndex]]; // restore original field name
-				unset($result[$i][$mixedFields[$idIndex]]);
+				// restore original field name
+				$result[$i][$idField] = $result[$i][$idFieldRenamed];
+				unset($result[$i][$idFieldRenamed]);
 			}
 			unset($result[$i][$idTranslation]);
 			

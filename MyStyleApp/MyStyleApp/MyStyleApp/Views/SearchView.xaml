@@ -9,7 +9,13 @@
              Title="{Binding LocalizedStrings[search]}" Icon="Search.png">
   <ScrollView>
     <Grid>
-      <StackLayout>
+      <StackLayout Padding="{StaticResource PageContentPadding}">
+        <Label
+            Text="{Binding LocalizedStrings[search]}"
+            Style="{StaticResource LargeTextStyle}"
+            HorizontalOptions="Center"
+            IsVisible="{Binding Converter={StaticResource PlatformToBoolNegatedConverter}, ConverterParameter=iOS}"/>
+        
         <StackLayout Padding="0,0,0,10" Spacing="0">
           <Label 
             Text="{Binding LocalizedStrings[province]}"
@@ -50,7 +56,7 @@
             SelectedItem="{Binding SelectedService}"
             Title="{Binding ChooseItemPlaceholder}"/>
         </StackLayout>
-        <StackLayout Padding="0,10,0,0">
+        <StackLayout VerticalOptions="EndAndExpand" Padding="0,10,0,0">
           <controls:CustomButton
             Text="{Binding LocalizedStrings[search]}"
             Command="{Binding SearchCommand}"/>

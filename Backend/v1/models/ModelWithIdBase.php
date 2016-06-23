@@ -107,11 +107,6 @@ abstract class ModelWithIdBase
 	{
 		// Check authorization
 		$idUser = $this->authorizeGetElement($id)[Tables::getInstance()->users->id];
-		
-		// This is to allow users/me using this function without passing the user id
-		if(is_null($id)) {
-			$id = $idUser;
-		}
 
 		// TODO: Validate fields
 		

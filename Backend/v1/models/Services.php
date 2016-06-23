@@ -41,7 +41,7 @@ class Services extends ModelWithIdBase
 	protected function dbGet($queryParams)
 	{
 		return Translations::getInstance()->getTranslated(
-			$this->services->table, $this->services->fields, $this->services->id, $this->translations->id, $this->translationExtraField, $queryParams);
+			$this->services->table, $this->services->fields, $this->services->id, $this->services->idTranslation, $this->translationExtraField, $queryParams);
 	}
 	
 	public function post($queryArray)

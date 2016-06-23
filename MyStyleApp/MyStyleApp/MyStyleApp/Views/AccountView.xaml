@@ -66,7 +66,7 @@
             Text="{Binding Password}" />
         </StackLayout>
 
-        <StackLayout Padding="0,10,0,0">
+        <StackLayout VerticalOptions="EndAndExpand" Padding="0,10,0,0">
           <controls:CustomButton
             Text="{Binding LocalizedStrings[create_account]}"
             Command="{Binding CreateAccountCommand}"/>

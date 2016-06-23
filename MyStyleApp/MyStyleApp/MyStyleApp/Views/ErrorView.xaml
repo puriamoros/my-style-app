@@ -6,17 +6,20 @@
              xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[error]}">
-
-  <StackLayout Spacing="15" Padding="{StaticResource PageContentPadding}">
-    <Label
-          Text="{Binding LocalizedStrings[error]}"
-          Style="{StaticResource LargeTextStyle2}" />
-    <Label
-      Text="{Binding ErrorText}"
-      IsVisible="{Binding ErrorText, Converter={StaticResource StringToBoolConverter}}"
-      Style="{StaticResource MediumTextStyle}" />
-    <controls:CustomButton
-      Text="{Binding LocalizedStrings[ok]}"
-      Command="{Binding CloseCommand}" />
-  </StackLayout>
+  <ScrollView>
+    <StackLayout Spacing="25" Padding="{StaticResource PageContentPadding}">
+      <Label
+              Text="{Binding LocalizedStrings[error]}"
+              Style="{StaticResource LargeTextStyle}"
+              HorizontalOptions="Center"
+              IsVisible="{Binding Converter={StaticResource PlatformToBoolNegatedConverter}, ConverterParameter=iOS}"/>
+      <Label
+        Text="{Binding ErrorText}"
+        IsVisible="{Binding ErrorText, Converter={StaticResource StringToBoolConverter}}"
+        Style="{StaticResource MediumTextStyle}" />
+      <controls:CustomButton
+        Text="{Binding LocalizedStrings[ok]}"
+        Command="{Binding CloseCommand}" />
+    </StackLayout>
+  </ScrollView>
 </views:CustomContentPage>

@@ -242,7 +242,7 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Establishment details.
+        ///   Looks up a localized string similar to Details.
         /// </summary>
         internal static string establishment_details {
             get {
@@ -463,6 +463,15 @@ namespace MyStyleApp.Localization {
         internal static string repeat_password {
             get {
                 return ResourceManager.GetString("repeat_password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Results.
+        /// </summary>
+        internal static string results {
+            get {
+                return ResourceManager.GetString("results", resourceCulture);
             }
         }
         

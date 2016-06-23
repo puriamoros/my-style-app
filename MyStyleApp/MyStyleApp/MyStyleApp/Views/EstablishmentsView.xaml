@@ -6,9 +6,15 @@
              xmlns:mvvmcorebehaviors="clr-namespace:MvvmCore.Behaviors"
              xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}"
-             Title="{Binding LocalizedStrings[establishments]}">
+             Title="{Binding LocalizedStrings[results]}">
   <Grid>
-    <Grid Padding="{StaticResource PageContentPadding}">
+    <StackLayout Padding="{StaticResource PageContentPadding}">
+      <Label
+            Text="{Binding LocalizedStrings[results]}"
+            Style="{StaticResource LargeTextStyle}"
+            HorizontalOptions="Center"
+            IsVisible="{Binding Converter={StaticResource PlatformToBoolNegatedConverter}, ConverterParameter=iOS}"/>
+      
       <!-- Without HasUnevenRows="True", list items does not render well in Android -->
       <ListView x:Name="EstablishmentsList"
         ItemsSource="{Binding EstablishmentsList}"
@@ -32,7 +38,7 @@
                       "{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}">
                       <Label Text="{Binding Name}" Style="{StaticResource MediumTextStyle}" />
                       <Label Text="{Binding Address}" Style="{StaticResource SmallTextStyle}" />
-                      <Label Text="10.50€" Style="{StaticResource SmallTextStyle}" />
+                      <Label Text="{Binding ShortenServices[0].Price, Converter={StaticResource FloatToPriceConverter}}" Style="{StaticResource SmallTextStyle}" />
                   </StackLayout>
                   <Image Aspect="AspectFit" Source="Favourite.png"
                     RelativeLayout.XConstraint=
@@ -76,7 +82,7 @@
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
-    </Grid>
+    </StackLayout>
     <controls:WaitingOverlayControl
       IsVisible="{Binding IsBusy}"
       Text="{Binding LocalizedStrings[waiting]}"/>

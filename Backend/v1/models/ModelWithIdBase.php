@@ -57,10 +57,40 @@ abstract class ModelWithIdBase
 		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
     }
 	
+	protected function authorizeDefault()
+	{
+		return Authorization::authorizeApiKey();
+	}
+	
+	protected function authorizeGetElements()
+	{
+		return $this->authorizeDefault();
+	}
+	
+	protected function authorizeGetElement()
+	{
+		return $this->authorizeDefault();
+	}
+	
+	protected function authorizeCreateElement()
+	{
+		return $this->authorizeDefault();
+	}
+	
+	protected function authorizeUpdateElement()
+	{
+		return $this->authorizeDefault();
+	}
+	
+	protected function authorizeDeleteElement()
+	{
+		return $this->authorizeDefault();
+	}
+	
 	protected function getElements($queryParams)
 	{
 		// Check authorization
-		Authorization::authorizeApiKey();
+		$this->authorizeGetElements();
 
 		// TODO: Validate fields
 		
@@ -76,7 +106,7 @@ abstract class ModelWithIdBase
 	protected function getElement($id)
 	{
 		// Check authorization
-		$idUser = Authorization::authorizeApiKey();
+		$idUser = $this->authorizeGetElement()[Tables::getInstance()->users->id];
 		
 		// This is to allow users/me using this function without passing the user id
 		if(is_null($id)) {
@@ -96,7 +126,7 @@ abstract class ModelWithIdBase
 	protected function createElement()
 	{
 		// Check authorization
-		Authorization::authorizeApiKey();
+		$this->authorizeCreateElement();
 		
 		$data = $this->getBodyData();
 
@@ -113,7 +143,7 @@ abstract class ModelWithIdBase
 	protected function updateElement($id)
 	{
 		// Check authorization
-		Authorization::authorizeApiKey();
+		$this->authorizeUpdateElement();
 		
 		$data = $this->getBodyData();
 
@@ -130,7 +160,7 @@ abstract class ModelWithIdBase
 	protected function deleteElement($id)
 	{
 		// Check authorization
-		Authorization::authorizeApiKey();
+		$this->authorizeDeleteElement();
 
 		// TODO: Validate fields
 		

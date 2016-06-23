@@ -2,6 +2,7 @@
 
 require_once(__DIR__.'/../models/Users.php');
 require_once(__DIR__.'/../data/StatusCodes.php');
+require_once(__DIR__.'/Tables.php');
 
 class Authorization
 {
@@ -12,9 +13,9 @@ class Authorization
 		$basic = self::getTokenValueFromHeader("Authorization", "Basic");
 
 		if (!is_null($basic)) {
-			$apiKey = Users::validateBasic($basic);
-			if(!is_null($apiKey)){
-				return $apiKey;
+			$result = Users::validateBasic($basic);
+			if(!is_null($result)){
+				return $result;
 			}
 		}
 		
@@ -27,9 +28,9 @@ class Authorization
 		$apiKey = self::getTokenValueFromHeader("Authorization", "ApiKey");
 
 		if (!is_null($apiKey)) {
-			$id = Users::validateApiKey($apiKey);
-			if(!is_null($id)){
-				return $id;
+			$result = Users::validateApiKey($apiKey);
+			if(!is_null($result)){
+				return $result;
 			}
 		}
 		

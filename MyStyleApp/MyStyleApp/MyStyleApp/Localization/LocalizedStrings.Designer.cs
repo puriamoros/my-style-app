@@ -107,6 +107,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change password.
+        /// </summary>
+        internal static string change_password {
+            get {
+                return ResourceManager.GetString("change_password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose an item.
         /// </summary>
         internal static string choose_an_item {
@@ -139,6 +148,15 @@ namespace MyStyleApp.Localization {
         internal static string do_login {
             get {
                 return ResourceManager.GetString("do_login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        internal static string edit {
+            get {
+                return ResourceManager.GetString("edit", resourceCulture);
             }
         }
         
@@ -332,6 +350,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log out.
+        /// </summary>
+        internal static string log_out {
+            get {
+                return ResourceManager.GetString("log_out", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
         internal static string login {
@@ -463,6 +490,15 @@ namespace MyStyleApp.Localization {
         internal static string remember_me {
             get {
                 return ResourceManager.GetString("remember_me", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repeat your email.
+        /// </summary>
+        internal static string repeat_email {
+            get {
+                return ResourceManager.GetString("repeat_email", resourceCulture);
             }
         }
         

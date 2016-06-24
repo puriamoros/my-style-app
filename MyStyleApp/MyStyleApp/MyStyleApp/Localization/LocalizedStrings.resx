@@ -288,4 +288,16 @@
   <data name="error_fields_not_equal" xml:space="preserve">
     <value>Fields "${FIELD_NAME_1}" and ${FIELD_NAME_2} must be equal</value>
   </data>
+  <data name="repeat_email" xml:space="preserve">
+    <value>Repeat your email</value>
+  </data>
+  <data name="change_password" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="log_out" xml:space="preserve">
+    <value>Log out</value>
+  </data>
 </root>

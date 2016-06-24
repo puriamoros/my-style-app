@@ -13,6 +13,7 @@
       <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
       <converters:PlatformToBoolConverter x:Key="PlatformToBoolConverter" />
       <converters:FloatToPriceConverter x:Key="FloatToPriceConverter" />
+      <converters:AccountModeToBoolConverter x:Key="AccountModeToBoolConverter" />
 
       <!-- iOS needs 20px top padding to avoid overlapping the status bar -->
       <OnPlatform x:Key="PagePadding"

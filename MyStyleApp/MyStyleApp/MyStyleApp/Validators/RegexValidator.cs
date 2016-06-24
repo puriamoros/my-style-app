@@ -5,7 +5,6 @@ namespace MyStyleApp.Validators
 {
     class RegexValidator : IValidator
     {
-        private const string STRING_ERROR_INVALID_FIELD = "error_invalid_field";
         private const string TOKEN_FIELD_NAME = "${FIELD_NAME}";
         private string _input;
         private string _regex;

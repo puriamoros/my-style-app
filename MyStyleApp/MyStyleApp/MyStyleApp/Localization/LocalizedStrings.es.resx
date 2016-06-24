@@ -285,4 +285,7 @@
   <data name="results" xml:space="preserve">
     <value>Resultados</value>
   </data>
+  <data name="error_fields_not_equal" xml:space="preserve">
+    <value>Los campos "${FIELD_NAME_1}" y ${FIELD_NAME_2} deben ser iguales</value>
+  </data>
 </root>

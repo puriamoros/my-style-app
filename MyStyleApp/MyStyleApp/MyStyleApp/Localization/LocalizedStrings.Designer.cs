@@ -215,6 +215,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fields &quot;${FIELD_NAME_1}&quot; and ${FIELD_NAME_2} must be equal.
+        /// </summary>
+        internal static string error_fields_not_equal {
+            get {
+                return ResourceManager.GetString("error_fields_not_equal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The field &quot;${FIELD_NAME}&quot; can not contain &quot;&lt;&quot; or &quot;&gt;&quot;.
         /// </summary>
         internal static string error_insecure_chars {

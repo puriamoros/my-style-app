@@ -118,6 +118,7 @@
     <Compile Include="Services\Backend\Mocks\UsersServiceMock.cs" />
     <Compile Include="Services\Backend\ProvincesService.cs" />
     <Compile Include="Services\ValidationService.cs" />
+    <Compile Include="Validators\EqualValidator.cs" />
     <Compile Include="Validators\IValidator.cs" />
     <Compile Include="Validators\LengthValidator.cs" />
     <Compile Include="Validators\RegexValidator.cs" />

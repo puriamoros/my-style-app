@@ -117,7 +117,7 @@ namespace MyStyleApp.Services
                 {
                     jsonObj = JsonConvert.DeserializeObject(resultData, tResult);
                 }
-                catch (JsonSerializationException)
+                catch (JsonSerializationException ex)
                 {
                     try
                     {
@@ -125,6 +125,7 @@ namespace MyStyleApp.Services
                     }
                     catch (Exception)
                     {
+                        logMsg += "JsonSerializationException: " + ex.Message + "\r\n";
                     }
                 }
                 catch (Exception)

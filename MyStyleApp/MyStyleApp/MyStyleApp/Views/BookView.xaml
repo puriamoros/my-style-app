@@ -13,7 +13,7 @@
             Text="{Binding LocalizedStrings[book]}"
             Style="{StaticResource LargeTextStyle}"
             HorizontalOptions="Center"
-            IsVisible="{Binding Converter={StaticResource PlatformToBoolNegatedConverter}, ConverterParameter=iOS}"/>
+            IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
       
       <StackLayout VerticalOptions="EndAndExpand" Padding="0,10,0,0">
         <controls:CustomButton

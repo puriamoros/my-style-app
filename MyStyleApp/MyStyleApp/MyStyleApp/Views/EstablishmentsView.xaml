@@ -13,7 +13,7 @@
             Text="{Binding LocalizedStrings[results]}"
             Style="{StaticResource LargeTextStyle}"
             HorizontalOptions="Center"
-            IsVisible="{Binding Converter={StaticResource PlatformToBoolNegatedConverter}, ConverterParameter=iOS}"/>
+            IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
       
       <!-- Without HasUnevenRows="True", list items does not render well in Android -->
       <ListView x:Name="EstablishmentsList"
@@ -47,7 +47,7 @@
                       "{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
                     RelativeLayout.YConstraint=
                       "{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
-                    IsVisible="{Binding IdFavourite, Converter={StaticResource IntToBoolConverter}, ConverterParameter=True}">
+                    IsVisible="{Binding IdFavourite, Converter={StaticResource IntToBoolConverter}, ConverterParameter=!}">
                     <Image.GestureRecognizers>
                       <TapGestureRecognizer
                         Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.AddToFavouritesCommand}"

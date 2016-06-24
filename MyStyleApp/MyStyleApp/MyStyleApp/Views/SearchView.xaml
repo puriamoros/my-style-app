@@ -14,7 +14,7 @@
             Text="{Binding LocalizedStrings[search]}"
             Style="{StaticResource LargeTextStyle}"
             HorizontalOptions="Center"
-            IsVisible="{Binding Converter={StaticResource PlatformToBoolNegatedConverter}, ConverterParameter=iOS}"/>
+            IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
         
         <StackLayout Padding="0,0,0,10" Spacing="0">
           <Label 

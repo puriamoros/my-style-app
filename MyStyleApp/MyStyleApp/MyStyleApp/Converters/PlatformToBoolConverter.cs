@@ -8,14 +8,27 @@ namespace MyStyleApp.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            bool negate = false;
             if (parameter is string)
             {
-                string platform = parameter as string;
-
-                if(Device.OS.ToString().Contains(platform))
+                string parameterStr = parameter as string;
+                if (parameterStr.StartsWith("!"))
                 {
-                    return true;
+                    negate = true;
+                    parameterStr = parameterStr.Substring(1);
                 }
+
+                bool result = false;
+                if(Device.OS.ToString().Contains(parameterStr))
+                {
+                    result = true;
+                }
+                if (negate)
+                {
+                    result = !result;
+                }
+
+                return result;
             }
             return false;
         }

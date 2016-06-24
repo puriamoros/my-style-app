@@ -12,7 +12,7 @@
               Text="{Binding LocalizedStrings[error]}"
               Style="{StaticResource LargeTextStyle}"
               HorizontalOptions="Center"
-              IsVisible="{Binding Converter={StaticResource PlatformToBoolNegatedConverter}, ConverterParameter=iOS}"/>
+              IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
       <Label
         Text="{Binding ErrorText}"
         IsVisible="{Binding ErrorText, Converter={StaticResource StringToBoolConverter}}"

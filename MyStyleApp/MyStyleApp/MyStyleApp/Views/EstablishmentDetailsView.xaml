@@ -14,7 +14,7 @@
             Text="{Binding LocalizedStrings[establishment_details]}"
             Style="{StaticResource LargeTextStyle}"
             HorizontalOptions="Center"
-            IsVisible="{Binding Converter={StaticResource PlatformToBoolNegatedConverter}, ConverterParameter=iOS}"/>
+            IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
 
           <StackLayout Padding="0,0,0,10" Spacing="0">
             <Label Text="{Binding Establishment.Name}" Style="{StaticResource LargeTextStyle}"/>
@@ -51,7 +51,7 @@
             <controls:CustomButton
               Text="{Binding LocalizedStrings[add_to_favourites]}"
               Command="{Binding AddToFavouritesCommand}"
-              IsVisible="{Binding Establishment.IdFavourite, Converter={StaticResource IntToBoolConverter}, ConverterParameter=True}"/>
+              IsVisible="{Binding Establishment.IdFavourite, Converter={StaticResource IntToBoolConverter}, ConverterParameter=!}"/>
             <controls:CustomButton
               Text="{Binding LocalizedStrings[delete_favourite]}"
               Command="{Binding DeleteFavouriteCommand}"

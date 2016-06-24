@@ -13,12 +13,16 @@ namespace MyStyleApp.Converters
                 string valueStr = value as string;
                 bool result = !String.IsNullOrEmpty(valueStr);
 
-                bool reverse = false;
+                bool negate = false;
                 if (parameter is string)
                 {
-                    reverse = bool.Parse(parameter as string);
+                    string parameterStr = parameter as string;
+                    if (parameterStr.StartsWith("!"))
+                    {
+                        negate = true;
+                    }
                 }
-                if (reverse)
+                if (negate)
                 {
                     result = !result;
                 }

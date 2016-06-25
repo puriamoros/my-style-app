@@ -5,6 +5,7 @@
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
              xmlns:mvvmcorebehaviors="clr-namespace:MvvmCore.Behaviors"
              xmlns:views="clr-namespace:MyStyleApp.Views"
+             xmlns:fe="clr-namespace:FreshEssentials;assembly=FreshEssentials"
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[results]}">
   <Grid>
@@ -18,13 +19,14 @@
       <!-- Without HasUnevenRows="True", list items does not render well in Android -->
       <ListView x:Name="EstablishmentsList"
         ItemsSource="{Binding EstablishmentsList}"
-        HasUnevenRows="True">
-        <ListView.Behaviors>
+        HasUnevenRows="True"
+        fe:ListViewItemTappedAttached.Command="{Binding ViewDetailsCommand}">
+        <!--<ListView.Behaviors>
           <mvvmcorebehaviors:EventToCommandBehavior
             EventName="ItemTapped"
             Command="{Binding ViewDetailsCommand}"
             EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
-        </ListView.Behaviors>
+        </ListView.Behaviors>-->
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell x:Name="Establishment">
@@ -47,12 +49,14 @@
                       "{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
                     RelativeLayout.YConstraint=
                       "{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
+                    fe:TappedGestureAttached.Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.AddToFavouritesCommand}"
+                    fe:TappedGestureAttached.CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}"
                     IsVisible="{Binding IdFavourite, Converter={StaticResource IntToBoolConverter}, ConverterParameter=!}">
-                    <Image.GestureRecognizers>
+                    <!--<Image.GestureRecognizers>
                       <TapGestureRecognizer
                         Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.AddToFavouritesCommand}"
                         CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
-                    </Image.GestureRecognizers>
+                    </Image.GestureRecognizers>-->
                   </Image>
                   <Image Aspect="AspectFit" Source="FavouriteFilled.png"
                     RelativeLayout.XConstraint=
@@ -61,12 +65,14 @@
                       "{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
                     RelativeLayout.YConstraint=
                       "{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
+                    fe:TappedGestureAttached.Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.DeleteFavouriteCommand}"
+                    fe:TappedGestureAttached.CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}"
                     IsVisible="{Binding IdFavourite, Converter={StaticResource IntToBoolConverter}}">
-                    <Image.GestureRecognizers>
+                    <!--<Image.GestureRecognizers>
                       <TapGestureRecognizer
                         Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.DeleteFavouriteCommand}"
                         CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
-                    </Image.GestureRecognizers>
+                    </Image.GestureRecognizers>-->
                   </Image>
                 </RelativeLayout>
               <ViewCell.ContextActions>

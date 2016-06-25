@@ -300,4 +300,16 @@
   <data name="log_out" xml:space="preserve">
     <value>Salir</value>
   </data>
+  <data name="new_password" xml:space="preserve">
+    <value>Nueva contraseña</value>
+  </data>
+  <data name="old_password" xml:space="preserve">
+    <value>Antigua contraseña</value>
+  </data>
+  <data name="repeat_new_password" xml:space="preserve">
+    <value>Repite la nueva contraseña</value>
+  </data>
+  <data name="error_fields_equal" xml:space="preserve">
+    <value>Los campos "${FIELD_NAME_1}" y ${FIELD_NAME_2} deben ser distintos</value>
+  </data>
 </root>

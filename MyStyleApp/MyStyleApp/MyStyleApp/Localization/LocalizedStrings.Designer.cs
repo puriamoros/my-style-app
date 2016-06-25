@@ -233,6 +233,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fields &quot;${FIELD_NAME_1}&quot; and ${FIELD_NAME_2} must be diferent.
+        /// </summary>
+        internal static string error_fields_equal {
+            get {
+                return ResourceManager.GetString("error_fields_equal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fields &quot;${FIELD_NAME_1}&quot; and ${FIELD_NAME_2} must be equal.
         /// </summary>
         internal static string error_fields_not_equal {
@@ -413,6 +422,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New password.
+        /// </summary>
+        internal static string new_password {
+            get {
+                return ResourceManager.GetString("new_password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Don&apos;t have an account?.
         /// </summary>
         internal static string no_account {
@@ -436,6 +454,15 @@ namespace MyStyleApp.Localization {
         internal static string ok {
             get {
                 return ResourceManager.GetString("ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Old password.
+        /// </summary>
+        internal static string old_password {
+            get {
+                return ResourceManager.GetString("old_password", resourceCulture);
             }
         }
         
@@ -499,6 +526,15 @@ namespace MyStyleApp.Localization {
         internal static string repeat_email {
             get {
                 return ResourceManager.GetString("repeat_email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repeat new password.
+        /// </summary>
+        internal static string repeat_new_password {
+            get {
+                return ResourceManager.GetString("repeat_new_password", resourceCulture);
             }
         }
         

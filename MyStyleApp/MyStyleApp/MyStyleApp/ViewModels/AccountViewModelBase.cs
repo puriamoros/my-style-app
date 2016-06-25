@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-using MyStyleApp.Services;
+﻿using MyStyleApp.Services;
 using MvvmCore;
 using MyStyleApp.Validators;
 using MyStyleApp.Constants;
-using System;
 using System.Windows.Input;
 using Xamarin.Forms;
 using MyStyleApp.Enums;
@@ -12,7 +10,7 @@ using MyStyleApp.Services.Backend;
 
 namespace MyStyleApp.ViewModels
 {
-    public class AccountViewModel : NavigableViewModelBase
+    public abstract class AccountViewModelBase : NavigableViewModelBase
     {
         private const string STRING_NAME = "name";
         private const string STRING_SURNAME = "surname";
@@ -42,7 +40,7 @@ namespace MyStyleApp.ViewModels
 
         IUsersService _usersService;
 
-        public AccountViewModel(
+        public AccountViewModelBase(
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
@@ -65,7 +63,7 @@ namespace MyStyleApp.ViewModels
 
         public void Initialize(User user, AccountModeEnum mode)
         {
-            if(user != null)
+            if (user != null)
             {
                 this.Name = user.Name;
                 this.Surname = user.Surname;
@@ -82,7 +80,7 @@ namespace MyStyleApp.ViewModels
                 this.RepeatEmail = "";
             }
             this.Password = "";
-            
+
             this.Mode = mode;
         }
 
@@ -229,7 +227,7 @@ namespace MyStyleApp.ViewModels
                     //await this._usersService.LoginAsync(this.Email, this.Password, this.RememberMe);
                     //await this.SetMainPageAsync<MainViewModel>();
                 });
-            
+
             //this.IsBusy = true;
             //try
             //{
@@ -267,7 +265,7 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    //await this.SetMainPageAsync<MainViewModel>();
+                    await this.PushNavPageAsync<ChangePasswordViewModel>();
                 });
         }
         public async void LogOutAsync()
@@ -276,9 +274,10 @@ namespace MyStyleApp.ViewModels
                 async () =>
                 {
                     await this._usersService.LogoutAsync();
-                    await this.SetMainPageAsync<LoginViewModel>();
+                    await this.SetMainPageNavPageAsync<LoginViewModel>();
                 });
         }
 
     }
 }
+

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:CustomContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MyStyleApp.Views.AccountView"
+             x:Class="MyStyleApp.Views.AccountViewBase"
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
              xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}"
@@ -59,7 +59,7 @@
             Style="{StaticResource MediumTextStyle}" />
           <Entry
             Placeholder="{Binding LocalizedStrings[email_placeholder]}"
-            Text="{Binding Email}"
+            Text="{Binding EmailRepeated}"
             Keyboard="Email"/>
         </StackLayout>
         
@@ -82,7 +82,7 @@
           <Entry
             IsPassword="True"
             Placeholder="{Binding LocalizedStrings[password_placeholder]}"
-            Text="{Binding Password}" />
+            Text="{Binding PasswordRepeated}" />
         </StackLayout>
 
         <StackLayout VerticalOptions="EndAndExpand" Padding="0,10,0,0" Spacing="5">

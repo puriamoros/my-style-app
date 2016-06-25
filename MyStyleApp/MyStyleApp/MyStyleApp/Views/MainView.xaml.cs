@@ -14,14 +14,14 @@ namespace MyStyleApp.Views
             AppointmentsView appointmentsView,
             FavouritesView favouritesView,
             SearchView searchView,
-            AccountView accountView)
+            AccountDetailsView accountDetailsView)
         {
             InitializeComponent();
 
             this.AddNavigationChild(appointmentsView, "LocalizedStrings[appointments]", "Calendar.png");
             this.AddNavigationChild(favouritesView, "LocalizedStrings[favourites]", "Star.png");
             this.AddNavigationChild(searchView, "LocalizedStrings[establishments]", "Search.png");
-            this.AddNavigationChild(accountView, "LocalizedStrings[my_account]", "User.png");
+            this.AddNavigationChild(accountDetailsView, "LocalizedStrings[my_account]", "User.png");
         }
 
         private void AddNavigationChild(Page view, string titleBinding, string icon)

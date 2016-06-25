@@ -43,6 +43,34 @@ namespace MvvmCore
             return tcs.Task;
         }
 
+        public Task<TViewModel> SetMainPageNavPageAsync<TViewModel>(Action<TViewModel> setStateAction = null)
+            where TViewModel : class, IViewModel
+        {
+            var tcs = new TaskCompletionSource<TViewModel>();
+            _deviceService.BeginInvokeOnMainThread(() =>
+            {
+                TViewModel viewModel;
+                var view = _viewFactory.Resolve<TViewModel>(out viewModel, setStateAction);
+                Application.Current.MainPage = new NavigationPage(view);
+
+                tcs.SetResult(viewModel);
+            });
+            return tcs.Task;
+        }
+
+        public Task<TViewModel> SetMainPageNavPageAsync<TViewModel>(TViewModel viewModel)
+            where TViewModel : class, IViewModel
+        {
+            var tcs = new TaskCompletionSource<TViewModel>();
+            _deviceService.BeginInvokeOnMainThread(() =>
+            {
+                var view = _viewFactory.Resolve(viewModel);
+                Application.Current.MainPage = new NavigationPage(view);
+                tcs.SetResult(viewModel);
+            });
+            return tcs.Task;
+        }
+
         public Task<TViewModel> SetMainPageTabAsync<TViewModel>(Action<TViewModel> setStateAction = null)
             where TViewModel : class, IViewModel
         {

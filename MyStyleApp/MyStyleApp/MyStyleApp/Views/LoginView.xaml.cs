@@ -8,15 +8,11 @@ using Xamarin.Forms;
 
 namespace MyStyleApp.Views
 {
-    public partial class LoginView : ContentPage
+    public partial class LoginView : CustomContentPage
     {
         public LoginView()
         {
             InitializeComponent();
-            if (Device.OS != TargetPlatform.iOS)
-            {
-                NavigationPage.SetHasNavigationBar(this, false);
-            }
         }
 
         //protected override bool OnBackButtonPressed()

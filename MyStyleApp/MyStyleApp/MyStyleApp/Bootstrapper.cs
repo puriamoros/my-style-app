@@ -29,11 +29,13 @@ namespace MyStyleApp
             builder.RegisterType<AppointmentsView>().SingleInstance();
             builder.RegisterType<FavouritesView>().SingleInstance();
             builder.RegisterType<SearchView>().SingleInstance();
-            builder.RegisterType<AccountView>().SingleInstance();
             builder.RegisterType<EstablishmentsView>().SingleInstance();
             builder.RegisterType<EstablishmentDetailsView>().SingleInstance();
             builder.RegisterType<BookView>().SingleInstance();
             builder.RegisterType<ErrorView>().SingleInstance();
+            builder.RegisterType<ChangePasswordView>().SingleInstance();
+            builder.RegisterType<AccountDetailsView>().SingleInstance();
+            builder.RegisterType<CreateAccountView>().SingleInstance();
 
             // Register ViewModels
             builder.RegisterType<StartViewModel>().SingleInstance();
@@ -42,11 +44,13 @@ namespace MyStyleApp
             builder.RegisterType<AppointmentsViewModel>().SingleInstance();
             builder.RegisterType<FavouritesViewModel>().SingleInstance();
             builder.RegisterType<SearchViewModel>().SingleInstance();
-            builder.RegisterType<AccountViewModel>().SingleInstance();
             builder.RegisterType<EstablishmentsViewModel>().SingleInstance();
             builder.RegisterType<EstablishmentDetailsViewModel>().SingleInstance();
             builder.RegisterType<BookViewModel>().SingleInstance();
             builder.RegisterType<ErrorViewModel>().SingleInstance();
+            builder.RegisterType<ChangePasswordViewModel>().SingleInstance();
+            builder.RegisterType<AccountDetailsViewModel>().SingleInstance();
+            builder.RegisterType<CreateAccountViewModel>().SingleInstance();
 
             // Register Services
             builder.RegisterType<LocalizedStringsService>().SingleInstance();
@@ -78,12 +82,14 @@ namespace MyStyleApp
             viewFactory.Register<MainViewModel, MainView>();
             viewFactory.Register<AppointmentsViewModel, AppointmentsView>();
             viewFactory.Register<FavouritesViewModel, FavouritesView>();
-            viewFactory.Register<SearchViewModel, SearchView>();
-            viewFactory.Register<AccountViewModel, AccountView>();
+            viewFactory.Register<SearchViewModel, SearchView>();            
             viewFactory.Register<EstablishmentsViewModel, EstablishmentsView>();
             viewFactory.Register<EstablishmentDetailsViewModel, EstablishmentDetailsView>();
             viewFactory.Register<BookViewModel, BookView>();
             viewFactory.Register<ErrorViewModel, ErrorView>();
+            viewFactory.Register<ChangePasswordViewModel, ChangePasswordView>();
+            viewFactory.Register<AccountDetailsViewModel, AccountDetailsView>();
+            viewFactory.Register<CreateAccountViewModel, CreateAccountView>();
         }
 
         protected override void ConfigureApplication(IContainer container)

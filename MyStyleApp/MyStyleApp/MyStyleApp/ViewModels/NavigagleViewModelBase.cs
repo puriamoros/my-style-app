@@ -82,6 +82,18 @@ namespace MyStyleApp.ViewModels
             return this._navigator.SetMainPageAsync(viewModel);
         }
 
+        public Task<TViewModel> SetMainPageNavPageAsync<TViewModel>(Action<TViewModel> setStateAction = null)
+            where TViewModel : class, IViewModel
+        {
+            return this._navigator.SetMainPageNavPageAsync(setStateAction);
+        }
+
+        public Task<TViewModel> SetMainPageNavPageAsync<TViewModel>(TViewModel viewModel)
+            where TViewModel : class, IViewModel
+        {
+            return this._navigator.SetMainPageAsync(viewModel);
+        }
+
         public Task<TViewModel> SetMainPageTabAsync<TViewModel>(Action<TViewModel> setStateAction = null)
             where TViewModel : class, IViewModel
         {

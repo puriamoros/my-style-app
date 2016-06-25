@@ -4,15 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Xamarin.Forms;
-
 namespace MyStyleApp.Views
 {
-    public partial class AccountView : CustomContentPage
+    public class AccountDetailsView : AccountViewBase
     {
-        public AccountView()
-        {
-            InitializeComponent();
-        }
     }
 }

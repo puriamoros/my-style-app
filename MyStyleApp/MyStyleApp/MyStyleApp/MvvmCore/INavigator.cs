@@ -12,6 +12,12 @@ namespace MvvmCore
         Task<TViewModel> SetMainPageAsync<TViewModel>(TViewModel viewModel)
             where TViewModel : class, IViewModel;
 
+        Task<TViewModel> SetMainPageNavPageAsync<TViewModel>(Action<TViewModel> setStateAction = null)
+            where TViewModel : class, IViewModel;
+
+        Task<TViewModel> SetMainPageNavPageAsync<TViewModel>(TViewModel viewModel)
+            where TViewModel : class, IViewModel;
+
         Task<TViewModel> SetMainPageTabAsync<TViewModel>(Action<TViewModel> setStateAction = null)
             where TViewModel : class, IViewModel;
 

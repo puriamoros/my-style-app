@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using MvvmCore;
+using MyStyleApp.Enums;
 
 namespace MyStyleApp.ViewModels
 {
@@ -120,7 +121,10 @@ namespace MyStyleApp.ViewModels
                     try
                     {
                         await this._usersService.LoginAsync(this.Email, this.Password, this.RememberMe);
-                        await this.SetMainPageAsync<MainViewModel>();
+                        await this.SetMainPageAsync<MainViewModel>((mainVM) =>
+                        {
+                            mainVM.Initialize();
+                        });
                     }
                     catch (Exception)
                     {
@@ -131,7 +135,14 @@ namespace MyStyleApp.ViewModels
 
         private async void NewAccountAsync()
         {
-            //await this.PushNavPageAsync<AccountViewModel>();
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    await this.PushNavPageAsync<CreateAccountViewModel>((accountVM) => 
+                    {
+                        accountVM.Initialize(null, AccountModeEnum.Create);
+                    });
+                });
         }
     }
 }

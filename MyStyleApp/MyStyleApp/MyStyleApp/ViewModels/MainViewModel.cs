@@ -1,23 +1,30 @@
-﻿using MyStyleApp.Models;
-using MyStyleApp.Services;
-using MyStyleApp.Services.Backend;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Xamarin.Forms;
+﻿using MyStyleApp.Services;
 using MvvmCore;
+using MyStyleApp.Services.Backend;
+using MyStyleApp.Enums;
 
 namespace MyStyleApp.ViewModels
 {
     public class MainViewModel : NavigableViewModelBase
     {
+        private AccountDetailsViewModel _accountDetailsViewModel;
+        private IUsersService _userService;
+
         public MainViewModel(
             INavigator navigator,
             IUserNotificator userNotificator,
-            LocalizedStringsService localizedStringsService) : 
+            LocalizedStringsService localizedStringsService,
+            IUsersService userService,
+            AccountDetailsViewModel accountDetailsViewModel) : 
             base(navigator, userNotificator, localizedStringsService)
         {
+            this._userService = userService;
+            this._accountDetailsViewModel = accountDetailsViewModel;
+        }
+
+        public void Initialize()
+        {
+            this._accountDetailsViewModel.Initialize(this._userService.LoggedUser, AccountModeEnum.View);
         }
     }
 }

@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-06-2016 a las 16:48:21
+-- Tiempo de generación: 26-06-2016 a las 18:28:09
 -- Versión del servidor: 10.1.13-MariaDB
--- Versión de PHP: 5.6.20
+-- Versión de PHP: 5.6.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -54,6 +54,7 @@ CREATE TABLE `establishments` (
   `id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
   `address` text NOT NULL,
+  `phone` varchar(9) NOT NULL,
   `idEstablishmentType` int(11) NOT NULL,
   `idOwner` int(11) NOT NULL,
   `idProvince` int(11) NOT NULL
@@ -63,11 +64,11 @@ CREATE TABLE `establishments` (
 -- Volcado de datos para la tabla `establishments`
 --
 
-INSERT INTO `establishments` (`id`, `name`, `address`, `idEstablishmentType`, `idOwner`, `idProvince`) VALUES
-(1, 'peluquería 1', 'C/. Tururu nº1', 1, 1, 1),
-(2, 'peluquería 2', 'C/. tururu nº2', 2, 1, 1),
-(3, 'peluquería 3', 'C/. tururu nº3', 1, 1, 2),
-(4, 'peluquería 4', 'C/. tururu nº4', 3, 2, 1);
+INSERT INTO `establishments` (`id`, `name`, `address`, `phone`, `idEstablishmentType`, `idOwner`, `idProvince`) VALUES
+(1, 'Peluquería 1', 'C/. Tururu nº1', '958111111', 1, 1, 1),
+(2, 'Peluquería 2', 'C/. tururu nº2', '951357357', 2, 1, 1),
+(3, 'Peluquería 3', 'C/. tururu nº3', '357159486', 1, 1, 2),
+(4, 'Peluquería 4', 'C/. tururu nº4', '123456789', 3, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -103,6 +104,13 @@ CREATE TABLE `favourites` (
   `idEstablishment` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `favourites`
+--
+
+INSERT INTO `favourites` (`id`, `idClient`, `idEstablishment`) VALUES
+(48, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -130,7 +138,7 @@ INSERT INTO `offer` (`idEstablishment`, `idService`, `price`) VALUES
 (3, 1, 12.5),
 (3, 3, 25.5),
 (3, 4, 16),
-(4, 1, 12.5),
+(4, 1, 10.5),
 (4, 2, 25.5),
 (4, 3, 16),
 (4, 4, 25.5),
@@ -460,7 +468,8 @@ ALTER TABLE `establishment_types`
 -- Indices de la tabla `favourites`
 --
 ALTER TABLE `favourites`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `idClient` (`idClient`,`idEstablishment`);
 
 --
 -- Indices de la tabla `offer`
@@ -520,7 +529,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1233;
 --
 -- AUTO_INCREMENT de la tabla `establishments`
 --
@@ -535,7 +544,7 @@ ALTER TABLE `establishment_types`
 -- AUTO_INCREMENT de la tabla `favourites`
 --
 ALTER TABLE `favourites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 --
 -- AUTO_INCREMENT de la tabla `provinces`
 --

@@ -24,7 +24,7 @@ namespace MyStyleApp.ViewModels
 
         public void Initialize()
         {
-            this._accountDetailsViewModel.Initialize(this._userService.LoggedUser, AccountModeEnum.View);
+            this._accountDetailsViewModel.Initialize(this._userService.LoggedUser);
         }
     }
 }

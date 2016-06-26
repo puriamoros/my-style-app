@@ -317,8 +317,10 @@ class DBCommands
 			$query = $pdo->prepare($command);
 
 			$count = 1;
-			foreach($fields as $field) {
+			$asdf = array();
+			foreach($fieldsButIds as $field) {
 				if(isset($data[$field])) {
+					array_push($asdf, $field);
 					$query->bindParam($count, $data[$field]);
 					$count++;
 				}

@@ -41,7 +41,7 @@
             IsEnabled="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=!View}" />
         </StackLayout>
 
-      <StackLayout Spacing="0" >
+        <StackLayout Spacing="0" >
           <Label
             Text="{Binding LocalizedStrings[email]}"
             Style="{StaticResource MediumTextStyle}" />
@@ -53,13 +53,13 @@
         </StackLayout>
         
         <StackLayout Spacing="0" 
-          IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=Create}" >
+          IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=!View}" >
           <Label
             Text="{Binding LocalizedStrings[repeat_email]}"
             Style="{StaticResource MediumTextStyle}" />
           <Entry
             Placeholder="{Binding LocalizedStrings[email_placeholder]}"
-            Text="{Binding EmailRepeated}"
+            Text="{Binding RepeatEmail}"
             Keyboard="Email"/>
         </StackLayout>
         
@@ -83,6 +83,14 @@
             IsPassword="True"
             Placeholder="{Binding LocalizedStrings[password_placeholder]}"
             Text="{Binding PasswordRepeated}" />
+        </StackLayout>
+        
+        <StackLayout>
+          <Label
+            Text="{Binding ErrorText}"
+            IsVisible="{Binding ErrorText, Converter={StaticResource StringToBoolConverter}}"
+            TextColor="{StaticResource ErrorColor}"
+            Style="{StaticResource SmallTextStyle}" />
         </StackLayout>
 
         <StackLayout VerticalOptions="EndAndExpand" Padding="0,10,0,0" Spacing="5">
@@ -109,13 +117,17 @@
           <controls:CustomButton
             IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=Edit}"
             Text="{Binding LocalizedStrings[save_changes]}"
-            Command="{Binding SaveAccountCommand}"/>   
+            Command="{Binding SaveAccountCommand}"/>
+        
+          <controls:CustomButton
+            IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=Edit}"
+            Text="{Binding LocalizedStrings[cancel]}"
+            Command="{Binding CancelCommand}"/> 
         </StackLayout>
-            
+      </StackLayout>
       <controls:WaitingOverlayControl
         IsVisible="{Binding IsBusy}"
         Text="{Binding LocalizedStrings[waiting]}"/>
-      </StackLayout>
     </Grid>
   </ScrollView>
   

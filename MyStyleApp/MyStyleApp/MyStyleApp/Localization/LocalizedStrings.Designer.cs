@@ -107,6 +107,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string cancel {
+            get {
+                return ResourceManager.GetString("cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change password.
         /// </summary>
         internal static string change_password {
@@ -233,7 +242,7 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fields &quot;${FIELD_NAME_1}&quot; and ${FIELD_NAME_2} must be diferent.
+        ///   Looks up a localized string similar to Fields &quot;${FIELD_NAME_1}&quot; and &quot;${FIELD_NAME_2}&quot; must be diferent.
         /// </summary>
         internal static string error_fields_equal {
             get {
@@ -242,7 +251,7 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fields &quot;${FIELD_NAME_1}&quot; and ${FIELD_NAME_2} must be equal.
+        ///   Looks up a localized string similar to Fields &quot;${FIELD_NAME_1}&quot; and &quot;${FIELD_NAME_2}&quot; must be equal.
         /// </summary>
         internal static string error_fields_not_equal {
             get {

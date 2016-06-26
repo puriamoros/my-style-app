@@ -169,6 +169,12 @@ class Users extends ModelWithIdBase
 		return;
 	}
 	
+	protected function dbUpdate($id, $data)
+	{
+		$fields = array_diff($this->fields, [$this->users->password, $this->users->apiKey]);
+		return DBCommands::dbUpdate($this->table, $fields, $this->idField, $id, $data);
+	}
+	
 	private function encryptPassword($plainPassword)
 	{
 		if ($plainPassword)

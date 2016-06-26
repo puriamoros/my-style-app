@@ -43,5 +43,18 @@ namespace MyStyleApp.Services.Backend.Mocks
             };
             return LoggedUser;
         }
+
+        public async Task<ApiKey> CreateUserAsync(User user)
+        {
+            ApiKey apiKey = new ApiKey();
+            apiKey.Value = "lkajsdlkjsdlkkjfñaksdjfakjsdf";
+
+            return apiKey;
+        }
+
+        public async Task UpdateUserAsync(int id, User user)
+        {
+
+        }
     }
 }

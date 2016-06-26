@@ -51,5 +51,28 @@ namespace MyStyleApp.Services.Backend
 
             return LoggedUser;
         }
+
+        public async Task<ApiKey> CreateUserAsync(User user)
+        {
+            ApiKey apiKey = await this.HttpService.InvokeWithContentAsync<ApiKey, User>(
+                HttpMethod.Post,
+                BackendConstants.REGISTER_URL,
+                null,
+                user,
+                null);
+
+            return apiKey;
+        }
+
+        public async Task UpdateUserAsync(int id, User user)
+        {
+            string apiKey = await this.HttpService.GetApiKeyAuthorizationAsync();
+            await this.HttpService.InvokeWithContentAsync<User>(
+                HttpMethod.Put,
+                BackendConstants.USER_URL,
+                apiKey,
+                user,
+                new object[] { id });
+        }
     }
 }

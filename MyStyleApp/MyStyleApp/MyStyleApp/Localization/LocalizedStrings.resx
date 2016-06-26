@@ -286,7 +286,7 @@
     <value>Results</value>
   </data>
   <data name="error_fields_not_equal" xml:space="preserve">
-    <value>Fields "${FIELD_NAME_1}" and ${FIELD_NAME_2} must be equal</value>
+    <value>Fields "${FIELD_NAME_1}" and "${FIELD_NAME_2}" must be equal</value>
   </data>
   <data name="repeat_email" xml:space="preserve">
     <value>Repeat your email</value>
@@ -310,6 +310,9 @@
     <value>Repeat new password</value>
   </data>
   <data name="error_fields_equal" xml:space="preserve">
-    <value>Fields "${FIELD_NAME_1}" and ${FIELD_NAME_2} must be diferent</value>
+    <value>Fields "${FIELD_NAME_1}" and "${FIELD_NAME_2}" must be diferent</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
 </root>

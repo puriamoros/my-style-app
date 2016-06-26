@@ -16,6 +16,9 @@ namespace MyStyleApp.Models
         [JsonProperty(Required = Required.Always, PropertyName = "email")]
         public string Email { get; set; }
 
+        [JsonProperty(Required = Required.Default, PropertyName = "password")]
+        public string Password { get; set; }
+
         [JsonProperty(Required = Required.Always, PropertyName = "userType")]
         public int UserType { get; set; }
 

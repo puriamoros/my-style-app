@@ -286,7 +286,7 @@
     <value>Resultados</value>
   </data>
   <data name="error_fields_not_equal" xml:space="preserve">
-    <value>Los campos "${FIELD_NAME_1}" y ${FIELD_NAME_2} deben ser iguales</value>
+    <value>Los campos "${FIELD_NAME_1}" y "${FIELD_NAME_2}" deben ser iguales</value>
   </data>
   <data name="repeat_email" xml:space="preserve">
     <value>Repite tu dirección de correo electrónico</value>
@@ -310,6 +310,9 @@
     <value>Repite la nueva contraseña</value>
   </data>
   <data name="error_fields_equal" xml:space="preserve">
-    <value>Los campos "${FIELD_NAME_1}" y ${FIELD_NAME_2} deben ser distintos</value>
+    <value>Los campos "${FIELD_NAME_1}" y "${FIELD_NAME_2}" deben ser distintos</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Cancelar</value>
   </data>
 </root>

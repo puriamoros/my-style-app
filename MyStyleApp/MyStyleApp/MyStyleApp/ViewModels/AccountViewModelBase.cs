@@ -55,9 +55,7 @@ namespace MyStyleApp.ViewModels
                 this.Phone = user.Phone;
                 this.Email = user.Email;
                 this.RepeatEmail = this.Email;
-                this.Password = "";
-                this.RepeatPassword = "";
-            }
+             }
             else
             {
                 this.Name = "";
@@ -65,10 +63,10 @@ namespace MyStyleApp.ViewModels
                 this.Phone = "";
                 this.Email = "";
                 this.RepeatEmail = "";
-                this.Password = "";
-                this.RepeatPassword = "";
             }
             this.Password = "";
+            this.RepeatPassword = "";
+            this.ErrorText = "";
 
             this.Mode = mode;
         }

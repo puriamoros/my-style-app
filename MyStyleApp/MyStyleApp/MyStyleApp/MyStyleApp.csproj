@@ -51,6 +51,7 @@
     <Compile Include="Enums\EstablishmentTypeEnum.cs" />
     <Compile Include="Enums\ProvinceEnum.cs" />
     <Compile Include="Exceptions\BackendException.cs" />
+    <Compile Include="Models\UserPassword.cs" />
     <Compile Include="Models\ApiKey.cs" />
     <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\CalendarAppointment.cs" />

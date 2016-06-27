@@ -35,6 +35,17 @@ class Authorization
 		throw new ApiException(STATE_NOT_AUTHORIZED, "Not authorized", 401);
     }
 	
+	public static function authorizeBasicSameUser($id)
+    {
+		$auth = $this->authorizeBasic();
+		
+		if($auth[$this->users->id] === $id) {
+			return $auth;
+		}
+		
+		throw new ApiException(STATE_NOT_AUTHORIZED, "Not authorized", 401);
+    }
+	
 	public static function authorizeApiKey()
     {
 		$headers = apache_request_headers();

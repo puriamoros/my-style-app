@@ -143,6 +143,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Created account.
+        /// </summary>
+        internal static string created_account {
+            get {
+                return ResourceManager.GetString("created_account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete favourite.
         /// </summary>
         internal static string delete_favourite {
@@ -508,6 +517,15 @@ namespace MyStyleApp.Localization {
         internal static string phone_placeholder {
             get {
                 return ResourceManager.GetString("phone_placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please log in .
+        /// </summary>
+        internal static string please_login {
+            get {
+                return ResourceManager.GetString("please_login", resourceCulture);
             }
         }
         

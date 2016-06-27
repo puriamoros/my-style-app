@@ -9,8 +9,9 @@ namespace MyStyleApp.Services.Backend
         Task LoginAsync(string email, string password, bool rememberLogin);
         Task LogoutAsync();
         Task<User> MeAsync();
-        Task<ApiKey> CreateUserAsync(User user);
+        Task<ApiKey> RegisterUserAsync(User user);
         Task UpdateUserAsync(int id, User user);
+        Task UpdatePasswordAsync(int id, string oldPassword, string newPassword);
 
     }
 }

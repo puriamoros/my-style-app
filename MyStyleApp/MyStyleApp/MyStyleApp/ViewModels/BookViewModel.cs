@@ -32,7 +32,7 @@ namespace MyStyleApp.ViewModels
             await this.UserNotificator.DisplayAlert(
                this.LocalizedStrings.GetString("booking_requested"),
                this.LocalizedStrings.GetString("email_confirmation"), 
-               this.LocalizedStrings.GetString("establishments"));
+               this.LocalizedStrings.GetString("ok"));
         }
     }
 }

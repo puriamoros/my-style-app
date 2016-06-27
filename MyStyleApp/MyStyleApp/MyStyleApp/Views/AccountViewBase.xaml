@@ -5,11 +5,20 @@
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
              xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}"
-             Title="{Binding LocalizedStrings[my_account]}" Icon="User.png">
+             Title="{Binding Title}" Icon="User.png">
   
   <ScrollView>
     <Grid>
       <StackLayout Spacing="15" Padding="{StaticResource PageContentPadding}">
+        <StackLayout Spacing="0"
+          IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=Create}">
+          <Label
+              Text="{Binding Title}"
+              Style="{StaticResource LargeTextStyle}"
+              HorizontalOptions="Center"
+              IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
+        </StackLayout>
+        
         <StackLayout Spacing="0" >
           <Label
             Text="{Binding LocalizedStrings[name]}"
@@ -82,18 +91,18 @@
           <Entry
             IsPassword="True"
             Placeholder="{Binding LocalizedStrings[password_placeholder]}"
-            Text="{Binding PasswordRepeated}" />
+            Text="{Binding RepeatPassword}" />
         </StackLayout>
         
         <StackLayout>
           <Label
             Text="{Binding ErrorText}"
-            IsVisible="{Binding ErrorText, Converter={StaticResource StringToBoolConverter}}"
+            
             TextColor="{StaticResource ErrorColor}"
             Style="{StaticResource SmallTextStyle}" />
         </StackLayout>
 
-        <StackLayout VerticalOptions="EndAndExpand" Padding="0,10,0,0" Spacing="5">
+        <StackLayout  Padding="0,10,0,0" Spacing="5">
           <controls:CustomButton
             IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=Create}"
             Text="{Binding LocalizedStrings[create_account]}"

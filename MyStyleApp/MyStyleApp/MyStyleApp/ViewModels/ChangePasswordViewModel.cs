@@ -1,11 +1,15 @@
 ﻿using MvvmCore;
+using MyStyleApp.Models;
 using MyStyleApp.Services;
+using MyStyleApp.Services.Backend;
 using MyStyleApp.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace MyStyleApp.ViewModels
 {
@@ -18,17 +22,25 @@ namespace MyStyleApp.ViewModels
         private string _oldPassword;
         private string _newPassword;
         private string _newPasswordRepeated;
+        private string _errorText;
 
         private ValidationService _validationService;
+
+        private IUsersService _usersService;
+
+        public ICommand SavePasswordCommand { get; private set; }
 
         public ChangePasswordViewModel(
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
-            ValidationService validationService) :
+            ValidationService validationService,
+            IUsersService usersService) :
             base(navigator, userNotificator, localizedStringsService)
         {
-
+            this.SavePasswordCommand = new Command(this.SavePasswordAsync);
+            this._validationService = validationService;
+            this._usersService = usersService;
         }
 
         public string OldPassword
@@ -49,12 +61,16 @@ namespace MyStyleApp.ViewModels
             set { SetProperty(ref _newPasswordRepeated, value); }
         }
 
+        public string ErrorText
+        {
+            get { return _errorText; }
+            set { SetProperty(ref _errorText, value); }
+        }
+
         private string GetValidationError()
         {
             // Alwais clear validators before adding
             this._validationService.ClearValidators();
-
-            //hay q cambiar el string q pasamos para cada caso???
 
             // OldPassword
             this._validationService.AddValidator(
@@ -77,6 +93,26 @@ namespace MyStyleApp.ViewModels
                 new EqualValidator(this.NewPassword, this.NewPasswordRepeated, STRING_NEWPASSWORD, STRING_NEWPASSWORDREPEATED));
 
             return this._validationService.GetValidationError();
+        }
+
+        public async void SavePasswordAsync()
+        {
+            string validationError = this.GetValidationError();
+
+            if (validationError == null)
+            {
+                this.ErrorText = "";
+                await this.ExecuteBlockingUIAsync(
+                    async () =>
+                    {
+                        await this._usersService.UpdatePasswordAsync(this._usersService.LoggedUser.Id, this.OldPassword, this.NewPassword);
+                        await this.PopNavPageAsync();
+                    });
+            }
+            else
+            {
+                this.ErrorText = validationError;
+            }
         }
 
     }

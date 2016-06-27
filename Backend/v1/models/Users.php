@@ -63,6 +63,18 @@ class Users extends ModelWithIdBase
 		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
     }
 	
+	public function put($queryArray)
+    {
+		if(count($queryArray) == 2) {
+			return $this->updateElement($queryArray[1]);
+		}
+		if(count($queryArray) == 3) {
+			return $this->updatePassword($queryArray[1]);
+		}
+		
+		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
+    }
+	
 	public function delete($queryArray)
     {
 		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
@@ -150,23 +162,26 @@ class Users extends ModelWithIdBase
 		return $result;
 	}
 	
-	protected function updateElement($id)
+	private function updatePassword($id)
 	{
 		// Check authorization
-		Authorization::authorizeApiKey();
+		Authorization::authorizeBasic();
 		
 		$data = $this->getBodyData();
-		$data[$this->users->password] = $this->encryptPassword($data[$this->users->password]);
-		unset($data[$this->users->apiKey]);
+		if(isset($data[$this->users->password])) {
+			$data[$this->users->password] = $this->encryptPassword($data[$this->users->password]);
+			
+				// TODO: Validate fields
+			
+			// Update password
+			return DBCommands::dbUpdate($this->table, [$this->users->password], $this->idField, $id, $data);
+			
+			// Print response
+			http_response_code(204);
+			return;
+		}
 
-		// TODO: Validate fields
-		
-		// Update user
-		$this->dbUpdate($id, $data);
-		
-		// Print response
-		http_response_code(204);
-		return;
+		throw new ApiException(STATE_INVALID_DATA, "Invalid data");
 	}
 	
 	protected function dbUpdate($id, $data)
@@ -223,6 +238,7 @@ class Users extends ModelWithIdBase
 				$result = DBCommands::dbGetOne(Tables::getInstance()->users->table, $fields, Tables::getInstance()->users->email, $email);
 			
 				if(password_verify($password, $result[Tables::getInstance()->users->password])) {
+					unset($result[Tables::getInstance()->users->password]);
 					return $result;
 				}
 			} catch (PDOException $e) {

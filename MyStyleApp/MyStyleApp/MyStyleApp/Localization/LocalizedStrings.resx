@@ -315,4 +315,10 @@
   <data name="cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="created_account" xml:space="preserve">
+    <value>Created account</value>
+  </data>
+  <data name="please_login" xml:space="preserve">
+    <value>Please log in </value>
+  </data>
 </root>

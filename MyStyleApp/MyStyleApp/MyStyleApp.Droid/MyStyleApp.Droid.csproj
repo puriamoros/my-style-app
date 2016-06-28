@@ -52,14 +52,6 @@
       <HintPath>..\..\packages\Xamarin.Forms.2.2.0.31\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FreshEssentials, Version=1.0.5976.18464, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FreshEssentials.2.0.1\lib\MonoAndroid10\FreshEssentials.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FreshEssentials.Droid, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FreshEssentials.2.0.1\lib\MonoAndroid10\FreshEssentials.Droid.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />

@@ -198,8 +198,8 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    //var list = await this._establishmentsService.GetEstablishmentsAsync(this.SelectedProvince, this.SelectedService);
-                    var list = await this._establishmentsService.GetEstablishmentsAsync(new Province() { Id = 1 }, new Service() { Id = 1 });
+                    var list = await this._establishmentsService.GetEstablishmentsAsync(this.SelectedProvince, this.SelectedService);
+                    //var list = await this._establishmentsService.GetEstablishmentsAsync(new Province() { Id = 1 }, new Service() { Id = 1 });
                     if (list.Count <= 0)
                     {
                         this.IsBusy = false;
@@ -221,8 +221,8 @@ namespace MyStyleApp.ViewModels
 
         private bool CanSearch()
         {
-            return true;
-            //return this.SelectedProvince != null && this.SelectedService != null;
+            //return true;
+            return this.SelectedProvince != null && this.SelectedService != null;
         }
     }
 }

@@ -97,7 +97,7 @@
         <StackLayout>
           <Label
             Text="{Binding ErrorText}"
-            
+            IsVisible="{Binding ErrorText, Converter={StaticResource StringToBoolConverter}}"
             TextColor="{StaticResource ErrorColor}"
             Style="{StaticResource SmallTextStyle}" />
         </StackLayout>

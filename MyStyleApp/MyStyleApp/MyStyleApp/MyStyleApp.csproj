@@ -141,6 +141,7 @@
     <Compile Include="ViewModels\NavigagleViewModelBase.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\Controls\BindablePicker.cs" />
     <Compile Include="Views\CreateAccountView.cs" />
     <Compile Include="Views\AccountDetailsView.cs" />
     <Compile Include="Views\AccountViewBase.xaml.cs">
@@ -172,6 +173,8 @@
     <Compile Include="Views\FavouritesView.xaml.cs">
       <DependentUpon>FavouritesView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Gestures\ListViewItemTapped.cs" />
+    <Compile Include="Views\Gestures\TappedGesture.cs" />
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -319,6 +322,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.2.0.31\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.2.0.31\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

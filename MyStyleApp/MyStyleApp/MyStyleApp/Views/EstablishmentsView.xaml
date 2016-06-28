@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyStyleApp.Views.EstablishmentsView"
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
+             xmlns:gestures="clr-namespace:MyStyleApp.Views.Gestures"
              xmlns:mvvmcorebehaviors="clr-namespace:MvvmCore.Behaviors"
              xmlns:views="clr-namespace:MyStyleApp.Views"
-             xmlns:fe="clr-namespace:FreshEssentials;assembly=FreshEssentials"
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[results]}">
   <Grid>
@@ -20,13 +20,7 @@
       <ListView x:Name="EstablishmentsList"
         ItemsSource="{Binding EstablishmentsList}"
         HasUnevenRows="True"
-        fe:ListViewItemTappedAttached.Command="{Binding ViewDetailsCommand}">
-        <!--<ListView.Behaviors>
-          <mvvmcorebehaviors:EventToCommandBehavior
-            EventName="ItemTapped"
-            Command="{Binding ViewDetailsCommand}"
-            EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
-        </ListView.Behaviors>-->
+        gestures:ListViewItemTapped.Command="{Binding ViewDetailsCommand}">
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell x:Name="Establishment">
@@ -49,14 +43,9 @@
                       "{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
                     RelativeLayout.YConstraint=
                       "{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
-                    fe:TappedGestureAttached.Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.AddToFavouritesCommand}"
-                    fe:TappedGestureAttached.CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}"
+                    gestures:TappedGesture.Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.AddToFavouritesCommand}"
+                    gestures:TappedGesture.CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}"
                     IsVisible="{Binding IdFavourite, Converter={StaticResource IntToBoolConverter}, ConverterParameter=!}">
-                    <!--<Image.GestureRecognizers>
-                      <TapGestureRecognizer
-                        Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.AddToFavouritesCommand}"
-                        CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
-                    </Image.GestureRecognizers>-->
                   </Image>
                   <Image Aspect="AspectFit" Source="FavouriteFilled.png"
                     RelativeLayout.XConstraint=
@@ -65,14 +54,9 @@
                       "{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
                     RelativeLayout.YConstraint=
                       "{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
-                    fe:TappedGestureAttached.Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.DeleteFavouriteCommand}"
-                    fe:TappedGestureAttached.CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}"
+                    gestures:TappedGesture.Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.DeleteFavouriteCommand}"
+                    gestures:TappedGesture.CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}"
                     IsVisible="{Binding IdFavourite, Converter={StaticResource IntToBoolConverter}}">
-                    <!--<Image.GestureRecognizers>
-                      <TapGestureRecognizer
-                        Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.DeleteFavouriteCommand}"
-                        CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
-                    </Image.GestureRecognizers>-->
                   </Image>
                 </RelativeLayout>
               <ViewCell.ContextActions>

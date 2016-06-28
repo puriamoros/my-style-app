@@ -4,7 +4,6 @@
              x:Class="MyStyleApp.Views.BookView"
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
              xmlns:views="clr-namespace:MyStyleApp.Views"
-             xmlns:fe="clr-namespace:FreshEssentials;assembly=FreshEssentials"
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[book]}">
   <Grid>

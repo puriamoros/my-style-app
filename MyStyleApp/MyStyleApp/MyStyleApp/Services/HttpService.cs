@@ -372,5 +372,36 @@ namespace MyStyleApp.Services
             }
         }
 
+        public async Task<string> InvokeExternalAsync(
+            HttpMethod method,
+            string url,
+            string credentials,
+            string content)
+        {
+            HttpClient client = null;
+            HttpRequestMessage message = null;
+
+            client = this.GetHttpClient(credentials);
+
+            message = this.GetHttpRequestMessage(method, url);
+
+            if(content != null)
+            {
+                message.Content = new StringContent(content, Encoding.UTF8, "application/json");
+            }
+
+            HttpResponseMessage response = await client.SendAsync(message);
+            byte[] data = await response.Content.ReadAsByteArrayAsync();
+            var resultContentString = Encoding.UTF8.GetString(data, 0, data.Length);
+
+            if (response.StatusCode != HttpStatusCode.NoContent)
+            {
+                return resultContentString;
+            }
+            else
+            {
+                return "";
+            }
+        }
     }
 }

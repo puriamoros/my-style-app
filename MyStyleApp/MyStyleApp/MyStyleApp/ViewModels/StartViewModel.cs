@@ -18,8 +18,69 @@ namespace MyStyleApp.ViewModels
             base(navigator, userNotificator, localizedStringsService)
         {
             this._usersService = usersService;
-            this.NavigateToMainPageAsync();
+
+            //TODO: UNCOMMENT WHEN APP IS READY
+            //this.NavigateToMainPageAsync();
+
+            //------------------------------
+            //TODO: DELETE WHEN APP IS READY
+            _IP = Constants.BackendConstants.BASE_URL;
+            _IPVisible = false;
+            OkCommand = new Xamarin.Forms.Command(() =>
+            {
+                Constants.BackendConstants.BASE_URL = this.IP;
+                TestIP();
+            });
+            TestIP();
+            //TODO: DELETE WHEN APP IS READY
+            //------------------------------
         }
+
+        //------------------------------
+        //TODO: DELETE WHEN APP IS READY
+        private string _IP;
+        public System.Windows.Input.ICommand OkCommand { get; private set; }
+        public string IP
+        {
+            get { return _IP; }
+            set { SetProperty(ref _IP, value); }
+        }
+        private bool _IPVisible;
+        public bool IPVisible
+        {
+            get { return _IPVisible; }
+            set { SetProperty(ref _IPVisible, value); }
+        }
+        private async void TestIP()
+        {
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    try
+                    {
+                        HttpService http = new HttpService(null);
+                        string result = await http.InvokeExternalAsync(
+                            System.Net.Http.HttpMethod.Get,
+                            Constants.BackendConstants.BASE_URL.Replace("/v1/", ""),
+                            null,
+                            null);
+
+                        if(!result.Contains("It's running!!"))
+                        {
+                            throw new Exception();
+                        }
+
+                        IPVisible = false;
+                        NavigateToMainPageAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        IPVisible = true;
+                    }
+                });
+        }
+        //TODO: DELETE WHEN APP IS READY
+        //------------------------------
 
         //public override void OnAppearing()
         //{

@@ -4,7 +4,6 @@
              x:Class="MyStyleApp.Views.SearchView"
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
              xmlns:views="clr-namespace:MyStyleApp.Views"
-             xmlns:fe="clr-namespace:FreshEssentials;assembly=FreshEssentials"
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[search]}" Icon="Search.png">
   <ScrollView>
@@ -20,7 +19,7 @@
           <Label 
             Text="{Binding LocalizedStrings[province]}"
             Style="{StaticResource MediumTextStyle}"/>
-          <fe:BindablePicker
+          <controls:BindablePicker
             ItemsSource="{Binding ProvinceList}"
             DisplayProperty="Name"
             SelectedItem="{Binding SelectedProvince}"
@@ -30,7 +29,7 @@
           <Label 
             Text="{Binding LocalizedStrings[establishment_type]}"
             Style="{StaticResource MediumTextStyle}"/>
-          <fe:BindablePicker
+          <controls:BindablePicker
             ItemsSource="{Binding EstablishmentTypeList}"
             DisplayProperty="Name"
             SelectedItem="{Binding SelectedEstablishmentType}"
@@ -40,7 +39,7 @@
           <Label
             Text="{Binding LocalizedStrings[service_category]}"
             Style="{StaticResource MediumTextStyle}"/>
-          <fe:BindablePicker
+          <controls:BindablePicker
             ItemsSource="{Binding ServiceCategoryList, Mode=TwoWay}"
             DisplayProperty="Name"
             SelectedItem="{Binding SelectedServiceCategory}"
@@ -50,7 +49,7 @@
           <Label 
             Text="{Binding LocalizedStrings[service]}"
             Style="{StaticResource MediumTextStyle}"/>
-          <fe:BindablePicker
+          <controls:BindablePicker
             ItemsSource="{Binding ServiceList, Mode=TwoWay}"
             DisplayProperty="Name"
             SelectedItem="{Binding SelectedService}"

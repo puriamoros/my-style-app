@@ -7,7 +7,17 @@
              Padding="{StaticResource PagePadding}">
   <ScrollView>
     <Grid>
-      <!-- Put the page contents here -->
+      
+      <!-- TODO: DELETE WHEN APP IS READY -->
+      <StackLayout IsVisible="{Binding IPVisible}">
+        <Entry
+          Text="{Binding IP}"/>
+        <controls:CustomButton
+            Text="Ok"
+            Command="{Binding OkCommand}"/>
+      </StackLayout>
+      <!-- TODO: DELETE WHEN APP IS READY -->
+      
       <controls:WaitingOverlayControl
         IsVisible="{Binding IsBusy}"
         Text="{Binding LocalizedStrings[waiting]}"/>

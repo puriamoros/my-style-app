@@ -183,7 +183,10 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    await this.PushNavPageAsync<ChangePasswordViewModel>();
+                    await this.PushNavPageAsync<ChangePasswordViewModel>((changePVM) =>
+                    {
+                        changePVM.Initialize();
+                    });
                 });
         }
 

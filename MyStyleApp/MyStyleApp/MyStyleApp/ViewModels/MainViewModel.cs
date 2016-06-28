@@ -25,6 +25,7 @@ namespace MyStyleApp.ViewModels
         public void Initialize()
         {
             this._accountDetailsViewModel.Initialize(this._userService.LoggedUser);
+            this.SetMainPageTabAsync<AppointmentsViewModel>();
         }
     }
 }

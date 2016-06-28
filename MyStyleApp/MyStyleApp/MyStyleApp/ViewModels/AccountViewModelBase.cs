@@ -12,12 +12,12 @@ namespace MyStyleApp.ViewModels
 {
     public abstract class AccountViewModelBase : NavigableViewModelBase
     {
-        public ICommand CreateAccountCommand { get; private set; }
-        public ICommand EditAccountCommand { get; private set; }
-        public ICommand SaveAccountCommand { get; private set; }
-        public ICommand CancelCommand { get; private set; }
-        public ICommand ChangePasswordAccountCommand { get; private set; }
-        public ICommand LogOutCommand { get; private set; }
+        public Command CreateAccountCommand { get; private set; }
+        public Command EditAccountCommand { get; private set; }
+        public Command SaveAccountCommand { get; private set; }
+        public Command CancelCommand { get; private set; }
+        public Command ChangePasswordAccountCommand { get; private set; }
+        public Command LogOutCommand { get; private set; }
         
         private string _name;
         private string _surname;
@@ -36,9 +36,9 @@ namespace MyStyleApp.ViewModels
             LocalizedStringsService localizedStringsService) :
             base(navigator, userNotificator, localizedStringsService)
         {
-            this.CreateAccountCommand = new Command(this.CreateAccountAsync);
+            this.CreateAccountCommand = new Command(this.CreateAccountAsync, this.CanCreateAccount);
             this.EditAccountCommand = new Command(this.EditAccount);
-            this.SaveAccountCommand = new Command(this.SaveAccountAsync);
+            this.SaveAccountCommand = new Command(this.SaveAccountAsync, this.CanSaveAccount);
             this.CancelCommand = new Command(this.Cancel);
             this.ChangePasswordAccountCommand = new Command(this.ChangePasswordAccountAsync);
             this.LogOutCommand = new Command(this.LogOutAsync);
@@ -80,43 +80,76 @@ namespace MyStyleApp.ViewModels
         public string Name
         {
             get { return _name; }
-            set { SetProperty(ref _name, value); }
+            set
+            {
+                SetProperty(ref _name, value);
+                this.CreateAccountCommand.ChangeCanExecute();
+                this.SaveAccountCommand.ChangeCanExecute();
+            }
         }
 
         public string Surname
         {
             get { return _surname; }
-            set { SetProperty(ref _surname, value); }
+            set
+            {
+                SetProperty(ref _surname, value);
+                this.CreateAccountCommand.ChangeCanExecute();
+                this.SaveAccountCommand.ChangeCanExecute();
+            }
         }
 
         public string Phone
         {
             get { return _phone; }
-            set { SetProperty(ref _phone, value); }
+            set
+            {
+                SetProperty(ref _phone, value);
+                this.CreateAccountCommand.ChangeCanExecute();
+                this.SaveAccountCommand.ChangeCanExecute();
+            }
         }
 
         public string Email
         {
             get { return _email; }
-            set { SetProperty(ref _email, value); }
+            set
+            {
+                SetProperty(ref _email, value);
+                this.CreateAccountCommand.ChangeCanExecute();
+                this.SaveAccountCommand.ChangeCanExecute();
+            }
         }
 
         public string RepeatEmail
         {
             get { return _repeatEmail; }
-            set { SetProperty(ref _repeatEmail, value); }
+            set
+            {
+                SetProperty(ref _repeatEmail, value);
+                this.CreateAccountCommand.ChangeCanExecute();
+                this.SaveAccountCommand.ChangeCanExecute();
+            }
         }
 
         public string Password
         {
             get { return _password; }
-            set { SetProperty(ref _password, value); }
+            set
+            {
+                SetProperty(ref _password, value);
+                this.CreateAccountCommand.ChangeCanExecute();
+            }
         }
 
         public string RepeatPassword
         {
             get { return _repeatPassword; }
-            set { SetProperty(ref _repeatPassword, value); }
+            set
+            {
+                SetProperty(ref _repeatPassword, value);
+                this.CreateAccountCommand.ChangeCanExecute();
+            }
         }
 
         public string ErrorText
@@ -147,6 +180,19 @@ namespace MyStyleApp.ViewModels
 
         protected virtual async void LogOutAsync()
         {
+        }
+
+        private bool CanSaveAccount()
+        {
+            return !string.IsNullOrEmpty(this.Name) && !string.IsNullOrEmpty(this.Surname) && !string.IsNullOrEmpty(this.Phone)
+                && !string.IsNullOrEmpty(this.Email) && !string.IsNullOrEmpty(this.RepeatEmail);
+        }
+
+        private bool CanCreateAccount()
+        {
+            return !string.IsNullOrEmpty(this.Name) && !string.IsNullOrEmpty(this.Surname) && !string.IsNullOrEmpty(this.Phone) 
+                && !string.IsNullOrEmpty(this.Email) && !string.IsNullOrEmpty(this.RepeatEmail) 
+                && !string.IsNullOrEmpty(this.Password) && !string.IsNullOrEmpty(this.RepeatPassword);
         }
 
     }

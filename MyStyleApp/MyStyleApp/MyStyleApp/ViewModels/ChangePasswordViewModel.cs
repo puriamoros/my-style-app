@@ -28,7 +28,7 @@ namespace MyStyleApp.ViewModels
 
         private IUsersService _usersService;
 
-        public ICommand SavePasswordCommand { get; private set; }
+        public Command SavePasswordCommand { get; private set; }
 
         public ChangePasswordViewModel(
             INavigator navigator,
@@ -38,27 +38,46 @@ namespace MyStyleApp.ViewModels
             IUsersService usersService) :
             base(navigator, userNotificator, localizedStringsService)
         {
-            this.SavePasswordCommand = new Command(this.SavePasswordAsync);
+            this.SavePasswordCommand = new Command(this.SavePasswordAsync, this.CanSavePassword);
             this._validationService = validationService;
             this._usersService = usersService;
+        }
+
+        public void Initialize()
+        {
+            this.OldPassword = "";
+            this.NewPassword = "";
+            this.NewPasswordRepeated = "";
         }
 
         public string OldPassword
         {
             get { return _oldPassword; }
-            set { SetProperty(ref _oldPassword, value); }
+            set
+            {
+                SetProperty(ref _oldPassword, value);
+                this.SavePasswordCommand.ChangeCanExecute();
+            }
         }
 
         public string NewPassword
         {
             get { return _newPassword; }
-            set { SetProperty(ref _newPassword, value); }
+            set
+            {
+                SetProperty(ref _newPassword, value);
+                this.SavePasswordCommand.ChangeCanExecute();
+            }
         }
 
         public string NewPasswordRepeated
         {
             get { return _newPasswordRepeated; }
-            set { SetProperty(ref _newPasswordRepeated, value); }
+            set
+            {
+                SetProperty(ref _newPasswordRepeated, value);
+                this.SavePasswordCommand.ChangeCanExecute();
+            }
         }
 
         public string ErrorText
@@ -113,6 +132,11 @@ namespace MyStyleApp.ViewModels
             {
                 this.ErrorText = validationError;
             }
+        }
+
+        private bool CanSavePassword()
+        {
+            return !string.IsNullOrEmpty(this.OldPassword) && !string.IsNullOrEmpty(this.NewPassword) && !string.IsNullOrEmpty(this.NewPasswordRepeated);
         }
 
     }

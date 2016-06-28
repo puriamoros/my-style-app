@@ -41,8 +41,8 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    this.FavouritesList = new ObservableCollection<Establishment>(
-                        await this._favouritesService.GetFavouritesAsync());
+                    var list = await this._favouritesService.GetFavouritesAsync();
+                    this.FavouritesList = new ObservableCollection<Establishment>(list);
                 });
         }
 

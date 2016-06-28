@@ -8,8 +8,9 @@
              Title="{Binding Title}" Icon="User.png">
   
   <ScrollView>
-    <Grid>
-      <StackLayout Spacing="15" Padding="{StaticResource PageContentPadding}">
+    <RelativeLayout>
+      <StackLayout RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+        Spacing="15" Padding="{StaticResource PageContentPadding}">
         <StackLayout Spacing="0"
           IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=Create}">
           <Label
@@ -46,7 +47,7 @@
           <Entry
             Placeholder="{Binding LocalizedStrings[phone_placeholder]}"
             Text="{Binding Phone}"
-            Keyboard="Text"
+            Keyboard="Numeric"
             IsEnabled="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=!View}" />
         </StackLayout>
 
@@ -102,7 +103,7 @@
             Style="{StaticResource SmallTextStyle}" />
         </StackLayout>
 
-        <StackLayout  Padding="0,10,0,0" Spacing="5">
+        <StackLayout  Padding="0,10,0,0" Spacing="5" VerticalOptions="EndAndExpand">
           <controls:CustomButton
             IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=Create}"
             Text="{Binding LocalizedStrings[create_account]}"
@@ -135,9 +136,11 @@
         </StackLayout>
       </StackLayout>
       <controls:WaitingOverlayControl
+        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}"
         IsVisible="{Binding IsBusy}"
         Text="{Binding LocalizedStrings[waiting]}"/>
-    </Grid>
+    </RelativeLayout>
   </ScrollView>
   
 </views:CustomContentPage>

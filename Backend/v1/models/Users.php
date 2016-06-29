@@ -162,6 +162,16 @@ class Users extends ModelWithIdBase
 		return $result;
 	}
 	
+	protected function dbCreate($data)
+	{
+		// Check if another user with same email already exists
+		if(isset($data[$this->users->email]) &&
+			count(DBCommands::dbGet($this->users->table, [$this->users->id], [$this->users->email], [$this->users->email => $data[$this->users->email]])) > 0) {
+			throw new ApiException(STATE_DUPLICATED_KEY_ERROR, "Duplicated key");
+		}
+		return parent::dbCreate($data);
+	}
+	
 	private function updatePassword($id)
 	{
 		// Check authorization
@@ -186,6 +196,14 @@ class Users extends ModelWithIdBase
 	
 	protected function dbUpdate($id, $data)
 	{
+		// Check if another user with same email already exists
+		if(isset($data[$this->users->email])) {
+			$result = DBCommands::dbGet($this->users->table, [$this->users->id], [$this->users->email], [$this->users->email => $data[$this->users->email]]);
+			if(count($result) > 0 && $result[0][$this->users->id] !== $id) {
+				throw new ApiException(STATE_DUPLICATED_KEY_ERROR, "Duplicated key");
+			}
+		}
+		
 		$fields = array_diff($this->fields, [$this->users->password, $this->users->apiKey]);
 		return DBCommands::dbUpdate($this->table, $fields, $this->idField, $id, $data);
 	}

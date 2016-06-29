@@ -7,8 +7,9 @@
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[search]}" Icon="Search.png">
   <ScrollView>
-    <Grid>
-      <StackLayout Padding="{StaticResource PageContentPadding}">
+    <RelativeLayout>
+      <StackLayout RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+        Padding="{StaticResource PageContentPadding}">
         <Label
             Text="{Binding LocalizedStrings[search]}"
             Style="{StaticResource LargeTextStyle}"
@@ -60,13 +61,11 @@
             Text="{Binding LocalizedStrings[search]}"
             Command="{Binding SearchCommand}"/>
         </StackLayout>
-
-          </StackLayout>
-      
+     </StackLayout>
       
       <controls:WaitingOverlayControl
         IsVisible="{Binding IsBusy}"
         Text="{Binding LocalizedStrings[waiting]}"/>
-    </Grid>
+    </RelativeLayout>
   </ScrollView>
 </views:CustomContentPage>

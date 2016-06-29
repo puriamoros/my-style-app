@@ -6,24 +6,27 @@
              xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[book]}">
-  <Grid>
-    <StackLayout Padding="{StaticResource PageContentPadding}">
-      <Label
-            Text="{Binding LocalizedStrings[book]}"
-            Style="{StaticResource LargeTextStyle}"
-            HorizontalOptions="Center"
-            IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
+  <ScrollView>
+    <RelativeLayout>
+      <StackLayout RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+        Padding="{StaticResource PageContentPadding}">
+        <Label
+              Text="{Binding LocalizedStrings[book]}"
+              Style="{StaticResource LargeTextStyle}"
+              HorizontalOptions="Center"
+              IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
       
-      <StackLayout VerticalOptions="EndAndExpand" Padding="0,10,0,0">
-        <controls:CustomButton
-          Text="{Binding LocalizedStrings[book]}"
-          Command="{Binding BookCommand}"/>
-      </StackLayout>
+        <StackLayout VerticalOptions="EndAndExpand" Padding="0,10,0,0">
+          <controls:CustomButton
+            Text="{Binding LocalizedStrings[book]}"
+            Command="{Binding BookCommand}"/>
+        </StackLayout>
 
-    </StackLayout>
+      </StackLayout>
 
     <controls:WaitingOverlayControl
       IsVisible="{Binding IsBusy}"
       Text="{Binding LocalizedStrings[waiting]}"/>
-  </Grid>
+    </RelativeLayout>
+  </ScrollView>
 </views:CustomContentPage>

@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using MyStyleApp.Enums;
 using MyStyleApp.Models;
 using MyStyleApp.Services.Backend;
+using MyStyleApp.Exceptions;
 
 namespace MyStyleApp.ViewModels
 {
@@ -146,8 +147,23 @@ namespace MyStyleApp.ViewModels
                     newUser.Password = this.Password;
                     newUser.UserType = 0;
 
-                    ApiKey apiKey = await this._usersService.RegisterUserAsync(newUser);
-
+                    try
+                    {
+                        await this._usersService.RegisterUserAsync(newUser);
+                    }
+                    catch (BackendException ex)
+                    {
+                        if (ex.BackendError.State == (int) BackendStatusCodeEnum.StateDuplicatedKeyError)
+                        {
+                            this.ErrorText = this.LocalizedStrings.GetString("error_duplicated_email");
+                            return;
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    
                     this.IsBusy = false;
 
                     await this.UserNotificator.DisplayAlert(

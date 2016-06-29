@@ -7,7 +7,7 @@
              xmlns:mvvmcorebehaviors="clr-namespace:MvvmCore.Behaviors"
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[appointments]}" Icon="Calendar.png">
-  
+
     <Grid>
       <StackLayout Padding="{StaticResource PageContentPadding}">
         <!-- Without HasUnevenRows="True", list items does not render well in Android -->
@@ -36,5 +36,4 @@
         IsVisible="{Binding IsBusy}"
         Text="{Binding LocalizedStrings[waiting]}"/>
     </Grid>
-  
 </views:CustomContentPage>

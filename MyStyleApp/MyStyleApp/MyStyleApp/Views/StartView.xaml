@@ -6,10 +6,12 @@
              xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}">
   <ScrollView>
-    <Grid>
+    <RelativeLayout>
       
       <!-- TODO: DELETE WHEN APP IS READY -->
-      <StackLayout IsVisible="{Binding IPVisible}">
+      <StackLayout RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+        IsVisible="{Binding IPVisible}">
+       
         <Entry
           Text="{Binding IP}"/>
         <controls:CustomButton
@@ -21,6 +23,6 @@
       <controls:WaitingOverlayControl
         IsVisible="{Binding IsBusy}"
         Text="{Binding LocalizedStrings[waiting]}"/>
-    </Grid>
+    </RelativeLayout>
   </ScrollView>
 </views:CustomContentPage>

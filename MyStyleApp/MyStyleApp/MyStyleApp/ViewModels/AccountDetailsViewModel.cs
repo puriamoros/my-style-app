@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using MyStyleApp.Enums;
 using MyStyleApp.Models;
 using MyStyleApp.Services.Backend;
+using MyStyleApp.Exceptions;
 
 namespace MyStyleApp.ViewModels
 {
@@ -136,8 +137,24 @@ namespace MyStyleApp.ViewModels
                         updateUser.Email = this.Email;
                         updateUser.Phone = this.Phone;
                         updateUser.UserType = this._usersService.LoggedUser.UserType;
+                        
+                        try
+                        {
+                            await this._usersService.UpdateUserAsync(this._usersService.LoggedUser.Id, updateUser);
+                        }
+                        catch (BackendException ex)
+                        {
+                            if (ex.BackendError.State == (int)BackendStatusCodeEnum.StateDuplicatedKeyError)
+                            {
+                                this.ErrorText = this.LocalizedStrings.GetString("error_duplicated_email");
+                                return;
+                            }
+                            else
+                            {
+                                throw;
+                            }
+                        }
 
-                        await this._usersService.UpdateUserAsync(this._usersService.LoggedUser.Id, updateUser);
 
                         this.Mode = AccountModeEnum.View;
 

@@ -215,6 +215,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error: The entered email is already registered.
+        /// </summary>
+        internal static string error_duplicated_email {
+            get {
+                return ResourceManager.GetString("error_duplicated_email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The field &quot;${FIELD_NAME}&quot; must have ${FIELD_LENGTH} characters.
         /// </summary>
         internal static string error_field_length {

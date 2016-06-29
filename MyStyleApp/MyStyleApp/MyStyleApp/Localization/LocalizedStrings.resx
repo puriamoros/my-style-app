@@ -321,4 +321,7 @@
   <data name="please_login" xml:space="preserve">
     <value>Please log in </value>
   </data>
+  <data name="error_duplicated_email" xml:space="preserve">
+    <value>Error: The entered email is already registered</value>
+  </data>
 </root>

@@ -48,6 +48,7 @@
     <Compile Include="Converters\PlatformToBoolConverter.cs" />
     <Compile Include="Converters\StringToBoolConverter.cs" />
     <Compile Include="Enums\AccountModeEnum.cs" />
+    <Compile Include="Enums\BackendStatusCodeEnum.cs" />
     <Compile Include="Enums\EstablishmentTypeEnum.cs" />
     <Compile Include="Enums\ProvinceEnum.cs" />
     <Compile Include="Exceptions\BackendException.cs" />

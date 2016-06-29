@@ -7,8 +7,9 @@
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[establishment_details]}">
   <ScrollView>
-    <Grid>
-        <StackLayout Padding="{StaticResource PageContentPadding}">
+    <RelativeLayout>
+      <StackLayout RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}" 
+          Padding="{StaticResource PageContentPadding}">
           <Label
             Text="{Binding LocalizedStrings[establishment_details]}"
             Style="{StaticResource LargeTextStyle}"
@@ -61,7 +62,7 @@
       <controls:WaitingOverlayControl
         IsVisible="{Binding IsBusy}"
         Text="{Binding LocalizedStrings[waiting]}"/>
-    </Grid>
+    </RelativeLayout>
   </ScrollView>
 </views:CustomContentPage>
 

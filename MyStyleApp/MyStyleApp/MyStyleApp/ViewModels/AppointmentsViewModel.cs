@@ -9,7 +9,7 @@ namespace MyStyleApp.ViewModels
 {
     public class AppointmentsViewModel : NavigableViewModelBase
     {
-        public ICommand NewAccountCommand { get; private set; }
+        //public ICommand NewAccountCommand { get; private set; }
 
         private IUsersService _userService;
 
@@ -21,13 +21,24 @@ namespace MyStyleApp.ViewModels
             base(navigator, userNotificator, localizedStringsService)
         {
             this._userService = userService;
-            this.NewAccountCommand = new Command(this.NewAccountAsync);
+            //this.NewAccountCommand = new Command(this.NewAccountAsync);
         }
 
-        private async void NewAccountAsync()
-        {
-            await this._userService.LogoutAsync();
-            await this.SetMainPageAsync<LoginViewModel>();
-        }
+        //public int MyProperty
+        //{
+        //    get;
+        //    set;
+        //}
+
+        //public int MyProperty
+        //{
+        //    get;
+        //    set;
+        //}
+        //private async void NewAccountAsync()
+        //{
+        //    await this._userService.LogoutAsync();
+        //    await this.SetMainPageAsync<LoginViewModel>();
+        //}
     }
 }

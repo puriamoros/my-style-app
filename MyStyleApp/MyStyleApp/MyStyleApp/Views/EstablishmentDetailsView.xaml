@@ -7,62 +7,67 @@
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[establishment_details]}">
   <ScrollView>
-    <RelativeLayout>
-      <StackLayout RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}" 
-          Padding="{StaticResource PageContentPadding}">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <StackLayout Grid.Row="0"
+        Padding="{StaticResource PageContentPadding}">
+        <Label
+          Text="{Binding LocalizedStrings[establishment_details]}"
+          Style="{StaticResource LargeTextStyle}"
+          HorizontalOptions="Center"
+          IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
+
+        <StackLayout Padding="0,0,0,10" Spacing="0">
+          <Label Text="{Binding Establishment.Name}" Style="{StaticResource LargeTextStyle}"/>
+          <Label Text="{Binding Establishment.Address}" Style="{StaticResource SmallTextStyle}"/>
+          <Label Text="{Binding Establishment.Phone}" Style="{StaticResource SmallTextStyle}"/>
+        </StackLayout>
+
+        <StackLayout Padding="0,0,0,10" Spacing="0">
           <Label
-            Text="{Binding LocalizedStrings[establishment_details]}"
-            Style="{StaticResource LargeTextStyle}"
-            HorizontalOptions="Center"
-            IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
-
-          <StackLayout Padding="0,0,0,10" Spacing="0">
-            <Label Text="{Binding Establishment.Name}" Style="{StaticResource LargeTextStyle}"/>
-            <Label Text="{Binding Establishment.Address}" Style="{StaticResource SmallTextStyle}"/>
-            <Label Text="{Binding Establishment.Phone}" Style="{StaticResource SmallTextStyle}"/>
-          </StackLayout>
-
-          <StackLayout Padding="0,0,0,10" Spacing="0">
-            <Label
-              Text="{Binding LocalizedStrings[service_category]}"
-              Style="{StaticResource MediumTextStyle}"/>
-            <controls:BindablePicker
-              ItemsSource="{Binding ServiceCategoryList, Mode=TwoWay}"
-              DisplayProperty="Name"
-              SelectedItem="{Binding SelectedServiceCategory}"
-              Title="{Binding ChooseItemPlaceholder}"/>
-          </StackLayout>
-      
-          <StackLayout Padding="0,0,0,10" Spacing="0">
-            <Label
-              Text="{Binding LocalizedStrings[service]}"
-              Style="{StaticResource MediumTextStyle}"/>
-            <controls:BindablePicker
-              ItemsSource="{Binding ServiceList, Mode=TwoWay}"
-              DisplayProperty="NameAndPrice"
-              SelectedItem="{Binding SelectedService}"
-              Title="{Binding ChooseItemPlaceholder}"/>
-          </StackLayout>
-              
-          <StackLayout VerticalOptions="EndAndExpand" Padding="0,10,0,0">
-            <controls:CustomButton
-              Text="{Binding LocalizedStrings[book]}"
-              Command="{Binding BookCommand}"/>
-            <controls:CustomButton
-              Text="{Binding LocalizedStrings[add_to_favourites]}"
-              Command="{Binding AddToFavouritesCommand}"
-              IsVisible="{Binding Establishment.IdFavourite, Converter={StaticResource IntToBoolConverter}, ConverterParameter=!}"/>
-            <controls:CustomButton
-              Text="{Binding LocalizedStrings[delete_favourite]}"
-              Command="{Binding DeleteFavouriteCommand}"
-              IsVisible="{Binding Establishment.IdFavourite, Converter={StaticResource IntToBoolConverter}}"/>
-          </StackLayout>
+            Text="{Binding LocalizedStrings[service_category]}"
+            Style="{StaticResource MediumTextStyle}"/>
+          <controls:BindablePicker
+            ItemsSource="{Binding ServiceCategoryList, Mode=TwoWay}"
+            DisplayProperty="Name"
+            SelectedItem="{Binding SelectedServiceCategory}"
+            Title="{Binding ChooseItemPlaceholder}"/>
         </StackLayout>
       
-      <controls:WaitingOverlayControl
+        <StackLayout Padding="0,0,0,10" Spacing="0">
+          <Label
+            Text="{Binding LocalizedStrings[service]}"
+            Style="{StaticResource MediumTextStyle}"/>
+          <controls:BindablePicker
+            ItemsSource="{Binding ServiceList, Mode=TwoWay}"
+            DisplayProperty="NameAndPrice"
+            SelectedItem="{Binding SelectedService}"
+            Title="{Binding ChooseItemPlaceholder}"/>
+        </StackLayout>
+      </StackLayout>
+      <StackLayout Grid.Row="1"
+        Padding="{StaticResource PageContentPadding}"
+        VerticalOptions="End">
+        <controls:CustomButton
+          Text="{Binding LocalizedStrings[book]}"
+          Command="{Binding BookCommand}"/>
+        <controls:CustomButton
+          Text="{Binding LocalizedStrings[add_to_favourites]}"
+          Command="{Binding AddToFavouritesCommand}"
+          IsVisible="{Binding Establishment.IdFavourite, Converter={StaticResource IntToBoolConverter}, ConverterParameter=!}"/>
+        <controls:CustomButton
+          Text="{Binding LocalizedStrings[delete_favourite]}"
+          Command="{Binding DeleteFavouriteCommand}"
+          IsVisible="{Binding Establishment.IdFavourite, Converter={StaticResource IntToBoolConverter}}"/>
+      </StackLayout>
+
+      <controls:WaitingOverlayControl Grid.Row="0" Grid.RowSpan="2"
         IsVisible="{Binding IsBusy}"
         Text="{Binding LocalizedStrings[waiting]}"/>
-    </RelativeLayout>
+    </Grid>
   </ScrollView>
 </views:CustomContentPage>
 

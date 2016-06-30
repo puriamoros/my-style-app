@@ -73,7 +73,10 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    await this.PushNavPageAsync<BookViewModel>();
+                    await this.PushNavPageAsync<BookViewModel>((bookVM) =>
+                    {
+                        bookVM.Initialize();
+                    });
                 });
         }
 

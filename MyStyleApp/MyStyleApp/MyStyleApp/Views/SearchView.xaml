@@ -7,8 +7,12 @@
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[search]}" Icon="Search.png">
   <ScrollView>
-    <RelativeLayout>
-      <StackLayout RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <StackLayout Grid.Row="0"
         Padding="{StaticResource PageContentPadding}">
         <Label
             Text="{Binding LocalizedStrings[search]}"
@@ -56,16 +60,18 @@
             SelectedItem="{Binding SelectedService}"
             Title="{Binding ChooseItemPlaceholder}"/>
         </StackLayout>
-        <StackLayout VerticalOptions="EndAndExpand" Padding="0,10,0,0">
-          <controls:CustomButton
-            Text="{Binding LocalizedStrings[search]}"
-            Command="{Binding SearchCommand}"/>
-        </StackLayout>
-     </StackLayout>
-      
-      <controls:WaitingOverlayControl
+      </StackLayout>
+      <StackLayout Grid.Row="1"
+        Padding="{StaticResource PageContentPadding}"
+        VerticalOptions="End">
+        <controls:CustomButton
+          Text="{Binding LocalizedStrings[search]}"
+          Command="{Binding SearchCommand}"/>
+      </StackLayout>
+
+      <controls:WaitingOverlayControl Grid.Row="0" Grid.RowSpan="2"
         IsVisible="{Binding IsBusy}"
         Text="{Binding LocalizedStrings[waiting]}"/>
-    </RelativeLayout>
+    </Grid>
   </ScrollView>
 </views:CustomContentPage>

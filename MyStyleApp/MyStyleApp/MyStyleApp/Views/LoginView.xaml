@@ -6,8 +6,8 @@
              xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}">
   <ScrollView>
-    <RelativeLayout>
-      <StackLayout RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+    <Grid>
+      <StackLayout 
         Spacing="15" Padding="{StaticResource PageContentPadding}">
         <Label
           Text="{Binding LocalizedStrings[login]}"
@@ -62,6 +62,6 @@
         RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}"
         IsVisible="{Binding IsBusy}"
         Text="{Binding LocalizedStrings[waiting]}"/>
-    </RelativeLayout>
+    </Grid>
   </ScrollView>
 </views:CustomContentPage>

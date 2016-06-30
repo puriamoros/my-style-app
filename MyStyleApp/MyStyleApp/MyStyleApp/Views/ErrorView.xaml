@@ -7,7 +7,7 @@
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[error]}">
   <ScrollView>
-    <RelativeLayout>
+    <Grid>
       <StackLayout RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
         Spacing="25" Padding="{StaticResource PageContentPadding}">
       <Label
@@ -23,6 +23,6 @@
         Text="{Binding LocalizedStrings[ok]}"
         Command="{Binding CloseCommand}" />
     </StackLayout>
-   </RelativeLayout>
+   </Grid>
   </ScrollView>
 </views:CustomContentPage>

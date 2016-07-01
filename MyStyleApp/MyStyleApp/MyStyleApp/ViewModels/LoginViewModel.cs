@@ -123,18 +123,46 @@ namespace MyStyleApp.ViewModels
                     {
                         await this._usersService.LoginAsync(this.Email, this.Password, this.RememberMe);
 
-                        await this.AppFlowController.AddContainer(null, "MainTabbed", ContainerTypeEnum.TabbedContainer);
-                        await this.AppFlowController.AddContainer("MainTabbed", "AppointmentNavigation", ContainerTypeEnum.NavigationContainer);
-                        await this.AppFlowController.AddContainer("MainTabbed", "FavouritesNavigation", ContainerTypeEnum.NavigationContainer);
-                        await this.AppFlowController.AddContainer("MainTabbed", "SearchNavigation", ContainerTypeEnum.NavigationContainer);
-                        await this.AppFlowController.AddContainer("MainTabbed", "AccountNavigation", ContainerTypeEnum.NavigationContainer);
-                        await this.AppFlowController.AddViewModel<AppointmentsViewModel>("AppointmentNavigation");
-                        await this.AppFlowController.AddViewModel<FavouritesViewModel>("FavouritesNavigation");
-                        await this.AppFlowController.AddViewModel<SearchViewModel>("SearchNavigation");
-                        await this.AppFlowController.AddViewModel<AccountDetailsViewModel>("AccountNavigation", (accountVM) =>
+                        //await this.AppFlowController.AddViewModel<MainViewModel>(null, (mainVM) =>
+                        //{
+                        //    mainVM.Initialize();
+                        //});
+
+                        await this.AppFlowController.AddContainer(null, "MainTabbed", ContainerTypeEnum.TabbedContainer, async () =>
                         {
-                            accountVM.Initialize(this._usersService.LoggedUser);
+                            await this.AppFlowController.AddContainer("MainTabbed", "AppointmentNavigation", ContainerTypeEnum.NavigationContainer, async () =>
+                            {
+                                await this.AppFlowController.AddViewModel<AppointmentsViewModel>("AppointmentNavigation");
+                            });
+                            await this.AppFlowController.AddContainer("MainTabbed", "FavouritesNavigation", ContainerTypeEnum.NavigationContainer, async () =>
+                            {
+                                await this.AppFlowController.AddViewModel<FavouritesViewModel>("FavouritesNavigation");
+                            });
+                            await this.AppFlowController.AddContainer("MainTabbed", "SearchNavigation", ContainerTypeEnum.NavigationContainer, async () =>
+                            {
+                                await this.AppFlowController.AddViewModel<SearchViewModel>("SearchNavigation");
+                                await this.AppFlowController.SetCurrentViewModel<SearchViewModel>();
+                            });
+                            await this.AppFlowController.AddContainer("MainTabbed", "AccountNavigation", ContainerTypeEnum.NavigationContainer, async () =>
+                            {
+                                await this.AppFlowController.AddViewModel<AccountDetailsViewModel>("AccountNavigation", (accountVM) =>
+                                {
+                                    accountVM.Initialize(this._usersService.LoggedUser);
+                                });
+                            });
                         });
+
+                        //await this.AppFlowController.AddContainer("MainTabbed", "AppointmentNavigation", ContainerTypeEnum.NavigationContainer);
+                        //await this.AppFlowController.AddContainer("MainTabbed", "FavouritesNavigation", ContainerTypeEnum.NavigationContainer);
+                        //await this.AppFlowController.AddContainer("MainTabbed", "SearchNavigation", ContainerTypeEnum.NavigationContainer);
+                        //await this.AppFlowController.AddContainer("MainTabbed", "AccountNavigation", ContainerTypeEnum.NavigationContainer);
+                        //await this.AppFlowController.AddViewModel<AppointmentsViewModel>("AppointmentNavigation");
+                        //await this.AppFlowController.AddViewModel<FavouritesViewModel>("FavouritesNavigation");
+                        //await this.AppFlowController.AddViewModel<SearchViewModel>("SearchNavigation");
+                        //await this.AppFlowController.AddViewModel<AccountDetailsViewModel>("AccountNavigation", (accountVM) =>
+                        //{
+                        //    accountVM.Initialize(this._usersService.LoggedUser);
+                        //});
                     }
                     catch (Exception)
                     {

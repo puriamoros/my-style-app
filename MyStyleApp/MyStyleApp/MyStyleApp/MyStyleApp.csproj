@@ -54,6 +54,7 @@
     <Compile Include="Enums\ProvinceEnum.cs" />
     <Compile Include="Exceptions\BackendException.cs" />
     <Compile Include="Models\Slot.cs" />
+    <Compile Include="Models\SlotWithCounter.cs" />
     <Compile Include="Models\UserPassword.cs" />
     <Compile Include="Models\ApiKey.cs" />
     <Compile Include="Models\Appointment.cs" />

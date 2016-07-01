@@ -65,6 +65,7 @@
     <Compile Include="Models\ServiceNameAndPrice.cs" />
     <Compile Include="Models\ShortenService.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="MvvmCore\AppFlowController.cs" />
     <Compile Include="MvvmCore\Behaviors\BindableBehavior.cs" />
     <Compile Include="MvvmCore\Behaviors\EventToCommandBehavior.cs" />
     <Compile Include="MvvmCore\IUserNotificator.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="MvvmCore\IViewFactory.cs" />
     <Compile Include="MvvmCore\IViewModel.cs" />
     <Compile Include="MvvmCore\Navigator.cs" />
+    <Compile Include="MvvmCore\ViewContainerFactory.cs" />
     <Compile Include="MvvmCore\ViewFactory.cs" />
     <Compile Include="MvvmCore\ViewModelBase.cs" />
     <Compile Include="MvvmCore\XamarinDeviceService.cs" />

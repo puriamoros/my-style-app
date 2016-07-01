@@ -19,11 +19,12 @@ namespace MyStyleApp.ViewModels
         public ICommand BookCommand { get; private set; }
         
         public BookViewModel(
+            AppFlowController appFlowController,
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService
             ) :
-            base(navigator, userNotificator, localizedStringsService)
+            base(appFlowController, navigator, userNotificator, localizedStringsService)
         {
             this.BookCommand = new Command(this.BookAsync);            
         }

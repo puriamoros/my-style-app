@@ -21,6 +21,10 @@ namespace MyStyleApp.Views
             if (Device.OS != TargetPlatform.iOS)
             {
                 NavigationPage.SetHasNavigationBar(this, false);
+                if(this.Parent is NavigationPage)
+                {
+                    NavigationPage.SetHasNavigationBar(this.Parent, false);
+                }
             }
         }
     }

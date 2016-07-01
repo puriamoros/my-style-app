@@ -10,14 +10,17 @@ namespace MyStyleApp.ViewModels
     {
         private bool _isBusy;
         private LocalizedStringsService _localizedStringsService;
+        private AppFlowController _appFlowController;
         private INavigator _navigator;
         private IUserNotificator _userNotificator;
 
         public NavigableViewModelBase(
+            AppFlowController appFlowController,
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService) : base()
         {
+            this._appFlowController = appFlowController;
             this._navigator = navigator;
             this._userNotificator = userNotificator;
             this._localizedStringsService = localizedStringsService;
@@ -27,6 +30,14 @@ namespace MyStyleApp.ViewModels
         {
             get { return _isBusy; }
             set { SetProperty(ref _isBusy, value); }
+        }
+
+        public AppFlowController AppFlowController
+        {
+            get
+            {
+                return this._appFlowController;
+            }
         }
 
         public IUserNotificator UserNotificator

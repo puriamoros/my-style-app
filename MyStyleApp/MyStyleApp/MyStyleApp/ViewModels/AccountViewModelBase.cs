@@ -31,10 +31,11 @@ namespace MyStyleApp.ViewModels
         private AccountModeEnum _mode;
         
         public AccountViewModelBase(
+            AppFlowController appFlowController,
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService) :
-            base(navigator, userNotificator, localizedStringsService)
+            base(appFlowController, navigator, userNotificator, localizedStringsService)
         {
             this.CreateAccountCommand = new Command(this.CreateAccountAsync, this.CanCreateAccount);
             this.EditAccountCommand = new Command(this.EditAccount);

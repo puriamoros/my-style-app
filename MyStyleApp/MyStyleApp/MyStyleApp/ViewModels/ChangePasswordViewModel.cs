@@ -31,12 +31,13 @@ namespace MyStyleApp.ViewModels
         public Command SavePasswordCommand { get; private set; }
 
         public ChangePasswordViewModel(
+            AppFlowController appFlowController,
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
             ValidationService validationService,
             IUsersService usersService) :
-            base(navigator, userNotificator, localizedStringsService)
+            base(appFlowController, navigator, userNotificator, localizedStringsService)
         {
             this.SavePasswordCommand = new Command(this.SavePasswordAsync, this.CanSavePassword);
             this._validationService = validationService;

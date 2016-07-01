@@ -11,12 +11,13 @@ namespace MyStyleApp.ViewModels
         private IUsersService _userService;
 
         public MainViewModel(
+            AppFlowController appFlowController,
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
             IUsersService userService,
             AccountDetailsViewModel accountDetailsViewModel) : 
-            base(navigator, userNotificator, localizedStringsService)
+            base(appFlowController, navigator, userNotificator, localizedStringsService)
         {
             this._userService = userService;
             this._accountDetailsViewModel = accountDetailsViewModel;

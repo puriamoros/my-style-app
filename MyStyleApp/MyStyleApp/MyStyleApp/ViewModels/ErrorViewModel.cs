@@ -12,11 +12,12 @@ namespace MyStyleApp.ViewModels
         private string _errorText;
 
         public ErrorViewModel(
-           INavigator navigator,
-           IUserNotificator userNotificator,
-           LocalizedStringsService localizedStringsService
-           ) :
-            base(navigator, userNotificator, localizedStringsService)
+            AppFlowController appFlowController,
+            INavigator navigator,
+            IUserNotificator userNotificator,
+            LocalizedStringsService localizedStringsService
+            ) :
+            base(appFlowController, navigator, userNotificator, localizedStringsService)
         {
             this.CloseCommand = new Command(this.CloseAsync);
         }

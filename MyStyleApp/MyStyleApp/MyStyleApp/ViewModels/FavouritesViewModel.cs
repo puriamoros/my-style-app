@@ -20,11 +20,12 @@ namespace MyStyleApp.ViewModels
         public ICommand DeleteFavouriteCommand { get; private set; }
 
         public FavouritesViewModel(
+            AppFlowController appFlowController,
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
             IFavouritesService favouritesService) :
-            base(navigator, userNotificator, localizedStringsService)
+            base(appFlowController, navigator, userNotificator, localizedStringsService)
         {
             this.ViewDetailsCommand = new Command<Establishment>(this.ViewDetailsAsync);
             this.DeleteFavouriteCommand = new Command<Establishment>(this.DeleteFavouriteAsync);

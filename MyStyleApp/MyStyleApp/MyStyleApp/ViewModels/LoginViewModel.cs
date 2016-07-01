@@ -34,12 +34,13 @@ namespace MyStyleApp.ViewModels
         private string _errorText;
 
         public LoginViewModel(
+            AppFlowController appFlowController,
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
             IUsersService usersService,
             ValidationService validationService) :
-            base(navigator, userNotificator, localizedStringsService)
+            base(appFlowController, navigator, userNotificator, localizedStringsService)
         {
             this._usersService = usersService;
             this._validationService = validationService;
@@ -121,9 +122,18 @@ namespace MyStyleApp.ViewModels
                     try
                     {
                         await this._usersService.LoginAsync(this.Email, this.Password, this.RememberMe);
-                        await this.SetMainPageAsync<MainViewModel>((mainVM) =>
+
+                        await this.AppFlowController.AddContainer(null, "MainTabbed", ContainerTypeEnum.TabbedContainer);
+                        await this.AppFlowController.AddContainer("MainTabbed", "AppointmentNavigation", ContainerTypeEnum.NavigationContainer);
+                        await this.AppFlowController.AddContainer("MainTabbed", "FavouritesNavigation", ContainerTypeEnum.NavigationContainer);
+                        await this.AppFlowController.AddContainer("MainTabbed", "SearchNavigation", ContainerTypeEnum.NavigationContainer);
+                        await this.AppFlowController.AddContainer("MainTabbed", "AccountNavigation", ContainerTypeEnum.NavigationContainer);
+                        await this.AppFlowController.AddViewModel<AppointmentsViewModel>("AppointmentNavigation");
+                        await this.AppFlowController.AddViewModel<FavouritesViewModel>("FavouritesNavigation");
+                        await this.AppFlowController.AddViewModel<SearchViewModel>("SearchNavigation");
+                        await this.AppFlowController.AddViewModel<AccountDetailsViewModel>("AccountNavigation", (accountVM) =>
                         {
-                            mainVM.Initialize();
+                            accountVM.Initialize(this._usersService.LoggedUser);
                         });
                     }
                     catch (Exception)
@@ -138,7 +148,7 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    await this.PushNavPageAsync<CreateAccountViewModel>((accountVM) => 
+                    await this.AppFlowController.AddViewModel<CreateAccountViewModel>("LoginNavigation",(accountVM) => 
                     {
                         accountVM.Initialize(null);
                     });

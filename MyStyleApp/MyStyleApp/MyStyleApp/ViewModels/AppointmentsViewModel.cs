@@ -14,11 +14,12 @@ namespace MyStyleApp.ViewModels
         private IUsersService _userService;
 
         public AppointmentsViewModel(
+            AppFlowController appFlowController,
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
             IUsersService userService) :
-            base(navigator, userNotificator, localizedStringsService)
+            base(appFlowController, navigator, userNotificator, localizedStringsService)
         {
             this._userService = userService;
             //this.NewAccountCommand = new Command(this.NewAccountAsync);

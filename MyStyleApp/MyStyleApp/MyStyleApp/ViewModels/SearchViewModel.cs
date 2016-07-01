@@ -33,6 +33,7 @@ namespace MyStyleApp.ViewModels
         public Command SearchCommand { get; private set; }
 
         public SearchViewModel(
+            AppFlowController appFlowController,
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
@@ -41,7 +42,7 @@ namespace MyStyleApp.ViewModels
             IServiceCategoriesService serviceCategoriesService,
             IServicesService servicesService,
             IEstablishmentsService establishmentsService) :
-            base(navigator, userNotificator, localizedStringsService)
+            base(appFlowController, navigator, userNotificator, localizedStringsService)
         {
             this._provincesService = provincesService;
             this._establishmentTypesService = establishmentTypesService;

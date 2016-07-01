@@ -39,6 +39,7 @@ namespace MyStyleApp.ViewModels
         public ICommand DeleteFavouriteCommand { get; private set; }
 
         public EstablishmentDetailsViewModel(
+            AppFlowController appFlowController,
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
@@ -46,7 +47,7 @@ namespace MyStyleApp.ViewModels
             IServiceCategoriesService serviceCategoriesService,
             IServicesService servicesService,
             IEstablishmentsService establishmentsService) :
-            base(navigator, userNotificator, localizedStringsService)
+            base(appFlowController, navigator, userNotificator, localizedStringsService)
         {
             this.lockObj = new object();
 

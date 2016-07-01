@@ -28,12 +28,13 @@ namespace MyStyleApp.ViewModels
         private IUsersService _usersService;
 
         public CreateAccountViewModel(
+            AppFlowController appFlowController,
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
             ValidationService validationService,
             IUsersService usersService) :
-            base(navigator, userNotificator, localizedStringsService)
+            base(appFlowController, navigator, userNotificator, localizedStringsService)
         {
             this._validationService = validationService;
             this._usersService = usersService;

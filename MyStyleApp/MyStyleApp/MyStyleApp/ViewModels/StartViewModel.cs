@@ -11,11 +11,12 @@ namespace MyStyleApp.ViewModels
         private IUsersService _usersService;
 
         public StartViewModel(
+            AppFlowController appFlowController,
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
             IUsersService usersService) :
-            base(navigator, userNotificator, localizedStringsService)
+            base(appFlowController, navigator, userNotificator, localizedStringsService)
         {
             this._usersService = usersService;
 
@@ -99,7 +100,7 @@ namespace MyStyleApp.ViewModels
                         await this._usersService.MeAsync();
 
                         // There is a logged user, go to main view
-                        await this.SetMainPageAsync<MainViewModel>((mainVM) =>
+                        await this.AppFlowController.AddViewModel<MainViewModel>(null, (mainVM) =>
                         {
                             mainVM.Initialize();
                         });
@@ -107,7 +108,8 @@ namespace MyStyleApp.ViewModels
                     catch (Exception)
                     {
                         // There is no logged user, go to login view
-                        await this.SetMainPageNavPageAsync<LoginViewModel>();
+                        await this.AppFlowController.AddContainer(null, "LoginNavigation", ContainerTypeEnum.NavigationContainer);
+                        await this.AppFlowController.AddViewModel<LoginViewModel>("LoginNavigation");
                     }
                 });
         }

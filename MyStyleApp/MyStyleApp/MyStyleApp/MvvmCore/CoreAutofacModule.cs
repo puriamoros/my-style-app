@@ -28,7 +28,10 @@ namespace MvvmCore
 			builder.Register<INavigation>(context => 
 				Application.Current.MainPage.Navigation
 			).SingleInstance();
-		}
+
+            builder.RegisterType<ViewContainerFactory>().SingleInstance();
+            builder.RegisterType<AppFlowController>().SingleInstance();
+        }
 	}
 }
 

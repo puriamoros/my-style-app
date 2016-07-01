@@ -34,7 +34,7 @@ namespace MyStyleApp.ViewModels
 
         private object lockObj;
         
-        public ICommand BookCommand { get; private set; }
+        public Command BookCommand { get; private set; }
         public ICommand AddToFavouritesCommand { get; private set; }
         public ICommand DeleteFavouriteCommand { get; private set; }
 
@@ -50,7 +50,7 @@ namespace MyStyleApp.ViewModels
         {
             this.lockObj = new object();
 
-            this.BookCommand = new Command(this.BookAsync);
+            this.BookCommand = new Command(this.BookAsync, this.CanBook);
             this.AddToFavouritesCommand = new Command(this.AddToFavouritesAsync);
             this.DeleteFavouriteCommand = new Command(this.DeleteFavouriteAsync);
 
@@ -222,7 +222,7 @@ namespace MyStyleApp.ViewModels
             set
             {
                 SetProperty(ref _selectedService, value);
-                //this.SearchCommand.ChangeCanExecute();
+                this.BookCommand.ChangeCanExecute();
             }
         }
 
@@ -289,6 +289,12 @@ namespace MyStyleApp.ViewModels
                 this.RefreshEstablishment();
             }
         }
+
+        private bool CanBook()
+        {
+            return this.SelectedService != null;
+        }
+
     }
 }
 

@@ -55,8 +55,7 @@ namespace MyStyleApp.ViewModels
 
         private async void BookAsync()
         {
-            //await this.UserNotificator.DisplayAlert(
-            //   "Reserva solicitada", "Recibirás un correo electrónico de confirmación.", "Aceptar");
+            //TODO: enviar email al propietario 
             await this.UserNotificator.DisplayAlert(
                this.LocalizedStrings.GetString("booking_requested"),
                this.LocalizedStrings.GetString("email_confirmation"), 

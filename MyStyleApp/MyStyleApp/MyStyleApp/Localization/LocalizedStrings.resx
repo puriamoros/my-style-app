@@ -324,4 +324,7 @@
   <data name="error_duplicated_email" xml:space="preserve">
     <value>Error: The entered email is already registered</value>
   </data>
+  <data name="date" xml:space="preserve">
+    <value>Date</value>
+  </data>
 </root>

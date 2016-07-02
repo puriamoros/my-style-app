@@ -53,6 +53,7 @@
     <Compile Include="Enums\EstablishmentTypeEnum.cs" />
     <Compile Include="Enums\ProvinceEnum.cs" />
     <Compile Include="Exceptions\BackendException.cs" />
+    <Compile Include="Models\Confirmation.cs" />
     <Compile Include="Models\Slot.cs" />
     <Compile Include="Models\SlotWithCounter.cs" />
     <Compile Include="Models\UserPassword.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="MvvmCore\Behaviors\EventToCommandBehavior.cs" />
     <Compile Include="MvvmCore\IUserNotificator.cs" />
     <Compile Include="MvvmCore\UserNotificator.cs" />
+    <Compile Include="Services\Backend\AppointmentsService.cs" />
     <Compile Include="Services\Backend\BackendServiceBase.cs" />
     <Compile Include="Services\Backend\EstablishmentsService.cs" />
     <Compile Include="Services\Backend\EstablishmentTypesService.cs" />

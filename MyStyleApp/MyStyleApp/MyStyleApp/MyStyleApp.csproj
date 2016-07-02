@@ -76,6 +76,7 @@
     <Compile Include="Services\Backend\EstablishmentsService.cs" />
     <Compile Include="Services\Backend\EstablishmentTypesService.cs" />
     <Compile Include="Services\Backend\FavouritesService.cs" />
+    <Compile Include="Services\Backend\IAppointmentsService.cs" />
     <Compile Include="Services\Backend\IEstablishmentsService.cs" />
     <Compile Include="Services\Backend\IFavouritesService.cs" />
     <Compile Include="Services\Backend\IServiceCategoriesService.cs" />

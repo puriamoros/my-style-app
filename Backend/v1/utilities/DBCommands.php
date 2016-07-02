@@ -16,7 +16,7 @@ class DBCommands
 		return $item;
 	}
 	
-	public static function dbGet($table, $fields, $searchFields, $queryParams)
+	public static function dbGet($table, $fields, $searchFields, $queryParams, $additionalConditions)
 	{
 		try {
 			$pdo = DBConnection::getInstance()->getDB();
@@ -31,7 +31,16 @@ class DBCommands
 					$where = true;
 				}
 			}
+			if(!is_null($additionalConditions)) {
+				foreach($additionalConditions as $condition) {
+					$command .= $where ? " AND " : " WHERE ";
+					$command .= $condition->field . $condition->operator . (($condition->doBindParam) ? "?" : $condition->value);
+					$where = true;
+				}
+			}
 
+			//throw new ApiException(STATE_DB_ERROR, $command);
+			
 			$query = $pdo->prepare($command);
 			
 			$count = 1;
@@ -39,6 +48,14 @@ class DBCommands
 				if(isset($queryParams[$field])) {
 					$query->bindParam($count, $queryParams[$field]);
 					$count++;
+				}
+			}
+			if(!is_null($additionalConditions)) {
+				foreach($additionalConditions as $condition) {
+					if($condition->doBindParam) {
+						$query->bindParam($count, $condition->value);
+						$count++;
+					}
 				}
 			}
 
@@ -58,7 +75,7 @@ class DBCommands
 		}
 	}
 	
-	public static function dbGetJoin($joinTables, $joinFields, $joinTypes, $fields, $searchFields, $queryParams)
+	public static function dbGetJoin($joinTables, $joinFields, $joinTypes, $fields, $searchFields, $queryParams, $additionalConditions)
 	{
 		try {
 			$pdo = DBConnection::getInstance()->getDB();
@@ -77,7 +94,16 @@ class DBCommands
 					$where = true;
 				}
 			}
-
+			if(!is_null($additionalConditions)) {
+				foreach($additionalConditions as $condition) {
+					$command .= $where ? " AND " : " WHERE ";
+					$command .= $condition->field . $condition->operator . (($condition->doBindParam) ? "?" : $condition->value);
+					$where = true;
+				}
+			}
+			
+			//throw new ApiException(STATE_DB_ERROR, $command);
+			
 			$query = $pdo->prepare($command);
 			
 			$count = 1;
@@ -85,6 +111,14 @@ class DBCommands
 				if(isset($queryParams[$field])) {
 					$query->bindParam($count, $queryParams[$field]);
 					$count++;
+				}
+			}
+			if(!is_null($additionalConditions)) {
+				foreach($additionalConditions as $condition) {
+					if($condition->doBindParam) {
+						$query->bindParam($count, $condition->value);
+						$count++;
+					}
 				}
 			}
 
@@ -128,6 +162,9 @@ class DBCommands
 				$command .= $key . "=?";
 				$where = true;
 			}
+			
+			//throw new ApiException(STATE_DB_ERROR, $command);
+			
 			$query = $pdo->prepare($command);
 
 			$count = 1;
@@ -182,6 +219,8 @@ class DBCommands
 				$where = true;
 			}
 			
+			//throw new ApiException(STATE_DB_ERROR, $command);
+			
 			$query = $pdo->prepare($command);
 
 			$count = 1;
@@ -218,6 +257,8 @@ class DBCommands
 				" (" . implode(",", $fields) . ")" .
 				" VALUES(" . implode(",", $fieldsParams) . ")";
 
+			//throw new ApiException(STATE_DB_ERROR, $command);
+				
 			$query = $pdo->prepare($command);
 
 			$count = 1;
@@ -250,6 +291,8 @@ class DBCommands
 				" (" . implode(",", $fieldsButId) . ")" .
 				" VALUES(" . implode(",", $fieldsButIdParams) . ")";
 
+			//throw new ApiException(STATE_DB_ERROR, $command);
+				
 			$query = $pdo->prepare($command);
 
 			$count = 1;
@@ -313,7 +356,9 @@ class DBCommands
 				$command .= $key . "=?";
 				$where = true;
 			}
-
+			
+			//throw new ApiException(STATE_DB_ERROR, $command);
+			
 			$query = $pdo->prepare($command);
 
 			$count = 1;
@@ -365,6 +410,8 @@ class DBCommands
 				$command .= $key . "=?";
 				$where = true;
 			}
+			
+			//throw new ApiException(STATE_DB_ERROR, $command);
 
 			$query = $pdo->prepare($command);
 

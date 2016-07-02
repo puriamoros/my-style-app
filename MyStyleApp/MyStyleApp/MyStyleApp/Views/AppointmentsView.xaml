@@ -11,7 +11,10 @@
     <Grid>
       <StackLayout Padding="{StaticResource PageContentPadding}">
         <!-- Without HasUnevenRows="True", list items does not render well in Android -->
-        <ListView>
+        <ListView
+          ItemsSource="{Binding AppointmentsList}"
+          HasUnevenRows="True"
+          x:Name="AppointmentsList">
           <ListView.Behaviors>
             <mvvmcorebehaviors:EventToCommandBehavior
               EventName="ItemTapped"
@@ -24,8 +27,9 @@
               <ViewCell>
                 <StackLayout Spacing="2" Padding="0,5,0,5" VerticalOptions="StartAndExpand" >
                   <Label Text="{Binding Date}" Style="{StaticResource LargeTextStyle}" />
-                  <Label Text="{Binding Establishment}" Style="{StaticResource MediumTextStyle}" />
-                  <Label Text="{Binding Service}" Style="{StaticResource MediumTextStyle}" />
+                  <Label Text="{Binding EstablishmentName}" Style="{StaticResource MediumTextStyle}" />
+                  <Label Text="{Binding ServiceName}" Style="{StaticResource MediumTextStyle}" />
+                  <Label Text="{Binding ServicePrice}" Style="{StaticResource MediumTextStyle}" />
                 </StackLayout>
               </ViewCell>
             </DataTemplate>

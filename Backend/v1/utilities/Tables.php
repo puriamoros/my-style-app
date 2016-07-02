@@ -16,6 +16,7 @@ class Tables
 				'idEstablishment',
 				'idService',
 				'date',
+				'confirmed',
 				'notes'
 			),
 			'establishments' => array(
@@ -25,7 +26,10 @@ class Tables
 				'phone',
 				'idEstablishmentType',
 				'idOwner',
-				'idProvince'
+				'idProvince',
+				'concurrence',
+				'hours1',
+				'hours2'
 			),
 			'favourites' => array(
 				'id',

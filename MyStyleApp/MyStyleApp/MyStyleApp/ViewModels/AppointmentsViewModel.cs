@@ -23,22 +23,5 @@ namespace MyStyleApp.ViewModels
             this._userService = userService;
             //this.NewAccountCommand = new Command(this.NewAccountAsync);
         }
-
-        //public int MyProperty
-        //{
-        //    get;
-        //    set;
-        //}
-
-        //public int MyProperty
-        //{
-        //    get;
-        //    set;
-        //}
-        //private async void NewAccountAsync()
-        //{
-        //    await this._userService.LogoutAsync();
-        //    await this.SetMainPageAsync<LoginViewModel>();
-        //}
     }
 }

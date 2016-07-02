@@ -68,8 +68,8 @@ namespace MyStyleApp.Services
             // Ignore null values
             serializeSettings.NullValueHandling = NullValueHandling.Ignore;
 
-            // DateTime format "yyyy-MM-dd HH:mm:ss.fff"
-            serializeSettings.Converters.Add(new IsoDateTimeConverter() { DateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fffZ" });
+            // DateTime format "yyyy-MM-dd HH:mm:ss"
+            serializeSettings.Converters.Add(new IsoDateTimeConverter() { DateTimeFormat = BackendConstants.DATETIME_FORMAT });
 
             return serializeSettings;
         }

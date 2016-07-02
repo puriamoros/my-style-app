@@ -70,6 +70,7 @@ namespace MyStyleApp
             builder.RegisterType<ServicesService>().As<IServicesService>().SingleInstance();
             builder.RegisterType<EstablishmentsService>().As<IEstablishmentsService>().SingleInstance();
             builder.RegisterType<FavouritesService>().As<IFavouritesService>().SingleInstance();
+            builder.RegisterType<AppointmentsService>().As<IAppointmentsService>().SingleInstance();
         }
 
         protected override void RegisterViews(IViewFactory viewFactory)

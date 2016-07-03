@@ -14,6 +14,9 @@
       <converters:PlatformToBoolConverter x:Key="PlatformToBoolConverter" />
       <converters:FloatToPriceConverter x:Key="FloatToPriceConverter" />
       <converters:AccountModeToBoolConverter x:Key="AccountModeToBoolConverter" />
+      <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
+      <converters:NegateConverter x:Key="NegateConverter" />
+      <converters:AppointmentStatusToBoolConverter x:Key="AppointmentStatusToBoolConverter" />
 
       <!-- iOS needs 20px top padding to avoid overlapping the status bar -->
       <OnPlatform x:Key="PagePadding"

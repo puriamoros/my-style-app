@@ -63,13 +63,15 @@ class Appointments extends ModelWithIdBase
 	
 	protected function dbGet($queryParams)
 	{
-		$additionalConditions = null;
-		if(isset($queryParams[$this->fromDate]) && isset($queryParams[$this->toDate])) {
-			$additionalConditions = array(
-				new Condition($this->appointments->date, '>=', $queryParams[$this->fromDate], true),
-				new Condition($this->appointments->date, '<=', $queryParams[$this->toDate], true),
-				new Condition($this->appointments->table . '.' . $this->appointments->idService, '=', $this->offer->table . '.' . $this->offer->idService, false)
-			);
+		$additionalConditions = array(
+			// This condition is necessary for join
+			new Condition($this->appointments->table . '.' . $this->appointments->idService, '=', $this->offer->table . '.' . $this->offer->idService, false));
+			
+		if(isset($queryParams[$this->fromDate])) {
+			array_push($additionalConditions, new Condition($this->appointments->date, '>=', $queryParams[$this->fromDate], true));
+		}
+		if(isset($queryParams[$this->toDate])) {
+			array_push($additionalConditions, new Condition($this->appointments->date, '<=', $queryParams[$this->toDate], true));
 		}
 		
 		// tables appointments,  establishments and offer have a field called "id", so we need to rename them
@@ -88,8 +90,8 @@ class Appointments extends ModelWithIdBase
 			['INNER', 'INNER'],
 			$mixedFields, $mixedFields, $queryParams, $additionalConditions);
 		
-		// restore original field names
 		for ($i = 0; $i < count($result); $i++) {
+			// restore original field names
 			$result[$i][$this->appointments->id] = $result[$i][$appointmentsIdRenamed];
 			unset($result[$i][$appointmentsIdRenamed]);
 			
@@ -99,6 +101,7 @@ class Appointments extends ModelWithIdBase
 			$result[$i][$this->appointments->idService] = $result[$i][$appointmentsIdServiceRenamed];
 			unset($result[$i][$appointmentsIdServiceRenamed]);
 			
+			// modify names
 			$result[$i][$this->establishmentName] = $result[$i][$this->establishments->name];
 			unset($result[$i][$this->establishments->name]);
 			
@@ -112,7 +115,7 @@ class Appointments extends ModelWithIdBase
 	public function put($queryArray)
     {
 		if(count($queryArray) == 3) {
-			if($queryArray[2] == 'confirm') {
+			if($queryArray[2] == 'status') {
 				return $this->updateElement($queryArray[1]);
 			}
 		}
@@ -122,12 +125,12 @@ class Appointments extends ModelWithIdBase
 	
 	protected function dbUpdate($id, $data)
 	{
-		return DBCommands::dbUpdate($this->table, [$this->appointments->confirmed], $this->idField, $id, $data);
+		return DBCommands::dbUpdate($this->table, [$this->appointments->status], $this->idField, $id, $data);
 	}
 	
 	protected function dbCreate($data)
 	{
-		$data[$this->appointments->confirmed] = 0;
+		$data[$this->appointments->status] = 0;
 		return DBCommands::dbCreate($this->table, $this->fields, $this->idField, $data);
 	}
 }

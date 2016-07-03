@@ -80,6 +80,33 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pending confirmation.
+        /// </summary>
+        internal static string appointment_status_0 {
+            get {
+                return ResourceManager.GetString("appointment_status_0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmed.
+        /// </summary>
+        internal static string appointment_status_1 {
+            get {
+                return ResourceManager.GetString("appointment_status_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancelled.
+        /// </summary>
+        internal static string appointment_status_2 {
+            get {
+                return ResourceManager.GetString("appointment_status_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Appointments.
         /// </summary>
         internal static string appointments {

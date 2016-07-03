@@ -18,7 +18,7 @@ namespace MyStyleApp.Services.Backend
             this._userService = userService;
         }
 
-        public async Task<List<Appointment>> GetAppointmentsAsync(DateTime from, DateTime to)
+        public async Task<List<Appointment>> GetClientAppointmentsAsync(DateTime from)
         {
             string authorization = await this.HttpService.GetApiKeyAuthorizationAsync();
 
@@ -28,11 +28,10 @@ namespace MyStyleApp.Services.Backend
                 authorization,
                 new object[] {
                     this._userService.LoggedUser.Id,
-                    from.ToString(BackendConstants.DATETIME_FORMAT),
-                    to.ToString(BackendConstants.DATETIME_FORMAT) });
+                    from.ToString(BackendConstants.DATETIME_FORMAT) });
         }
 
-        public async Task<List<Appointment>> GetAppointmentsAsync(Establishment establishment, DateTime from, DateTime to)
+        public async Task<List<Appointment>> GetEstablishmentAppointmentsAsync(Establishment establishment, DateTime from, DateTime to)
         {
             string authorization = await this.HttpService.GetApiKeyAuthorizationAsync();
 
@@ -57,15 +56,15 @@ namespace MyStyleApp.Services.Backend
                 null);
         }
 
-        public async Task ConfirmAppointmentAsync(Appointment appointment)
+        public async Task UpdateAppointmentStatusAsync(Appointment appointment)
         {
             string authorization = await this.HttpService.GetApiKeyAuthorizationAsync();
 
-            await this.HttpService.InvokeWithContentAsync<Confirmation>(
+            await this.HttpService.InvokeWithContentAsync<GenericStatus>(
                 HttpMethod.Post,
-                BackendConstants.CONFIRM_APPOINTMENTS_URL,
+                BackendConstants.APPOINTMENT_STATUS_URL,
                 authorization,
-                new Confirmation() { Confirmed = appointment.Confirmed },
+                new GenericStatus() { Status = (int) appointment.Status },
                 new object[] { appointment.Id });
         }
 
@@ -75,7 +74,7 @@ namespace MyStyleApp.Services.Backend
 
             await this.HttpService.InvokeAsync(
                 HttpMethod.Delete,
-                BackendConstants.CONFIRM_APPOINTMENTS_URL,
+                BackendConstants.APPOINTMENTS_URL,
                 authorization,
                 new object[] { appointment.Id });
         }

@@ -41,7 +41,9 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Constants\BackendConstants.cs" />
     <Compile Include="Constants\RegexConstants.cs" />
+    <Compile Include="Converters\AppointmentStatusToBoolConverter.cs" />
     <Compile Include="Converters\AccountModeToBoolConverter.cs" />
+    <Compile Include="Converters\NegateConverter.cs" />
     <Compile Include="Converters\DateTimeToStringConverter.cs" />
     <Compile Include="Converters\FloatToPriceConverter.cs" />
     <Compile Include="Converters\IntToBoolConverter.cs" />
@@ -49,11 +51,12 @@
     <Compile Include="Converters\PlatformToBoolConverter.cs" />
     <Compile Include="Converters\StringToBoolConverter.cs" />
     <Compile Include="Enums\AccountModeEnum.cs" />
+    <Compile Include="Enums\AppointmentStatusEnum.cs" />
     <Compile Include="Enums\BackendStatusCodeEnum.cs" />
     <Compile Include="Enums\EstablishmentTypeEnum.cs" />
     <Compile Include="Enums\ProvinceEnum.cs" />
     <Compile Include="Exceptions\BackendException.cs" />
-    <Compile Include="Models\Confirmation.cs" />
+    <Compile Include="Models\GenericStatus.cs" />
     <Compile Include="Models\Slot.cs" />
     <Compile Include="Models\SlotWithCounter.cs" />
     <Compile Include="Models\UserPassword.cs" />

@@ -327,4 +327,13 @@
   <data name="date" xml:space="preserve">
     <value>Date</value>
   </data>
+  <data name="appointment_status_0" xml:space="preserve">
+    <value>Pending confirmation</value>
+  </data>
+  <data name="appointment_status_1" xml:space="preserve">
+    <value>Confirmed</value>
+  </data>
+  <data name="appointment_status_2" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
 </root>

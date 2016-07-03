@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MyStyleApp.Enums;
+using Newtonsoft.Json;
 using System;
 
 namespace MyStyleApp.Models
@@ -23,8 +24,8 @@ namespace MyStyleApp.Models
         [JsonProperty(Required = Required.Always, PropertyName = "notes")]
         public string Notes { get; set; }
 
-        [JsonProperty(Required = Required.Always, PropertyName = "confirmed")]
-        public bool Confirmed { get; set; }
+        [JsonProperty(Required = Required.Always, PropertyName = "status")]
+        public AppointmentStatusEnum Status { get; set; }
 
         [JsonProperty(Required = Required.Default, PropertyName = "establishmentName")]
         public string EstablishmentName { get; set; }
@@ -34,5 +35,11 @@ namespace MyStyleApp.Models
 
         [JsonIgnore]
         public string ServiceName { get; set; }
+
+        [JsonIgnore]
+        public string ServiceNameAndPrice
+        {
+            get { return ServiceName + " - " + ServicePrice.ToString("0.00") + "€"; }
+        }
     }
 }

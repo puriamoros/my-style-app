@@ -16,7 +16,7 @@ class Tables
 				'idEstablishment',
 				'idService',
 				'date',
-				'confirmed',
+				'status',
 				'notes'
 			),
 			'establishments' => array(

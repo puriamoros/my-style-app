@@ -12,9 +12,9 @@
       <StackLayout Padding="{StaticResource PageContentPadding}">
         <!-- Without HasUnevenRows="True", list items does not render well in Android -->
         <ListView
-          ItemsSource="{Binding AppointmentsList}"
+          ItemsSource="{Binding AppointmentList}"
           HasUnevenRows="True"
-          x:Name="AppointmentsList">
+          x:Name="AppointmentList">
           <ListView.Behaviors>
             <mvvmcorebehaviors:EventToCommandBehavior
               EventName="ItemTapped"
@@ -26,10 +26,18 @@
               <!-- This needs behaviors -->
               <ViewCell>
                 <StackLayout Spacing="2" Padding="0,5,0,5" VerticalOptions="StartAndExpand" >
-                  <Label Text="{Binding Date}" Style="{StaticResource LargeTextStyle}" />
-                  <Label Text="{Binding EstablishmentName}" Style="{StaticResource MediumTextStyle}" />
-                  <Label Text="{Binding ServiceName}" Style="{StaticResource MediumTextStyle}" />
-                  <Label Text="{Binding ServicePrice}" Style="{StaticResource MediumTextStyle}" />
+                  <Label Text="{Binding EstablishmentName}" Style="{StaticResource LargeTextStyle}" />
+                  <Label Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=g}" Style="{StaticResource MediumTextStyle}" />
+                  <Label Text="{Binding ServiceNameAndPrice}" Style="{StaticResource MediumTextStyle}" />
+                  <Label Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[appointment_status_0]}"
+                      IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Pending}"
+                      Style="{StaticResource MediumTextStyle}" />
+                  <Label Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[appointment_status_1]}"
+                      IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Confirmed}"
+                      Style="{StaticResource MediumTextStyle}" />
+                  <Label Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[appointment_status_2]}"
+                      IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Cancelled}"
+                      Style="{StaticResource MediumTextStyle}" />
                 </StackLayout>
               </ViewCell>
             </DataTemplate>

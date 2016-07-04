@@ -75,7 +75,7 @@ namespace MyStyleApp.ViewModels
                 {
                     await this.PushNavPageAsync<BookViewModel>((bookVM) =>
                     {
-                        bookVM.Initialize(establishment);
+                        bookVM.Initialize(establishment, this.SelectedService);
                     });
                 });
         }

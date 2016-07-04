@@ -240,10 +240,22 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    await this.PushNavPageAsync<BookViewModel>((bookVM) =>
+                    var allServicesList = await this._servicesService.GetServicesAsync();
+                    var result = from item in allServicesList
+                                 where item.Id == this.SelectedService.Id
+                                 select item;
+
+                    if(result.Count() > 0)
                     {
-                        bookVM.Initialize(this.Establishment);
-                    });
+                        await this.PushNavPageAsync<BookViewModel>((bookVM) =>
+                        {
+                            bookVM.Initialize(this.Establishment, result.ElementAt(0));
+                        });
+                    }
+                    else
+                    {
+                        throw new Exception("Selected service not found");
+                    }
                 });     
         }
         

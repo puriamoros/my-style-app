@@ -8,5 +8,7 @@ namespace MyStyleApp.Models
         public DateTime Date { get; set; }
 
         public int Count { get; set; }
+
+        public bool CanBook { get; set; }
     }
 }

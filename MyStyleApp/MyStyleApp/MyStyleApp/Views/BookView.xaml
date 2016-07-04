@@ -4,46 +4,65 @@
              x:Class="MyStyleApp.Views.BookView"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
+             xmlns:gestures="clr-namespace:MyStyleApp.Views.Gestures"
              xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[book]}">
-  <ScrollView>
-    <Grid>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="*" />
-      </Grid.RowDefinitions>
-      <StackLayout Grid.Row="0"
-        Padding="{StaticResource PageContentPadding}">
-        <Label
-          Text="{Binding LocalizedStrings[book]}"
-          Style="{StaticResource LargeTextStyle}"
-          HorizontalOptions="Center"
-          IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <StackLayout Grid.Row="0"
+      Padding="{StaticResource PageContentPadding}">
+      <Label
+        Text="{Binding LocalizedStrings[book]}"
+        Style="{StaticResource LargeTextStyle}"
+        HorizontalOptions="Center"
+        IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
        
-        <StackLayout>
-          <Label 
-            Text="{Binding LocalizedStrings[date]}" 
-            Style="{StaticResource MediumTextStyle}"/>
-          <DatePicker VerticalOptions="CenterAndExpand"
-            Date="{Binding Date, Mode=TwoWay}"
-            MinimumDate="{Binding MinimumDate, Mode=TwoWay}"
-            MaximumDate="{Binding MaximumDate, Mode=TwoWay}"
-            Format="D"/>
-        </StackLayout>
+      <StackLayout>
+        <Label 
+          Text="{Binding LocalizedStrings[date]}" 
+          Style="{StaticResource MediumTextStyle}"/>
+        <DatePicker VerticalOptions="CenterAndExpand"
+          Date="{Binding Date, Mode=TwoWay}"
+          MinimumDate="{Binding MinimumDate, Mode=TwoWay}"
+          MaximumDate="{Binding MaximumDate, Mode=TwoWay}"
+          Format="D"/>
       </StackLayout>
+
+      <!-- Without HasUnevenRows="True", list items does not render well in Android -->
+      <ListView x:Name="SlotList"
+        ItemsSource="{Binding SlotList}"
+        HasUnevenRows="True"
+        gestures:ListViewItemTapped.Command="{Binding BookCommand}">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell x:Name="Slot">
+              <StackLayout>
+                <Label IsVisible="{Binding CanBook}"
+                  Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" Style="{StaticResource MediumTextStyle}" />
+                <Label IsVisible="{Binding CanBook, Converter={StaticResource NegateConverter}}"
+                  TextColor="Red"
+                  Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" Style="{StaticResource MediumTextStyle}" />
+              </StackLayout>
+              <ViewCell.ContextActions>
+                <MenuItem Text="{Binding Source={x:Reference SlotList}, Path=BindingContext.LocalizedStrings[book]}"
+                  Command="{Binding Source={x:Reference SlotList}, Path=BindingContext.BookCommand}"
+                  CommandParameter="{Binding Source={x:Reference Slot}, Path=BindingContext}" />
+              </ViewCell.ContextActions>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
       
-      <StackLayout Grid.Row="1"
-        Padding="{StaticResource PageContentPadding}"
-        VerticalOptions="End">
-        <controls:CustomButton
-          Text="{Binding LocalizedStrings[book]}"
-          Command="{Binding BookCommand}"/>
-      </StackLayout>
-      
+    </StackLayout>
+    
     <controls:WaitingOverlayControl Grid.Row="0" Grid.RowSpan="2"
       IsVisible="{Binding IsBusy}"
       Text="{Binding LocalizedStrings[waiting]}"/>
-    </Grid>
-  </ScrollView>
+  </Grid>
+
 </views:CustomContentPage>

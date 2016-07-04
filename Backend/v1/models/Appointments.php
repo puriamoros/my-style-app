@@ -24,6 +24,9 @@ class Appointments extends ModelWithIdBase
 		// Offer table data
 		$this->offer = Tables::getInstance()->offer;
 		
+		// Services table data
+		$this->services = Tables::getInstance()->services;
+		
 		// Fields for extra data
 		$this->fromDate = 'from';
 		$this->toDate = 'to';
@@ -125,12 +128,82 @@ class Appointments extends ModelWithIdBase
 	
 	protected function dbUpdate($id, $data)
 	{
-		return DBCommands::dbUpdate($this->table, [$this->appointments->status], $this->idField, $id, $data);
+		return DBCommands::dbUpdate($this->appointments->table, [$this->appointments->status], $this->idField, $id, $data);
+	}
+	
+	private function checkCanCreate($data) {
+		$establishment = DBCommands::dbGetOne($this->establishments->table, $this->establishments->fields, $this->establishments->id, $data[$this->appointments->idEstablishment]);
+		if(is_null($establishment)) {
+			throw new ApiException(STATE_DB_ERROR, "Establishment not found");
+		}
+		
+		$service = DBCommands::dbGetOne($this->services->table, $this->services->fields, $this->services->id, $data[$this->appointments->idService]);
+		if(is_null($service)) {
+			throw new ApiException(STATE_DB_ERROR, "Service not found");
+		}
+		
+		$concurrence = $establishment[$this->establishments->concurrence];
+		$duration = $establishment[$this->services->duration];
+		$openingHours = array();
+		
+		$hours1 = $establishment[$this->establishments->hours1];
+		$hours2 = $establishment[$this->establishments->hours2];
+		$intervals = array();
+		if(isset($hours1) && trim($hours1) !== '') {
+			array_push($intervals, $hours1);
+		}
+		if(isset($hours2) && trim($hours2) !== '') {
+			array_push($intervals, $hours2);
+		}
+		
+		foreach($intervals as $interval) {
+			$splitInterval = explode('-', $interval);
+			
+			if(count($splitInterval) != 2) {
+				throw new ApiException(STATE_DB_ERROR, "Erroneous establishment data");
+			}
+			
+			foreach($splitInterval as $hourStr) {
+				$splitHour = explode(':', $hourStr);
+			
+				if(count($splitHour) != 2) {
+					throw new ApiException(STATE_DB_ERROR, "Erroneous establishment data");
+				}
+				
+				$hour = (int) $splitHour[0];
+				$minute = (int) $splitHour[1];
+				
+				if ($hour < 0 || $hour > 23 || ($minute != 0 && $minute != 30))
+				{
+					throw new ApiException(STATE_DB_ERROR, "Erroneous establishment data");
+				}
+				
+				array_push($openingHours, array(
+					'hour' => $hour,
+					'minute' => $minute));
+					
+				throw new ApiException(STATE_DB_ERROR, [$hour,$minute]);
+			}
+			
+			throw new ApiException(STATE_DB_ERROR, $openingHours);
+		}
+		
+		/*$queryParams = array(
+			$this->appointments->idEstablishment => $data[$this->appointments->idEstablishment],
+			$this->appointments->date => $data[$this->appointments->date]
+		);
+		$sameDateAppointments = DBCommands::dbGet($this->appointments->table, $this->appointments->fields, $this->appointments->fields, $queryParams);
+		
+		// TODO: check if there is enough time
+		if(count($sameDateAppointments) >= $establishment[$this->establishments->concurrence]) {
+			throw new ApiException(STATE_ESTABLISHMENT_FULL, "Establishment full");
+		}*/
 	}
 	
 	protected function dbCreate($data)
 	{
+		$this->checkCanCreate($data);
 		$data[$this->appointments->status] = 0;
-		return DBCommands::dbCreate($this->table, $this->fields, $this->idField, $data);
+		return DBCommands::dbCreate($this->appointments->table, $this->appointments->fields, $this->appointments->id, $data);
 	}
 }

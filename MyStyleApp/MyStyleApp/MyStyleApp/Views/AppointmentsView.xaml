@@ -25,7 +25,7 @@
             <DataTemplate>
               <!-- This needs behaviors -->
               <ViewCell>
-                <StackLayout Spacing="2" Padding="0,5,0,5" VerticalOptions="StartAndExpand" >
+                <!--<StackLayout Spacing="2" Padding="0,5,0,5" VerticalOptions="StartAndExpand" >
                   <Label Text="{Binding EstablishmentName}" Style="{StaticResource LargeTextStyle}" />
                   <Label Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=g}" Style="{StaticResource MediumTextStyle}" />
                   <Label Text="{Binding ServiceNameAndPrice}" Style="{StaticResource MediumTextStyle}" />
@@ -38,8 +38,103 @@
                   <Label Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[appointment_status_2]}"
                       IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Cancelled}"
                       Style="{StaticResource MediumTextStyle}" />
-                </StackLayout>
-              </ViewCell>
+                </StackLayout>-->
+
+              <Frame Padding="0,5,0,5">
+                <Frame BackgroundColor="Blue" OutlineColor="Red">
+                  <StackLayout BackgroundColor="Green">
+                    <StackLayout
+                      RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+                      RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.99}"
+                      RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}">
+                      <Label Text="{Binding EstablishmentName}" Style="{StaticResource LargeTextStyle}" />
+                    </StackLayout>
+
+                    <RelativeLayout>
+                      <StackLayout
+                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.50}"
+                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}">
+                        <Label Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=d}" Style="{StaticResource MediumTextStyle}" />
+                      </StackLayout>
+                      <Image Aspect="AspectFit" Source="Clock.png"
+                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.50}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
+                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}">
+                      </Image>
+                      <StackLayout
+                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.58}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.42}"
+                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}">
+                        <Label Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" Style="{StaticResource MediumTextStyle}" />
+                      </StackLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout>
+                      <StackLayout
+                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.50}"
+                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}">
+                        <Label Text="{Binding ServiceName}" Style="{StaticResource MediumTextStyle}" />
+                      </StackLayout>
+                      <Image Aspect="AspectFit" Source="EuroPriceTag.png"
+                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.50}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
+                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}">
+                      </Image>
+                      <StackLayout
+                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.58}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.42}"
+                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}">
+                        <Label Text="{Binding ServicePrice}" Style="{StaticResource MediumTextStyle}" />
+                      </StackLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout>
+                      <Image Aspect="AspectFit" Source="Favourite.png"
+                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
+                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
+                        IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Confirmed}">
+                      </Image>
+                      <!--<Image Aspect="AspectFit" Source="Pending.png"
+                      RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+                      RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
+                      RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
+                      IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Pending}">
+                    </Image>
+                    <Image Aspect="AspectFit" Source="Confirmed.png"
+                      RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+                      RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
+                      RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
+                      IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Confirmed}">
+                    </Image>
+                    <Image Aspect="AspectFit" Source="Cancelled.png"
+                      RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+                      RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
+                      RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
+                      IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Cancelled}">
+                    </Image>-->
+                      <StackLayout
+                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.92}"
+                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}">
+                        <Label Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[appointment_status_0]}"
+                          IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Pending}"
+                          Style="{StaticResource MediumTextStyle}" />
+                        <Label Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[appointment_status_1]}"
+                          IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Confirmed}"
+                          Style="{StaticResource MediumTextStyle}" />
+                        <Label Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[appointment_status_2]}"
+                          IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Cancelled}"
+                          Style="{StaticResource MediumTextStyle}" />
+                      </StackLayout>
+                    </RelativeLayout>
+                  </StackLayout>
+                </Frame>
+              </Frame>
+
+                </ViewCell>
             </DataTemplate>
           </ListView.ItemTemplate>
         </ListView>

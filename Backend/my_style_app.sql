@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-06-2016 a las 18:28:09
+-- Tiempo de generación: 04-07-2016 a las 11:29:56
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.21
 
@@ -32,7 +32,8 @@ CREATE TABLE `appointments` (
   `idClient` int(11) NOT NULL,
   `idEstablishment` int(11) NOT NULL,
   `idService` int(11) NOT NULL,
-  `date` varchar(100) NOT NULL,
+  `date` datetime NOT NULL,
+  `status` tinyint(4) NOT NULL,
   `notes` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -40,8 +41,10 @@ CREATE TABLE `appointments` (
 -- Volcado de datos para la tabla `appointments`
 --
 
-INSERT INTO `appointments` (`id`, `idClient`, `idEstablishment`, `idService`, `date`, `notes`) VALUES
-(1232, 1, 1, 1, 'asdf', 'asdf');
+INSERT INTO `appointments` (`id`, `idClient`, `idEstablishment`, `idService`, `date`, `status`, `notes`) VALUES
+(1, 1, 1, 4, '2016-09-27 10:30:00', 1, 'asdf'),
+(2, 1, 2, 22, '2016-09-28 15:30:00', 0, 'hola'),
+(3, 1, 2, 24, '2016-09-29 16:00:00', 2, 'hola');
 
 -- --------------------------------------------------------
 
@@ -57,18 +60,21 @@ CREATE TABLE `establishments` (
   `phone` varchar(9) NOT NULL,
   `idEstablishmentType` int(11) NOT NULL,
   `idOwner` int(11) NOT NULL,
-  `idProvince` int(11) NOT NULL
+  `idProvince` int(11) NOT NULL,
+  `concurrence` int(11) NOT NULL,
+  `hours1` varchar(11) NOT NULL,
+  `hours2` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `establishments`
 --
 
-INSERT INTO `establishments` (`id`, `name`, `address`, `phone`, `idEstablishmentType`, `idOwner`, `idProvince`) VALUES
-(1, 'Peluquería 1', 'C/. Tururu nº1', '958111111', 1, 1, 1),
-(2, 'Peluquería 2', 'C/. tururu nº2', '951357357', 2, 1, 1),
-(3, 'Peluquería 3', 'C/. tururu nº3', '357159486', 1, 1, 2),
-(4, 'Peluquería 4', 'C/. tururu nº4', '123456789', 3, 2, 1);
+INSERT INTO `establishments` (`id`, `name`, `address`, `phone`, `idEstablishmentType`, `idOwner`, `idProvince`, `concurrence`, `hours1`, `hours2`) VALUES
+(1, 'Peluquería 1', 'C/. Tururu nº1', '958111111', 1, 1, 1, 1, '10:00-14:00', '16:00-20:00'),
+(2, 'Peluquería 2', 'C/. tururu nº2', '951357357', 2, 1, 1, 2, '08:00-20:00', ''),
+(3, 'Peluquería 3', 'C/. tururu nº3', '357159486', 1, 1, 2, 3, '06:00-15:00', ''),
+(4, 'Peluquería 4', 'C/. tururu nº4', '123456789', 3, 2, 1, 4, '16:00-00:00', '');
 
 -- --------------------------------------------------------
 
@@ -238,27 +244,27 @@ CREATE TABLE `services` (
 INSERT INTO `services` (`id`, `idTranslation`, `idServiceCategory`, `duration`) VALUES
 (1, 12, 1, 30),
 (2, 13, 1, 30),
-(3, 14, 1, 45),
-(4, 15, 1, 45),
+(3, 14, 1, 60),
+(4, 15, 1, 60),
 (5, 16, 1, 60),
-(6, 17, 1, 45),
+(6, 17, 1, 60),
 (7, 18, 2, 30),
 (8, 19, 2, 30),
 (9, 20, 2, 30),
 (10, 21, 2, 30),
-(11, 22, 2, 15),
-(12, 23, 2, 15),
+(11, 22, 2, 30),
+(12, 23, 2, 30),
 (13, 24, 3, 60),
 (14, 25, 3, 60),
 (15, 26, 3, 60),
-(16, 27, 3, 45),
-(17, 28, 3, 45),
+(16, 27, 3, 60),
+(17, 28, 3, 60),
 (18, 29, 3, 60),
 (19, 30, 4, 90),
 (20, 31, 4, 90),
-(21, 32, 5, 45),
+(21, 32, 5, 60),
 (22, 33, 6, 30),
-(23, 34, 6, 45),
+(23, 34, 6, 60),
 (24, 35, 6, 30),
 (25, 36, 6, 30),
 (26, 37, 6, 30),
@@ -327,6 +333,19 @@ INSERT INTO `service_categories` (`id`, `idTranslation`, `idEstablishmentType`) 
 (9, 9, 2),
 (10, 10, 2),
 (11, 11, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `slots`
+--
+
+DROP TABLE IF EXISTS `slots`;
+CREATE TABLE `slots` (
+  `id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `idAppointment` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -439,8 +458,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `apiKey`, `userType`, `phone`) VALUES
-(1, 'Helio', 'Huete', 'helio.huete@gmail.com', '$2y$10$g0v8y38VjKujbzPQCa9g.e2HeYt5fLAC5o1asOxoqmvN53GvbReg6', 'cc06c9f321e156c2468669728e2be8b8', 0, '0'),
-(19, 'Puri', 'Amorós', 'puri.amoros@gmail.com', '$2y$10$/kXT7NWAulGrX31H/BNLmOQfFr41znROhIxlDDuKlA1wU6mWHINxO', '3bc23b47841173b7027d911bc055d113', 0, '0');
+(1, 'Helio', 'Huete', 'helio.huete@gmail.com', '$2y$10$w282D1Eyi3inEtBIbjAd6e69s0uzoDTI2KQjjowSIZVgUd4Dl.0by', 'cc06c9f321e156c2468669728e2be8b8', 1, '123456789'),
+(19, 'Puri', 'Amorós', 'puri.amoros@gmail.com', '$2y$10$AZfna1yNJg.NEjPjpNU/mefD4XuNoVD4k2cc7ojv0W5MIafTk8rV.', '3bc23b47841173b7027d911bc055d113', 0, '0'),
+(20, 'aaa', 'bbb', 'aa@bb.com', '$2y$10$r1NGrTmPIZqvjaO.3nGaQO8g4ovt.EiX3TKcSHh1Yh4PQAEh2Ef/W', 'f166df0a695856c42e1827a31f90f947', 0, '123456789'),
+(21, 'sdfasdf', 'asdfasdfdf', 'piunchi@gmail.com', '$2y$10$W.nmnDfq4A.fyoLz89d9U.R2eWcbdQ7WabRNYz5RlZ2tgSVDbLFnq', 'cb96faa601c5951c670e7894502267e3', 0, '123456789');
 
 --
 -- Índices para tablas volcadas
@@ -502,6 +523,12 @@ ALTER TABLE `service_categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `slots`
+--
+ALTER TABLE `slots`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `staff`
 --
 ALTER TABLE `staff`
@@ -529,7 +556,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1233;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `establishments`
 --
@@ -561,10 +588,15 @@ ALTER TABLE `services`
 ALTER TABLE `service_categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
+-- AUTO_INCREMENT de la tabla `slots`
+--
+ALTER TABLE `slots`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -221,22 +221,10 @@ namespace MyStyleApp.ViewModels
 
         private async void BookAsync(Slot slot)
         {
-            int slotsNeeded = this._service.Duration / 30;
-            int slotIndex = this.SlotList.IndexOf(slot);
-
-            bool enoughTime = true;
-            for(int i=0; i<slotsNeeded && enoughTime; i++)
-            {
-                if(this.SlotList[slotIndex+i].Count >= this._establishment.Concurrence)
-                {
-                    enoughTime = false;
-                }
-            }
-
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    if (enoughTime)
+                    if (slot.CanBook)
                     {
                         //TODO: enviar email al propietario
                         await this.UserNotificator.DisplayAlert(

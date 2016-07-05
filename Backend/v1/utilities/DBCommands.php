@@ -16,7 +16,7 @@ class DBCommands
 		return $item;
 	}
 	
-	public static function dbGet($table, $fields, $searchFields, $queryParams, $additionalConditions)
+	public static function dbGet($table, $fields, $searchFields, $queryParams, $additionalConditions, $groupedBy)
 	{
 		try {
 			$pdo = DBConnection::getInstance()->getDB();
@@ -38,7 +38,15 @@ class DBCommands
 					$where = true;
 				}
 			}
-
+			$groupBy = false;
+			if(!is_null($groupedBy)) {
+				foreach($groupedBy as $group) {
+					$command .= $groupBy ? ", " : " GROUP BY ";
+					$command .= $group;
+					$groupBy = true;
+				}
+			}
+			
 			//throw new ApiException(STATE_DB_ERROR, $command);
 			
 			$query = $pdo->prepare($command);
@@ -75,7 +83,7 @@ class DBCommands
 		}
 	}
 	
-	public static function dbGetJoin($joinTables, $joinFields, $joinTypes, $fields, $searchFields, $queryParams, $additionalConditions)
+	public static function dbGetJoin($joinTables, $joinFields, $joinTypes, $fields, $searchFields, $queryParams, $additionalConditions, $groupedBy)
 	{
 		try {
 			$pdo = DBConnection::getInstance()->getDB();
@@ -99,6 +107,14 @@ class DBCommands
 					$command .= $where ? " AND " : " WHERE ";
 					$command .= $condition->field . $condition->operator . (($condition->doBindParam) ? "?" : $condition->value);
 					$where = true;
+				}
+			}
+			$groupBy = false;
+			if(!is_null($groupedBy)) {
+				foreach($groupedBy as $group) {
+					$command .= $groupBy ? ", " : " GROUP BY ";
+					$command .= $group;
+					$groupBy = true;
 				}
 			}
 			

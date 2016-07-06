@@ -181,12 +181,60 @@ class Appointments extends ModelWithIdBase
 				array_push($openingHours, array(
 					'hour' => $hour,
 					'minute' => $minute));
-					
-				throw new ApiException(STATE_DB_ERROR, [$hour,$minute]);
 			}
-			
-			throw new ApiException(STATE_DB_ERROR, $openingHours);
 		}
+		
+		$openingDates = array();
+		for ($i = 0; $i < count($openingHours)-1; $i+=2) {
+			$from = date_create($data[$this->appointments->date]);
+			date_time_set($from, $openingHours[$i]['hour'], $openingHours[i]['minute']);
+			$to = date_create($data[$this->appointments->date]);
+			date_time_set($to, $openingHours[$i+1]['hour'], $openingHours[i+1]['minute']);
+			
+			array_push($openingDates, array(
+				'from' => $from,
+				'to' => $to
+			));
+		}
+		
+		$start = date_create($data[$this->appointments->date]);
+		date_time_set($start, 0, 0);
+		$end = date_create($data[$this->appointments->date]);
+		date_time_set($end, 23, 59, 59);
+		
+		$fields = [$this->appointments->date, 'COUNT(*)'];
+		$groupBy = [$this->appointments->date];
+		$queryParams = array(
+			$this->appointments->idEstablishment => $data[$this->appointments->idEstablishment]
+		);
+		$additionalConditions = array(
+			new Condition($this->appointments->date, '>=', date_format($start, 'Y-m-d H:i:s'), true),
+			new Condition($this->appointments->date, '<=', date_format($end, 'Y-m-d H:i:s'), true));
+		$appointmentsGrouped = DBCommands::dbGet($this->appointments->table, $fields, $this->appointments->fields, $queryParams, $additionalConditions, $groupBy);
+		
+		$appointmentMap = array();
+		foreach($appointmentsGrouped as $group) {
+			$appointmentMap[$group[$this->appointments->date]] = $group['COUNT(*)'];
+		}
+		//throw new ApiException(STATE_DB_ERROR, [$openingHours, $openingDates]);
+		$slots = array();
+		foreach($openingDates as $openingDate) {
+			$formDate = clone $openingDate['from'];
+			$toDate = clone $openingDate['to'];
+			while($formDate < $toDate){
+				$count = 0;
+				if(isset($appointmentMap[date_format($formDate, 'Y-m-d H:i:s')])) {
+					$count = $appointmentMap[date_format($formDate, 'Y-m-d H:i:s')];
+				}
+				array_push($slots, array(
+					date_format($formDate, 'Y-m-d H:i:s') => $count
+				));
+				date_add($formDate, date_interval_create_from_date_string('30 minutes'));
+			}
+		}
+		
+		throw new ApiException(STATE_DB_ERROR, [$openingDates, $slots]);
+		
 		
 		/*$queryParams = array(
 			$this->appointments->idEstablishment => $data[$this->appointments->idEstablishment],

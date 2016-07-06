@@ -11,10 +11,14 @@ namespace MyStyleApp.Services.Backend
 {
     public class EstablishmentsService : BackendServiceBase, IEstablishmentsService
     {
+        private ProvincesService _provincesService;
+
         public EstablishmentsService(
-            HttpService httpService) :
+            HttpService httpService,
+            ProvincesService provincesService) :
             base(httpService)
         {
+            this._provincesService = provincesService;
         }
 
         public async Task<IList<Establishment>> GetEstablishmentsAsync(Province province, Service service)
@@ -26,6 +30,11 @@ namespace MyStyleApp.Services.Backend
                    BackendConstants.GET_ESTABLISHMENTS_URL,
                    credentials,
                    new object[] { province.Id, service.Id });
+
+            for(int i=0; i<list.Count; i++)
+            {
+                list[i].ProvinceName = _provincesService.GetProvince(list[i].IdProvince);
+            }
 
             return list;
         }
@@ -39,6 +48,8 @@ namespace MyStyleApp.Services.Backend
                    BackendConstants.GET_ESTABLISHMENT_URL,
                    credentials,
                    new object[] { id });
+
+            establishment.ProvinceName = _provincesService.GetProvince(establishment.IdProvince);
 
             return establishment;
         }

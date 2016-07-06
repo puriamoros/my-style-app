@@ -23,6 +23,12 @@ namespace MyStyleApp.Models
         [JsonProperty(Required = Required.Default, PropertyName = "idFavourite")]
         public int IdFavourite { get; set; }
 
+        [JsonProperty(Required = Required.Always, PropertyName = "idOwner")]
+        public int IdOwner { get; set; }
+
+        [JsonProperty(Required = Required.Always, PropertyName = "idProvince")]
+        public int IdProvince { get; set; }
+
         [JsonProperty(Required = Required.Default, PropertyName = "concurrence")]
         public int Concurrence { get; set; }
 
@@ -34,5 +40,8 @@ namespace MyStyleApp.Models
 
         [JsonProperty(Required = Required.Default, PropertyName = "services")]
         public IList<ShortenService> ShortenServices { get; set; }
+
+        [JsonIgnore]
+        public string ProvinceName { get; set; }
     }
 }

@@ -6,7 +6,7 @@
 
   <Application.Resources>
     <ResourceDictionary>
-      
+
       <!-- Converters -->
       <converters:StringToBoolConverter x:Key="StringToBoolConverter" />
       <converters:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter" />
@@ -28,7 +28,10 @@
 
       <!-- Colors -->
       <Color x:Key="ErrorColor">Red</Color>
-      
+      <Color x:Key="ConfirmedColor">#089C05</Color>
+      <Color x:Key="PendingColor">#FB9E05</Color>
+      <Color x:Key="CancelledColor">#D40606</Color>
+
       <!-- Font sizes -->
       <Style x:Key="TextStyle" TargetType="Label">
         <Setter Property="FontFamily" Value="SegoeWP-Light" />
@@ -51,6 +54,7 @@
       <Style x:Key="LargeTextStyle" TargetType="Label" BasedOn="{StaticResource TextStyle}">
         <Setter Property="FontSize" Value="Large" />
       </Style>
+
       <Style x:Key="LargeTextStyle1" TargetType="Label" BasedOn="{StaticResource TextStyle}">
         <Setter Property="FontSize">
           <Setter.Value>

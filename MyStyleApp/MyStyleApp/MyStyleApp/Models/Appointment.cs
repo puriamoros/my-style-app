@@ -36,10 +36,10 @@ namespace MyStyleApp.Models
         [JsonIgnore]
         public string ServiceName { get; set; }
 
-        [JsonIgnore]
-        public string ServiceNameAndPrice
-        {
-            get { return ServiceName + " - " + ServicePrice.ToString("0.00") + "€"; }
-        }
+        //[JsonIgnore]
+        //public string ServiceNameAndPrice
+        //{
+        //    get { return ServiceName + " - " + ServicePrice.ToString("0.00") + "€"; }
+        //}
     }
 }

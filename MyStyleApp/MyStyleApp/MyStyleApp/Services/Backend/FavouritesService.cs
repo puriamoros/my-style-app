@@ -12,11 +12,16 @@ namespace MyStyleApp.Services.Backend
     {
         private IList<Establishment> _list;
         private IUsersService _userService;
+        private ProvincesService _provincesService;
 
-        public FavouritesService(HttpService httpService, IUsersService userService):
+        public FavouritesService(
+            HttpService httpService, 
+            IUsersService userService,
+            ProvincesService provincesService) :
             base(httpService)
         {
             this._userService = userService;
+            this._provincesService = provincesService;
         }
 
         public async Task<IList<Establishment>> GetFavouritesAsync()
@@ -31,6 +36,12 @@ namespace MyStyleApp.Services.Backend
                     credentials,
                     new object[] { this._userService.LoggedUser.Id });
             }
+
+            for (int i = 0; i < _list.Count; i++)
+            {
+                _list[i].ProvinceName = _provincesService.GetProvince(_list[i].IdProvince);
+            }
+
             return this._list;
         }
 

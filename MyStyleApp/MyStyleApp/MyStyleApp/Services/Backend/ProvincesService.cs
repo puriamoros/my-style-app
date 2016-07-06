@@ -1,6 +1,7 @@
 ﻿using MyStyleApp.Models;
 using MyStyleApp.Enums;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace MyStyleApp.Services.Backend
@@ -32,6 +33,21 @@ namespace MyStyleApp.Services.Backend
         public IList<Province> GetProvinces()
         {
             return this._provinceList;
+        }
+
+        public string GetProvince(int idProvince)
+        {
+            var result = from item in _provinceList
+                         where item.Id == idProvince
+                         select item;
+            if(result.Count() > 0)
+            {
+                return result.ElementAt(0).Name;
+            }
+            else
+            {
+                return "";
+            }
         }
     }
 }

@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyStyleApp.Views.FavouritesView"
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
+             xmlns:gestures="clr-namespace:MyStyleApp.Views.Gestures"
              xmlns:views="clr-namespace:MyStyleApp.Views"
-             xmlns:mvvmcorebehaviors="clr-namespace:MvvmCore.Behaviors"
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[favourites]}" Icon="Star.png">
   <Grid>
@@ -13,25 +13,33 @@
       <ListView
         ItemsSource="{Binding FavouritesList}"
         HasUnevenRows="True"
-        x:Name="FavouritesList">
+        x:Name="FavouritesList"
+        gestures:ListViewItemTapped.Command="{Binding ViewDetailsCommand}">
         <ListView.ItemTemplate>
           <DataTemplate>
-            <!-- This does not need behaviors but needs a x:Name for the ListView -->
-            <TextCell x:Name="Favourite"
-              Text="{Binding Name}"
-              Detail="{Binding Address}"
-              Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.ViewDetailsCommand}"
-              CommandParameter="{Binding}">
-              <TextCell.ContextActions>
+            <ViewCell x:Name="Favourite">
+              <StackLayout Padding="0,5,0,5">
+                <StackLayout>
+                  <Label Text="{Binding Name}" Style="{StaticResource LargeTextStyle}" FontAttributes="Bold"/>
+                  <Label Text="{Binding Address}" Style="{StaticResource MediumTextStyle}" />
+                  <Label Text="{Binding ProvinceName}" Style="{StaticResource MediumTextStyle}" />
+                </StackLayout>
+                <StackLayout HeightRequest="1" BackgroundColor="Gray"
+                  IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>  
+              </StackLayout>
+              
+                
+             <ViewCell.ContextActions>
                 <MenuItem Text="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.LocalizedStrings[view_details]}"
                   Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.ViewDetailsCommand}"
                   CommandParameter="{Binding Source={x:Reference Favourite}, Path=BindingContext}" />
                 <MenuItem Text="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.LocalizedStrings[delete_favourite]}"
                   Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.DeleteFavouriteCommand}"
                   CommandParameter="{Binding Source={x:Reference Favourite}, Path=BindingContext}" />
-                
-              </TextCell.ContextActions>
-            </TextCell> 
+              </ViewCell.ContextActions>
+            </ViewCell>
+            
+            
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>

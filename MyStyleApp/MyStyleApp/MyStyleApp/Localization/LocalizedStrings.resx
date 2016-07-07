@@ -336,4 +336,7 @@
   <data name="appointment_status_2" xml:space="preserve">
     <value>Cancelled</value>
   </data>
+  <data name="appointment_cancellation_error" xml:space="preserve">
+    <value>The cancellation limit for an appointment es one day before the appointment date</value>
+  </data>
 </root>

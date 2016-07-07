@@ -239,8 +239,10 @@ namespace MvvmCore
 			{
 				TViewModel viewModel;
 				var view = _viewFactory.Resolve(out viewModel, setStateAction);
-				await navigation.PushAsync(view);
-				tcs.SetResult(viewModel);
+                /*INavigation rootNavigation = navigation.NavigationStack[0].Navigation;
+                await rootNavigation.PushAsync(view);*/
+                await navigation.PushAsync(view);
+                tcs.SetResult(viewModel);
 			});
 			return tcs.Task;
 		}

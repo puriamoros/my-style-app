@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MyStyleApp.Models;
 using System.Net.Http;
 using MyStyleApp.Constants;
+using MyStyleApp.Enums;
 
 namespace MyStyleApp.Services.Backend
 {
@@ -56,15 +57,15 @@ namespace MyStyleApp.Services.Backend
                 null);
         }
 
-        public async Task UpdateAppointmentStatusAsync(Appointment appointment)
+        public async Task UpdateAppointmentStatusAsync(Appointment appointment, AppointmentStatusEnum status)
         {
             string authorization = await this.HttpService.GetApiKeyAuthorizationAsync();
 
             await this.HttpService.InvokeWithContentAsync<GenericStatus>(
-                HttpMethod.Post,
+                HttpMethod.Put,
                 BackendConstants.APPOINTMENT_STATUS_URL,
                 authorization,
-                new GenericStatus() { Status = (int) appointment.Status },
+                new GenericStatus() { Status = (int) status },
                 new object[] { appointment.Id });
         }
 

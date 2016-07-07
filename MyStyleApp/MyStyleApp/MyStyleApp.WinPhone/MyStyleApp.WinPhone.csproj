@@ -107,6 +107,7 @@
     <Content Include="Assets\StoreLogo.scale-240.png" />
     <Content Include="Assets\WideLogo.scale-240.png" />
     <Content Include="Cancelled.png" />
+    <Content Include="CellPhone.png" />
     <Content Include="Clock.png" />
     <Content Include="Confirmed.png" />
     <Content Include="EuroPriceTag.png" />

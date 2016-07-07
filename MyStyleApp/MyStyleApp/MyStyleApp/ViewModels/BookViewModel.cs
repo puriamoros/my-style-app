@@ -46,6 +46,8 @@ namespace MyStyleApp.ViewModels
             this._appointmentsService = appointmentsService;
 
             this.BookCommand = new Command<Slot>(this.BookAsync);
+
+            MessagingCenter.Subscribe<Appointment>(this, "appointmentCancelled", this.OnAppointmentCancelled);
         }
 
         public void Initialize(Establishment establishment, Service service)
@@ -240,6 +242,17 @@ namespace MyStyleApp.ViewModels
                            this.LocalizedStrings.GetString("ok"));
                     }
                 });
+        }
+
+        private void OnAppointmentCancelled(Appointment appointment)
+        {
+            if(appointment.IdEstablishment == this._establishment.Id &&
+                appointment.Date.Year == this.Date.Year &&
+                appointment.Date.Month == this.Date.Month &&
+                appointment.Date.Day == this.Date.Day)
+            {
+                this.OnDateChanged(this.Date);
+            }
         }
     }
 }

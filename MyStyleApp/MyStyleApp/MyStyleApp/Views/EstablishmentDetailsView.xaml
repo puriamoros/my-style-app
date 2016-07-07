@@ -20,12 +20,34 @@
           HorizontalOptions="Center"
           IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
 
-        <StackLayout Padding="0,0,0,10" Spacing="0">
-          <Label Text="{Binding Establishment.Name}" Style="{StaticResource LargeTextStyle}"/>
-          <Label Text="{Binding Establishment.Address}" Style="{StaticResource SmallTextStyle}"/>
-          <Label Text="{Binding Establishment.Phone}" Style="{StaticResource SmallTextStyle}"/>
-        </StackLayout>
+        <StackLayout Padding="0,5,0,10">
+          <StackLayout>
+            <StackLayout>
+              <Label Style="{StaticResource LargeTextStyle}" FontAttributes="Bold"
+                Text="{Binding Establishment.Name}" SizeChanged="OnLabelSizeChanged"/>
+            </StackLayout>
 
+            <StackLayout>
+              <Label Style="{StaticResource MediumTextStyle}"
+                Text="{Binding Establishment.Address}" SizeChanged="OnLabelSizeChanged"/>
+            </StackLayout>
+          </StackLayout>
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="7*" />
+              <ColumnDefinition Width="93*" />
+            </Grid.ColumnDefinitions>
+            <RelativeLayout Grid.Column="0" VerticalOptions="Center" >
+              <Image Aspect="AspectFit" Source="CellPhone.png"
+                RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>  
+            </RelativeLayout>
+            <StackLayout Grid.Column="1">
+              <Label Style="{StaticResource MediumTextStyle}" VerticalOptions="Center"
+                Text="{Binding Establishment.Phone}"/> 
+            </StackLayout>
+          </Grid>
+        </StackLayout>
+        
         <StackLayout Padding="0,0,0,10" Spacing="0">
           <Label
             Text="{Binding LocalizedStrings[service_category]}"

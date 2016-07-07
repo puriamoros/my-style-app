@@ -14,18 +14,5 @@ namespace MyStyleApp.Views
         {
             InitializeComponent();
         }
-
-        private void OnLabelSizeChanged(object sender, EventArgs e)
-        {
-            if(sender is Label)
-            {
-                Label label = sender as Label;
-                if(label.Parent is StackLayout)
-                {
-                    StackLayout stackLayout = label.Parent as StackLayout;
-                    stackLayout.HeightRequest = label.Height;
-                }
-            }
-        }
     }
 }

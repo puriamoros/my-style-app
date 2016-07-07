@@ -23,5 +23,21 @@ namespace MyStyleApp.Views
                 NavigationPage.SetHasNavigationBar(this, false);
             }
         }
+
+        // Sets the height of the parent StackLayout to the label height
+        // This is necesary when we have some labels ones on the top of others and some
+        // of them can need more than one line for their texts
+        protected void OnLabelSizeChanged(object sender, EventArgs e)
+        {
+            if (sender is Label)
+            {
+                Label label = sender as Label;
+                if (label.Parent is StackLayout)
+                {
+                    StackLayout stackLayout = label.Parent as StackLayout;
+                    stackLayout.HeightRequest = label.Height;
+                }
+            }
+        }
     }
 }

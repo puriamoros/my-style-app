@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using MyStyleApp.Services.Backend;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MyStyleApp.ViewModels
 {
@@ -60,6 +61,13 @@ namespace MyStyleApp.ViewModels
                     await this.SetMainPageTabAsync<SearchViewModel>(async (searchVM) =>
                     {
                         await searchVM.PopNavPageToRootAsync();
+
+                        // Hack to workaround a bug with Android when popping and then inmediately pushing
+                        if (Device.OS == TargetPlatform.Android)
+                        {
+                            await Task.Delay(10);
+                        }
+
                         await searchVM.PushNavPageAsync<EstablishmentDetailsViewModel>(async (establishmentDetailsVM) =>
                         {
                             await establishmentDetailsVM.InitilizeAsync(establishment.Id, 0, 0);

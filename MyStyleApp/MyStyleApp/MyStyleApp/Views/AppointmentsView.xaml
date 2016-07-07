@@ -9,102 +9,112 @@
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[appointments]}" Icon="Calendar.png">
 
-    <Grid>
-      <StackLayout Padding="{StaticResource PageContentPadding}">
-        <!-- Without HasUnevenRows="True", list items does not render well in Android -->
-        <ListView
-          ItemsSource="{Binding AppointmentList}"
-          HasUnevenRows="True"
-          x:Name="AppointmentList"
-          gestures:ListViewItemTapped.Command="{Binding AppointmentDetailsCommand}">
+  <Grid>
+    <StackLayout Padding="{StaticResource PageContentPadding}">
+      <!-- Without HasUnevenRows="True", list items does not render well in Android -->
+      <ListView
+        ItemsSource="{Binding AppointmentList}"
+        HasUnevenRows="True"
+        x:Name="AppointmentList"
+        gestures:ListViewItemTapped.Command="{Binding AppointmentDetailsCommand}">
                     
-          <ListView.ItemTemplate>
-            <DataTemplate>
-              <ViewCell>
-                <StackLayout Padding="0,5,0,5">
-                  
-                  <Label Text="{Binding EstablishmentName}" Style="{StaticResource LargeTextStyle}" FontAttributes="Bold"/>
-                  
-                  <Grid>
-                    <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="60*" />
-                      <ColumnDefinition Width="6*" />
-                      <ColumnDefinition Width="34*" />
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
-                      Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=d}" />
-                    <RelativeLayout Grid.Column="1" VerticalOptions="Center">
-                      <Image Aspect="AspectFit" Source="Clock.png" VerticalOptions="Center"
-                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
-                    </RelativeLayout>
-                    <Label Grid.Column="2" VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
-                      Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" />
-                  </Grid>
-                  
-                  <Grid>
-                    <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="60*" />
-                      <ColumnDefinition Width="6*" />
-                      <ColumnDefinition Width="34*" />
-                    </Grid.ColumnDefinitions>
-                    
-                    <StackLayout Grid.Column="0">
-                      <Label Grid.Column="0" VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
-                        Text="{Binding ServiceName}" SizeChanged="OnLabelSizeChanged"/>
-                    </StackLayout>
-                    
-                    <RelativeLayout Grid.Column="1" VerticalOptions="Center">
-                      <Image Aspect="AspectFit" Source="EuroPriceTag.png" VerticalOptions="Center"
-                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
-                    </RelativeLayout>
-                    
-                    <Label Grid.Column="2" VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
-                      Text="{Binding ServicePrice, Converter={StaticResource FloatToPriceConverter}}" />
-                  </Grid>
-                
-                  <Grid>
-                    <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="5*" />
-                      <ColumnDefinition Width="95*" />
-                    </Grid.ColumnDefinitions>
-                    <RelativeLayout Grid.Column="0" VerticalOptions="Center" >
-                      <Image Aspect="AspectFit" Source="Pending.png" 
-                        IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Pending}"
-                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
-                      <Image Aspect="AspectFit" Source="Confirmed.png" 
-                        IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Confirmed}"
-                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
-                      <Image Aspect="AspectFit" Source="Cancelled.png" 
-                        IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Cancelled}"
-                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
-                    </RelativeLayout>
-                    <StackLayout Grid.Column="1">
-                      <Label Style="{StaticResource SmallTextStyle}" VerticalOptions="Center"
-                        Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[appointment_status_0]}"
-                        TextColor="{StaticResource PendingColor}"
-                        IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Pending}"/>
-                      <Label Style="{StaticResource SmallTextStyle}" VerticalOptions="Center"
-                        Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[appointment_status_1]}"
-                        TextColor="{StaticResource ConfirmedColor}"
-                        IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Confirmed}"/>
-                      <Label Style="{StaticResource SmallTextStyle}" VerticalOptions="Center"
-                        Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[appointment_status_2]}"
-                        TextColor="{StaticResource CancelledColor}"
-                        IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Cancelled}"/>
-                    </StackLayout>
-                  </Grid>
-                  
-                <BoxView HeightRequest="1" BackgroundColor="Gray"
-                  IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/> 
-                  
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell x:Name="Appointment">
+              <StackLayout Padding="0,5,0,5">
+                <StackLayout>
+                  <Label VerticalOptions="Center" Style="{StaticResource LargeTextStyle}" FontAttributes="Bold"
+                    Text="{Binding EstablishmentName}" SizeChanged="OnLabelSizeChanged"/>
                 </StackLayout>
-              </ViewCell>
-            </DataTemplate>
-          </ListView.ItemTemplate>
-        </ListView>
-      </StackLayout>
-      <controls:WaitingOverlayControl
-        IsVisible="{Binding IsBusy}"
-        Text="{Binding LocalizedStrings[waiting]}"/>
-    </Grid>
+                                  
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60*" />
+                    <ColumnDefinition Width="6*" />
+                    <ColumnDefinition Width="34*" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+                    Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=d}" />
+                  <RelativeLayout Grid.Column="1" VerticalOptions="Center">
+                    <Image Aspect="AspectFit" Source="Clock.png" VerticalOptions="Center"
+                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                  </RelativeLayout>
+                  <Label Grid.Column="2" VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+                    Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" />
+                </Grid>
+                  
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60*" />
+                    <ColumnDefinition Width="6*" />
+                    <ColumnDefinition Width="34*" />
+                  </Grid.ColumnDefinitions>
+                    
+                  <StackLayout Grid.Column="0">
+                    <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+                      Text="{Binding ServiceName}" SizeChanged="OnLabelSizeChanged"/>
+                  </StackLayout>
+                    
+                  <RelativeLayout Grid.Column="1" VerticalOptions="Center">
+                    <Image Aspect="AspectFit" Source="EuroPriceTag.png" VerticalOptions="Center"
+                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                  </RelativeLayout>
+                    
+                  <StackLayout Grid.Column="2">
+                    <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+                      Text="{Binding ServicePrice, Converter={StaticResource FloatToPriceConverter}}" SizeChanged="OnLabelSizeChanged"/>
+                    </StackLayout> 
+                </Grid>
+                
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="95*" />
+                  </Grid.ColumnDefinitions>
+                  <RelativeLayout Grid.Column="0" VerticalOptions="Center" >
+                    <Image Aspect="AspectFit" Source="Pending.png" 
+                      IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Pending}"
+                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                    <Image Aspect="AspectFit" Source="Confirmed.png" 
+                      IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Confirmed}"
+                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                    <Image Aspect="AspectFit" Source="Cancelled.png" 
+                      IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Cancelled}"
+                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                  </RelativeLayout>
+                  <StackLayout Grid.Column="1">
+                    <Label Style="{StaticResource SmallTextStyle}" VerticalOptions="Center"
+                      Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[appointment_status_0]}"
+                      TextColor="{StaticResource PendingColor}"
+                      IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Pending}"/>
+                    <Label Style="{StaticResource SmallTextStyle}" VerticalOptions="Center"
+                      Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[appointment_status_1]}"
+                      TextColor="{StaticResource ConfirmedColor}"
+                      IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Confirmed}"/>
+                    <Label Style="{StaticResource SmallTextStyle}" VerticalOptions="Center"
+                      Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[appointment_status_2]}"
+                      TextColor="{StaticResource CancelledColor}"
+                      IsVisible="{Binding Status, Converter={StaticResource AppointmentStatusToBoolConverter}, ConverterParameter=Cancelled}"/>
+                  </StackLayout>
+                </Grid>
+                  
+              <BoxView HeightRequest="1" BackgroundColor="Gray"
+                IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}" />                   
+              </StackLayout>
+            
+              <ViewCell.ContextActions>
+                <MenuItem Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[cancel]}"
+                  Command="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.CancelCommand}"
+                  CommandParameter="{Binding Source={x:Reference Appointment}, Path=BindingContext}" />
+              </ViewCell.ContextActions>
+            
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackLayout>
+    <controls:WaitingOverlayControl
+      IsVisible="{Binding IsBusy}"
+      Text="{Binding LocalizedStrings[waiting]}"/>
+  </Grid>
 </views:CustomContentPage>

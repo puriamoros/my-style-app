@@ -336,4 +336,7 @@
   <data name="appointment_status_2" xml:space="preserve">
     <value>Cancelada</value>
   </data>
+  <data name="appointment_cancellation_error" xml:space="preserve">
+    <value>El límite de cancelación de una cita es el día antes de la fecha de la cita</value>
+  </data>
 </root>

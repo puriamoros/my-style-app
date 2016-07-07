@@ -14,6 +14,9 @@ namespace MyStyleApp.Enums
         StateNotAuthorized,
         StateInvalidOperation,
         StateInvalidData,
-        StateDuplicatedKeyError
+        StateDuplicatedKeyError,
+        StateEstablishmentClosed,
+        StateEstablishmentFull,
+        StateAppointmentCancellationError
     }
 }

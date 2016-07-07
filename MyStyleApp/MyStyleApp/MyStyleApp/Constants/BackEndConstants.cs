@@ -3,7 +3,7 @@
     public class BackendConstants
     {
         public const long TIMEOUT_MS = 5000;
-        public const string DATETIME_FORMAT = "dd-MM-yyyy HH:mm:ss";
+        public const string DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
         public static string BASE_URL = "http://192.168.1.35/api.mystyleapp.com/v1/";
         //public static string BASE_URL = "http://10.95.126.126/api.mystyleapp.com/v1/";
         //public static string BASE_URL = "http://10.95.122.67/api.mystyleapp.com/v1/";

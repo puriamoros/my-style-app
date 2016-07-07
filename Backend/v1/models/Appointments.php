@@ -128,7 +128,32 @@ class Appointments extends ModelWithIdBase
 	
 	protected function dbUpdate($id, $data)
 	{
+		$this->checkCanUpdate($id, $data);
 		return DBCommands::dbUpdate($this->appointments->table, [$this->appointments->status], $this->idField, $id, $data);
+	}
+	
+	protected function dbCreate($data)
+	{
+		$this->checkCanCreate($data);
+		$data[$this->appointments->status] = 0;
+		return DBCommands::dbCreate($this->appointments->table, $this->appointments->fields, $this->appointments->id, $data);
+	}
+	
+	private function checkCanUpdate($id, $data) {
+		$status = $data[$this->appointments->status];
+		if($status == 2) { // Cancel status
+			$appointment = DBCommands::dbGetOne($this->appointments->table, $this->appointments->fields, $this->appointments->id, $id);
+			if(is_null($appointment)) {
+				throw new ApiException(STATE_DB_ERROR, "Appointment not found");
+			}
+			
+			$date = $appointment[$this->appointments->date];
+			$intervalInMinutes = (date_create($date)->getTimestamp() - date_create()->getTimestamp()) / 60;
+			
+			if($intervalInMinutes < 24*60) {
+				throw new ApiException(STATE_APPOINTMENT_CANCELLATION_ERROR, "Too late to cancel the appointment");
+			}
+		}
 	}
 	
 	private function checkCanCreate($data) {
@@ -137,13 +162,21 @@ class Appointments extends ModelWithIdBase
 			throw new ApiException(STATE_DB_ERROR, "Establishment not found");
 		}
 		
+		$offer = DBCommands::dbGetOneMultiId($this->offer->table, $this->offer->fields,
+			[$this->offer->idEstablishment => $data[$this->appointments->idEstablishment], $this->offer->idService => $data[$this->appointments->idService]]);
+		if(is_null($offer)) {	
+			throw new ApiException(STATE_DB_ERROR, "Establishment not offering the service");
+		}
+		
 		$service = DBCommands::dbGetOne($this->services->table, $this->services->fields, $this->services->id, $data[$this->appointments->idService]);
 		if(is_null($service)) {
 			throw new ApiException(STATE_DB_ERROR, "Service not found");
 		}
 		
-		$concurrence = $establishment[$this->establishments->concurrence];
-		$duration = $establishment[$this->services->duration];
+		$date = $data[$this->appointments->date];
+		$concurrence = (int) $establishment[$this->establishments->concurrence];
+		$duration = (int) $service[$this->services->duration];
+		$slotsNeeded = $duration / 30;
 		$openingHours = array();
 		
 		$hours1 = $establishment[$this->establishments->hours1];
@@ -186,9 +219,9 @@ class Appointments extends ModelWithIdBase
 		
 		$openingDates = array();
 		for ($i = 0; $i < count($openingHours)-1; $i+=2) {
-			$from = date_create($data[$this->appointments->date]);
+			$from = date_create($date);
 			date_time_set($from, $openingHours[$i]['hour'], $openingHours[i]['minute']);
-			$to = date_create($data[$this->appointments->date]);
+			$to = date_create($date);
 			date_time_set($to, $openingHours[$i+1]['hour'], $openingHours[i+1]['minute']);
 			
 			array_push($openingDates, array(
@@ -197,9 +230,9 @@ class Appointments extends ModelWithIdBase
 			));
 		}
 		
-		$start = date_create($data[$this->appointments->date]);
+		$start = date_create($date);
 		date_time_set($start, 0, 0);
-		$end = date_create($data[$this->appointments->date]);
+		$end = date_create($date);
 		date_time_set($end, 23, 59, 59);
 		
 		$fields = [$this->appointments->date, 'COUNT(*)'];
@@ -209,14 +242,15 @@ class Appointments extends ModelWithIdBase
 		);
 		$additionalConditions = array(
 			new Condition($this->appointments->date, '>=', date_format($start, 'Y-m-d H:i:s'), true),
-			new Condition($this->appointments->date, '<=', date_format($end, 'Y-m-d H:i:s'), true));
+			new Condition($this->appointments->date, '<=', date_format($end, 'Y-m-d H:i:s'), true),
+			new Condition($this->appointments->status, '<>', 2, true));
 		$appointmentsGrouped = DBCommands::dbGet($this->appointments->table, $fields, $this->appointments->fields, $queryParams, $additionalConditions, $groupBy);
 		
 		$appointmentMap = array();
 		foreach($appointmentsGrouped as $group) {
 			$appointmentMap[$group[$this->appointments->date]] = $group['COUNT(*)'];
 		}
-		//throw new ApiException(STATE_DB_ERROR, [$openingHours, $openingDates]);
+		
 		$slots = array();
 		foreach($openingDates as $openingDate) {
 			$formDate = clone $openingDate['from'];
@@ -226,32 +260,31 @@ class Appointments extends ModelWithIdBase
 				if(isset($appointmentMap[date_format($formDate, 'Y-m-d H:i:s')])) {
 					$count = $appointmentMap[date_format($formDate, 'Y-m-d H:i:s')];
 				}
-				array_push($slots, array(
-					date_format($formDate, 'Y-m-d H:i:s') => $count
-				));
+				$slots[date_format($formDate, 'Y-m-d H:i:s')] = (int) $count;
 				date_add($formDate, date_interval_create_from_date_string('30 minutes'));
 			}
 		}
 		
-		throw new ApiException(STATE_DB_ERROR, [$openingDates, $slots]);
+		$slotsKeys = array_keys($slots);
+		$index = array_search($date, $slotsKeys);
+		if($index === false) {
+			throw new ApiException(STATE_ESTABLISHMENT_CLOSED, 'The establishment is closed at that hour');
+		}
 		
+		$enoughTime = ($index+$slotsNeeded <= count($slots));
+		for ($j = $index; $j < count($slots) && ($j - $index) < $slotsNeeded && $enoughTime; $j++) {
+			 $enoughConcurrence = ($slots[$slotsKeys[$j]] < $concurrence);
+			 $prevSlotTogether = ($j == $index || 
+				((date_create($slotsKeys[$j])->getTimestamp() - date_create($slotsKeys[$j-1])->getTimestamp()) / 60) === 30);
+			
+			if (!$enoughConcurrence || !$prevSlotTogether)
+			{
+				$enoughTime = false;
+			}
+		}
 		
-		/*$queryParams = array(
-			$this->appointments->idEstablishment => $data[$this->appointments->idEstablishment],
-			$this->appointments->date => $data[$this->appointments->date]
-		);
-		$sameDateAppointments = DBCommands::dbGet($this->appointments->table, $this->appointments->fields, $this->appointments->fields, $queryParams);
-		
-		// TODO: check if there is enough time
-		if(count($sameDateAppointments) >= $establishment[$this->establishments->concurrence]) {
-			throw new ApiException(STATE_ESTABLISHMENT_FULL, "Establishment full");
-		}*/
-	}
-	
-	protected function dbCreate($data)
-	{
-		$this->checkCanCreate($data);
-		$data[$this->appointments->status] = 0;
-		return DBCommands::dbCreate($this->appointments->table, $this->appointments->fields, $this->appointments->id, $data);
+		if(!$enoughTime) {
+			throw new ApiException(STATE_ESTABLISHMENT_FULL, 'The establishment is full at that hour interval');
+		}
 	}
 }

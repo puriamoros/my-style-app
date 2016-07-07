@@ -6,18 +6,23 @@ using MyStyleApp.Services.Backend;
 using MyStyleApp.Models;
 using System.Collections.ObjectModel;
 using System;
+using Xamarin.Forms;
+using MyStyleApp.Enums;
+using MyStyleApp.Exceptions;
+using System.Collections.Generic;
 
 namespace MyStyleApp.ViewModels
 {
     public class AppointmentsViewModel : NavigableViewModelBase
     {
-        //public ICommand NewAccountCommand { get; private set; }
-
+        
         private IUsersService _userService;
         private IServicesService _servicesService;
         private IAppointmentsService _appointmentsService;
 
         private ObservableCollection<Appointment> _appointmentList;
+
+        public Command CancelCommand { get; private set; }
 
         public AppointmentsViewModel(
             INavigator navigator,
@@ -32,7 +37,7 @@ namespace MyStyleApp.ViewModels
             this._servicesService = servicesService;
             this._appointmentsService = appointmentsService;
 
-            //this.NewAccountCommand = new Command(this.NewAccountAsync);
+            this.CancelCommand = new Command<Appointment>(this.CancelAsync, this.CanCancel);
 
             this.InitializeAsync();
         }
@@ -66,6 +71,51 @@ namespace MyStyleApp.ViewModels
         {
             get { return _appointmentList; }
             set { SetProperty(ref _appointmentList, value); }
+        }
+
+        private async void CancelAsync(Appointment appointment)
+        {
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    try
+                    {
+                        await this._appointmentsService.UpdateAppointmentStatusAsync(appointment, AppointmentStatusEnum.Cancelled);
+                        appointment.Status = AppointmentStatusEnum.Cancelled;
+                        this.RefreshAppointmentsList();
+                        MessagingCenter.Send<Appointment>(appointment, "appointmentCancelled");
+                    }
+                    catch (BackendException ex)
+                    {
+                        if (ex.BackendError.State == (int)BackendStatusCodeEnum.StateAppointmentCancellationError)
+                        {
+                            await this.UserNotificator.DisplayAlert(
+                                this.LocalizedStrings.GetString("error"),
+                                this.LocalizedStrings.GetString("appointment_cancellation_error"),
+                                this.LocalizedStrings.GetString("ok"));
+                            return;
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                });
+        }
+
+        private bool CanCancel(Appointment appointment)
+        {
+            if(appointment != null)
+            {
+                return appointment.Status != AppointmentStatusEnum.Cancelled;
+            }
+            return false;
+        }
+
+        private void RefreshAppointmentsList()
+        {
+            var list = new List<Appointment>(this.AppointmentList);
+            this.AppointmentList = new ObservableCollection<Appointment>(list);
         }
     }
 }

@@ -31,9 +31,17 @@
                     <ColumnDefinition Width="10*" />
                   </Grid.ColumnDefinitions>
                   <StackLayout Grid.Column="0">
-                    <Label Text="{Binding Name}" Style="{StaticResource LargeTextStyle}" FontAttributes="Bold"/>
-                    <Label Text="{Binding Address}" Style="{StaticResource MediumTextStyle}" />
+                    <StackLayout>
+                      <Label Style="{StaticResource LargeTextStyle}" FontAttributes="Bold"
+                        Text="{Binding Name}" SizeChanged="OnLabelSizeChanged"/>
+                    </StackLayout>
+
+                    <StackLayout>
+                      <Label Style="{StaticResource MediumTextStyle}"
+                        Text="{Binding Address}" SizeChanged="OnLabelSizeChanged"/>
+                    </StackLayout>
                   </StackLayout>
+                  
 
                   <RelativeLayout Grid.Column="1" VerticalOptions="Center">
                     <Image  Aspect="AspectFit" Source="Favourite.png" 
@@ -60,39 +68,16 @@
                     <Image Aspect="AspectFit" Source="EuroPriceTag.png" VerticalOptions="Center"
                       RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
                   </RelativeLayout>
-                  <Label Grid.Column="1" Text="{Binding ShortenServices[0].Price, Converter={StaticResource FloatToPriceConverter}}" Style="{StaticResource MediumTextStyle}" />                  
+                  <StackLayout Grid.Column="1">
+                    <Label Style="{StaticResource MediumTextStyle}" SizeChanged="OnLabelSizeChanged"
+                      Text="{Binding ShortenServices[0].Price, Converter={StaticResource FloatToPriceConverter}}" />
+                  </StackLayout>  
                 </Grid>
-                
-                <StackLayout HeightRequest="1"
-                  IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>
+
+                <BoxView HeightRequest="1" BackgroundColor="Gray"
+                  IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}" />
               </StackLayout>
-                <!--<RelativeLayout BackgroundColor="Red">
-                  <StackLayout Spacing="2" Padding="0,5,0,5" BackgroundColor="Green"
-                    RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
-                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.92}"
-                    RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}">
-                      <Label Text="{Binding Name}" Style="{StaticResource MediumTextStyle}" FontAttributes="Bold"/>
-                      <Label Text="{Binding Address}" Style="{StaticResource SmallTextStyle}" />
-                      <Label Text="{Binding ShortenServices[0].Price, Converter={StaticResource FloatToPriceConverter}}" Style="{StaticResource SmallTextStyle}" />
-                  </StackLayout>
-                  <Image Aspect="AspectFit" Source="Favourite.png" BackgroundColor="Yellow"
-                    RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.92}"
-                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
-                    RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
-                    gestures:TappedGesture.Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.AddToFavouritesCommand}"
-                    gestures:TappedGesture.CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}"
-                    IsVisible="{Binding IdFavourite, Converter={StaticResource IntToBoolConverter}, ConverterParameter=!}">
-                  </Image>
-                  <Image Aspect="AspectFit" Source="FavouriteFilled.png" BackgroundColor="White"
-                    RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.92}"
-                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
-                    RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
-                    gestures:TappedGesture.Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.DeleteFavouriteCommand}"
-                    gestures:TappedGesture.CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}"
-                    IsVisible="{Binding IdFavourite, Converter={StaticResource IntToBoolConverter}}">
-                  </Image>
-                  
-                </RelativeLayout>-->
+                
               <ViewCell.ContextActions>
                 <MenuItem Text="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.LocalizedStrings[book]}"
                   Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.BookCommand}"

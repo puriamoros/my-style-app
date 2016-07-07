@@ -1,4 +1,5 @@
-﻿using MyStyleApp.Models;
+﻿using MyStyleApp.Enums;
+using MyStyleApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace MyStyleApp.Services.Backend
         Task<List<Appointment>> GetClientAppointmentsAsync(DateTime from);
         Task<List<Appointment>> GetEstablishmentAppointmentsAsync(Establishment establishment, DateTime from, DateTime to);
         Task<Appointment> CreateAppointmentAsync(Appointment appointment);
-        Task UpdateAppointmentStatusAsync(Appointment appointment);
+        Task UpdateAppointmentStatusAsync(Appointment appointment, AppointmentStatusEnum status);
         Task DeleteAppointmentAsync(Appointment appointment);
     }
 }

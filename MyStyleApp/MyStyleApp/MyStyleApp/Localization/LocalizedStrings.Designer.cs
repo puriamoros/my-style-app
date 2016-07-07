@@ -80,6 +80,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The cancellation limit for an appointment es one day before the appointment date.
+        /// </summary>
+        internal static string appointment_cancellation_error {
+            get {
+                return ResourceManager.GetString("appointment_cancellation_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pending confirmation.
         /// </summary>
         internal static string appointment_status_0 {

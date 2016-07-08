@@ -164,7 +164,7 @@ namespace MyStyleApp.ViewModels
                 return;
             }
 
-            var slots = new List<Slot>();
+            Dictionary<DateTime, Slot> slotsDictionary = new Dictionary<DateTime, Slot>();
             for(int i=0; i<this._openingHours.Count-1; i+=2)
             {
                 DateTime start = new DateTime(
@@ -183,22 +183,26 @@ namespace MyStyleApp.ViewModels
 
                 while (start < end)
                 {
-                    // Get appointments at this date
-                    var result = from item in appointmentList
-                                 where item.Date == start && item.Status != AppointmentStatusEnum.Cancelled
-                                 select item;
+                    if(!slotsDictionary.ContainsKey(start))
+                    {
+                        // Get appointments at this date
+                        var result = from item in appointmentList
+                                     where item.Date == start && item.Status != AppointmentStatusEnum.Cancelled
+                                     select item;
 
-                    Slot slot = new Slot();
-                    slot.Date = start;
-                    slot.Count = result.Count();
-                    slot.CanBook = false;
-                    slots.Add(slot);
+                        Slot slot = new Slot();
+                        slot.Date = start;
+                        slot.Count = result.Count();
+                        slot.CanBook = false;
+                        slotsDictionary.Add(start, slot);
+                    }
 
                     start = start.AddMinutes(30);
                 }
             }
 
             // Now that we have all slots, we can update each slot.CanBook
+            List<Slot> slots = new List<Slot>(slotsDictionary.Values);
             for (int i = 0; i < slots.Count; i++)
             {
                 int slotsNeeded = this._service.Duration / 30;
@@ -217,6 +221,8 @@ namespace MyStyleApp.ViewModels
                 slots[i].CanBook = enoughTime;
                 System.Diagnostics.Debug.WriteLine(i);
             }
+
+            slots.Sort((one, other) => { return one.Date.CompareTo(other.Date); });
 
             this.SlotList = new ObservableCollection<Slot>(slots);
         }

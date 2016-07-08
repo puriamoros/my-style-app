@@ -60,18 +60,27 @@ namespace MyStyleApp.ViewModels
                 {
                     await this.SetMainPageTabAsync<SearchViewModel>(async (searchVM) =>
                     {
-                        await searchVM.PopNavPageToRootAsync();
+                        await searchVM.ExecuteBlockingUIAsync(
+                            async () =>
+                            {
+                                await searchVM.PopNavPageToRootAsync();
 
-                        // Hack to workaround a bug with Android when popping and then inmediately pushing
-                        if (Device.OS == TargetPlatform.Android)
-                        {
-                            await Task.Delay(10);
-                        }
+                                // Hack to workaround a bug with Android when popping and then inmediately pushing
+                                if (Device.OS == TargetPlatform.Android)
+                                {
+                                    await Task.Delay(10);
+                                }
+                                // Hack to workaround a bug with iOS when popping and then inmediately pushing
+                                if (Device.OS == TargetPlatform.iOS)
+                                {
+                                    await Task.Delay(350);
+                                }
 
-                        await searchVM.PushNavPageAsync<EstablishmentDetailsViewModel>(async (establishmentDetailsVM) =>
-                        {
-                            await establishmentDetailsVM.InitilizeAsync(establishment.Id, 0, 0);
-                        });
+                                await searchVM.PushNavPageAsync<EstablishmentDetailsViewModel>(async (establishmentDetailsVM) =>
+                                {
+                                    await establishmentDetailsVM.InitilizeAsync(establishment.Id, 0, 0);
+                                });
+                            });
                     });
                 });
         }

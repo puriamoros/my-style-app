@@ -45,6 +45,8 @@ namespace MyStyleApp.ViewModels
             }
         }
 
+        public ViewModelBase Parent { get; set; }
+
         public async Task ExecuteBlockingUIAsync(Func<Task> action)
         {
             this.IsBusy = true;

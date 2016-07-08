@@ -24,7 +24,7 @@
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell x:Name="Establishment">
-              <StackLayout Padding="0,5,0,5">
+              <StackLayout Padding="{StaticResource ListViewItemPadding}">
                 <Grid>
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90*" />

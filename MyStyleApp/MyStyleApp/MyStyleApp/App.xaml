@@ -22,9 +22,18 @@
       <OnPlatform x:Key="PagePadding"
                   x:TypeArguments="Thickness"
                   iOS="0,20,0,0"
-                  Android="0,0,0,0"
-                  WinPhone="0,0,0,0" />
-      <Thickness x:Key="PageContentPadding">5</Thickness>
+                  Android="0"
+                  WinPhone="0" />
+      <OnPlatform x:Key="PageContentPadding"
+                  x:TypeArguments="Thickness"
+                  iOS="5,0,5,0"
+                  Android="5"
+                  WinPhone="5" />
+      <OnPlatform x:Key="ListViewItemPadding"
+                  x:TypeArguments="Thickness"
+                  iOS="20,5,0,5"
+                  Android="0,5,0,5"
+                  WinPhone="0,5,0,5" />
 
       <!-- Colors -->
       <Color x:Key="ErrorColor">Red</Color>

@@ -12,16 +12,15 @@
   <Grid>
     <StackLayout Padding="{StaticResource PageContentPadding}">
       <!-- Without HasUnevenRows="True", list items does not render well in Android -->
-      <ListView
+      <ListView x:Name="AppointmentList"
         ItemsSource="{Binding AppointmentList}"
         HasUnevenRows="True"
-        x:Name="AppointmentList"
         gestures:ListViewItemTapped.Command="{Binding AppointmentDetailsCommand}">
                     
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell x:Name="Appointment">
-              <StackLayout Padding="0,5,0,5">
+              <StackLayout Padding="{StaticResource ListViewItemPadding}">
                 <StackLayout>
                   <Label VerticalOptions="Center" Style="{StaticResource LargeTextStyle}" FontAttributes="Bold"
                     Text="{Binding EstablishmentName}" SizeChanged="OnLabelSizeChanged"/>

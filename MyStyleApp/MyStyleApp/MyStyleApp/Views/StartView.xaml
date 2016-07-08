@@ -6,7 +6,7 @@
              xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}">
   <ScrollView>
-    <RelativeLayout>
+    <Grid>
       
       <!-- TODO: DELETE WHEN APP IS READY -->
       <StackLayout RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
@@ -23,6 +23,6 @@
       <controls:WaitingOverlayControl
         IsVisible="{Binding IsBusy}"
         Text="{Binding LocalizedStrings[waiting]}"/>
-    </RelativeLayout>
+    </Grid>
   </ScrollView>
 </views:CustomContentPage>

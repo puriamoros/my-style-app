@@ -10,15 +10,14 @@
   <Grid>
     <Grid Padding="{StaticResource PageContentPadding}">
       <!-- Without HasUnevenRows="True", list items does not render well in Android -->
-      <ListView
+      <ListView x:Name="FavouritesList"
         ItemsSource="{Binding FavouritesList}"
         HasUnevenRows="True"
-        x:Name="FavouritesList"
         gestures:ListViewItemTapped.Command="{Binding ViewDetailsCommand}">
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell x:Name="Favourite">
-              <StackLayout Padding="0,5,0,5">
+              <StackLayout Padding="{StaticResource ListViewItemPadding}">
                 <StackLayout>
                   <Label Text="{Binding Name}" Style="{StaticResource LargeTextStyle}" FontAttributes="Bold"/>
                   <Label Text="{Binding Address}" Style="{StaticResource MediumTextStyle}" />

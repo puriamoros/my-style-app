@@ -41,7 +41,7 @@
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell x:Name="Slot">
-              <StackLayout>
+              <StackLayout Padding="{StaticResource ListViewItemPadding}">
                 <Label IsVisible="{Binding CanBook}"
                   Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" Style="{StaticResource MediumTextStyle}" />
                 <Label IsVisible="{Binding CanBook, Converter={StaticResource NegateConverter}}"

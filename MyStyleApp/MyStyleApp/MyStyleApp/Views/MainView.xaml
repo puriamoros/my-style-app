@@ -3,7 +3,7 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             x:Class="MyStyleApp.Views.MainView"
             xmlns:views="clr-namespace:MyStyleApp.Views"
-            Padding="{StaticResource PagePadding}">
+            Padding="{StaticResource PagePadding}" BackgroundColor="Yellow">
 
   <!--<views:CustomNavigationPage Title="{Binding LocalizedStrings[appointments]}" Icon="Calendar.png">
     <x:Arguments>

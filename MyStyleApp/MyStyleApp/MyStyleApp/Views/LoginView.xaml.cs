@@ -21,5 +21,13 @@ namespace MyStyleApp.Views
         //    return true;
         //    //return base.OnBackButtonPressed();
         //}
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            
+            // We don't want a navigation bar on LoginView
+            NavigationPage.SetHasNavigationBar(this, false);
+        }
     }
 }

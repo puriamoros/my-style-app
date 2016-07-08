@@ -31,7 +31,7 @@
                   WinPhone="5" />
       <OnPlatform x:Key="ListViewItemPadding"
                   x:TypeArguments="Thickness"
-                  iOS="20,5,0,5"
+                  iOS="10,5,0,5"
                   Android="0,5,0,5"
                   WinPhone="0,5,0,5" />
 

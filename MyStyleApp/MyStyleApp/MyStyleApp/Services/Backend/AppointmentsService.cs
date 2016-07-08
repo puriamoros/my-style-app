@@ -68,16 +68,5 @@ namespace MyStyleApp.Services.Backend
                 new GenericStatus() { Status = (int) status },
                 new object[] { appointment.Id });
         }
-
-        public async Task DeleteAppointmentAsync(Appointment appointment)
-        {
-            string authorization = await this.HttpService.GetApiKeyAuthorizationAsync();
-
-            await this.HttpService.InvokeAsync(
-                HttpMethod.Delete,
-                BackendConstants.APPOINTMENTS_URL,
-                authorization,
-                new object[] { appointment.Id });
-        }
     }
 }

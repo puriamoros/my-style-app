@@ -16,6 +16,7 @@ namespace MyStyleApp.ViewModels
     {
         private ObservableCollection<Establishment> _favouritesList;
         private IFavouritesService _favouritesService;
+        private IEstablishmentsService _establishmentsService;
 
         public ICommand ViewDetailsCommand { get; private set; }
         public ICommand DeleteFavouriteCommand { get; private set; }
@@ -24,12 +25,14 @@ namespace MyStyleApp.ViewModels
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
-            IFavouritesService favouritesService) :
+            IFavouritesService favouritesService,
+            IEstablishmentsService establishmentsService) :
             base(navigator, userNotificator, localizedStringsService)
         {
             this.ViewDetailsCommand = new Command<Establishment>(this.ViewDetailsAsync);
             this.DeleteFavouriteCommand = new Command<Establishment>(this.DeleteFavouriteAsync);
             this._favouritesService = favouritesService;
+            this._establishmentsService = establishmentsService;
 
             MessagingCenter.Subscribe<Establishment>(this, "favouriteAdded", this.OnFavouriteAdded);
             MessagingCenter.Subscribe<Establishment>(this, "favouriteDeleted", this.OnFavouriteDeleted);
@@ -78,7 +81,9 @@ namespace MyStyleApp.ViewModels
 
                                 await searchVM.PushNavPageAsync<EstablishmentDetailsViewModel>(async (establishmentDetailsVM) =>
                                 {
-                                    await establishmentDetailsVM.InitilizeAsync(establishment.Id, 0, 0);
+                                    // Get establishment details from BE
+                                    var establishmentDetails = await this._establishmentsService.GetEstablishmentAsync(establishment.Id);
+                                    await establishmentDetailsVM.InitilizeAsync(establishmentDetails, 0, 0);
                                 });
                             });
                     });

@@ -20,7 +20,7 @@ namespace MyStyleApp.Views
 
             this.AddNavigationChild(appointmentsView, "LocalizedStrings[appointments]", "Calendar.png");
             this.AddNavigationChild(favouritesView, "LocalizedStrings[favourites]", "Star.png");
-            this.AddNavigationChild(searchView, "LocalizedStrings[establishments]", "Search.png");
+            this.AddNavigationChild(searchView, "LocalizedStrings[establishments]", "Barbershop.png");
             this.AddNavigationChild(accountDetailsView, "LocalizedStrings[my_account]", "User.png");
         }
 

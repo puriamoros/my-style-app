@@ -97,8 +97,8 @@
                   </StackLayout>
                 </Grid>
                   
-              <BoxView HeightRequest="1" BackgroundColor="Gray"
-                IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}" />                   
+                <BoxView HeightRequest="1" BackgroundColor="Gray"
+                  IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}" />                   
               </StackLayout>
             
               <ViewCell.ContextActions>

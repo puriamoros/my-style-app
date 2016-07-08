@@ -5,7 +5,7 @@
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
              xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}"
-             Title="{Binding LocalizedStrings[search]}" Icon="Search.png">
+             Title="{Binding LocalizedStrings[search]}" Icon="Barbershop.png">
   <ScrollView>
     <Grid>
       <Grid.RowDefinitions>

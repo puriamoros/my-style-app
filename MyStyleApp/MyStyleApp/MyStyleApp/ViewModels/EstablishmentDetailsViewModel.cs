@@ -63,13 +63,14 @@ namespace MyStyleApp.ViewModels
             MessagingCenter.Subscribe<Establishment>(this, "favouriteDeleted", this.OnFavouriteDeleted);
         }
 
-        public async Task InitilizeAsync(int idEstablishment, int idServiceCategory, int idService)
+        public async Task InitilizeAsync(Establishment establishment, int idServiceCategory, int idService)
         {
             lock(lockObj)
             {
                 this._initializing = true;
             }
 
+            // Reset view
             this.Establishment = null;
             if(this.ServiceCategoryList != null)
             {
@@ -82,12 +83,12 @@ namespace MyStyleApp.ViewModels
             }
             this.SelectedService = null;
 
+            // Set establishment
+            this.Establishment = establishment;
+
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    // Get selected establishment from BE
-                    this.Establishment = await this._establishmentsService.GetEstablishmentAsync(idEstablishment);
-
                     // Get all the services and services categories from BE
                     var allServicesList = await this._servicesService.GetServicesAsync();
                     var allServiceCategoriesList = await this._serviceCategoriesService.GetServiceCategoriesAsync();

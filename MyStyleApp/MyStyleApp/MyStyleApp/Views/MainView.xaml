@@ -3,7 +3,7 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             x:Class="MyStyleApp.Views.MainView"
             xmlns:views="clr-namespace:MyStyleApp.Views"
-            Padding="{StaticResource PagePadding}" BackgroundColor="Yellow">
+            Padding="{StaticResource PagePadding}">
 
   <!--<views:CustomNavigationPage Title="{Binding LocalizedStrings[appointments]}" Icon="Calendar.png">
     <x:Arguments>
@@ -15,7 +15,7 @@
       <views:FavouritesView Title="{Binding LocalizedStrings[favourites]}" />
     </x:Arguments>
   </views:CustomNavigationPage>
-  <views:CustomNavigationPage Title="{Binding LocalizedStrings[establishments]}" Icon="Search.png">
+  <views:CustomNavigationPage Title="{Binding LocalizedStrings[establishments]}" Icon="Barbershop.png">
     <x:Arguments>
       <views:SearchView Title="{Binding LocalizedStrings[search]}" />
     </x:Arguments>

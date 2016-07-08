@@ -15,7 +15,7 @@
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
     <StackLayout Grid.Row="0"
-      Padding="{StaticResource PageContentPadding}">
+      Padding="{StaticResource PageContentPadding}">      
       <Label
         Text="{Binding LocalizedStrings[book]}"
         Style="{StaticResource LargeTextStyle}"
@@ -24,7 +24,7 @@
        
       <StackLayout>
         <Label 
-          Text="{Binding LocalizedStrings[date]}" 
+          Text="Choose the date" 
           Style="{StaticResource MediumTextStyle}"/>
         <DatePicker VerticalOptions="CenterAndExpand"
           Date="{Binding Date, Mode=TwoWay}"
@@ -33,6 +33,12 @@
           Format="D"/>
       </StackLayout>
 
+      <StackLayout Padding="0,10,0,0">
+        <Label
+          Text="Choose the hour"
+          Style="{StaticResource MediumTextStyle}"/>
+      </StackLayout>
+      
       <!-- Without HasUnevenRows="True", list items does not render well in Android -->
       <ListView x:Name="SlotList"
         ItemsSource="{Binding SlotList}"
@@ -41,13 +47,33 @@
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell x:Name="Slot">
-              <StackLayout Padding="{StaticResource ListViewItemPadding}">
+              <StackLayout>                              
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="95*" />
+                  </Grid.ColumnDefinitions>
+                  <RelativeLayout Grid.Column="0" VerticalOptions="Center">
+                    <Image Aspect="AspectFit" Source="Clock-48.png" VerticalOptions="Center"
+                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                  </RelativeLayout>
+                  <StackLayout Grid.Column="1" Padding="3,0,3,0">
+                    <Label IsVisible="{Binding CanBook}"
+                      Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" Style="{StaticResource SmallTextStyle}" />
+                    <Label IsVisible="{Binding CanBook, Converter={StaticResource NegateConverter}}"
+                      TextColor="{StaticResource ErrorColor}"
+                      Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" Style="{StaticResource SmallTextStyle}" />
+                  </StackLayout>
+                </Grid>
+              </StackLayout>
+ 
+              <!--<StackLayout Padding="{StaticResource ListViewItemPadding}">
                 <Label IsVisible="{Binding CanBook}"
                   Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" Style="{StaticResource MediumTextStyle}" />
                 <Label IsVisible="{Binding CanBook, Converter={StaticResource NegateConverter}}"
-                  TextColor="Red"
+                  TextColor="{Binding ErrorColor}"
                   Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" Style="{StaticResource MediumTextStyle}" />
-              </StackLayout>
+              </StackLayout>-->
               <ViewCell.ContextActions>
                 <MenuItem Text="{Binding Source={x:Reference SlotList}, Path=BindingContext.LocalizedStrings[book]}"
                   Command="{Binding Source={x:Reference SlotList}, Path=BindingContext.BookCommand}"

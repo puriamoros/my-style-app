@@ -14,6 +14,5 @@ namespace MyStyleApp.Services.Backend
         Task<List<Appointment>> GetEstablishmentAppointmentsAsync(Establishment establishment, DateTime from, DateTime to);
         Task<Appointment> CreateAppointmentAsync(Appointment appointment);
         Task UpdateAppointmentStatusAsync(Appointment appointment, AppointmentStatusEnum status);
-        Task DeleteAppointmentAsync(Appointment appointment);
     }
 }

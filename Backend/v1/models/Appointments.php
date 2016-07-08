@@ -58,7 +58,7 @@ class Appointments extends ModelWithIdBase
 		$user = $this->authorizeDefault();
 		
 		// TODO: autorizar tambien al owner a ver las citas de sus establecimientos
-		if($user[$this->users->id] !== $queryParams[$this->appointments->idClient]) {
+		if(isset($queryParams[$this->appointments->idClient]) && $user[$this->users->id] !== $queryParams[$this->appointments->idClient]) {
 			throw new ApiException(STATE_NOT_AUTHORIZED, "Not authorized", 401);
 		}
 	}
@@ -87,6 +87,10 @@ class Appointments extends ModelWithIdBase
 		$mixedFields[array_search($this->appointments->idService, $mixedFields)] = $appointmentsIdServiceRenamed;
 		array_push($mixedFields, $this->establishments->name);
 		array_push($mixedFields, $this->offer->price);
+		if(isset($queryParams[$this->appointments->idEstablishment])) {
+			$queryParams[$appointmentsIdEstablishmentRenamed] = $queryParams[$this->appointments->idEstablishment];
+			unset($queryParams[$this->appointments->idEstablishment]);
+		}
 		$result = DBCommands::dbGetJoin(
 			[$this->appointments->table, $this->establishments->table, $this->offer->table],
 			[$this->appointments->idEstablishment, $this->establishments->id, $this->offer->idEstablishment],
@@ -138,6 +142,11 @@ class Appointments extends ModelWithIdBase
 		$data[$this->appointments->status] = 0;
 		return DBCommands::dbCreate($this->appointments->table, $this->appointments->fields, $this->appointments->id, $data);
 	}
+	
+	public function delete($queryArray)
+    {
+		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
+    }
 	
 	private function checkCanUpdate($id, $data) {
 		$status = $data[$this->appointments->status];

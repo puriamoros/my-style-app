@@ -38,7 +38,7 @@ namespace MyStyleApp.Services.Backend
 
             return await this.HttpService.InvokeAsync<List<Appointment>>(
                 HttpMethod.Get,
-                BackendConstants.GET_CLIENT_APPOINTMENTS_URL,
+                BackendConstants.GET_ESTABLISHMENT_APPOINTMENTS_URL,
                 authorization,
                 new object[] {
                     establishment.Id,

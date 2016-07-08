@@ -147,11 +147,14 @@ class Appointments extends ModelWithIdBase
 				throw new ApiException(STATE_DB_ERROR, "Appointment not found");
 			}
 			
-			$date = $appointment[$this->appointments->date];
-			$intervalInMinutes = (date_create($date)->getTimestamp() - date_create()->getTimestamp()) / 60;
-			
-			if($intervalInMinutes < 24*60) {
-				throw new ApiException(STATE_APPOINTMENT_CANCELLATION_ERROR, "Too late to cancel the appointment");
+			$appointmentStatus = $appointment[$this->appointments->status];
+			if($appointmentStatus == 1) { // Confirmed status
+				$date = $appointment[$this->appointments->date];
+				$intervalInMinutes = (date_create($date)->getTimestamp() - date_create()->getTimestamp()) / 60;
+				
+				if($intervalInMinutes < 24*60) {
+					throw new ApiException(STATE_APPOINTMENT_CANCELLATION_ERROR, "Too late to cancel the appointment");
+				}
 			}
 		}
 	}

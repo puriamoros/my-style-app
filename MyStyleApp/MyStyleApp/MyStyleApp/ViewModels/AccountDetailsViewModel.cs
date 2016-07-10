@@ -38,8 +38,20 @@ namespace MyStyleApp.ViewModels
             this._validationService = validationService;
             this._usersService = usersService;
             this.Title = this.LocalizedStrings.GetString("my_account");
+        }
+
+        public override void OnAppearing()
+        {
+            base.OnAppearing();
 
             MessagingCenter.Subscribe<string>(this, "changeAccountMode", this.OnAccountModeChanged);
+        }
+
+        public override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            MessagingCenter.Unsubscribe<string>(this, "changeAccountMode");
         }
 
         public void Initialize(User user)

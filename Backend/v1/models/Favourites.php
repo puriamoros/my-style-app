@@ -78,7 +78,9 @@ class Favourites extends ModelWithIdBase
 		
 		$result = DBCommands::dbGetJoin(
 			[$this->favourites->table, $this->establishments->table],
-			[$this->favourites->idEstablishment, $this->establishments->id],
+			[
+				[$this->favourites->table . "." . $this->favourites->idEstablishment, $this->establishments->table . "." . $this->establishments->id]
+			],
 			['INNER'],
 			$mixedFields, [$this->favourites->idClient], $queryParams);
 		

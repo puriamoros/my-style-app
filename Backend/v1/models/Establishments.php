@@ -71,7 +71,10 @@ class Establishments extends ModelWithIdBase
 			array_push($searchFields, $this->offer->idService);
 			$result = DBCommands::dbGetJoin(
 				[$this->establishments->table, $this->offer->table, $this->favourites->table],
-				[$this->establishments->id, $this->offer->idEstablishment, $this->favourites->idEstablishment],
+				[
+					[$this->establishments->table . '.' . $this->establishments->id, $this->offer->table . '.' . $this->offer->idEstablishment],
+					[$this->offer->table . '.' . $this->offer->idEstablishment, $this->favourites->table . '.' . $this->favourites->idEstablishment]
+				],
 				['INNER', 'LEFT'],
 				$mixedFields, $searchFields, $queryParams);
 				
@@ -132,7 +135,9 @@ class Establishments extends ModelWithIdBase
 		
 		$result = DBCommands::dbGetOneJoin(
 			[$this->establishments->table, $this->favourites->table],
-			[$this->establishments->id, $this->favourites->id],
+			[
+				[$this->establishments->table . '.' . $this->establishments->id, $this->favourites->table . '.' . $this->favourites->idEstablishment]
+			],
 			['LEFT'],
 			$mixedFields, $establismentsIdFieldRenamed, $id);
 			

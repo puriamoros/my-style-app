@@ -1,5 +1,6 @@
 ﻿using MvvmCore;
 using MyStyleApp.Enums;
+using MyStyleApp.Exceptions;
 using MyStyleApp.Models;
 using MyStyleApp.Services;
 using MyStyleApp.Services.Backend;
@@ -29,6 +30,7 @@ namespace MyStyleApp.ViewModels
         private DateTime _maximumDate;
         private ObservableCollection<Slot> _slotList;
 
+        private IUsersService _usersService;
         private IAppointmentsService _appointmentsService;
         private Establishment _establishment;
         private Service _service;
@@ -40,14 +42,28 @@ namespace MyStyleApp.ViewModels
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
+            IUsersService usersService,
             IAppointmentsService appointmentsService) :
             base(navigator, userNotificator, localizedStringsService)
         {
+            this._usersService = usersService;
             this._appointmentsService = appointmentsService;
 
             this.BookCommand = new Command<Slot>(this.BookAsync);
+        }
+
+        public override void OnPushed()
+        {
+            base.OnPushed();
 
             MessagingCenter.Subscribe<Appointment>(this, "appointmentCancelled", this.OnAppointmentCancelled);
+        }
+
+        public override void OnPopped()
+        {
+            base.OnPopped();
+
+            MessagingCenter.Unsubscribe<Appointment>(this, "appointmentCancelled");
         }
 
         public void Initialize(Establishment establishment, Service service)
@@ -148,6 +164,11 @@ namespace MyStyleApp.ViewModels
 
         private async void OnDateChanged(DateTime dateTime)
         {
+            await RefreshAppointmentsAsync(dateTime);
+        }
+
+        private async Task RefreshAppointmentsAsync(DateTime dateTime)
+        {
             var from = dateTime;
             var to = from.AddDays(1).AddMilliseconds(-1);
 
@@ -185,9 +206,10 @@ namespace MyStyleApp.ViewModels
                 {
                     if(!slotsDictionary.ContainsKey(start))
                     {
-                        // Get appointments at this date
+                        // Get appointments affecting this slot and update slot.Count
                         var result = from item in appointmentList
-                                     where item.Date == start && item.Status != AppointmentStatusEnum.Cancelled
+                                     where item.Status != AppointmentStatusEnum.Cancelled &&
+                                        (start >= item.Date && start < item.Date + TimeSpan.FromMinutes(item.ServiceDuration))
                                      select item;
 
                         Slot slot = new Slot();
@@ -203,9 +225,9 @@ namespace MyStyleApp.ViewModels
 
             // Now that we have all slots, we can update each slot.CanBook
             List<Slot> slots = new List<Slot>(slotsDictionary.Values);
+            int slotsNeeded = this._service.Duration / 30;
             for (int i = 0; i < slots.Count; i++)
             {
-                int slotsNeeded = this._service.Duration / 30;
                 bool enoughTime = (i+slotsNeeded <= slots.Count);
                 for (int j = 0; i + j < slots.Count && j < slotsNeeded && enoughTime; j++)
                 {
@@ -219,7 +241,6 @@ namespace MyStyleApp.ViewModels
                 }
 
                 slots[i].CanBook = enoughTime;
-                System.Diagnostics.Debug.WriteLine(i);
             }
 
             slots.Sort((one, other) => { return one.Date.CompareTo(other.Date); });
@@ -229,35 +250,100 @@ namespace MyStyleApp.ViewModels
 
         private async void BookAsync(Slot slot)
         {
-            await this.ExecuteBlockingUIAsync(
-                async () =>
+            bool doRequest = false;
+            if (slot.CanBook)
+            {
+                doRequest = await this.UserNotificator.DisplayAlert(
+                   this.LocalizedStrings.GetString("booking_data_title"),
+                   this.LocalizedStrings.GetString("booking_data_body",
+                    "${ESTABLISMENT_NAME}", this._establishment.Name,
+                    "${SERVICE_NAME}", this._service.Name,
+                    "${DATE}", slot.Date.ToString("f")),
+                   this.LocalizedStrings.GetString("ok"),
+                   this.LocalizedStrings.GetString("cancel"));
+            }
+            else
+            {
+                await this.UserNotificator.DisplayAlert(
+                   this.LocalizedStrings.GetString("booking_error_title"),
+                   this.LocalizedStrings.GetString("booking_error_body"),
+                   this.LocalizedStrings.GetString("ok"));
+            }
+
+            if (doRequest)
+            {
+                // Appointment to create
+                Appointment appointment = new Appointment()
                 {
-                    if (slot.CanBook)
+                    IdClient = this._usersService.LoggedUser.Id,
+                    IdEstablishment = this._establishment.Id,
+                    IdService = this._service.Id,
+                    Date = slot.Date,
+                    Notes = ""
+                };
+
+                bool success = false;
+                await this.ExecuteBlockingUIAsync(
+                    async () =>
                     {
-                        //TODO: enviar email al propietario
-                        await this.UserNotificator.DisplayAlert(
-                           this.LocalizedStrings.GetString("booking_requested"),
-                           this.LocalizedStrings.GetString("email_confirmation"),
-                           this.LocalizedStrings.GetString("ok"));
-                    }
-                    else
-                    {
-                        await this.UserNotificator.DisplayAlert(
-                           this.LocalizedStrings.GetString("error"),
-                           "no hay hueco",
-                           this.LocalizedStrings.GetString("ok"));
-                    }
-                });
+                        try
+                        {
+                            // Create appointment
+                            Appointment createdAppointment = await this._appointmentsService.CreateAppointmentAsync(appointment);
+
+                            // Appointment created sucessfuly
+                            success = true;
+
+                            // Complete created appointment data
+                            createdAppointment.EstablishmentName = _establishment.Name;
+                            createdAppointment.ServiceName = _service.Name;
+                            createdAppointment.ServicePrice = _service.Price;
+                            createdAppointment.ServiceDuration = _service.Duration;
+
+                            // Send an appointmentCreated message
+                            MessagingCenter.Send<Appointment>(createdAppointment, "appointmentCreated");
+                        }
+                        catch (BackendException ex)
+                        {
+                            if(ex.BackendError.State == (int) BackendStatusCodeEnum.StateEstablishmentClosed ||
+                                ex.BackendError.State == (int)BackendStatusCodeEnum.StateEstablishmentFull)
+                            {
+                                await this.UserNotificator.DisplayAlert(
+                                   this.LocalizedStrings.GetString("booking_error_title"),
+                                   this.LocalizedStrings.GetString("booking_error_body"),
+                                   this.LocalizedStrings.GetString("ok"));
+                            }
+                            else
+                            {
+                                throw;
+                            }
+                        }
+                        finally
+                        {
+                            // Always refresh establishment appointments on error or success
+                            await this.RefreshAppointmentsAsync(this.Date);
+                        }
+                    });
+
+                if(success)
+                {
+                    // Show result ok to user
+                    await this.UserNotificator.DisplayAlert(
+                       this.LocalizedStrings.GetString("booking_requested_title"),
+                       this.LocalizedStrings.GetString("booking_requested_body"),
+                       this.LocalizedStrings.GetString("ok"));
+                }
+            }
         }
 
-        private void OnAppointmentCancelled(Appointment appointment)
+        private async void OnAppointmentCancelled(Appointment appointment)
         {
             if(appointment.IdEstablishment == this._establishment.Id &&
                 appointment.Date.Year == this.Date.Year &&
                 appointment.Date.Month == this.Date.Month &&
                 appointment.Date.Day == this.Date.Day)
             {
-                this.OnDateChanged(this.Date);
+                await this.RefreshAppointmentsAsync(this.Date);
             }
         }
     }

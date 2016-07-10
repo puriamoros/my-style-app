@@ -92,7 +92,10 @@ class DBCommands
 			for ($i = 0; $i < count($joinTables)-1; $i++) {
 				$command .= ($i == 0) ? $joinTables[$i] . " " : " ";
 				$command .= $joinTypes[$i] . " JOIN " . $joinTables[$i+1];
-				$command .= " ON " . $joinTables[$i] . "." . $joinFields[$i] . "=" . $joinTables[$i+1] . "." . $joinFields[$i+1];
+				for ($j = 0; $j < count($joinFields[$i])-1; $j+=2) {
+					$command .= ($j == 0) ? " ON " : " AND ";
+					$command .= $joinFields[$i][$j] . "=" . $joinFields[$i][$j+1];
+				}
 			}
 			$where = false;
 			foreach($searchFields as $field) {
@@ -118,7 +121,7 @@ class DBCommands
 				}
 			}
 			
-			//throw new ApiException(STATE_DB_ERROR, $command);
+			//throw new ApiException(STATE_DB_ERROR, [$joinFields, $command]);
 			
 			$query = $pdo->prepare($command);
 			
@@ -185,7 +188,8 @@ class DBCommands
 
 			$count = 1;
 			foreach($idMap as $key => $value) {
-				$query->bindParam($count, $value);
+				// Do not bind $value since binding is done when executing and $value changes inside the loop
+				$query->bindParam($count, $idMap[$key]);
 				$count++;
 			}
 
@@ -226,7 +230,10 @@ class DBCommands
 			for ($i = 0; $i < count($joinTables)-1; $i++) {
 				$command .= ($i == 0) ? $joinTables[$i] . " " : " ";
 				$command .= $joinTypes[$i] . " JOIN " . $joinTables[$i+1];
-				$command .= " ON " . $joinTables[$i] . "." . $joinFields[$i] . "=" . $joinTables[$i+1] . "." . $joinFields[$i+1];
+				for ($j = 0; $j < count($joinFields[$i])-1; $j+=2) {
+					$command .= ($j == 0) ? " ON " : " AND ";
+					$command .= $joinFields[$i][$j] . "=" . $joinFields[$i][$j+1];
+				}
 			}
 			$where = false;
 			foreach($idMap as $key => $value) {
@@ -241,7 +248,8 @@ class DBCommands
 
 			$count = 1;
 			foreach($idMap as $key => $value) {
-				$query->bindParam($count, $value);
+			// Do not bind $value since binding is done when executing and $value changes inside the loop
+				$query->bindParam($count, $idMap[$key]);
 				$count++;
 			}
 
@@ -387,7 +395,8 @@ class DBCommands
 				}
 			}
 			foreach($idMap as $key => $value) {
-				$query->bindParam($count, $value);
+				// Do not bind $value since binding is done when executing and $value changes inside the loop
+				$query->bindParam($count, $idMap[$key]);
 				$count++;
 			}
 
@@ -433,7 +442,8 @@ class DBCommands
 
 			$count = 1;
 			foreach($idMap as $key => $value) {
-				$query->bindParam($count, $value);
+				// Do not bind $value since binding is done when executing and $value changes inside the loop
+				$query->bindParam($count, $idMap[$key]);
 				$count++;
 			}
 

@@ -42,6 +42,20 @@ namespace MyStyleApp.ViewModels
             this.InitializeAsync();
         }
 
+        public override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            MessagingCenter.Subscribe<Appointment>(this, "appointmentCreated", this.OnAppointmentCreated);
+        }
+
+        public override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            MessagingCenter.Unsubscribe<Appointment>(this, "appointmentCreated");
+        }
+
         private async void InitializeAsync()
         {
             await this.ExecuteBlockingUIAsync(
@@ -75,7 +89,15 @@ namespace MyStyleApp.ViewModels
 
         private async void CancelAsync(Appointment appointment)
         {
-            await this.ExecuteBlockingUIAsync(
+            bool doCancel = await this.UserNotificator.DisplayAlert(
+                this.LocalizedStrings.GetString("appointment_cancel_title"),
+                this.LocalizedStrings.GetString("appointment_cancel_body"),
+                this.LocalizedStrings.GetString("yes"),
+                this.LocalizedStrings.GetString("no"));
+
+            if(doCancel)
+            {
+                await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
                     try
@@ -101,6 +123,7 @@ namespace MyStyleApp.ViewModels
                         }
                     }
                 });
+            }
         }
 
         private bool CanCancel(Appointment appointment)
@@ -115,7 +138,14 @@ namespace MyStyleApp.ViewModels
         private void RefreshAppointmentsList()
         {
             var list = new List<Appointment>(this.AppointmentList);
+            list.Sort((one, other) => { return one.Date.CompareTo(other.Date); });
             this.AppointmentList = new ObservableCollection<Appointment>(list);
+        }
+
+        private void OnAppointmentCreated(Appointment appointment)
+        {
+            this.AppointmentList.Add(appointment);
+            this.RefreshAppointmentsList();
         }
     }
 }

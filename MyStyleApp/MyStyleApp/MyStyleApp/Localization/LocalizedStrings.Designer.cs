@@ -80,6 +80,24 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are about to cancel an appointment. Do you want to continue with the cancellation?.
+        /// </summary>
+        internal static string appointment_cancel_body {
+            get {
+                return ResourceManager.GetString("appointment_cancel_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel appointment.
+        /// </summary>
+        internal static string appointment_cancel_title {
+            get {
+                return ResourceManager.GetString("appointment_cancel_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The cancellation limit for an appointment es one day before the appointment date.
         /// </summary>
         internal static string appointment_cancellation_error {
@@ -134,11 +152,56 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are about to request a booking with the following data:\n- Establishment: ${ESTABLISMENT_NAME}\n- Service: ${SERVICE_NAME}\n- Date: ${DATE}\n\nDo you want to continue with the request?.
+        /// </summary>
+        internal static string booking_data_body {
+            get {
+                return ResourceManager.GetString("booking_data_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Booking Reaquest.
+        /// </summary>
+        internal static string booking_data_title {
+            get {
+                return ResourceManager.GetString("booking_data_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Booking at the requested date and time is not possible. Please, select a different date and/or time.
+        /// </summary>
+        internal static string booking_error_body {
+            get {
+                return ResourceManager.GetString("booking_error_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can not book.
+        /// </summary>
+        internal static string booking_error_title {
+            get {
+                return ResourceManager.GetString("booking_error_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The booking request has been saved. You can see it in the Appointments section. Remember that you will receive a confirmation email when your request is accepted.
+        /// </summary>
+        internal static string booking_requested_body {
+            get {
+                return ResourceManager.GetString("booking_requested_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Booking Requested.
         /// </summary>
-        internal static string booking_requested {
+        internal static string booking_requested_title {
             get {
-                return ResourceManager.GetString("booking_requested", resourceCulture);
+                return ResourceManager.GetString("booking_requested_title", resourceCulture);
             }
         }
         
@@ -229,15 +292,6 @@ namespace MyStyleApp.Localization {
         internal static string email {
             get {
                 return ResourceManager.GetString("email", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A confirmation email will be send you.
-        /// </summary>
-        internal static string email_confirmation {
-            get {
-                return ResourceManager.GetString("email_confirmation", resourceCulture);
             }
         }
         
@@ -503,6 +557,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        internal static string no {
+            get {
+                return ResourceManager.GetString("no", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Don&apos;t have an account?.
         /// </summary>
         internal static string no_account {
@@ -724,6 +787,15 @@ namespace MyStyleApp.Localization {
         internal static string welcome_user {
             get {
                 return ResourceManager.GetString("welcome_user", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        internal static string yes {
+            get {
+                return ResourceManager.GetString("yes", resourceCulture);
             }
         }
     }

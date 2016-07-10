@@ -249,11 +249,23 @@
   <data name="generic_error" xml:space="preserve">
     <value>Se ha produciod un error.\nCompruebe que está conectado a internet o inténtelo de nuevo más tarde.</value>
   </data>
-  <data name="booking_requested" xml:space="preserve">
+  <data name="booking_data_title" xml:space="preserve">
+    <value>Colicitud de reserva</value>
+  </data>
+  <data name="booking_data_body" xml:space="preserve">
+    <value>Estás a punto de solicitar una reserva con los siguientes datos:\n- Establecimiento: ${ESTABLISMENT_NAME}\n- Servicio: ${SERVICE_NAME}\n- Fecha: ${DATE}\n\nDesesas continuar con la solicitud?</value>
+  </data>
+  <data name="booking_error_title" xml:space="preserve">
+    <value>No es posible reservar</value>
+  </data>
+  <data name="booking_error_body" xml:space="preserve">
+    <value>No es posible reservar en la fecha y hora solicitadas. Por favor, seleccione una fecha y/u hora distinta</value>
+  </data>
+  <data name="booking_requested_title" xml:space="preserve">
     <value>Reserva solicitada</value>
   </data>
-  <data name="email_confirmation" xml:space="preserve">
-    <value>Recibirás un correo electrónico de confirmación</value>
+  <data name="booking_requested_body" xml:space="preserve">
+    <value>Su solicitud de reserva ha sido guardada. Puede verla en la sección de citas. Recuerde que recibirá un email de confirmación cuando su solicitud sea aceptada</value>
   </data>
   <data name="establishment_details" xml:space="preserve">
     <value>Detalles</value>
@@ -338,5 +350,17 @@
   </data>
   <data name="appointment_cancellation_error" xml:space="preserve">
     <value>El límite de cancelación de una cita es el día antes de la fecha de la cita</value>
+  </data>
+  <data name="appointment_cancel_body" xml:space="preserve">
+    <value>Estás a punto de cancelar una cita. ¿Deseas continuar con la cancelación?</value>
+  </data>
+  <data name="appointment_cancel_title" xml:space="preserve">
+    <value>Cancelar cita</value>
+  </data>
+  <data name="yes" xml:space="preserve">
+    <value>Sí</value>
+  </data>
+  <data name="no" xml:space="preserve">
+    <value>No</value>
   </data>
 </root>

@@ -249,11 +249,23 @@
   <data name="generic_error" xml:space="preserve">
     <value>There has been an error.\nPlease, check your internet connection or try again later.</value>
   </data>
-  <data name="booking_requested" xml:space="preserve">
+  <data name="booking_data_title" xml:space="preserve">
+    <value>Booking Reaquest</value>
+  </data>
+  <data name="booking_data_body" xml:space="preserve">
+    <value>You are about to request a booking with the following data:\n- Establishment: ${ESTABLISMENT_NAME}\n- Service: ${SERVICE_NAME}\n- Date: ${DATE}\n\nDo you want to continue with the request?</value>
+  </data>
+  <data name="booking_error_title" xml:space="preserve">
+    <value>Can not book</value>
+  </data>
+  <data name="booking_error_body" xml:space="preserve">
+    <value>Booking at the requested date and time is not possible. Please, select a different date and/or time</value>
+  </data>
+  <data name="booking_requested_title" xml:space="preserve">
     <value>Booking Requested</value>
   </data>
-  <data name="email_confirmation" xml:space="preserve">
-    <value>A confirmation email will be send you</value>
+  <data name="booking_requested_body" xml:space="preserve">
+    <value>The booking request has been saved. You can see it in the Appointments section. Remember that you will receive a confirmation email when your request is accepted</value>
   </data>
   <data name="establishment_details" xml:space="preserve">
     <value>Details</value>
@@ -338,5 +350,17 @@
   </data>
   <data name="appointment_cancellation_error" xml:space="preserve">
     <value>The cancellation limit for an appointment es one day before the appointment date</value>
+  </data>
+  <data name="appointment_cancel_body" xml:space="preserve">
+    <value>You are about to cancel an appointment. Do you want to continue with the cancellation?</value>
+  </data>
+  <data name="appointment_cancel_title" xml:space="preserve">
+    <value>Cancel appointment</value>
+  </data>
+  <data name="yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="no" xml:space="preserve">
+    <value>No</value>
   </data>
 </root>

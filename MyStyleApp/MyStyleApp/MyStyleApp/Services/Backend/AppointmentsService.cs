@@ -54,6 +54,7 @@ namespace MyStyleApp.Services.Backend
                 HttpMethod.Post,
                 BackendConstants.APPOINTMENTS_URL,
                 authorization,
+                appointment,
                 null);
         }
 

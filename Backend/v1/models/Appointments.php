@@ -32,6 +32,7 @@ class Appointments extends ModelWithIdBase
 		$this->toDate = 'to';
 		$this->establishmentName = 'establishmentName';
 		$this->servicePrice = 'servicePrice';
+		$this->serviceDuration = 'serviceDuration';
 		
 		// Call parent ctor
 		parent::__construct($this->appointments->table, $this->appointments->fields, $this->appointments->id);
@@ -87,14 +88,19 @@ class Appointments extends ModelWithIdBase
 		$mixedFields[array_search($this->appointments->idService, $mixedFields)] = $appointmentsIdServiceRenamed;
 		array_push($mixedFields, $this->establishments->name);
 		array_push($mixedFields, $this->offer->price);
+		array_push($mixedFields, $this->services->duration);
 		if(isset($queryParams[$this->appointments->idEstablishment])) {
 			$queryParams[$appointmentsIdEstablishmentRenamed] = $queryParams[$this->appointments->idEstablishment];
 			unset($queryParams[$this->appointments->idEstablishment]);
 		}
 		$result = DBCommands::dbGetJoin(
-			[$this->appointments->table, $this->establishments->table, $this->offer->table],
-			[$this->appointments->idEstablishment, $this->establishments->id, $this->offer->idEstablishment],
-			['INNER', 'INNER'],
+			[$this->appointments->table, $this->establishments->table, $this->offer->table, $this->services->table],
+			[
+				[$this->appointments->table . '.' . $this->appointments->idEstablishment, $this->establishments->table . '.' . $this->establishments->id],
+				[$this->establishments->table . '.' . $this->establishments->id, $this->offer->table . '.' . $this->offer->idEstablishment],
+				[$this->offer->table . '.' . $this->offer->idService, $this->services->table . '.' . $this->services->id]
+			],
+			['INNER', 'INNER', 'INNER'],
 			$mixedFields, $mixedFields, $queryParams, $additionalConditions);
 		
 		for ($i = 0; $i < count($result); $i++) {
@@ -114,6 +120,9 @@ class Appointments extends ModelWithIdBase
 			
 			$result[$i][$this->servicePrice] = $result[$i][$this->offer->price];
 			unset($result[$i][$this->offer->price]);
+			
+			$result[$i][$this->serviceDuration] = $result[$i][$this->services->duration];
+			unset($result[$i][$this->services->duration]);
 		}
 		
 		return $result;
@@ -247,7 +256,7 @@ class Appointments extends ModelWithIdBase
 		$end = date_create($date);
 		date_time_set($end, 23, 59, 59);
 		
-		$fields = [$this->appointments->date, 'COUNT(*)'];
+		/*$fields = [$this->appointments->date, 'COUNT(*)'];
 		$groupBy = [$this->appointments->date];
 		$queryParams = array(
 			$this->appointments->idEstablishment => $data[$this->appointments->idEstablishment]
@@ -261,8 +270,36 @@ class Appointments extends ModelWithIdBase
 		$appointmentMap = array();
 		foreach($appointmentsGrouped as $group) {
 			$appointmentMap[$group[$this->appointments->date]] = $group['COUNT(*)'];
+		}*/
+		$fields = [$this->appointments->date, $this->services->duration];
+		$additionalConditions = array(
+			new Condition($this->appointments->date, '>=', date_format($start, 'Y-m-d H:i:s'), true),
+			new Condition($this->appointments->date, '<=', date_format($end, 'Y-m-d H:i:s'), true),
+			new Condition($this->appointments->status, '<>', 2, true));
+		$queryParams = array(
+			$this->appointments->idEstablishment => $data[$this->appointments->idEstablishment]
+		);
+		$appointments = DBCommands::dbGetJoin(
+			[$this->appointments->table, $this->services->table],
+			[
+				[$this->appointments->table . '.' . $this->appointments->idService, $this->services->table . '.' . $this->services->id]
+			],
+			['INNER'],
+			$fields, $this->appointments->fields, $queryParams, $additionalConditions);
+			
+		$appointmentMap = array();
+		foreach($appointments as $appointment) {
+			$appointmentSlots = $appointment[$this->services->duration] / 30;
+			$appointmentDate = date_create($appointment[$this->appointments->date]);
+			for ($k = 0; $k < $appointmentSlots; $k++) {
+				if(!isset($appointmentMap[date_format($appointmentDate, 'Y-m-d H:i:s')])) {
+					$appointmentMap[date_format($appointmentDate, 'Y-m-d H:i:s')] = 0;
+				}
+				$appointmentMap[date_format($appointmentDate, 'Y-m-d H:i:s')]++;
+				date_add($appointmentDate, date_interval_create_from_date_string('30 minutes'));
+			}
 		}
-		
+		//throw new ApiException(STATE_ESTABLISHMENT_CLOSED, $appointments);
 		$slots = array();
 		foreach($openingDates as $openingDate) {
 			$formDate = clone $openingDate['from'];

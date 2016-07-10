@@ -58,9 +58,22 @@ namespace MyStyleApp.ViewModels
             this._serviceCategoriesService = serviceCategoriesService;
             this._servicesService = servicesService;
             this._establishmentsService = establishmentsService;
+        }
+
+        public override void OnPushed()
+        {
+            base.OnPushed();
 
             MessagingCenter.Subscribe<Establishment>(this, "favouriteAdded", this.OnFavouriteAdded);
             MessagingCenter.Subscribe<Establishment>(this, "favouriteDeleted", this.OnFavouriteDeleted);
+        }
+
+        public override void OnPopped()
+        {
+            base.OnPopped();
+
+            MessagingCenter.Unsubscribe<Establishment>(this, "favouriteAdded");
+            MessagingCenter.Unsubscribe<Establishment>(this, "favouriteDeleted");
         }
 
         public async Task InitilizeAsync(Establishment establishment, int idServiceCategory, int idService)

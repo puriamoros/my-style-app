@@ -138,7 +138,7 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    await this.PushNavPageAsync<CreateAccountViewModel>((accountVM) => 
+                    await this.PushNavPageAsync<CreateAccountViewModel>((accountVM) =>
                     {
                         accountVM.Initialize(null);
                     });

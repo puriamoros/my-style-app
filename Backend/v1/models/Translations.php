@@ -40,7 +40,7 @@ class Translations
 		$sameIdField = $idIndex !== false && strcmp(strtolower($this->translations->id), strtolower($idField)) == 0;
 		if($sameIdField) {
 			// table also have a field called "id"
-			$idFieldRenamed = $table . "." . $idField;
+			$idFieldRenamed = $table . '.' . $idField;
 			$mixedFields[$idIndex] = $idFieldRenamed;
 		}
 		
@@ -52,7 +52,9 @@ class Translations
 		
 		$result = DBCommands::dbGetJoin(
 			[$table, $this->translations->table],
-			[$idTranslation, $this->translations->id],
+			[
+				[$table . '.' . $idTranslation,  $this->translations->table. '.' . $this->translations->id]
+			],
 			['INNER'],
 			$mixedFields, $mixedFields, $queryParams);
 		

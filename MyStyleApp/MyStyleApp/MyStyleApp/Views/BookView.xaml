@@ -47,22 +47,22 @@
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell x:Name="Slot">
-              <StackLayout>                              
+              <StackLayout Padding="25,5,0,5">                              
                 <Grid>
                   <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*" />
-                    <ColumnDefinition Width="95*" />
+                    <ColumnDefinition Width="6*" />
+                    <ColumnDefinition Width="94*" />
                   </Grid.ColumnDefinitions>
                   <RelativeLayout Grid.Column="0" VerticalOptions="Center">
                     <Image Aspect="AspectFit" Source="Clock-48.png" VerticalOptions="Center"
                       RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
                   </RelativeLayout>
-                  <StackLayout Grid.Column="1" Padding="3,0,3,0">
+                  <StackLayout Grid.Column="1" Padding="3,0,0,0">
                     <Label IsVisible="{Binding CanBook}"
-                      Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" Style="{StaticResource SmallTextStyle}" />
+                      Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" Style="{StaticResource MediumTextStyle}" />
                     <Label IsVisible="{Binding CanBook, Converter={StaticResource NegateConverter}}"
                       TextColor="{StaticResource ErrorColor}"
-                      Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" Style="{StaticResource SmallTextStyle}" />
+                      Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" Style="{StaticResource MediumTextStyle}" />
                   </StackLayout>
                 </Grid>
               </StackLayout>

@@ -250,10 +250,10 @@
     <value>Se ha produciod un error.\nCompruebe que está conectado a internet o inténtelo de nuevo más tarde.</value>
   </data>
   <data name="booking_data_title" xml:space="preserve">
-    <value>Colicitud de reserva</value>
+    <value>Solicitud de reserva</value>
   </data>
   <data name="booking_data_body" xml:space="preserve">
-    <value>Estás a punto de solicitar una reserva con los siguientes datos:\n- Establecimiento: ${ESTABLISMENT_NAME}\n- Servicio: ${SERVICE_NAME}\n- Fecha: ${DATE}\n\nDesesas continuar con la solicitud?</value>
+    <value>Estás a punto de solicitar una reserva con los siguientes datos:\n- Establecimiento: ${ESTABLISMENT_NAME}\n- Servicio: ${SERVICE_NAME}\n- Fecha: ${DATE}\n\n¿Desesas continuar con la solicitud?</value>
   </data>
   <data name="booking_error_title" xml:space="preserve">
     <value>No es posible reservar</value>

@@ -199,7 +199,7 @@ namespace MyStyleApp.ViewModels
                 // Ie: from 20:00 to 00:00 (00:00 is the start of the next day)
                 if (end.Hour == 0 && end.Minute == 0)
                 {
-                    end.AddDays(1);
+                    end = end.AddDays(1);
                 }
 
                 while (start < end)

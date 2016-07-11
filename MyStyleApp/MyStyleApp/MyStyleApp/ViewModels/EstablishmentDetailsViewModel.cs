@@ -261,9 +261,20 @@ namespace MyStyleApp.ViewModels
 
                     if(result.Count() > 0)
                     {
+                        // Clone selected service and complete service data with the service price
+                        Service selected = result.ElementAt(0);
+                        Service service = new Service()
+                        {
+                            Id = selected.Id,
+                            Name = selected.Name,
+                            IdServiceCategory = selected.IdServiceCategory,
+                            Duration = selected.Duration,
+                            Price = this.SelectedService.Price
+                        };
+
                         await this.PushNavPageAsync<BookViewModel>((bookVM) =>
                         {
-                            bookVM.Initialize(this.Establishment, result.ElementAt(0));
+                            bookVM.Initialize(this.Establishment, service);
                         });
                     }
                     else

@@ -32,7 +32,7 @@
                       RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
                   </RelativeLayout>
                   <StackLayout Grid.Column="1">
-                    <Label Text="{Binding Address}" Style="{StaticResource MediumTextStyle}" />
+                    <Label Text="{Binding Address}" Style="{StaticResource MediumTextStyle}" SizeChanged="OnLabelSizeChanged"/>
                   </StackLayout>
                 </Grid>
                   

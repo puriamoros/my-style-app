@@ -211,7 +211,7 @@
     <BundleResource Include="Resources\Pending.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Clock-48.png" />
+    <BundleResource Include="Resources\SimpleClock.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\CellPhone.png" />

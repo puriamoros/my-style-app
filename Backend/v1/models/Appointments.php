@@ -245,6 +245,13 @@ class Appointments extends ModelWithIdBase
 			$to = date_create($date);
 			date_time_set($to, $openingHours[$i+1]['hour'], $openingHours[i+1]['minute']);
 			
+			// 00:00 in a $to hour means the start of the next day
+			// Ie: from 20:00 to 00:00 (00:00 is the start of the next day)
+			if ($openingHours[$i+1]['hour'] == 0 && $openingHours[i+1]['minute'] == 0)
+			{
+				date_add($to, date_interval_create_from_date_string('1 days'));
+			}
+			
 			array_push($openingDates, array(
 				'from' => $from,
 				'to' => $to
@@ -256,21 +263,6 @@ class Appointments extends ModelWithIdBase
 		$end = date_create($date);
 		date_time_set($end, 23, 59, 59);
 		
-		/*$fields = [$this->appointments->date, 'COUNT(*)'];
-		$groupBy = [$this->appointments->date];
-		$queryParams = array(
-			$this->appointments->idEstablishment => $data[$this->appointments->idEstablishment]
-		);
-		$additionalConditions = array(
-			new Condition($this->appointments->date, '>=', date_format($start, 'Y-m-d H:i:s'), true),
-			new Condition($this->appointments->date, '<=', date_format($end, 'Y-m-d H:i:s'), true),
-			new Condition($this->appointments->status, '<>', 2, true));
-		$appointmentsGrouped = DBCommands::dbGet($this->appointments->table, $fields, $this->appointments->fields, $queryParams, $additionalConditions, $groupBy);
-		
-		$appointmentMap = array();
-		foreach($appointmentsGrouped as $group) {
-			$appointmentMap[$group[$this->appointments->date]] = $group['COUNT(*)'];
-		}*/
 		$fields = [$this->appointments->date, $this->services->duration];
 		$additionalConditions = array(
 			new Condition($this->appointments->date, '>=', date_format($start, 'Y-m-d H:i:s'), true),
@@ -299,7 +291,7 @@ class Appointments extends ModelWithIdBase
 				date_add($appointmentDate, date_interval_create_from_date_string('30 minutes'));
 			}
 		}
-		//throw new ApiException(STATE_ESTABLISHMENT_CLOSED, $appointments);
+		
 		$slots = array();
 		foreach($openingDates as $openingDate) {
 			$formDate = clone $openingDate['from'];

@@ -54,7 +54,7 @@
                     <ColumnDefinition Width="94*" />
                   </Grid.ColumnDefinitions>
                   <RelativeLayout Grid.Column="0" VerticalOptions="Center">
-                    <Image Aspect="AspectFit" Source="Clock-48.png" VerticalOptions="Center"
+                    <Image Aspect="AspectFit" Source="SimpleClock.png" VerticalOptions="Center"
                       RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
                   </RelativeLayout>
                   <StackLayout Grid.Column="1" Padding="3,0,0,0">

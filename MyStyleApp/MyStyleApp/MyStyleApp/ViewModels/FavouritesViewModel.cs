@@ -34,23 +34,10 @@ namespace MyStyleApp.ViewModels
             this._favouritesService = favouritesService;
             this._establishmentsService = establishmentsService;
 
-            this.InitializeAsync();
-        }
-
-        public override void OnAppearing()
-        {
-            base.OnAppearing();
-
             MessagingCenter.Subscribe<Establishment>(this, "favouriteAdded", this.OnFavouriteAdded);
             MessagingCenter.Subscribe<Establishment>(this, "favouriteDeleted", this.OnFavouriteDeleted);
-        }
 
-        public override void OnDisappearing()
-        {
-            base.OnDisappearing();
-
-            MessagingCenter.Unsubscribe<Establishment>(this, "favouriteAdded");
-            MessagingCenter.Unsubscribe<Establishment>(this, "favouriteDeleted");
+            this.InitializeAsync();
         }
 
         private async void InitializeAsync()

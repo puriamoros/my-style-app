@@ -39,21 +39,9 @@ namespace MyStyleApp.ViewModels
 
             this.CancelCommand = new Command<Appointment>(this.CancelAsync, this.CanCancel);
 
-            this.InitializeAsync();
-        }
-
-        public override void OnAppearing()
-        {
-            base.OnAppearing();
-
             MessagingCenter.Subscribe<Appointment>(this, "appointmentCreated", this.OnAppointmentCreated);
-        }
 
-        public override void OnDisappearing()
-        {
-            base.OnDisappearing();
-
-            MessagingCenter.Unsubscribe<Appointment>(this, "appointmentCreated");
+            this.InitializeAsync();
         }
 
         private async void InitializeAsync()

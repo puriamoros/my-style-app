@@ -36,10 +36,21 @@
                         Text="{Binding Name}" SizeChanged="OnLabelSizeChanged"/>
                     </StackLayout>
 
-                    <StackLayout>
-                      <Label Style="{StaticResource MediumTextStyle}"
-                        Text="{Binding Address}" SizeChanged="OnLabelSizeChanged"/>
-                    </StackLayout>
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*" />
+                        <ColumnDefinition Width="93*" />
+                      </Grid.ColumnDefinitions>
+                      <RelativeLayout Grid.Column="0" VerticalOptions="Start" >
+                        <Image Aspect="AspectFit" Source="Marker.png"
+                          RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                      </RelativeLayout>
+                      <StackLayout Grid.Column="1">
+                        <Label Style="{StaticResource MediumTextStyle}"
+                          Text="{Binding Address}" SizeChanged="OnLabelSizeChanged"/>
+                      </StackLayout>
+                    </Grid>
+                   
                   </StackLayout>
                   
 

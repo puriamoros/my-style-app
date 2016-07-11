@@ -114,6 +114,7 @@
     <Content Include="EuroPriceTag.png" />
     <Content Include="Favourite.png" />
     <Content Include="FavouriteFilled.png" />
+    <Content Include="Marker.png" />
     <Content Include="Pending.png" />
   </ItemGroup>
   <ItemGroup>

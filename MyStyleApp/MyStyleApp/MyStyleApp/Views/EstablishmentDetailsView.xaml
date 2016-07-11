@@ -20,18 +20,27 @@
           HorizontalOptions="Center"
           IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
 
-        <StackLayout Padding="0,5,0,10">
+        <StackLayout Padding="0,5,0,10"> 
           <StackLayout>
-            <StackLayout>
-              <Label Style="{StaticResource LargeTextStyle}" FontAttributes="Bold"
-                Text="{Binding Establishment.Name}" SizeChanged="OnLabelSizeChanged"/>
-            </StackLayout>
-
-            <StackLayout>
-              <Label Style="{StaticResource MediumTextStyle}"
-                Text="{Binding Establishment.Address}" SizeChanged="OnLabelSizeChanged"/>
-            </StackLayout>
+            <Label Style="{StaticResource LargeTextStyle}" FontAttributes="Bold"
+              Text="{Binding Establishment.Name}" SizeChanged="OnLabelSizeChanged"/>
           </StackLayout>
+          
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="7*" />
+              <ColumnDefinition Width="93*" />
+            </Grid.ColumnDefinitions>
+            <RelativeLayout Grid.Column="0" VerticalOptions="Start" >
+              <Image Aspect="AspectFit" Source="Marker.png"
+                RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+            </RelativeLayout>
+            <StackLayout Grid.Column="1">
+              <Label Style="{StaticResource MediumTextStyle}"
+            Text="{Binding Establishment.Address}" SizeChanged="OnLabelSizeChanged"/>
+            </StackLayout>
+          </Grid>
+                   
           <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="7*" />

@@ -20,13 +20,30 @@
               <StackLayout Padding="{StaticResource ListViewItemPadding}">
                 <StackLayout>
                   <Label Text="{Binding Name}" Style="{StaticResource LargeTextStyle}" FontAttributes="Bold"/>
-                  <Label Text="{Binding Address}" Style="{StaticResource MediumTextStyle}" />
+                </StackLayout>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*" />
+                    <ColumnDefinition Width="93*" />
+                  </Grid.ColumnDefinitions>
+                  <RelativeLayout Grid.Column="0" VerticalOptions="Start" >
+                    <Image Aspect="AspectFit" Source="Marker.png"
+                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                  </RelativeLayout>
+                  <StackLayout Grid.Column="1">
+                    <Label Text="{Binding Address}" Style="{StaticResource MediumTextStyle}" />
+                  </StackLayout>
+                </Grid>
+                  
+                <StackLayout>
                   <Label Text="{Binding ProvinceName}" Style="{StaticResource MediumTextStyle}" />
                 </StackLayout>
-                <StackLayout HeightRequest="1" BackgroundColor="Gray"
-                  IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>  
+
+                <BoxView HeightRequest="1" BackgroundColor="Gray"
+                  IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}" />
+                
               </StackLayout>
-              
                 
              <ViewCell.ContextActions>
                 <MenuItem Text="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.LocalizedStrings[view_details]}"

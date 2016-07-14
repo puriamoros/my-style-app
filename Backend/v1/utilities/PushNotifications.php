@@ -1,4 +1,9 @@
 <?php 
+
+require_once(__DIR__.'/ApiException.php');
+require_once(__DIR__.'/../data/StatusCodes.php');
+require_once(__DIR__.'/../data/PushConstants.php');
+
 // Server file
 class PushNotifications {
 
@@ -146,5 +151,72 @@ class PushNotifications {
         }
     }
     
+	public static function WP81($clientUri, $title, $body) {
+
+        $token='';
+		$toastNotification ='<?xml version="1.0" encoding="utf-16"?>'.
+		'<toast launch="confirmedAppointment">'.
+			'<visual lang="en-US">'.
+				'<binding template="ToastText02">'.
+				  '<text id="1">' . $title . '</text>'.
+				  '<text id="2">' . $body . '</text>'.
+				'</binding>'.
+			'</visual>'.
+		'</toast>';
+            
+		if ($token == null || $token=="")
+		{
+			$token= self::createToken();
+		}
+             
+		// Call API:
+		$toast = 'wns/toast';
+		$badge = 'wns/badge';
+		$tile  = 'wns/tile';
+		$raw   = 'wns/raw';
+		
+		$headers = array('Content-Type: text/xml', 'Content-Length: ' . strlen($toastNotification), 'X-WNS-Type: ' . $toast, 'Authorization: Bearer ' . $token);
+		
+		$ch = curl_init($clientUri);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $toastNotification);
+        curl_setopt($ch, CURLOPT_VERBOSE, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		
+        $json = curl_exec($ch);
+		$response = curl_getinfo($ch);
+        curl_close ($ch);
+		return $response['http_code'];
+	}
+	 
+	 private static function createToken()
+	{
+		//Change Package Id and ClientSecret to the given one.
+		$encSid = urlencode(WP_PACKAGE_SID);
+		$encSecret = urlencode(WP_SECRET);
+		
+		$sUrl ='https://login.live.com/accesstoken.srf';
+		$body =
+			'grant_type=client_credentials&client_id=' . $encSid .
+			'&client_secret=' . $encSecret . '&scope=notify.windows.com';
+
+		// Call MS API:
+		$ch = curl_init($sUrl);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		
+		$json = curl_exec($ch);
+		curl_close ($ch);
+		$obj = json_decode($json);
+		
+		return $obj->{'access_token'};
+	}
 }
 ?>

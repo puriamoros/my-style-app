@@ -7,6 +7,7 @@ require_once(__DIR__.'/../utilities/Authorization.php');
 require_once(__DIR__.'/../utilities/Tables.php');
 require_once(__DIR__.'/ModelWithIdBase.php');
 require_once(__DIR__.'/Condition.php');
+require_once(__DIR__.'/../utilities/PushNotifications.php');
 
 class Appointments extends ModelWithIdBase
 {
@@ -142,7 +143,18 @@ class Appointments extends ModelWithIdBase
 	protected function dbUpdate($id, $data)
 	{
 		$this->checkCanUpdate($id, $data);
-		return DBCommands::dbUpdate($this->appointments->table, [$this->appointments->status], $this->idField, $id, $data);
+		$result = DBCommands::dbUpdate($this->appointments->table, [$this->appointments->status], $this->idField, $id, $data);
+		
+		$status = $data[$this->appointments->status];
+		if($status == 1) {
+			$pushResult = PushNotifications::WP81(
+				'',
+				'Appointment confirmed!',
+				'Check details on Appointments section'
+			);
+		}
+		
+		return $result;
 	}
 	
 	protected function dbCreate($data)

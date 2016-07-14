@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Xml;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Networking.PushNotifications;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -55,6 +58,15 @@ namespace MyStyleApp.WinPhone
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
+
+            var channelTask = PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync().AsTask();
+            channelTask.Wait();
+            var channel = channelTask.Result;
+            var uri = channel.Uri;
+            channel.PushNotificationReceived += Channel_PushNotificationReceived;
+            System.Diagnostics.Debug.WriteLine(channel.ExpirationTime); 
+            System.Diagnostics.Debug.WriteLine(uri);
+
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -105,6 +117,32 @@ namespace MyStyleApp.WinPhone
 
             // Ensure the current window is active
             Window.Current.Activate();
+        }
+
+        private async void Channel_PushNotificationReceived(PushNotificationChannel sender, PushNotificationReceivedEventArgs args)
+        {
+            System.Diagnostics.Debug.WriteLine("Notification received: " + args.NotificationType.ToString());
+            string content = "None";
+            switch (args.NotificationType)
+            {
+                case PushNotificationType.Toast:
+                    content = args.ToastNotification.Content.GetXml();
+                    break;
+                case PushNotificationType.Tile:
+                    content = args.TileNotification.Content.GetXml();
+                    break;
+                case PushNotificationType.TileFlyout:
+                    content = args.TileNotification.Content.GetXml();
+                    break;
+                case PushNotificationType.Badge:
+                    content = args.BadgeNotification.Content.GetXml();
+                    break;
+                case PushNotificationType.Raw:
+                    content = args.RawNotification.Content;
+                    break;
+            }
+            
+            Xamarin.Forms.MessagingCenter.Send<string>(content, "pushNotificationReceived");
         }
 
         /// <summary>

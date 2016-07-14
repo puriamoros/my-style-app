@@ -108,6 +108,7 @@
     <Content Include="Assets\WideLogo.scale-240.png" />
     <Content Include="Cancelled.png" />
     <Content Include="CellPhone.png" />
+    <None Include="Package.StoreAssociation.xml" />
     <Content Include="SimpleClock.png" />
     <Content Include="Clock.png" />
     <Content Include="Confirmed.png" />

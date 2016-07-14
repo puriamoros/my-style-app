@@ -40,6 +40,11 @@ namespace MyStyleApp.ViewModels
             this.CancelCommand = new Command<Appointment>(this.CancelAsync, this.CanCancel);
 
             MessagingCenter.Subscribe<Appointment>(this, "appointmentCreated", this.OnAppointmentCreated);
+            MessagingCenter.Subscribe<string>(this, "pushNotificationReceived", (str) =>
+            {
+                //this.UserNotificator.DisplayAlert("Notificación", str, "ok");
+                this.InitializeAsync();
+            });
 
             this.InitializeAsync();
         }

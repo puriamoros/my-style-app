@@ -7,12 +7,10 @@ require_once(__DIR__.'/../data/PushConstants.php');
 // Server file
 class PushNotifications {
 
-	// (Android)API access key from Google API's Console.
-	private static $API_ACCESS_KEY = 'AIzaSyDG3fYAj1uW7VB-wejaMJyJXiO5JagAsYI';
 	// (iOS) Private key's passphrase.
-	private static $passphrase = 'joashp';
+	//private static $passphrase = '';
 	// (Windows Phone 8) The name of our push channel.
-	private static $channelName = "joashp";
+	// private static $channelName = '';
 	
 	// Change the above three vriables as per your app.
 
@@ -20,8 +18,8 @@ class PushNotifications {
 		exit('Init function is not allowed');
 	}
 	
-        // Sends Push notification for Android users
-	public function android($data, $reg_id) {
+    // Sends Push notification for Android users
+	/*public function android($data, $reg_id) {
 	        $url = 'https://android.googleapis.com/gcm/send';
 	        $message = array(
 	            'title' => $data['mtitle'],
@@ -43,10 +41,28 @@ class PushNotifications {
 	        );
 	
 	    	return $this->useCurl($url, $headers, json_encode($fields));
-    	}
+    	}*/
+		
+	public static function android($clientToken, $title, $body) {
+		$url = 'https://gcm-http.googleapis.com/gcm/send';
+		$message = array(
+			'to' => $clientToken,
+			'data' => array(
+				'title' => $title,
+				'body' => $body
+			)
+		);
+		
+		$headers = array(
+			'Authorization: key=' . ANDROID_SERVER_API_KEY,
+			'Content-Type: application/json'
+		);
+
+		return self::useCurl($url, $headers, json_encode($message));
+	}
 	
 	// Sends Push's toast notification for Windows Phone 8 users
-	public function WP($data, $uri) {
+	/*public function WP8($data, $uri) {
 		$delay = 2;
 		$msg =  "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
 		        "<wp:Notification xmlns:wp=\"WPNotification\">" .
@@ -73,10 +89,10 @@ class PushNotifications {
 		}
 		
 		return $result;
-	}
+	}*/
 	
-        // Sends Push notification for iOS users
-	public function iOS($data, $devicetoken) {
+    // Sends Push notification for iOS users
+	/*public function iOS($data, $devicetoken) {
 
 		$deviceToken = $devicetoken;
 
@@ -119,10 +135,10 @@ class PushNotifications {
 		else
 			return 'Message successfully delivered' . PHP_EOL;
 
-	}
+	}*/
 	
 	// Curl 
-	private function useCurl(&$model, $url, $headers, $fields = null) {
+	private static function useCurl($url, $headers, $fields = null) {
 	        // Open connection
 	        $ch = curl_init();
 	        if ($url) {
@@ -140,14 +156,16 @@ class PushNotifications {
 	     
 	            // Execute post
 	            $result = curl_exec($ch);
-	            if ($result === FALSE) {
+				$response = curl_getinfo($ch);
+	            /*if ($result === FALSE) {
 	                die('Curl failed: ' . curl_error($ch));
-	            }
+	            }*/
 	     
 	            // Close connection
 	            curl_close($ch);
 	
-	            return $result;
+	            //return $result;
+				return $response['http_code'];
         }
     }
     
@@ -166,7 +184,7 @@ class PushNotifications {
             
 		if ($token == null || $token=="")
 		{
-			$token= self::createToken();
+			$token= self::createWP81Token();
 		}
              
 		// Call API:
@@ -192,7 +210,7 @@ class PushNotifications {
 		return $response['http_code'];
 	}
 	 
-	 private static function createToken()
+	 private static function createWP81Token()
 	{
 		//Change Package Id and ClientSecret to the given one.
 		$encSid = urlencode(WP_PACKAGE_SID);

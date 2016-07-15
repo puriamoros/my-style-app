@@ -6,6 +6,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Android.Content;
+using Android.Gms.Common;
 
 namespace MyStyleApp.Droid
 {
@@ -25,6 +27,35 @@ namespace MyStyleApp.Droid
             LoadApplication(new App());
 
             base.ActionBar.Show();
+
+            // Push notifications
+            if (IsPlayServicesAvailable())
+            {
+                var intent = new Intent(this, typeof(RegistrationIntentService));
+                StartService(intent);
+            }
+        }
+
+        private bool IsPlayServicesAvailable()
+        {
+            int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
+            if (resultCode != ConnectionResult.Success)
+            {
+                String error = "";
+                if (GoogleApiAvailability.Instance.IsUserResolvableError(resultCode))
+                {
+                    error = GoogleApiAvailability.Instance.GetErrorString(resultCode);
+                }
+                else
+                {
+                    error = "This device is not supported";
+                }
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

@@ -36,10 +36,6 @@ namespace MyStyleApp.Droid
 
             var notification = notificationBuilder.Build();
 
-            // Default sound and default vibration
-            //notification.Defaults |= NotificationDefaults.Sound | NotificationDefaults.Vibrate;
-            Log.Debug("MyStyleApp", "NotificationDefaults: " + notification.Defaults);
-
             var notificationManager = (NotificationManager)GetSystemService(Context.NotificationService);
             notificationManager.Notify(0, notification);
 

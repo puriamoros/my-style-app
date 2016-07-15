@@ -12,38 +12,43 @@ namespace MyStyleApp.Droid
     {
         private static object locker = new object();
         private bool tokenSent;
+        private bool tokenRegenerated;
 
         public RegistrationIntentService() : base("RegistrationIntentService")
         {
             tokenSent = false;
+            tokenRegenerated = false;
         }
 
         protected override void OnHandleIntent(Intent intent)
         {
             try
             {
-                Log.Info("MyStyleApp", "Calling InstanceID.GetToken");
+                
                 lock (locker)
                 {
                     var instanceID = InstanceID.GetInstance(this);
-#if DEBUG
-                    try
-                    {
-                        Log.Info("MyStyleApp", "Calling: InstanceID.DeleteInstanceID");
-                        instanceID.DeleteInstanceID();
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Info("MyStyleApp", "Exception on: InstanceID.DeleteInstanceID");
-                    }
-#endif
-                    var token = instanceID.GetToken(
-                        "1021355216197", GoogleCloudMessaging.InstanceIdScope, null);
 
-                    System.Diagnostics.Debug.WriteLine("GCM Registration Token: " + token);
-                    Log.Info("MyStyleApp", "GCM Registration Token: " + token);
-                    SendRegistrationToAppServer(token);
-                    //Subscribe(token);
+                    if(!tokenRegenerated)
+                    {
+                        try
+                        {
+                            Log.Info("MyStyleApp", "Calling: InstanceID.DeleteInstanceID");
+                            instanceID.DeleteInstanceID();
+                        }
+                        catch (Exception e)
+                        {
+                            Log.Info("MyStyleApp", "Exception on: InstanceID.DeleteInstanceID");
+                        }
+
+                        Log.Info("MyStyleApp", "Calling InstanceID.GetToken");
+                        var token = instanceID.GetToken("1021355216197", GoogleCloudMessaging.InstanceIdScope, null);
+                        Log.Info("MyStyleApp", "GCM Registration Token: " + token);
+
+                        SendRegistrationToAppServer(token);
+
+                        tokenRegenerated = true;
+                    }
                 }
             }
             catch (Exception e)
@@ -63,11 +68,5 @@ namespace MyStyleApp.Droid
                 tokenSent = true;
             }
         }
-
-        /*void Subscribe(string token)
-        {
-            var pubSub = GcmPubSub.GetInstance(this);
-            pubSub.Subscribe(token, "/topics/global", null);
-        }*/
     }
 }

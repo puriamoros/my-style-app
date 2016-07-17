@@ -54,12 +54,14 @@ namespace MyStyleApp.Services.Backend.Mocks
 
         public async Task UpdateUserAsync(int id, User user)
         {
-
         }
 
         public async Task UpdatePasswordAsync(int id, string oldPassword, string newPassword)
+        { 
+        }
+
+        public async Task UpdatePlatformAsync(int id, string platform, string pushToken)
         {
-            
         }
     }
 }

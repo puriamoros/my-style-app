@@ -14,6 +14,14 @@ class Users extends ModelWithIdBase
 		// Users table data
 		$this->users = Tables::getInstance()->users;
 		
+		// Users private fields
+		$this->privateFields = array(
+			$this->users->password,
+			$this->users->apiKey,
+			$this->users->platform,
+			$this->users->pushToken
+		);
+		
 		// Call parent ctor
 		parent::__construct($this->users->table, $this->users->fields, $this->users->id);
     }
@@ -69,7 +77,12 @@ class Users extends ModelWithIdBase
 			return $this->updateElement($queryArray[1]);
 		}
 		if(count($queryArray) == 3) {
-			return $this->updatePassword($queryArray[1]);
+			if ($queryArray[2] == 'password') {
+				return $this->updatePassword($queryArray[1]);
+			}
+			else if ($queryArray[2] == 'platform') {
+				return $this->updatePlatform($queryArray[1]);
+			}
 		}
 		
 		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
@@ -79,6 +92,13 @@ class Users extends ModelWithIdBase
     {
 		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
     }
+	
+	private function unsetPrivateFields(&$array)
+	{
+		foreach($this->privateFields as $field) {
+			unset($array[$field]);
+		}
+	}
 	
 	private function login()
 	{
@@ -95,8 +115,7 @@ class Users extends ModelWithIdBase
 	{
 		$result = parent::getElements($queryParams);
 		for ($i = 0; $i < count($result); $i++) {
-			unset($result[$i][$this->users->password]);
-			unset($result[$i][$this->users->apiKey]);
+			$this->unsetPrivateFields($result[$i]);
 		}
 		return $result;
 	}
@@ -113,8 +132,7 @@ class Users extends ModelWithIdBase
 	{
 		$result = parent::getElement($id);
 		if(!is_null($result)) {
-			unset($result[$this->users->password]);
-			unset($result[$this->users->apiKey]);
+			$this->unsetPrivateFields($result);
 		}
 		return $result;
 	}
@@ -153,8 +171,7 @@ class Users extends ModelWithIdBase
 		
 		// Create user
 		$result = $this->dbCreate($data);
-		unset($result[$this->users->password]);
-		unset($result[$this->users->apiKey]);
+		$this->unsetPrivateFields($result);
 		
 		// Print response
 		http_response_code(201);
@@ -194,6 +211,26 @@ class Users extends ModelWithIdBase
 		throw new ApiException(STATE_INVALID_DATA, "Invalid data");
 	}
 	
+	private function updatePlatform($id)
+	{
+		// Check authorization
+		Authorization::authorizeApiKey();
+		
+		$data = $this->getBodyData();
+		if(isset($data[$this->users->platform]) && isset($data[$this->users->pushToken])) {
+			// TODO: Validate fields
+			
+			// Update platform and pushToken
+			return DBCommands::dbUpdate($this->table, [$this->users->platform, $this->users->pushToken], $this->idField, $id, $data);
+			
+			// Print response
+			http_response_code(204);
+			return;
+		}
+
+		throw new ApiException(STATE_INVALID_DATA, "Invalid data");
+	}
+	
 	protected function dbUpdate($id, $data)
 	{
 		// Check if another user with same email already exists
@@ -204,7 +241,7 @@ class Users extends ModelWithIdBase
 			}
 		}
 		
-		$fields = array_diff($this->fields, [$this->users->password, $this->users->apiKey]);
+		$fields = array_diff($this->fields, $this->privateFields);
 		return DBCommands::dbUpdate($this->table, $fields, $this->idField, $id, $data);
 	}
 	
@@ -264,5 +301,18 @@ class Users extends ModelWithIdBase
 		}
 		
 		return null;
+	}
+	
+	public static function getPlatform($id)
+	{
+		// Check authorization
+		Authorization::authorizeApiKey();
+			
+		// Get platform and pushToken
+		$fields = array(
+			Tables::getInstance()->users->platform,
+			Tables::getInstance()->users->pushToken
+		);
+		return DBCommands::dbGetOne(Tables::getInstance()->users->table, $fields, Tables::getInstance()->users->id, $id);
 	}
 }

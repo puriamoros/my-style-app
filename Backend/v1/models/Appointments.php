@@ -32,6 +32,7 @@ class Appointments extends ModelWithIdBase
 		$this->fromDate = 'from';
 		$this->toDate = 'to';
 		$this->establishmentName = 'establishmentName';
+		$this->clientName = 'clientName';
 		$this->servicePrice = 'servicePrice';
 		$this->serviceDuration = 'serviceDuration';
 		
@@ -83,11 +84,15 @@ class Appointments extends ModelWithIdBase
 		$appointmentsIdRenamed = $this->appointments->table . '.' . $this->appointments->id;
 		$appointmentsIdEstablishmentRenamed = $this->appointments->table . '.' . $this->appointments->idEstablishment;
 		$appointmentsIdServiceRenamed = $this->appointments->table . '.' . $this->appointments->idService;
+		$establishmentNameRenamed = $this->establishments->table . '.' . $this->establishments->name;
+		$clientNameRenamed = $this->users->table . '.' . $this->users->name;
 		$mixedFields = $this->appointments->fields;
 		$mixedFields[array_search($this->appointments->id, $mixedFields)] = $appointmentsIdRenamed;
 		$mixedFields[array_search($this->appointments->idEstablishment, $mixedFields)] = $appointmentsIdEstablishmentRenamed;
 		$mixedFields[array_search($this->appointments->idService, $mixedFields)] = $appointmentsIdServiceRenamed;
-		array_push($mixedFields, $this->establishments->name);
+		array_push($mixedFields, $establishmentNameRenamed);
+		array_push($mixedFields, $clientNameRenamed);
+		array_push($mixedFields, $this->users->surname);
 		array_push($mixedFields, $this->offer->price);
 		array_push($mixedFields, $this->services->duration);
 		if(isset($queryParams[$this->appointments->idEstablishment])) {
@@ -95,8 +100,9 @@ class Appointments extends ModelWithIdBase
 			unset($queryParams[$this->appointments->idEstablishment]);
 		}
 		$result = DBCommands::dbGetJoin(
-			[$this->appointments->table, $this->establishments->table, $this->offer->table, $this->services->table],
+			[$this->users->table, $this->appointments->table, $this->establishments->table, $this->offer->table, $this->services->table],
 			[
+				[$this->users->table . '.' . $this->users->id, $this->appointments->table . '.' . $this->appointments->idClient],
 				[$this->appointments->table . '.' . $this->appointments->idEstablishment, $this->establishments->table . '.' . $this->establishments->id],
 				[$this->establishments->table . '.' . $this->establishments->id, $this->offer->table . '.' . $this->offer->idEstablishment],
 				[$this->offer->table . '.' . $this->offer->idService, $this->services->table . '.' . $this->services->id]
@@ -116,8 +122,12 @@ class Appointments extends ModelWithIdBase
 			unset($result[$i][$appointmentsIdServiceRenamed]);
 			
 			// modify names
-			$result[$i][$this->establishmentName] = $result[$i][$this->establishments->name];
-			unset($result[$i][$this->establishments->name]);
+			$result[$i][$this->establishmentName] = $result[$i][$establishmentNameRenamed];
+			unset($result[$i][$establishmentNameRenamed]);
+			
+			$result[$i][$this->clientName] = $result[$i][$clientNameRenamed] . ' ' . $result[$i][$this->users->surname] ;
+			unset($result[$i][$clientNameRenamed]);
+			unset($result[$i][$this->users->surname]);
 			
 			$result[$i][$this->servicePrice] = $result[$i][$this->offer->price];
 			unset($result[$i][$this->offer->price]);
@@ -142,15 +152,17 @@ class Appointments extends ModelWithIdBase
 	
 	protected function dbUpdate($id, $data)
 	{
-		$this->checkCanUpdate($id, $data);
-		$result = DBCommands::dbUpdate($this->appointments->table, [$this->appointments->status], $this->idField, $id, $data);
+		/*$this->checkCanUpdate($id, $data);
+		$result = DBCommands::dbUpdate($this->appointments->table, [$this->appointments->status], $this->idField, $id, $data);*/
 		
+		$appointment = $this->getElement($id);
 		$status = $data[$this->appointments->status];
 		if($status == 1) {
-			$pushResult = PushNotifications::WP81(
-				'',
+			PushNotifications::Notify(
+				$appointment[$this->appointments->idClient],
 				'Appointment confirmed!',
-				'Check details on Appointments section'
+				'Check details on Appointments section',
+				'appointmentConfirmed'
 			);
 		}
 		

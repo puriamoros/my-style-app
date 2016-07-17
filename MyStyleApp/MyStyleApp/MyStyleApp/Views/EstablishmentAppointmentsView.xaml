@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:CustomContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MyStyleApp.Views.AppointmentsView"
+             x:Class="MyStyleApp.Views.EstablishmentAppointmentsView"
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
              xmlns:gestures="clr-namespace:MyStyleApp.Views.Gestures"
              xmlns:views="clr-namespace:MyStyleApp.Views"
@@ -12,91 +12,98 @@
   <Grid>
     <StackLayout Padding="{StaticResource PageContentPadding}">
       <!-- Without HasUnevenRows="True", list items does not render well in Android -->
+      <Label
+           Text="{Binding LocalizedStrings[appointments]}"
+           Style="{StaticResource LargeTextStyle}"
+           HorizontalOptions="Center"
+           IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
+
+      <StackLayout Padding="0,0,0,10" Spacing="0">
+        <Label
+          Text="{Binding LocalizedStrings[establishment]}"
+          Style="{StaticResource MediumTextStyle}"/>
+        <controls:BindablePicker
+          ItemsSource="{Binding EstablishmentList}"
+          DisplayProperty="Name"
+          SelectedItem="{Binding SelectedEstablishment}"
+          Title="{Binding ChooseItemPlaceholder}"/>
+      </StackLayout>
+
+      <StackLayout Padding="0,0,0,10">
+        <Label
+          Text="{Binding LocalizedStrings[choose_date]}"
+          Style="{StaticResource MediumTextStyle}"/>
+        <DatePicker VerticalOptions="CenterAndExpand"
+          Date="{Binding Date, Mode=TwoWay}"
+          MinimumDate="{Binding MinimumDate, Mode=TwoWay}"
+          MaximumDate="{Binding MaximumDate, Mode=TwoWay}"
+          Format="D"/>
+      </StackLayout>
+      
       <ListView x:Name="AppointmentList"
         ItemsSource="{Binding AppointmentList}"
         HasUnevenRows="True"
-        gestures:ListViewItemTapped.Command="{Binding AppointmentDetailsCommand}">
+        gestures:ListViewItemTapped.Command="{Binding AppointmentDetailsCommand}"> 
+        <!--cambiar el command-->
                     
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell x:Name="Appointment">
-              <StackLayout Padding="{StaticResource ListViewItemPadding}">
-                <StackLayout>
-                  <Label VerticalOptions="Center" Style="{StaticResource LargeTextStyle}" FontAttributes="Bold"
-                    Text="{Binding EstablishmentName}" SizeChanged="OnLabelSizeChanged"/>
-                </StackLayout>
-                                  
+              <StackLayout Padding="{StaticResource ListViewItemPadding}">                                                  
                 <Grid>
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="6*" />
-                    <ColumnDefinition Width="58*" />
-                    <ColumnDefinition Width="6*" />
-                    <ColumnDefinition Width="30*" />
+                    <ColumnDefinition Width="94*" />
                   </Grid.ColumnDefinitions>
                   <RelativeLayout Grid.Column="0" VerticalOptions="Center">
-                    <Image Aspect="AspectFit" Source="Calendar.png" VerticalOptions="Center"
-                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
-                  </RelativeLayout>
-                  <Label Grid.Column="1" VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
-                    Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=d}" />
-                  <RelativeLayout Grid.Column="2" VerticalOptions="Center">
                     <Image Aspect="AspectFit" Source="Clock.png" VerticalOptions="Center"
                       RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
                   </RelativeLayout>
-                  <Label Grid.Column="3" VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+                  <Label Grid.Column="1" VerticalOptions="Center" Style="{StaticResource MediumTextStyle}" FontAttributes="Bold"
                     Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" />
                 </Grid>
 
                 <Grid>
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="6*" />
-                    <ColumnDefinition Width="58*" />
+                    <ColumnDefinition Width="94*" />
+                  </Grid.ColumnDefinitions>
+                  <RelativeLayout Grid.Column="0" VerticalOptions="Center">
+                    <Image Aspect="AspectFit" Source="Client.png" VerticalOptions="Center"
+                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                  </RelativeLayout>
+                  <Label Grid.Column="1" VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+                   Text="{Binding ClientName}" SizeChanged="OnLabelSizeChanged"/>
+                </Grid>
+                            
+                <Grid>
+                  <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="6*" />
-                    <ColumnDefinition Width="30*" />
+                    <ColumnDefinition Width="60*" />
+                    <ColumnDefinition Width="6*" />
+                    <ColumnDefinition Width="28*" />
                   </Grid.ColumnDefinitions>
 
                   <RelativeLayout Grid.Column="0" VerticalOptions="Center">
                     <Image Aspect="AspectFit" Source="Mirror.png" VerticalOptions="Center"
                       RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
                   </RelativeLayout>
-
+                  
                   <StackLayout Grid.Column="1">
                     <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
                       Text="{Binding ServiceName}" SizeChanged="OnLabelSizeChanged"/>
                   </StackLayout>
-
+                    
                   <RelativeLayout Grid.Column="2" VerticalOptions="Center">
                     <Image Aspect="AspectFit" Source="EuroPriceTag.png" VerticalOptions="Center"
                       RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
                   </RelativeLayout>
-
+                    
                   <StackLayout Grid.Column="3">
                     <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
                       Text="{Binding ServicePrice, Converter={StaticResource FloatToPriceConverter}}" SizeChanged="OnLabelSizeChanged"/>
-                  </StackLayout>
-                </Grid>
-                <!--<Grid>
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="60*" />
-                    <ColumnDefinition Width="6*" />
-                    <ColumnDefinition Width="34*" />
-                  </Grid.ColumnDefinitions>
-                    
-                  <StackLayout Grid.Column="0">
-                    <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
-                      Text="{Binding ServiceName}" SizeChanged="OnLabelSizeChanged"/>
-                  </StackLayout>
-                    
-                  <RelativeLayout Grid.Column="1" VerticalOptions="Center">
-                    <Image Aspect="AspectFit" Source="EuroPriceTag.png" VerticalOptions="Center"
-                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
-                  </RelativeLayout>
-                    
-                  <StackLayout Grid.Column="2">
-                    <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
-                      Text="{Binding ServicePrice, Converter={StaticResource FloatToPriceConverter}}" SizeChanged="OnLabelSizeChanged"/>
                     </StackLayout> 
-                </Grid>-->
+                </Grid>
                 
                 <Grid>
                   <Grid.ColumnDefinitions>

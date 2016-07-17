@@ -59,15 +59,6 @@ namespace MyStyleApp.WinPhone
             }
 #endif
 
-            var channelTask = PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync().AsTask();
-            channelTask.Wait();
-            var channel = channelTask.Result;
-            var uri = channel.Uri;
-            channel.PushNotificationReceived += Channel_PushNotificationReceived;
-            System.Diagnostics.Debug.WriteLine(channel.ExpirationTime); 
-            System.Diagnostics.Debug.WriteLine(uri);
-
-
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -117,32 +108,17 @@ namespace MyStyleApp.WinPhone
 
             // Ensure the current window is active
             Window.Current.Activate();
+
+            // Check arguments, may be this lauch is because of a push notification
+            //if(!string.IsNullOrEmpty(e.Arguments))
+            //{
+            //    Xamarin.Forms.MessagingCenter.Send<string>(e.Arguments, "pushNotificationReceived");
+            //}
         }
 
-        private async void Channel_PushNotificationReceived(PushNotificationChannel sender, PushNotificationReceivedEventArgs args)
+        protected override void OnActivated(IActivatedEventArgs args)
         {
-            System.Diagnostics.Debug.WriteLine("Notification received: " + args.NotificationType.ToString());
-            string content = "None";
-            switch (args.NotificationType)
-            {
-                case PushNotificationType.Toast:
-                    content = args.ToastNotification.Content.GetXml();
-                    break;
-                case PushNotificationType.Tile:
-                    content = args.TileNotification.Content.GetXml();
-                    break;
-                case PushNotificationType.TileFlyout:
-                    content = args.TileNotification.Content.GetXml();
-                    break;
-                case PushNotificationType.Badge:
-                    content = args.BadgeNotification.Content.GetXml();
-                    break;
-                case PushNotificationType.Raw:
-                    content = args.RawNotification.Content;
-                    break;
-            }
-            
-            Xamarin.Forms.MessagingCenter.Send<string>(content, "pushNotificationReceived");
+            base.OnActivated(args);
         }
 
         /// <summary>

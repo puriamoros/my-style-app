@@ -84,5 +84,42 @@ namespace MyStyleApp.Services.Backend.Mocks
 
             return establishment;
         }
+
+        public async Task<IList<Establishment>> GetMyEstablishmentsAsync()
+        {
+            IList<Establishment> listEstablishments = new List<Establishment>();
+
+            listEstablishments.Add(new Establishment()
+            {
+                Id = 1,
+                Name = "Establecimiento1",
+                Address = "Dirección1",
+                Phone = "951456587",
+                IdEstablishmentType = 1
+            }
+            );
+
+            listEstablishments.Add(new Establishment()
+            {
+                Id = 2,
+                Name = "Establecimiento2",
+                Address = "Dirección2",
+                Phone = "951456588",
+                IdEstablishmentType = 2
+            }
+            );
+
+            listEstablishments.Add(new Establishment()
+            {
+                Id = 3,
+                Name = "Establecimiento3",
+                Address = "Dirección3",
+                Phone = "951456589",
+                IdEstablishmentType = 3
+            }
+            );
+
+            return listEstablishments;
+        }
     }
 }

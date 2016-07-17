@@ -25,7 +25,7 @@ namespace MyStyleApp.Views
         }
 
         // Sets the height of the parent StackLayout to the label height
-        // This is necesary when we have some labels ones on the top of others and some
+        // This is necessary when we have some labels ones on the top of others and some
         // of them can need more than one line for their texts
         protected void OnLabelSizeChanged(object sender, EventArgs e)
         {

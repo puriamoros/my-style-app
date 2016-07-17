@@ -233,6 +233,24 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose the date.
+        /// </summary>
+        internal static string choose_date {
+            get {
+                return ResourceManager.GetString("choose_date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose the hour.
+        /// </summary>
+        internal static string choose_hour {
+            get {
+                return ResourceManager.GetString("choose_hour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create an account.
         /// </summary>
         internal static string create_account {
@@ -404,6 +422,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Establishment.
+        /// </summary>
+        internal static string establishment {
+            get {
+                return ResourceManager.GetString("establishment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Details.
         /// </summary>
         internal static string establishment_details {
@@ -526,6 +553,15 @@ namespace MyStyleApp.Localization {
         internal static string my_account {
             get {
                 return ResourceManager.GetString("my_account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My establishments.
+        /// </summary>
+        internal static string my_establishments {
+            get {
+                return ResourceManager.GetString("my_establishments", resourceCulture);
             }
         }
         

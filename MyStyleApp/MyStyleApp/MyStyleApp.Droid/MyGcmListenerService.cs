@@ -13,14 +13,16 @@ namespace MyStyleApp.Droid
         {
             var title = data.GetString("title");
             var body = data.GetString("body");
+            var context = data.GetString("context");
             Log.Debug("MyStyleApp", "From:    " + from);
             Log.Debug("MyStyleApp", "Title: " + title);
             Log.Debug("MyStyleApp", "Body: " + body);
-            SendNotification(title, body);
+            Log.Debug("MyStyleApp", "Context: " + context);
+            SendNotification(title, body, context);
         }
 
         // Converts the remote notification into a local notification and lauches it
-        void SendNotification(string title, string body)
+        void SendNotification(string title, string body, string context)
         {
             var intent = new Intent(this, typeof(MainActivity));
             intent.AddFlags(ActivityFlags.ClearTop);
@@ -39,7 +41,7 @@ namespace MyStyleApp.Droid
             var notificationManager = (NotificationManager)GetSystemService(Context.NotificationService);
             notificationManager.Notify(0, notification);
 
-            Xamarin.Forms.MessagingCenter.Send<string>(title, "pushNotificationReceived");
+            Xamarin.Forms.MessagingCenter.Send<string>(context, "pushNotificationReceived");
         }
     }
 }

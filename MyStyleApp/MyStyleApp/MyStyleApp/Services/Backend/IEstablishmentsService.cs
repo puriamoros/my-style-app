@@ -14,5 +14,7 @@ namespace MyStyleApp.Services.Backend
             Service service);
 
         Task<Establishment> GetEstablishmentAsync(int id);
-    }
+
+        Task<IList<Establishment>> GetMyEstablishmentsAsync();
+    }       
 }

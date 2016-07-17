@@ -24,7 +24,7 @@
        
       <StackLayout>
         <Label 
-          Text="Choose the date" 
+          Text="{Binding LocalizedStrings[choose_date]}" 
           Style="{StaticResource MediumTextStyle}"/>
         <DatePicker VerticalOptions="CenterAndExpand"
           Date="{Binding Date, Mode=TwoWay}"
@@ -35,7 +35,7 @@
 
       <StackLayout Padding="0,10,0,0">
         <Label
-          Text="Choose the hour"
+          Text="{Binding LocalizedStrings[choose_hour]}"
           Style="{StaticResource MediumTextStyle}"/>
       </StackLayout>
       

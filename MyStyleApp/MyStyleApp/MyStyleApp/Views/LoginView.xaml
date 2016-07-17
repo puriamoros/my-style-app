@@ -30,7 +30,8 @@
             Placeholder="{Binding LocalizedStrings[password_placeholder]}"
             Text="{Binding Password}" />
         </StackLayout>
-        <StackLayout Spacing="0" >
+        <!-- We will always remember the user, but we leave the code as it is to make things easier if we had to go back-->
+        <StackLayout Spacing="0" IsVisible="False">
           <Label
             Text="{Binding LocalizedStrings[remember_me]}"
             Style="{StaticResource MediumTextStyle}" />

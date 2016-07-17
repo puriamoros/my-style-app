@@ -13,67 +13,82 @@ using System.Collections.Generic;
 
 namespace MyStyleApp.ViewModels
 {
-    public class AppointmentsViewModel : NavigableViewModelBase
+   
+    public class EstablishmentAppointmentsViewModel : NavigableViewModelBase
     {
-        
+        private DateTime _date;
+        private DateTime _minimumDate;
+        private DateTime _maximumDate;
+
         private IUsersService _userService;
         private IServicesService _servicesService;
         private IAppointmentsService _appointmentsService;
+        private IEstablishmentsService _establishmentsService;
 
+        private List<OpeningHour> _openingHours;
         private ObservableCollection<Appointment> _appointmentList;
+        private ObservableCollection<Establishment> _establishmentList;
+        private Establishment _selectedEstablishment;
 
         public Command CancelCommand { get; private set; }
-
-        public AppointmentsViewModel(
+       
+        public EstablishmentAppointmentsViewModel(
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
             IUsersService userService,
             IServicesService servicesService,
-            IAppointmentsService appointmentsService) :
+            IAppointmentsService appointmentsService,
+            IEstablishmentsService establishmentsService) :
             base(navigator, userNotificator, localizedStringsService)
         {
             this._userService = userService;
             this._servicesService = servicesService;
             this._appointmentsService = appointmentsService;
+            this._establishmentsService = establishmentsService;
 
-            this.CancelCommand = new Command<Appointment>(this.CancelAsync, this.CanCancel);
+            this.CancelCommand = new Command<Appointment>(this.CancelAsync, this.CanCancel);        
 
             MessagingCenter.Subscribe<Appointment>(this, "appointmentCreated", this.OnAppointmentCreated);
-            MessagingCenter.Subscribe<string>(this, "pushNotificationReceived", (str) =>
-            {
-                if(str == "appointmentConfirmed")
-                {
-                    this.InitializeAsync();
-                }
-            });
 
             this.InitializeAsync();
         }
 
-        private async void InitializeAsync()
+        public async void InitializeAsync()
         {
+            this.MinimumDate = DateTime.Today;
+            this.MaximumDate = DateTime.Today.AddMonths(3);
+            this.Date = DateTime.Today;
+
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    var appointments = await this._appointmentsService.GetClientAppointmentsAsync(DateTime.Today);
-                    var services = await this._servicesService.GetServicesAsync();
+                    var establishments = await this._establishmentsService.GetMyEstablishmentsAsync();
 
-                    foreach (Appointment appointment in appointments)
-                    {
-                        var result = from service in services
-                                     where service.Id == appointment.IdService
-                                     select service;
-
-                        if (result.Count() > 0)
-                        {
-                            appointment.ServiceName = result.ElementAt(0).Name;
-                        }
-                    }
-
-                    this.AppointmentList = new ObservableCollection<Appointment>(appointments);
+                    this.EstablishmentList = new ObservableCollection<Establishment>(establishments);
                 });
-            
+        }
+
+        public DateTime Date
+        {
+            get { return _date; }
+            set
+            {
+                SetProperty(ref _date, value);
+                this.OnDataChanged();
+            }
+        }
+
+        public DateTime MinimumDate
+        {
+            get { return _minimumDate; }
+            set { SetProperty(ref _minimumDate, value); }
+        }
+
+        public DateTime MaximumDate
+        {
+            get { return _maximumDate; }
+            set { SetProperty(ref _maximumDate, value); }
         }
 
         public ObservableCollection<Appointment> AppointmentList
@@ -81,6 +96,57 @@ namespace MyStyleApp.ViewModels
             get { return _appointmentList; }
             set { SetProperty(ref _appointmentList, value); }
         }
+
+        public ObservableCollection<Establishment> EstablishmentList
+        {
+            get { return _establishmentList; }
+            set { SetProperty(ref _establishmentList, value); }
+        }
+
+        public Establishment SelectedEstablishment
+        {
+            get { return _selectedEstablishment; }
+            set
+            {
+                SetProperty(ref _selectedEstablishment, value);
+                this.OnDataChanged();
+            }
+        }
+
+        private async void OnDataChanged()
+        {
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    if (this.SelectedEstablishment != null)
+                    {
+                        var appointments = await this._appointmentsService.GetEstablishmentAppointmentsAsync(this.SelectedEstablishment, this.Date, this.Date.AddDays(1).AddMilliseconds(-1));
+                        var services = await this._servicesService.GetServicesAsync();
+
+                        foreach (Appointment appointment in appointments)
+                        {
+                            var result = from service in services
+                                         where service.Id == appointment.IdService
+                                         select service;
+
+                            if (result.Count() > 0)
+                            {
+                                appointment.ServiceName = result.ElementAt(0).Name;
+                            }
+                        }
+
+                        this.AppointmentList = new ObservableCollection<Appointment>(appointments);
+                    }
+                    else
+                    {
+                        if(this.AppointmentList != null)
+                        {
+                            this.AppointmentList.Clear();
+                        }                      
+                    }
+                });
+        }
+
 
         private async void CancelAsync(Appointment appointment)
         {

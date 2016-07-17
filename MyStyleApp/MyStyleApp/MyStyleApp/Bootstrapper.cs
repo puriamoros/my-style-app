@@ -36,6 +36,8 @@ namespace MyStyleApp
             builder.RegisterType<ChangePasswordView>().SingleInstance();
             builder.RegisterType<AccountDetailsView>().SingleInstance();
             builder.RegisterType<CreateAccountView>().SingleInstance();
+            builder.RegisterType<MyEstablishmentsView>().SingleInstance();
+            builder.RegisterType<EstablishmentAppointmentsView>().SingleInstance();
 
             // Register ViewModels
             builder.RegisterType<StartViewModel>().SingleInstance();
@@ -51,6 +53,8 @@ namespace MyStyleApp
             builder.RegisterType<ChangePasswordViewModel>().SingleInstance();
             builder.RegisterType<AccountDetailsViewModel>().SingleInstance();
             builder.RegisterType<CreateAccountViewModel>().SingleInstance();
+            builder.RegisterType<MyEstablishmentsViewModel>().SingleInstance();
+            builder.RegisterType<EstablishmentAppointmentsViewModel>().SingleInstance();
 
             // Register Services
             builder.RegisterType<LocalizedStringsService>().SingleInstance();
@@ -71,6 +75,8 @@ namespace MyStyleApp
             builder.RegisterType<EstablishmentsService>().As<IEstablishmentsService>().SingleInstance();
             builder.RegisterType<FavouritesService>().As<IFavouritesService>().SingleInstance();
             builder.RegisterType<AppointmentsService>().As<IAppointmentsService>().SingleInstance();
+            builder.Register(p => DependencyService.Get<IPushNotificationsService>()).
+                As<IPushNotificationsService>().SingleInstance();
         }
 
         protected override void RegisterViews(IViewFactory viewFactory)
@@ -91,6 +97,8 @@ namespace MyStyleApp
             viewFactory.Register<ChangePasswordViewModel, ChangePasswordView>();
             viewFactory.Register<AccountDetailsViewModel, AccountDetailsView>();
             viewFactory.Register<CreateAccountViewModel, CreateAccountView>();
+            viewFactory.Register<MyEstablishmentsViewModel, MyEstablishmentsView>();
+            viewFactory.Register<EstablishmentAppointmentsViewModel, EstablishmentAppointmentsView>();
         }
 
         protected override void ConfigureApplication(IContainer container)

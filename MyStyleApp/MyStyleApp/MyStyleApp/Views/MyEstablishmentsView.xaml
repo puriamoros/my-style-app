@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:CustomContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyStyleApp.Views.MyEstablishmentsView"
+             xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
+             xmlns:gestures="clr-namespace:MyStyleApp.Views.Gestures"
+             xmlns:mvvmcorebehaviors="clr-namespace:MvvmCore.Behaviors"
+             xmlns:views="clr-namespace:MyStyleApp.Views"
+             Padding="{StaticResource PagePadding}"
+             Title="{Binding LocalizedStrings[my_establishments]}">
+  <Grid>
+    <StackLayout Padding="{StaticResource PageContentPadding}">
+      <Label
+            Text="{Binding LocalizedStrings[my_establishments]}"
+            Style="{StaticResource LargeTextStyle}"
+            HorizontalOptions="Center"
+            IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
+      
+      <!-- Without HasUnevenRows="True", list items does not render well in Android -->
+      <ListView x:Name="EstablishmentsList"
+        ItemsSource="{Binding EstablishmentsList}"
+        HasUnevenRows="True"
+        gestures:ListViewItemTapped.Command="{Binding ViewDetailsCommand}">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell x:Name="Establishment">
+              <StackLayout Padding="{StaticResource ListViewItemPadding}">
+                <Grid>
+                  <StackLayout Padding="5,5,5,5">
+                    <StackLayout>
+                      <Label Style="{StaticResource LargeTextStyle}" FontAttributes="Bold"
+                        Text="{Binding Name}" SizeChanged="OnLabelSizeChanged"/>
+                    </StackLayout>
+                    
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*" />
+                        <ColumnDefinition Width="93*" />
+                      </Grid.ColumnDefinitions>
+                      <RelativeLayout Grid.Column="0" VerticalOptions="Start" >
+                        <Image Aspect="AspectFit" Source="Marker.png"
+                          RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                      </RelativeLayout>
+                      <StackLayout Grid.Column="1">
+                        <Label Style="{StaticResource MediumTextStyle}"
+                          Text="{Binding Address}" SizeChanged="OnLabelSizeChanged"/>
+                      </StackLayout>
+                    </Grid>
+                  </StackLayout>
+                    
+                </Grid>
+               
+                <BoxView HeightRequest="1" BackgroundColor="Gray"
+                  IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}" />
+              </StackLayout>
+                
+              <ViewCell.ContextActions> 
+                <MenuItem Text="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.LocalizedStrings[view_details]}"
+                  Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.ViewDetailsCommand}"
+                  CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
+              </ViewCell.ContextActions>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackLayout>
+    <controls:WaitingOverlayControl
+      IsVisible="{Binding IsBusy}"
+      Text="{Binding LocalizedStrings[waiting]}"/>
+  </Grid>
+</views:CustomContentPage>

@@ -71,6 +71,7 @@
     <Compile Include="Models\ServiceNameAndPrice.cs" />
     <Compile Include="Models\ShortenService.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserPlatform.cs" />
     <Compile Include="MvvmCore\Behaviors\BindableBehavior.cs" />
     <Compile Include="MvvmCore\Behaviors\EventToCommandBehavior.cs" />
     <Compile Include="MvvmCore\IUserNotificator.cs" />
@@ -111,6 +112,7 @@
       <DependentUpon>NonLocalizedStrings.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\Backend\IUsersService.cs" />
+    <Compile Include="Services\IPushNotificationsService.cs" />
     <Compile Include="Services\LocalizedStringsService.cs" />
     <Compile Include="MvvmCore\Controls\NavigationPage.cs" />
     <Compile Include="MvvmCore\CoreAutofacBootstrapper.cs" />
@@ -134,6 +136,7 @@
     <Compile Include="Validators\RegexValidator.cs" />
     <Compile Include="Validators\RequiredValidator.cs" />
     <Compile Include="Validators\SimpleValidator.cs" />
+    <Compile Include="ViewModels\EstablishmentAppointmentsViewModel.cs" />
     <Compile Include="ViewModels\CreateAccountViewModel.cs" />
     <Compile Include="ViewModels\AccountDetailsViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModelBase.cs" />
@@ -143,13 +146,17 @@
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\ErrorViewModel.cs" />
     <Compile Include="ViewModels\EstablishmentDetailsViewModel.cs" />
+    <Compile Include="ViewModels\MyEstablishmentsViewModel.cs" />
     <Compile Include="ViewModels\EstablishmentsViewModel.cs" />
     <Compile Include="ViewModels\FavouritesViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="ViewModels\StartViewModel.cs" />
-    <Compile Include="ViewModels\NavigagleViewModelBase.cs" />
+    <Compile Include="ViewModels\NavigableViewModelBase.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\EstablishmentAppointmentsView.xaml.cs">
+      <DependentUpon>EstablishmentAppointmentsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\BindablePicker.cs" />
     <Compile Include="Views\CreateAccountView.cs" />
     <Compile Include="Views\AccountDetailsView.cs" />
@@ -175,6 +182,9 @@
     </Compile>
     <Compile Include="Views\EstablishmentDetailsView.xaml.cs">
       <DependentUpon>EstablishmentDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyEstablishmentsView.xaml.cs">
+      <DependentUpon>MyEstablishmentsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EstablishmentsView.xaml.cs">
       <DependentUpon>EstablishmentsView.xaml</DependentUpon>
@@ -327,7 +337,18 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MyEstablishmentsView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EstablishmentAppointmentsView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.2.0.31\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.2.0.31\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

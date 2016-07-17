@@ -363,4 +363,16 @@
   <data name="no" xml:space="preserve">
     <value>No</value>
   </data>
+  <data name="my_establishments" xml:space="preserve">
+    <value>My establishments</value>
+  </data>
+  <data name="choose_date" xml:space="preserve">
+    <value>Choose the date</value>
+  </data>
+  <data name="choose_hour" xml:space="preserve">
+    <value>Choose the hour</value>
+  </data>
+  <data name="establishment" xml:space="preserve">
+    <value>Establishment</value>
+  </data>
 </root>

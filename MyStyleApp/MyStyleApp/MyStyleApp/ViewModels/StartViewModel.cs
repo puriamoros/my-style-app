@@ -103,6 +103,16 @@ namespace MyStyleApp.ViewModels
                         {
                             mainVM.Initialize();
                         });
+
+                        //await this.SetMainPageAsync<EstablishmentAppointmentsViewModel>((EstablishmentAppointmentsVM) =>
+                        //{
+                        //    EstablishmentAppointmentsVM.InitializeAsync();
+                        //});
+
+                        //await this.SetMainPageAsync<MyEstablishmentsViewModel>((MyEstablishmentsVM) =>
+                        //{
+                        //    MyEstablishmentsVM.InitializeAsync();
+                        //});
                     }
                     catch (Exception)
                     {

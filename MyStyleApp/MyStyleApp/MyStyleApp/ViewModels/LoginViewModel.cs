@@ -46,6 +46,10 @@ namespace MyStyleApp.ViewModels
             this.LoginCommand = new Command(this.LoginAsync);
             this.NewAccountCommand = new Command(this.NewAccountAsync);
 
+            // We will always remember the user, but we leave the code as it is to
+            // make things easier if we had to go back
+            this._rememberMe = true;
+
             // REMOVE!!!
             FillWithMockData();
         }

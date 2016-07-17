@@ -69,7 +69,9 @@ class Tables
 				'password',
 				'apiKey',
 				'userType',
-				'phone'
+				'phone',
+				'platform',
+				'pushToken'
 			)
 		);
 		

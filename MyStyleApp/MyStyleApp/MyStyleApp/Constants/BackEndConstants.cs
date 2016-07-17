@@ -12,6 +12,7 @@
         public const string USERS_URL = "users";
         public const string USER_URL = "users/{0}";
         public const string PASSWORD_URL = "users/{0}/password";
+        public const string PLATFORM_URL = "users/{0}/platform";
         public const string ME_URL = "users/me";
         public const string SERVICE_CATEGORIES_URL = "servicecategories?lang={0}";
         public const string SERVICES_URL = "services?lang={0}";
@@ -24,5 +25,7 @@
         public const string GET_ESTABLISHMENT_APPOINTMENTS_URL = "appointments?idEstablishment={0}&from={1}&to={2}";
         public const string APPOINTMENTS_URL = "appointments";
         public const string APPOINTMENT_STATUS_URL = "appointments/{0}/status";
+        public const string GET_MY_ESTABLISHMENTS_URL = "establishments?idOwner={0}";
+
     }
 }

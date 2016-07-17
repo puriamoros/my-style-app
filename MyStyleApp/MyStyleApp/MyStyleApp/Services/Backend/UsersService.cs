@@ -6,14 +6,35 @@ using System.Threading.Tasks;
 using MyStyleApp.Models;
 using System.Net.Http;
 using MyStyleApp.Constants;
+using Xamarin.Forms;
 
 namespace MyStyleApp.Services.Backend
 {
     public class UsersService : BackendServiceBase, IUsersService
     {
-        public UsersService(HttpService httpService) :
+        private IPushNotificationsService _pushNotificationsService;
+
+        public UsersService(HttpService httpService, IPushNotificationsService pushNotificationsService) :
             base(httpService)
         {
+            this._pushNotificationsService = pushNotificationsService;
+            MessagingCenter.Subscribe<string>(this, "pushNotificationTokenReceived", this.OnPushNotificationTokenReceived);
+        }
+
+        private async void OnPushNotificationTokenReceived(string token)
+        {
+            System.Diagnostics.Debug.WriteLine("Push notifications token received: " + token);
+            if(this.LoggedUser != null)
+            {
+                try
+                {
+                    await this.UpdatePlatformAsync(this.LoggedUser.Id, Device.OS.ToString(), token);
+                }
+                catch (Exception)
+                {
+                    System.Diagnostics.Debug.WriteLine("Error while updating platform");
+                }
+            }
         }
 
         public User LoggedUser { get; private set; }
@@ -48,6 +69,8 @@ namespace MyStyleApp.Services.Backend
                 BackendConstants.ME_URL,
                 apiKey,
                 null);
+
+            this._pushNotificationsService.RegisterDevice();
 
             return LoggedUser;
         }
@@ -86,6 +109,21 @@ namespace MyStyleApp.Services.Backend
                 BackendConstants.PASSWORD_URL,
                 authorization,
                 userPassword,
+                new object[] { id });
+        }
+
+        public async Task UpdatePlatformAsync(int id, string platform, string pushToken)
+        {
+            UserPlatform userPlatform = new UserPlatform();
+            userPlatform.Platform = platform;
+            userPlatform.PushToken = pushToken;
+
+            string authorization = await this.HttpService.GetApiKeyAuthorizationAsync();
+            await this.HttpService.InvokeWithContentAsync<UserPlatform>(
+                HttpMethod.Put,
+                BackendConstants.PLATFORM_URL,
+                authorization,
+                userPlatform,
                 new object[] { id });
         }
     }

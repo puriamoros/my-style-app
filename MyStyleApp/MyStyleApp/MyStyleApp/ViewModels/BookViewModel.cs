@@ -181,7 +181,10 @@ namespace MyStyleApp.ViewModels
 
             if(appointmentList == null)
             {
-                this.SlotList.Clear();
+                if(this.SlotList != null)
+                {
+                    this.SlotList.Clear();
+                }
                 return;
             }
 

@@ -47,11 +47,9 @@ namespace MyStyleApp.ViewModels
                     this.InitializeAsync();
                 }
             });
-
-            this.InitializeAsync();
         }
 
-        private async void InitializeAsync()
+        public async void InitializeAsync()
         {
             await this.ExecuteBlockingUIAsync(
                 async () =>

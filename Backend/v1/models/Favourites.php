@@ -6,6 +6,7 @@ require_once(__DIR__.'/../data/StatusCodes.php');
 require_once(__DIR__.'/../utilities/Authorization.php');
 require_once(__DIR__.'/../utilities/Tables.php');
 require_once(__DIR__.'/ModelWithIdBase.php');
+require_once(__DIR__.'/Condition.php');
 
 class Favourites extends ModelWithIdBase
 {
@@ -79,7 +80,7 @@ class Favourites extends ModelWithIdBase
 		$result = DBCommands::dbGetJoin(
 			[$this->favourites->table, $this->establishments->table],
 			[
-				[$this->favourites->table . "." . $this->favourites->idEstablishment, $this->establishments->table . "." . $this->establishments->id]
+				[new Condition($this->favourites->table . "." . $this->favourites->idEstablishment, '=', $this->establishments->table . "." . $this->establishments->id, false)]
 			],
 			['INNER'],
 			$mixedFields, [$this->favourites->idClient], $queryParams);

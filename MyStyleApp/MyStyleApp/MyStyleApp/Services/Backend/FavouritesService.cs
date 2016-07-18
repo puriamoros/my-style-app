@@ -10,6 +10,7 @@ namespace MyStyleApp.Services.Backend
 {
     public class FavouritesService : BackendServiceBase, IFavouritesService
     {
+        private int _lastUserId;
         private IList<Establishment> _list;
         private IUsersService _userService;
         private ProvincesService _provincesService;
@@ -26,7 +27,7 @@ namespace MyStyleApp.Services.Backend
 
         public async Task<IList<Establishment>> GetFavouritesAsync()
         {
-            if(this._list == null)
+            if(this._list == null || this._lastUserId != this._userService.LoggedUser.Id)
             {
                 string credentials = await this.HttpService.GetApiKeyAuthorizationAsync();
 
@@ -35,6 +36,8 @@ namespace MyStyleApp.Services.Backend
                     BackendConstants.GET_FAVOURITES_URL,
                     credentials,
                     new object[] { this._userService.LoggedUser.Id });
+
+                this._lastUserId = this._userService.LoggedUser.Id;
             }
 
             for (int i = 0; i < _list.Count; i++)

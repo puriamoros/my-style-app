@@ -102,12 +102,12 @@ class Appointments extends ModelWithIdBase
 		$result = DBCommands::dbGetJoin(
 			[$this->users->table, $this->appointments->table, $this->establishments->table, $this->offer->table, $this->services->table],
 			[
-				[$this->users->table . '.' . $this->users->id, $this->appointments->table . '.' . $this->appointments->idClient],
-				[$this->appointments->table . '.' . $this->appointments->idEstablishment, $this->establishments->table . '.' . $this->establishments->id],
-				[$this->establishments->table . '.' . $this->establishments->id, $this->offer->table . '.' . $this->offer->idEstablishment],
-				[$this->offer->table . '.' . $this->offer->idService, $this->services->table . '.' . $this->services->id]
+				[new Condition($this->users->table . '.' . $this->users->id, '=',  $this->appointments->table . '.' . $this->appointments->idClient, false)],
+				[new Condition($this->appointments->table . '.' . $this->appointments->idEstablishment, '=', $this->establishments->table . '.' . $this->establishments->id, false)],
+				[new Condition($this->establishments->table . '.' . $this->establishments->id, '=', $this->offer->table . '.' . $this->offer->idEstablishment, false)],
+				[new Condition($this->offer->table . '.' . $this->offer->idService, '=', $this->services->table . '.' . $this->services->id, false)]
 			],
-			['INNER', 'INNER', 'INNER'],
+			['INNER', 'INNER', 'INNER', 'INNER'],
 			$mixedFields, $mixedFields, $queryParams, $additionalConditions);
 		
 		for ($i = 0; $i < count($result); $i++) {
@@ -152,8 +152,8 @@ class Appointments extends ModelWithIdBase
 	
 	protected function dbUpdate($id, $data)
 	{
-		/*$this->checkCanUpdate($id, $data);
-		$result = DBCommands::dbUpdate($this->appointments->table, [$this->appointments->status], $this->idField, $id, $data);*/
+		$this->checkCanUpdate($id, $data);
+		$result = DBCommands::dbUpdate($this->appointments->table, [$this->appointments->status], $this->idField, $id, $data);
 		
 		$appointment = $this->getElement($id);
 		$status = $data[$this->appointments->status];
@@ -298,7 +298,7 @@ class Appointments extends ModelWithIdBase
 		$appointments = DBCommands::dbGetJoin(
 			[$this->appointments->table, $this->services->table],
 			[
-				[$this->appointments->table . '.' . $this->appointments->idService, $this->services->table . '.' . $this->services->id]
+				[new Condition($this->appointments->table . '.' . $this->appointments->idService, '=', $this->services->table . '.' . $this->services->id, false)]
 			],
 			['INNER'],
 			$fields, $this->appointments->fields, $queryParams, $additionalConditions);

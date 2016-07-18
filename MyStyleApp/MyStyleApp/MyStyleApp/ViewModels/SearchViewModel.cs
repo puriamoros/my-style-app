@@ -55,15 +55,18 @@ namespace MyStyleApp.ViewModels
             this.ProvinceList = new ObservableCollection<Province>(this._provincesService.GetProvinces());
             this.EstablishmentTypeList = new ObservableCollection<EstablishmentType>(
                 this._establishmentTypesService.GetEstablishmentTypes());
-
-            this.InitializeAsync();
         }
 
-        private async void InitializeAsync()
+        public async void InitializeAsync()
         {
+            this.SelectedProvince = null;
+            this.SelectedEstablishmentType = null;
+            this.SelectedServiceCategory = null;
+            this.SelectedService = null;
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
+                    await this.PopNavPageToRootAsync();
                     await this._serviceCategoriesService.GetServiceCategoriesAsync();
                     await this._servicesService.GetServicesAsync();
                 });
@@ -122,7 +125,7 @@ namespace MyStyleApp.ViewModels
                             this.ServiceCategoryList = new ObservableCollection<ServiceCategory>(all);
                         }
                     }
-                    else
+                    else if(this.ServiceCategoryList != null)
                     {
                         this.ServiceCategoryList.Clear();
                     }
@@ -160,7 +163,7 @@ namespace MyStyleApp.ViewModels
 
                         this.ServiceList = new ObservableCollection<Service>(selected);
                     }
-                    else
+                    else if(this.ServiceList != null)
                     {
                         this.ServiceList.Clear();
                     }

@@ -32,7 +32,7 @@ namespace MyStyleApp.Services.Backend
                    HttpMethod.Get,
                    BackendConstants.GET_ESTABLISHMENTS_URL,
                    credentials,
-                   new object[] { province.Id, service.Id });
+                   new object[] { province.Id, service.Id, this._userService.LoggedUser.Id });
 
             for(int i=0; i<list.Count; i++)
             {

@@ -1,6 +1,7 @@
 <?php
 
 require_once(__DIR__.'/../utilities/DBCommands.php');
+require_once(__DIR__.'/Condition.php');
 
 class Translations
 {
@@ -53,7 +54,7 @@ class Translations
 		$result = DBCommands::dbGetJoin(
 			[$table, $this->translations->table],
 			[
-				[$table . '.' . $idTranslation,  $this->translations->table. '.' . $this->translations->id]
+				[new Condition($table . '.' . $idTranslation, '=',  $this->translations->table. '.' . $this->translations->id, false)]
 			],
 			['INNER'],
 			$mixedFields, $mixedFields, $queryParams);

@@ -218,7 +218,7 @@ namespace MyStyleApp.ViewModels
 
                 this.ServiceList = new ObservableCollection<ServiceNameAndPrice>(selected);
             }
-            else
+            else if (this.ServiceList != null)
             {
                 this.ServiceList.Clear();
             }

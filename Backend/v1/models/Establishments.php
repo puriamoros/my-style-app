@@ -6,6 +6,7 @@ require_once(__DIR__.'/../data/StatusCodes.php');
 require_once(__DIR__.'/../utilities/Authorization.php');
 require_once(__DIR__.'/../utilities/Tables.php');
 require_once(__DIR__.'/ModelWithIdBase.php');
+require_once(__DIR__.'/Condition.php');
 
 class Establishments extends ModelWithIdBase
 {
@@ -55,9 +56,9 @@ class Establishments extends ModelWithIdBase
 	
 	protected function dbGet($queryParams)
 	{
-		if(isset($queryParams[$this->offer->idService])) {
+		if(isset($queryParams[$this->offer->idService]) && isset($queryParams[$this->favourites->idClient])) {
 			// Request is looking for establishments offering a specific service => join with table offer
-			// We also need to know if the establishment is a favourite => join with table favourites
+			// We also need to know if the establishment is a favourite of the user requesting the info => join with table favourites
 			
 			// both tables favourites and establishments have a field called "id", so we need to rename them
 			$establismentsIdFieldRenamed = $this->establishments->table . '.' . $this->establishments->id;
@@ -72,8 +73,9 @@ class Establishments extends ModelWithIdBase
 			$result = DBCommands::dbGetJoin(
 				[$this->establishments->table, $this->offer->table, $this->favourites->table],
 				[
-					[$this->establishments->table . '.' . $this->establishments->id, $this->offer->table . '.' . $this->offer->idEstablishment],
-					[$this->offer->table . '.' . $this->offer->idEstablishment, $this->favourites->table . '.' . $this->favourites->idEstablishment]
+					[new Condition($this->establishments->table . '.' . $this->establishments->id, '=', $this->offer->table . '.' . $this->offer->idEstablishment, false)],
+					[new Condition($this->offer->table . '.' . $this->offer->idEstablishment, '=', $this->favourites->table . '.' . $this->favourites->idEstablishment, false),
+					new Condition($this->favourites->table . '.' . $this->favourites->idClient, '=', $queryParams[$this->favourites->idClient], true)]
 				],
 				['INNER', 'LEFT'],
 				$mixedFields, $searchFields, $queryParams);
@@ -136,7 +138,7 @@ class Establishments extends ModelWithIdBase
 		$result = DBCommands::dbGetOneJoin(
 			[$this->establishments->table, $this->favourites->table],
 			[
-				[$this->establishments->table . '.' . $this->establishments->id, $this->favourites->table . '.' . $this->favourites->idEstablishment]
+				[new Condition($this->establishments->table . '.' . $this->establishments->id, '=', $this->favourites->table . '.' . $this->favourites->idEstablishment, false)]
 			],
 			['LEFT'],
 			$mixedFields, $establismentsIdFieldRenamed, $id);

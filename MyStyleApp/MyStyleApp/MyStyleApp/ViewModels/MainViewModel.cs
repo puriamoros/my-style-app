@@ -38,7 +38,11 @@ namespace MyStyleApp.ViewModels
 
         public void Initialize()
         {
+            this._appointmentsViewModel.InitializeAsync();
+            this._favouritesViewModel.InitializeAsync();
+            this._searchViewModel.InitializeAsync();
             this._accountDetailsViewModel.Initialize(this._userService.LoggedUser);
+
             this.SetMainPageTabAsync<AppointmentsViewModel>();
         }
 

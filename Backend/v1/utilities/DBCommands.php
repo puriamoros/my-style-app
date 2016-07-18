@@ -3,6 +3,7 @@
 require_once(__DIR__.'/../data/DBConnection.php');
 require_once(__DIR__.'/../utilities/ApiException.php');
 require_once(__DIR__.'/../data/StatusCodes.php');
+require_once(__DIR__.'/../models/Condition.php');
 
 class DBCommands
 {
@@ -83,7 +84,7 @@ class DBCommands
 		}
 	}
 	
-	public static function dbGetJoin($joinTables, $joinFields, $joinTypes, $fields, $searchFields, $queryParams, $additionalConditions, $groupedBy)
+	public static function dbGetJoin($joinTables, $joinConditions, $joinTypes, $fields, $searchFields, $queryParams, $additionalConditions, $groupedBy)
 	{
 		try {
 			$pdo = DBConnection::getInstance()->getDB();
@@ -92,9 +93,11 @@ class DBCommands
 			for ($i = 0; $i < count($joinTables)-1; $i++) {
 				$command .= ($i == 0) ? $joinTables[$i] . " " : " ";
 				$command .= $joinTypes[$i] . " JOIN " . $joinTables[$i+1];
-				for ($j = 0; $j < count($joinFields[$i])-1; $j+=2) {
-					$command .= ($j == 0) ? " ON " : " AND ";
-					$command .= $joinFields[$i][$j] . "=" . $joinFields[$i][$j+1];
+				$on = false;
+				foreach($joinConditions[$i] as $condition) {
+					$command .= $on ? " AND " : " ON ";
+					$command .= $condition->field . $condition->operator . (($condition->doBindParam) ? "?" : $condition->value);
+					$on = true;
 				}
 			}
 			$where = false;
@@ -121,11 +124,19 @@ class DBCommands
 				}
 			}
 			
-			//throw new ApiException(STATE_DB_ERROR, [$joinFields, $command]);
+			//throw new ApiException(STATE_DB_ERROR, $command);
 			
 			$query = $pdo->prepare($command);
 			
 			$count = 1;
+			foreach($joinConditions as $joinCondition) {
+				foreach($joinCondition as $condition) {
+					if($condition->doBindParam) {
+						$query->bindParam($count, $condition->value);
+						$count++;
+					}
+				}
+			}
 			foreach($searchFields as $field) {
 				if(isset($queryParams[$field])) {
 					$query->bindParam($count, $queryParams[$field]);
@@ -217,7 +228,7 @@ class DBCommands
 		return self::dbGetOneMultiIdJoin($joinTables, $joinFields, $joinTypes, $fields, $idMap);
 	}
 	
-	public static function dbGetOneMultiIdJoin($joinTables, $joinFields, $joinTypes, $fields, $idMap)
+	public static function dbGetOneMultiIdJoin($joinTables, $joinConditions, $joinTypes, $fields, $idMap)
 	{
 		if(count($idMap) <= 0) {
 			throw new ApiException(STATE_DB_ERROR, "DB error");
@@ -230,9 +241,11 @@ class DBCommands
 			for ($i = 0; $i < count($joinTables)-1; $i++) {
 				$command .= ($i == 0) ? $joinTables[$i] . " " : " ";
 				$command .= $joinTypes[$i] . " JOIN " . $joinTables[$i+1];
-				for ($j = 0; $j < count($joinFields[$i])-1; $j+=2) {
-					$command .= ($j == 0) ? " ON " : " AND ";
-					$command .= $joinFields[$i][$j] . "=" . $joinFields[$i][$j+1];
+				$on = false;
+				foreach($joinConditions[$i] as $condition) {
+					$command .= $on ? " AND " : " ON ";
+					$command .= $condition->field . $condition->operator . (($condition->doBindParam) ? "?" : $condition->value);
+					$on = true;
 				}
 			}
 			$where = false;
@@ -247,6 +260,14 @@ class DBCommands
 			$query = $pdo->prepare($command);
 
 			$count = 1;
+			foreach($joinConditions as $joinCondition) {
+				foreach($joinCondition as $condition) {
+					if($condition->doBindParam) {
+						$query->bindParam($count, $condition->value);
+						$count++;
+					}
+				}
+			}
 			foreach($idMap as $key => $value) {
 			// Do not bind $value since binding is done when executing and $value changes inside the loop
 				$query->bindParam($count, $idMap[$key]);

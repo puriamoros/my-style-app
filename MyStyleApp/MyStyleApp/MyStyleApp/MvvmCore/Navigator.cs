@@ -102,17 +102,24 @@ namespace MvvmCore
             where TViewModel : class, IViewModel
         {
             var tcs = new TaskCompletionSource<TViewModel>();
-            _deviceService.BeginInvokeOnMainThread(() =>
+            if(navigation == null)
             {
-                TViewModel viewModel;
-                var view = _viewFactory.Resolve<TViewModel>(out viewModel, setStateAction);
-                bool found = false;
-                for (int i = navigation.NavigationStack.Count - 1; i >= 0 && !found; i++)
+                tcs.SetResult(null);
+            }
+            else
+            {
+                _deviceService.BeginInvokeOnMainThread(() =>
                 {
-                    found = this.SetTab(navigation.NavigationStack[i], view);
-                }
-                tcs.SetResult(viewModel);
-            });
+                    TViewModel viewModel;
+                    var view = _viewFactory.Resolve<TViewModel>(out viewModel, setStateAction);
+                    bool found = false;
+                    for (int i = navigation.NavigationStack.Count - 1; i >= 0 && !found; i++)
+                    {
+                        found = this.SetTab(navigation.NavigationStack[i], view);
+                    }
+                    tcs.SetResult(viewModel);
+                });
+            }
             return tcs.Task;
         }
 
@@ -120,16 +127,23 @@ namespace MvvmCore
             where TViewModel : class, IViewModel
         {
             var tcs = new TaskCompletionSource<TViewModel>();
-            _deviceService.BeginInvokeOnMainThread(() =>
+            if (navigation == null)
             {
-                var view = _viewFactory.Resolve(viewModel);
-                bool found = false;
-                for(int i= navigation.NavigationStack.Count -1; i >= 0 && !found; i++)
+                tcs.SetResult(null);
+            }
+            else
+            {
+                _deviceService.BeginInvokeOnMainThread(() =>
                 {
-                    found = this.SetTab(navigation.NavigationStack[i], view);
-                }
-                tcs.SetResult(viewModel);
-            });
+                    var view = _viewFactory.Resolve(viewModel);
+                    bool found = false;
+                    for (int i = navigation.NavigationStack.Count - 1; i >= 0 && !found; i++)
+                    {
+                        found = this.SetTab(navigation.NavigationStack[i], view);
+                    }
+                    tcs.SetResult(viewModel);
+                });
+            }
             return tcs.Task;
         }
 
@@ -184,49 +198,70 @@ namespace MvvmCore
         public Task<IViewModel> PopNavPageAsync(INavigation navigation)
 		{
 			var tcs = new TaskCompletionSource<IViewModel>();
-			_deviceService.BeginInvokeOnMainThread(async () =>
-			{
-				Page view = await navigation.PopAsync();
-                tcs.SetResult(view.BindingContext as IViewModel);
+            if (navigation == null)
+            {
+                tcs.SetResult(null);
+            }
+            else
+            {
+                _deviceService.BeginInvokeOnMainThread(async () =>
+                {
+                    Page view = await navigation.PopAsync();
+                    tcs.SetResult(view.BindingContext as IViewModel);
 
-			});
+                });
+            }
             return tcs.Task;
 		}
 
 		public Task<IViewModel> PopNavPageModalAsync(INavigation navigation)
 		{
 			var tcs = new TaskCompletionSource<IViewModel>();
-			_deviceService.BeginInvokeOnMainThread(async () =>
-			{
-				Page view = await navigation.PopModalAsync();
-				tcs.SetResult(view.BindingContext as IViewModel);
-			});
+            if (navigation == null)
+            {
+                tcs.SetResult(null);
+            }
+            else
+            {
+                _deviceService.BeginInvokeOnMainThread(async () =>
+                {
+                    Page view = await navigation.PopModalAsync();
+                    tcs.SetResult(view.BindingContext as IViewModel);
+                });
+            }
             return tcs.Task;
 		}
 
 		public Task PopNavPageToRootAsync(INavigation navigation)
 		{
 			var tcs = new TaskCompletionSource<object>();
-			_deviceService.BeginInvokeOnMainThread(async () =>
-			{
-                // WinPhone hack: navigation PopToRootAsync is not working as
-                // spected on WinPhone, so I have to use a workaround
-                if (_deviceService.OS == TargetPlatform.Windows ||
-                    _deviceService.OS == TargetPlatform.WinPhone)
+            if (navigation == null)
+            {
+                tcs.SetResult(null);
+            }
+            else
+            {
+                _deviceService.BeginInvokeOnMainThread(async () =>
                 {
-                    INavigation rootNavigation = navigation.NavigationStack[0].Navigation;
-                    while (rootNavigation.NavigationStack.Count > 1)
+                    // WinPhone hack: navigation PopToRootAsync is not working as
+                    // spected on WinPhone, so I have to use a workaround
+                    if (_deviceService.OS == TargetPlatform.Windows ||
+                        _deviceService.OS == TargetPlatform.WinPhone)
                     {
-                        await rootNavigation.PopAsync();
+                        INavigation rootNavigation = navigation.NavigationStack[0].Navigation;
+                        while (rootNavigation.NavigationStack.Count > 1)
+                        {
+                            await rootNavigation.PopAsync();
+                        }
                     }
-                }
-                else
-                {
-                    await navigation.PopToRootAsync();
-                }
-                
-				tcs.SetResult(null);
-			});
+                    else
+                    {
+                        await navigation.PopToRootAsync();
+                    }
+
+                    tcs.SetResult(null);
+                });
+            }
 			return tcs.Task;
 		}
 
@@ -328,13 +363,20 @@ namespace MvvmCore
             where TViewModel : class, IViewModel
         {
             var tcs = new TaskCompletionSource<object>();
-            _deviceService.BeginInvokeOnMainThread(() =>
+            if (navigation == null)
             {
-                TViewModel viewModel;
-                var view = _viewFactory.Resolve<TViewModel>(out viewModel);
-                navigation.RemovePage(view);
                 tcs.SetResult(null);
-            });
+            }
+            else
+            {
+                _deviceService.BeginInvokeOnMainThread(() =>
+                {
+                    TViewModel viewModel;
+                    var view = _viewFactory.Resolve<TViewModel>(out viewModel);
+                    navigation.RemovePage(view);
+                    tcs.SetResult(null);
+                });
+            }
             return tcs.Task;
         }
     }

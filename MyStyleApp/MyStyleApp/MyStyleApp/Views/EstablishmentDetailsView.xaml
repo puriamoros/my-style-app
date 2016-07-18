@@ -47,7 +47,7 @@
               <ColumnDefinition Width="93*" />
             </Grid.ColumnDefinitions>
             <RelativeLayout Grid.Column="0" VerticalOptions="Center" >
-              <Image Aspect="AspectFit" Source="CellPhone.png"
+              <Image Aspect="AspectFit" Source="Phone.png"
                 RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>  
             </RelativeLayout>
             <StackLayout Grid.Column="1">

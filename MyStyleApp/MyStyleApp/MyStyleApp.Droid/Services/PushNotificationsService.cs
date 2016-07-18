@@ -14,6 +14,12 @@ namespace MyStyleApp.Droid.Services
                 var intent = new Intent(Android.App.Application.Context, typeof(RegistrationIntentService));
                 Android.App.Application.Context.StartService(intent);
             }
+            else
+            {
+                //If GooglePlay is not available we can not receive push notificacitions
+                string token = "";
+                Xamarin.Forms.MessagingCenter.Send<string>(token, "pushNotificationTokenReceived");
+            }
         }
 
         private bool IsPlayServicesAvailable()

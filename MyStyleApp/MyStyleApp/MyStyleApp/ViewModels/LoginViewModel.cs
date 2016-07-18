@@ -56,8 +56,8 @@ namespace MyStyleApp.ViewModels
 
         private void FillWithMockData()
         {
-            this.Email = "helio.huete@gmail.com";
-            this.Password = "helio";
+            this.Email = "puri.amoros@gmail.com";
+            this.Password = "puri";
         }
 
         public string Email

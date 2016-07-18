@@ -34,6 +34,11 @@
                   iOS="10,5,0,5"
                   Android="0,5,0,5"
                   WinPhone="0,5,0,5" />
+      <OnPlatform x:Key="BottomContainerPadding"
+                  x:TypeArguments="Thickness"
+                  iOS="5,0,5,0"
+                  Android="5,0,5,0"
+                  WinPhone="5,0,5,32" />
 
       <!-- Colors -->
       <Color x:Key="ErrorColor">Red</Color>

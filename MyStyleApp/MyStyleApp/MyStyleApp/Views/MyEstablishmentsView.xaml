@@ -9,14 +9,20 @@
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[my_establishments]}">
   <Grid>
-    <StackLayout Padding="{StaticResource PageContentPadding}">
+      
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+        
+    <StackLayout Grid.Row="0" Padding="{StaticResource PageContentPadding}">
       <Label
             Text="{Binding LocalizedStrings[my_establishments]}"
             Style="{StaticResource LargeTextStyle}"
             HorizontalOptions="Center"
             IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
       
-      <!-- Without HasUnevenRows="True", list items does not render well in Android -->
+      <!--Without HasUnevenRows="True", list items does not render well in Android--> 
       <ListView x:Name="EstablishmentsList"
         ItemsSource="{Binding EstablishmentsList}"
         HasUnevenRows="True"
@@ -64,6 +70,15 @@
         </ListView.ItemTemplate>
       </ListView>
     </StackLayout>
+    
+    <StackLayout Grid.Row="1"
+        Padding="{StaticResource BottomContainerPadding}"
+        VerticalOptions="End">
+      <controls:CustomButton
+        Text="{Binding LocalizedStrings[new_establishment]}"
+        Command="{Binding NewEstablishmentCommand}"/>
+    </StackLayout>
+    
     <controls:WaitingOverlayControl
       IsVisible="{Binding IsBusy}"
       Text="{Binding LocalizedStrings[waiting]}"/>

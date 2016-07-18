@@ -375,4 +375,16 @@
   <data name="establishment" xml:space="preserve">
     <value>Establishment</value>
   </data>
+  <data name="appointment_confirm_body" xml:space="preserve">
+    <value>You are about to confirm an appointment. Do you want to continue with the confirmation?</value>
+  </data>
+  <data name="appointment_confirm_title" xml:space="preserve">
+    <value>Confirm appointment</value>
+  </data>
+  <data name="confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="new_establishment" xml:space="preserve">
+    <value>New establishment</value>
+  </data>
 </root>

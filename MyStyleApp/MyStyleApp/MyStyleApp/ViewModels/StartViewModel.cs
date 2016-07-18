@@ -99,20 +99,20 @@ namespace MyStyleApp.ViewModels
                         await this._usersService.MeAsync();
 
                         // There is a logged user, go to main view
-                        await this.SetMainPageAsync<MainViewModel>((mainVM) =>
-                        {
-                            mainVM.Initialize();
-                        });
+                        //await this.SetMainPageAsync<MainViewModel>((mainVM) =>
+                        //{
+                        //    mainVM.Initialize();
+                        //});
 
                         //await this.SetMainPageAsync<EstablishmentAppointmentsViewModel>((EstablishmentAppointmentsVM) =>
                         //{
                         //    EstablishmentAppointmentsVM.InitializeAsync();
                         //});
 
-                        //await this.SetMainPageAsync<MyEstablishmentsViewModel>((MyEstablishmentsVM) =>
-                        //{
-                        //    MyEstablishmentsVM.InitializeAsync();
-                        //});
+                        await this.SetMainPageAsync<MyEstablishmentsViewModel>((MyEstablishmentsVM) =>
+                        {
+                            MyEstablishmentsVM.InitializeAsync();
+                        });
                     }
                     catch (Exception)
                     {

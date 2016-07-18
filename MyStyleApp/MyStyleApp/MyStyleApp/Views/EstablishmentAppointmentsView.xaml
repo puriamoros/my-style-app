@@ -145,6 +145,9 @@
                 <MenuItem Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[cancel]}"
                   Command="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.CancelCommand}"
                   CommandParameter="{Binding Source={x:Reference Appointment}, Path=BindingContext}" />
+                <MenuItem Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[confirm]}"
+                  Command="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.ConfirmCommand}"
+                  CommandParameter="{Binding Source={x:Reference Appointment}, Path=BindingContext}" />
               </ViewCell.ContextActions>
             
             </ViewCell>

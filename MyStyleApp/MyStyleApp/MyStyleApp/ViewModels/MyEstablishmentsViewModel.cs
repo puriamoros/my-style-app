@@ -20,6 +20,7 @@ namespace MyStyleApp.ViewModels
         private IEstablishmentsService _establishmentsService;       
         
         public ICommand ViewDetailsCommand { get; private set; }
+        public ICommand NewEstablishmentCommand { get; private set; }
 
         public MyEstablishmentsViewModel(
             INavigator navigator, 
@@ -29,7 +30,8 @@ namespace MyStyleApp.ViewModels
             base(navigator, userNotificator, localizedStringsService)
         {
             //this.ViewDetailsCommand = new Command<Establishment>(this.ViewDetailsAsync);
-           
+            //this.NewEstablishmentCommand = new Command<Establishment>(this.NewEstablishmentAsync);
+
             this._establishmentsService = establishmentsService;
 
             this.InitializeAsync();
@@ -65,6 +67,11 @@ namespace MyStyleApp.ViewModels
             //        //}
             //        //);
             //    });
+        }
+
+        private async void NewEstablishmentAsync()
+        {
+
         }
 
     }

@@ -25,13 +25,13 @@ namespace MyStyleApp.ViewModels
         private IAppointmentsService _appointmentsService;
         private IEstablishmentsService _establishmentsService;
 
-        private List<OpeningHour> _openingHours;
         private ObservableCollection<Appointment> _appointmentList;
         private ObservableCollection<Establishment> _establishmentList;
         private Establishment _selectedEstablishment;
 
         public Command CancelCommand { get; private set; }
-       
+        public Command ConfirmCommand { get; private set; }
+
         public EstablishmentAppointmentsViewModel(
             INavigator navigator,
             IUserNotificator userNotificator,
@@ -47,11 +47,21 @@ namespace MyStyleApp.ViewModels
             this._appointmentsService = appointmentsService;
             this._establishmentsService = establishmentsService;
 
-            this.CancelCommand = new Command<Appointment>(this.CancelAsync, this.CanCancel);        
+            this.CancelCommand = new Command<Appointment>(this.CancelAsync, this.CanCancel);
+            this.ConfirmCommand = new Command<Appointment>(this.ConfirmAsync, this.CanConfirm);
 
             MessagingCenter.Subscribe<Appointment>(this, "appointmentCreated", this.OnAppointmentCreated);
+            MessagingCenter.Subscribe<string>(this, "pushNotificationReceived", this.OnPushNotificacionReceived);
 
             this.InitializeAsync();
+        }
+
+        private void OnPushNotificacionReceived(string context)
+        {
+            if (context == "appointmentCancelled" || context == "appointmentPending")
+            {
+                this.InitializeAsync();
+            }
         }
 
         public async void InitializeAsync()
@@ -135,6 +145,12 @@ namespace MyStyleApp.ViewModels
                             }
                         }
 
+                        //Sort appointments by date
+                        appointments.Sort((appointment1, appointment2) =>
+                        {
+                            return appointment1.Date.CompareTo(appointment2.Date);
+                        });
+
                         this.AppointmentList = new ObservableCollection<Appointment>(appointments);
                     }
                     else
@@ -166,7 +182,8 @@ namespace MyStyleApp.ViewModels
                         await this._appointmentsService.UpdateAppointmentStatusAsync(appointment, AppointmentStatusEnum.Cancelled);
                         appointment.Status = AppointmentStatusEnum.Cancelled;
                         this.RefreshAppointmentsList();
-                        MessagingCenter.Send<Appointment>(appointment, "appointmentCancelled");
+                        this.CancelCommand.ChangeCanExecute();
+                        this.ConfirmCommand.ChangeCanExecute();
                     }
                     catch (BackendException ex)
                     {
@@ -192,6 +209,37 @@ namespace MyStyleApp.ViewModels
             if(appointment != null)
             {
                 return appointment.Status != AppointmentStatusEnum.Cancelled;
+            }
+            return false;
+        }
+
+        private async void ConfirmAsync(Appointment appointment)
+        {
+            bool doConfirm = await this.UserNotificator.DisplayAlert(
+                this.LocalizedStrings.GetString("appointment_confirm_title"),
+                this.LocalizedStrings.GetString("appointment_confirm_body"),
+                this.LocalizedStrings.GetString("yes"),
+                this.LocalizedStrings.GetString("no"));
+
+            if (doConfirm)
+            {
+                await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    await this._appointmentsService.UpdateAppointmentStatusAsync(appointment, AppointmentStatusEnum.Confirmed);
+                    appointment.Status = AppointmentStatusEnum.Confirmed;
+                    this.RefreshAppointmentsList();
+                    this.CancelCommand.ChangeCanExecute();
+                    this.ConfirmCommand.ChangeCanExecute();
+                });
+            }
+        }
+
+        private bool CanConfirm(Appointment appointment)
+        {
+            if (appointment != null)
+            {
+                return appointment.Status != AppointmentStatusEnum.Confirmed;
             }
             return false;
         }

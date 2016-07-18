@@ -107,6 +107,24 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are about to confirm an appointment. Do you want to continue with the confirmation?.
+        /// </summary>
+        internal static string appointment_confirm_body {
+            get {
+                return ResourceManager.GetString("appointment_confirm_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm appointment.
+        /// </summary>
+        internal static string appointment_confirm_title {
+            get {
+                return ResourceManager.GetString("appointment_confirm_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pending confirmation.
         /// </summary>
         internal static string appointment_status_0 {
@@ -247,6 +265,15 @@ namespace MyStyleApp.Localization {
         internal static string choose_hour {
             get {
                 return ResourceManager.GetString("choose_hour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        internal static string confirm {
+            get {
+                return ResourceManager.GetString("confirm", resourceCulture);
             }
         }
         
@@ -580,6 +607,15 @@ namespace MyStyleApp.Localization {
         internal static string name_placeholder {
             get {
                 return ResourceManager.GetString("name_placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New establishment.
+        /// </summary>
+        internal static string new_establishment {
+            get {
+                return ResourceManager.GetString("new_establishment", resourceCulture);
             }
         }
         

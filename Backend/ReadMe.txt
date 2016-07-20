@@ -19,7 +19,7 @@ To check if everything is ok:
 - You should see: It's running!!
 
 
-Common erros
+Common errors
 --------------
 
 If you get the following warning for every post or put: "Automatically populating $HTTP_RAW_POST_DATA is deprecated and will be removed in a future version"

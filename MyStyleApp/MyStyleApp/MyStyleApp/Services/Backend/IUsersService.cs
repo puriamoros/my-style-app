@@ -1,4 +1,5 @@
 ﻿using MyStyleApp.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MyStyleApp.Services.Backend
@@ -13,5 +14,6 @@ namespace MyStyleApp.Services.Backend
         Task UpdateUserAsync(int id, User user);
         Task UpdatePasswordAsync(int id, string oldPassword, string newPassword);
         Task UpdatePlatformAsync(int id, string platform, string pushToken);
+        Task<IList<User>> GetStaffAsync(Establishment establishment);
     }
 }

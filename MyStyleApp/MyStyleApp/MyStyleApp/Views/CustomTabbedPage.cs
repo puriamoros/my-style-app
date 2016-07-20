@@ -2,29 +2,11 @@
 
 namespace MyStyleApp.Views
 {
-    public partial class MainView : TabbedPage
+    public class CustomTabbedPage : TabbedPage
     {
         private const string CURRENT_TOKEN = "Filled";
-        //public MainView()
-        //{
-        //    InitializeComponent();
-        //}
 
-        public MainView(
-            AppointmentsView appointmentsView,
-            FavouritesView favouritesView,
-            SearchView searchView,
-            AccountDetailsView accountDetailsView)
-        {
-            InitializeComponent();
-
-            this.AddNavigationChild(appointmentsView, "LocalizedStrings[appointments]", "Calendar.png");
-            this.AddNavigationChild(favouritesView, "LocalizedStrings[favourites]", "Star.png");
-            this.AddNavigationChild(searchView, "LocalizedStrings[establishments]", "Barbershop.png");
-            this.AddNavigationChild(accountDetailsView, "LocalizedStrings[my_account]", "User.png");
-        }
-
-        private void AddNavigationChild(Page view, string titleBinding, string icon)
+        protected void AddNavigationChild(Page view, string titleBinding, string icon)
         {
             var nav = new CustomNavigationPage(view);
             nav.SetBinding(CustomNavigationPage.TitleProperty, titleBinding);

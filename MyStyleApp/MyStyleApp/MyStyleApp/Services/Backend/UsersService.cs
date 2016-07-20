@@ -13,7 +13,7 @@ namespace MyStyleApp.Services.Backend
     public class UsersService : BackendServiceBase, IUsersService
     {
         private IPushNotificationsService _pushNotificationsService;
-
+        
         public UsersService(HttpService httpService, IPushNotificationsService pushNotificationsService) :
             base(httpService)
         {
@@ -125,6 +125,19 @@ namespace MyStyleApp.Services.Backend
                 authorization,
                 userPlatform,
                 new object[] { id });
+        }
+
+        public async Task<IList<User>> GetStaffAsync(Establishment establishment)
+        {
+            string authorization = await this.HttpService.GetApiKeyAuthorizationAsync();
+
+            IList<User> staffList = await this.HttpService.InvokeAsync<IList<User>>(
+                    HttpMethod.Get,
+                    BackendConstants.GET_STAFF_URL,
+                    authorization,
+                    new object[] { establishment.Id });
+
+            return staffList;
         }
     }
 }

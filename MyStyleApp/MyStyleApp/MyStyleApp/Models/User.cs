@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MyStyleApp.Enums;
+using Newtonsoft.Json;
 
 namespace MyStyleApp.Models
 {
@@ -20,7 +21,7 @@ namespace MyStyleApp.Models
         public string Password { get; set; }
 
         [JsonProperty(Required = Required.Always, PropertyName = "userType")]
-        public int UserType { get; set; }
+        public UserTypeEnum UserType { get; set; }
 
         [JsonProperty(Required = Required.Always, PropertyName = "phone")]
         public string Phone { get; set; }

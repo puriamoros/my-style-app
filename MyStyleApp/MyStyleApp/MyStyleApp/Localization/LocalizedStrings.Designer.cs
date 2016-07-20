@@ -629,6 +629,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New staff.
+        /// </summary>
+        internal static string new_staff {
+            get {
+                return ResourceManager.GetString("new_staff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         internal static string no {
@@ -809,6 +818,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Staff.
+        /// </summary>
+        internal static string staff {
+            get {
+                return ResourceManager.GetString("staff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Surname.
         /// </summary>
         internal static string surname {
@@ -823,6 +841,51 @@ namespace MyStyleApp.Localization {
         internal static string surname_placeholder {
             get {
                 return ResourceManager.GetString("surname_placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User type.
+        /// </summary>
+        internal static string user_type {
+            get {
+                return ResourceManager.GetString("user_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Client.
+        /// </summary>
+        internal static string user_type_1 {
+            get {
+                return ResourceManager.GetString("user_type_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Owner.
+        /// </summary>
+        internal static string user_type_2 {
+            get {
+                return ResourceManager.GetString("user_type_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Staff.
+        /// </summary>
+        internal static string user_type_3 {
+            get {
+                return ResourceManager.GetString("user_type_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authorized staff.
+        /// </summary>
+        internal static string user_type_4 {
+            get {
+                return ResourceManager.GetString("user_type_4", resourceCulture);
             }
         }
         

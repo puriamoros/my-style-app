@@ -25,7 +25,7 @@ namespace MyStyleApp
             // Register Views
             builder.RegisterType<StartView>().SingleInstance();
             builder.RegisterType<LoginView>().SingleInstance();
-            builder.RegisterType<MainView>().SingleInstance();
+            builder.RegisterType<MainClientView>().SingleInstance();
             builder.RegisterType<AppointmentsView>().SingleInstance();
             builder.RegisterType<FavouritesView>().SingleInstance();
             builder.RegisterType<SearchView>().SingleInstance();
@@ -38,11 +38,13 @@ namespace MyStyleApp
             builder.RegisterType<CreateAccountView>().SingleInstance();
             builder.RegisterType<MyEstablishmentsView>().SingleInstance();
             builder.RegisterType<EstablishmentAppointmentsView>().SingleInstance();
+            builder.RegisterType<StaffView>().SingleInstance();
+            builder.RegisterType<MainOwnerView>().SingleInstance();
 
             // Register ViewModels
             builder.RegisterType<StartViewModel>().SingleInstance();
             builder.RegisterType<LoginViewModel>().SingleInstance();
-            builder.RegisterType<MainViewModel>().SingleInstance();
+            builder.RegisterType<MainClientViewModel>().SingleInstance();
             builder.RegisterType<AppointmentsViewModel>().SingleInstance();
             builder.RegisterType<FavouritesViewModel>().SingleInstance();
             builder.RegisterType<SearchViewModel>().SingleInstance();
@@ -55,6 +57,8 @@ namespace MyStyleApp
             builder.RegisterType<CreateAccountViewModel>().SingleInstance();
             builder.RegisterType<MyEstablishmentsViewModel>().SingleInstance();
             builder.RegisterType<EstablishmentAppointmentsViewModel>().SingleInstance();
+            builder.RegisterType<StaffViewModel>().SingleInstance();
+            builder.RegisterType<MainOwnerViewModel>().SingleInstance();
 
             // Register Services
             builder.RegisterType<LocalizedStringsService>().SingleInstance();
@@ -86,7 +90,7 @@ namespace MyStyleApp
             // Register ViewModel <-> View relations
             viewFactory.Register<StartViewModel, StartView>();
             viewFactory.Register<LoginViewModel, LoginView>();
-            viewFactory.Register<MainViewModel, MainView>();
+            viewFactory.Register<MainClientViewModel, MainClientView>();
             viewFactory.Register<AppointmentsViewModel, AppointmentsView>();
             viewFactory.Register<FavouritesViewModel, FavouritesView>();
             viewFactory.Register<SearchViewModel, SearchView>();            
@@ -99,6 +103,8 @@ namespace MyStyleApp
             viewFactory.Register<CreateAccountViewModel, CreateAccountView>();
             viewFactory.Register<MyEstablishmentsViewModel, MyEstablishmentsView>();
             viewFactory.Register<EstablishmentAppointmentsViewModel, EstablishmentAppointmentsView>();
+            viewFactory.Register<StaffViewModel, StaffView>();
+            viewFactory.Register<MainOwnerViewModel, MainOwnerView>();
         }
 
         protected override void ConfigureApplication(IContainer container)

@@ -1,5 +1,6 @@
 ﻿using MyStyleApp.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MyStyleApp.Services.Backend.Mocks
@@ -62,6 +63,34 @@ namespace MyStyleApp.Services.Backend.Mocks
 
         public async Task UpdatePlatformAsync(int id, string platform, string pushToken)
         {
+        }
+
+        public async Task<IList<User>> GetStaffAsync(Establishment establishment)
+        {
+            IList<User> listStaff = new List<User>();
+
+            listStaff.Add(new User()
+            {
+                Id = 1,
+                Name = "Empleado1",
+            }
+            );
+
+            listStaff.Add(new User()
+            {
+                Id = 2,
+                Name = "Empleado2",
+            }
+            );
+
+            listStaff.Add(new User()
+            {
+                Id = 3,
+                Name = "Empleado3",
+            }
+            );
+
+            return listStaff;
         }
     }
 }

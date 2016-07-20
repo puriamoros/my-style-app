@@ -26,6 +26,6 @@
         public const string APPOINTMENTS_URL = "appointments";
         public const string APPOINTMENT_STATUS_URL = "appointments/{0}/status";
         public const string GET_MY_ESTABLISHMENTS_URL = "establishments?idOwner={0}";
-
+        public const string GET_STAFF_URL = "staffs?idEstablishment={0}";
     }
 }

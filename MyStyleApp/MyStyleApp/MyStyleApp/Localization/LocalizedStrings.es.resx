@@ -387,4 +387,25 @@
   <data name="new_establishment" xml:space="preserve">
     <value>Nuevo establecimiento</value>
   </data>
+  <data name="staff" xml:space="preserve">
+    <value>Empleados</value>
+  </data>
+  <data name="new_staff" xml:space="preserve">
+    <value>Nuevo empleado</value>
+  </data>
+  <data name="user_type" xml:space="preserve">
+    <value>Tipo de usuario</value>
+  </data>
+  <data name="user_type_1" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+  <data name="user_type_2" xml:space="preserve">
+    <value>Propietario</value>
+  </data>
+  <data name="user_type_3" xml:space="preserve">
+    <value>Empleado</value>
+  </data>
+  <data name="user_type_4" xml:space="preserve">
+    <value>Empleado autorizado</value>
+  </data>
 </root>

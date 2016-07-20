@@ -5,7 +5,7 @@ using MyStyleApp.Enums;
 
 namespace MyStyleApp.ViewModels
 {
-    public class MainViewModel : NavigableViewModelBase
+    public class MainClientViewModel : NavigableViewModelBase
     {
         private AppointmentsViewModel _appointmentsViewModel;
         private FavouritesViewModel _favouritesViewModel;
@@ -13,7 +13,7 @@ namespace MyStyleApp.ViewModels
         private AccountDetailsViewModel _accountDetailsViewModel;
         private IUsersService _userService;
 
-        public MainViewModel(
+        public MainClientViewModel(
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,

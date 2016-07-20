@@ -125,7 +125,7 @@ namespace MyStyleApp.ViewModels
                     try
                     {
                         await this._usersService.LoginAsync(this.Email, this.Password, this.RememberMe);
-                        await this.SetMainPageAsync<MainViewModel>((mainVM) =>
+                        await this.SetMainPageAsync<MainClientViewModel>((mainVM) =>
                         {
                             mainVM.Initialize();
                         });

@@ -34,13 +34,13 @@
                     <ColumnDefinition Width="30*" />
                   </Grid.ColumnDefinitions>
                   <RelativeLayout Grid.Column="0" VerticalOptions="Center">
-                    <Image Aspect="AspectFit" Source="Calendar.png" VerticalOptions="Center"
+                    <Image Aspect="AspectFit" Source="Calendar.png"
                       RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
                   </RelativeLayout>
                   <Label Grid.Column="1" VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
                     Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=d}" />
                   <RelativeLayout Grid.Column="2" VerticalOptions="Center">
-                    <Image Aspect="AspectFit" Source="Clock.png" VerticalOptions="Center"
+                    <Image Aspect="AspectFit" Source="Clock.png"
                       RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
                   </RelativeLayout>
                   <Label Grid.Column="3" VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
@@ -56,7 +56,7 @@
                   </Grid.ColumnDefinitions>
 
                   <RelativeLayout Grid.Column="0" VerticalOptions="Center">
-                    <Image Aspect="AspectFit" Source="Mirror.png" VerticalOptions="Center"
+                    <Image Aspect="AspectFit" Source="Mirror.png"
                       RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
                   </RelativeLayout>
 
@@ -66,7 +66,7 @@
                   </StackLayout>
 
                   <RelativeLayout Grid.Column="2" VerticalOptions="Center">
-                    <Image Aspect="AspectFit" Source="EuroPriceTag.png" VerticalOptions="Center"
+                    <Image Aspect="AspectFit" Source="EuroPriceTag.png"
                       RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
                   </RelativeLayout>
 
@@ -75,29 +75,7 @@
                       Text="{Binding ServicePrice, Converter={StaticResource FloatToPriceConverter}}" SizeChanged="OnLabelSizeChanged"/>
                   </StackLayout>
                 </Grid>
-                <!--<Grid>
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="60*" />
-                    <ColumnDefinition Width="6*" />
-                    <ColumnDefinition Width="34*" />
-                  </Grid.ColumnDefinitions>
-                    
-                  <StackLayout Grid.Column="0">
-                    <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
-                      Text="{Binding ServiceName}" SizeChanged="OnLabelSizeChanged"/>
-                  </StackLayout>
-                    
-                  <RelativeLayout Grid.Column="1" VerticalOptions="Center">
-                    <Image Aspect="AspectFit" Source="EuroPriceTag.png" VerticalOptions="Center"
-                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
-                  </RelativeLayout>
-                    
-                  <StackLayout Grid.Column="2">
-                    <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
-                      Text="{Binding ServicePrice, Converter={StaticResource FloatToPriceConverter}}" SizeChanged="OnLabelSizeChanged"/>
-                    </StackLayout> 
-                </Grid>-->
-                
+                               
                 <Grid>
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*" />

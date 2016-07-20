@@ -14,7 +14,7 @@ using System.Collections.Specialized;
 
 namespace MyStyleApp.ViewModels
 {
-    class MyEstablishmentsViewModel : NavigableViewModelBase
+    public class MyEstablishmentsViewModel : NavigableViewModelBase
     {
         private ObservableCollection<Establishment> _establishmentsList;
         private IEstablishmentsService _establishmentsService;       

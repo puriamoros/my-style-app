@@ -50,14 +50,17 @@
     <Compile Include="Converters\ItemTappedEventArgsConverter.cs" />
     <Compile Include="Converters\PlatformToBoolConverter.cs" />
     <Compile Include="Converters\StringToBoolConverter.cs" />
+    <Compile Include="Converters\UserTypeToBoolConverter.cs" />
     <Compile Include="Enums\AccountModeEnum.cs" />
     <Compile Include="Enums\AppointmentStatusEnum.cs" />
     <Compile Include="Enums\BackendStatusCodeEnum.cs" />
     <Compile Include="Enums\EstablishmentTypeEnum.cs" />
     <Compile Include="Enums\ProvinceEnum.cs" />
+    <Compile Include="Enums\UserTypeEnum.cs" />
     <Compile Include="Exceptions\BackendException.cs" />
     <Compile Include="Models\GenericStatus.cs" />
     <Compile Include="Models\Slot.cs" />
+    <Compile Include="Models\Staff.cs" />
     <Compile Include="Models\UserPassword.cs" />
     <Compile Include="Models\ApiKey.cs" />
     <Compile Include="Models\Appointment.cs" />
@@ -146,6 +149,8 @@
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\ErrorViewModel.cs" />
     <Compile Include="ViewModels\EstablishmentDetailsViewModel.cs" />
+    <Compile Include="ViewModels\MainOwnerViewModel.cs" />
+    <Compile Include="ViewModels\StaffViewModel.cs" />
     <Compile Include="ViewModels\MyEstablishmentsViewModel.cs" />
     <Compile Include="ViewModels\EstablishmentsViewModel.cs" />
     <Compile Include="ViewModels\FavouritesViewModel.cs" />
@@ -153,7 +158,8 @@
     <Compile Include="ViewModels\StartViewModel.cs" />
     <Compile Include="ViewModels\NavigableViewModelBase.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\MainClientViewModel.cs" />
+    <Compile Include="Views\CustomTabbedPage.cs" />
     <Compile Include="Views\EstablishmentAppointmentsView.xaml.cs">
       <DependentUpon>EstablishmentAppointmentsView.xaml</DependentUpon>
     </Compile>
@@ -183,6 +189,11 @@
     <Compile Include="Views\EstablishmentDetailsView.xaml.cs">
       <DependentUpon>EstablishmentDetailsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MainClientView.cs" />
+    <Compile Include="Views\MainOwnerView.cs" />
+    <Compile Include="Views\StaffView.xaml.cs">
+      <DependentUpon>StaffView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MyEstablishmentsView.xaml.cs">
       <DependentUpon>MyEstablishmentsView.xaml</DependentUpon>
     </Compile>
@@ -196,9 +207,6 @@
     <Compile Include="Views\Gestures\TappedGesture.cs" />
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MainView.xaml.cs">
-      <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CustomNavigationPage.cs" />
     <Compile Include="Views\SearchView.xaml.cs">
@@ -251,12 +259,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\LoginView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\MainView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -345,6 +347,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\EstablishmentAppointmentsView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\StaffView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

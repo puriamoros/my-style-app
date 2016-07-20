@@ -15,7 +15,7 @@ Example (with symbolic link):
 - Create the link: mklink /D api.mystyleapp.com <DIR_REPO>\Backend
 
 To check if everything is ok:
-- Open in a browser: http://api.mystyleapp.com/
+- Open in a browser: http://localhost/api.mystyleapp.com/
 - You should see: It's running!!
 
 

@@ -14,18 +14,6 @@ Example (with symbolic link):
 - Go to apache public folder.
 - Create the link: mklink /D api.mystyleapp.com <DIR_REPO>\Backend
 
-You can also insert a virtual host referencing this folder:
-- Open <dir_apache>\conf\extra\httpd-vhosts.conf
-- Add the virtual host:
-	NameVirtualHost api.mystyleapp.com:80
-	<VirtualHost api.mystyleapp.com:80>
-		DocumentRoot "<APACHE_PUBLIC_FOLDER>/api.mystyleapp.com"
-		ServerName api.mystyleapp.com
-	</VirtualHost>
-- Open C:\Windows\System32\drivers\etc\hosts
-- Add the new host:
-	127.0.0.1       api.mystyleapp.com
-
 To check if everything is ok:
 - Open in a browser: http://api.mystyleapp.com/
 - You should see: It's running!!

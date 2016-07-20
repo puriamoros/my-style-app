@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using MyStyleApp.Services;
 using MvvmCore;
 using MyStyleApp.Services.Backend;
@@ -99,15 +98,20 @@ namespace MyStyleApp.ViewModels
                         await this._usersService.MeAsync();
 
                         // There is a logged user, go to main view
-                        //await this.SetMainPageAsync<MainClientViewModel>((mainVM) =>
-                        //{
-                        //    mainVM.Initialize();
-                        //});
-
-                        await this.SetMainPageAsync<MainOwnerViewModel>((mainVM) =>
+                        if (this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.Client)
                         {
-                            mainVM.Initialize();
-                        });
+                            await this.SetMainPageAsync<MainClientViewModel>((mainVM) =>
+                            {
+                                mainVM.Initialize();
+                            });
+                        }
+                        else if (this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.Owner)
+                        {
+                            await this.SetMainPageAsync<MainOwnerViewModel>((mainVM) =>
+                            {
+                                mainVM.Initialize();
+                            });
+                        }
 
                     }
                     catch (Exception)

@@ -1,15 +1,11 @@
 ﻿using MyStyleApp.Constants;
-using MyStyleApp.Models;
 using MyStyleApp.Services;
 using MyStyleApp.Services.Backend;
 using MyStyleApp.Validators;
 using System;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using MvvmCore;
-using MyStyleApp.Enums;
 
 namespace MyStyleApp.ViewModels
 {
@@ -125,10 +121,21 @@ namespace MyStyleApp.ViewModels
                     try
                     {
                         await this._usersService.LoginAsync(this.Email, this.Password, this.RememberMe);
-                        await this.SetMainPageAsync<MainClientViewModel>((mainVM) =>
+
+                        if (this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.Client)
                         {
-                            mainVM.Initialize();
-                        });
+                            await this.SetMainPageAsync<MainClientViewModel>((mainVM) =>
+                            {
+                                mainVM.Initialize();
+                            });
+                        }
+                        else if (this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.Owner)
+                        {
+                            await this.SetMainPageAsync<MainOwnerViewModel>((mainVM) =>
+                            {
+                                mainVM.Initialize();
+                            });
+                        }
                     }
                     catch (Exception)
                     {

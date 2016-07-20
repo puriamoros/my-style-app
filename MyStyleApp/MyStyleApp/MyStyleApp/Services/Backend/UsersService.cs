@@ -28,6 +28,7 @@ namespace MyStyleApp.Services.Backend
             {
                 try
                 {
+                    // Create user<->platform association
                     await this.UpdatePlatformAsync(this.LoggedUser.Id, Device.OS.ToString(), token);
                 }
                 catch (Exception)
@@ -52,12 +53,17 @@ namespace MyStyleApp.Services.Backend
 
         public async Task LogoutAsync()
         {
+            // Delete user<->platform association
+            await this.UpdatePlatformAsync(this.LoggedUser.Id, "", "");
+
             await this.HttpService.DeleteApiKeyAuthorizationAsync();
             this.LoggedUser = null;
         }
 
         public async Task<User> MeAsync()
         {
+            int oldLoggedUserId = (this.LoggedUser != null) ? this.LoggedUser.Id : - 1;
+
             string apiKey = await this.HttpService.GetApiKeyAuthorizationAsync();
             if(apiKey == null)
             {
@@ -70,7 +76,10 @@ namespace MyStyleApp.Services.Backend
                 apiKey,
                 null);
 
-            this._pushNotificationsService.RegisterDevice();
+            if(oldLoggedUserId != this.LoggedUser.Id)
+            {
+                this._pushNotificationsService.RegisterDevice();
+            }
 
             return LoggedUser;
         }

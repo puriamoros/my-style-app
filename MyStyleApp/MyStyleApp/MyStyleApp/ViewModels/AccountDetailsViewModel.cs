@@ -212,8 +212,6 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    // Delete user<->platform association
-                    await this._usersService.UpdatePlatformAsync(this._usersService.LoggedUser.Id, "", "");
                     // Logout
                     await this._usersService.LogoutAsync();
 

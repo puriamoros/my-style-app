@@ -55,6 +55,25 @@ namespace MyStyleApp.ViewModels
             this.ProvinceList = new ObservableCollection<Province>(this._provincesService.GetProvinces());
             this.EstablishmentTypeList = new ObservableCollection<EstablishmentType>(
                 this._establishmentTypesService.GetEstablishmentTypes());
+
+            this.SubscribeToMessages();
+        }
+
+        private void SubscribeToMessages()
+        {
+            MessagingCenter.Subscribe<string>(this, "userLogin", (userType) =>
+            {
+                if (userType == UserTypeEnum.Client.ToString())
+                {
+                }
+            });
+            MessagingCenter.Subscribe<string>(this, "userLogout", async (userType) =>
+            {
+                if (userType == UserTypeEnum.Client.ToString())
+                {
+                    await this.PopNavPageToRootAsync();
+                }
+            });
         }
 
         public async void InitializeAsync()
@@ -66,7 +85,6 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    await this.PopNavPageToRootAsync();
                     await this._serviceCategoriesService.GetServiceCategoriesAsync();
                     await this._servicesService.GetServicesAsync();
                 });

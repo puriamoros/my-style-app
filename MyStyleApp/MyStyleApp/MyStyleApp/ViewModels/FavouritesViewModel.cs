@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using MyStyleApp.Services.Backend;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MyStyleApp.Enums;
 
 namespace MyStyleApp.ViewModels
 {
@@ -34,6 +35,29 @@ namespace MyStyleApp.ViewModels
             this._favouritesService = favouritesService;
             this._establishmentsService = establishmentsService;
 
+            this.SubscribeToMessages();
+        }
+
+        private void SubscribeToMessages()
+        {
+            MessagingCenter.Subscribe<string>(this, "userLogin", (userType) =>
+            {
+                if (userType == UserTypeEnum.Client.ToString())
+                {
+                    MessagingCenter.Subscribe<Establishment>(this, "favouriteAdded", this.OnFavouriteAdded);
+                    MessagingCenter.Subscribe<Establishment>(this, "favouriteDeleted", this.OnFavouriteDeleted);
+                }
+            });
+            MessagingCenter.Subscribe<string>(this, "userLogout", (userType) =>
+            {
+                if (userType == UserTypeEnum.Client.ToString())
+                {
+                    MessagingCenter.Unsubscribe<Establishment>(this, "favouriteAdded");
+                    MessagingCenter.Unsubscribe<Establishment>(this, "favouriteDeleted");
+                }
+            });
+
+            // Need to subscribe on ctor as well since first userLogin message is delivered before this object is created
             MessagingCenter.Subscribe<Establishment>(this, "favouriteAdded", this.OnFavouriteAdded);
             MessagingCenter.Subscribe<Establishment>(this, "favouriteDeleted", this.OnFavouriteDeleted);
         }

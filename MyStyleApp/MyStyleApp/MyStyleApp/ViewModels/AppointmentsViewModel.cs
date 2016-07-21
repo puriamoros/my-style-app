@@ -15,7 +15,6 @@ namespace MyStyleApp.ViewModels
 {
     public class AppointmentsViewModel : NavigableViewModelBase
     {
-        
         private IUsersService _userService;
         private IServicesService _servicesService;
         private IAppointmentsService _appointmentsService;
@@ -39,6 +38,29 @@ namespace MyStyleApp.ViewModels
 
             this.CancelCommand = new Command<Appointment>(this.CancelAsync, this.CanCancel);
 
+            this.SubscribeToMessages();
+        }
+
+        private void SubscribeToMessages()
+        {
+            MessagingCenter.Subscribe<string>(this, "userLogin", (userType) =>
+            {
+                if (userType == UserTypeEnum.Client.ToString())
+                {
+                    MessagingCenter.Subscribe<Appointment>(this, "appointmentCreated", this.OnAppointmentCreated);
+                    MessagingCenter.Subscribe<string>(this, "pushNotificationReceived", this.OnPushNotificacionReceived);
+                }
+            });
+            MessagingCenter.Subscribe<string>(this, "userLogout", (userType) =>
+            {
+                if (userType == UserTypeEnum.Client.ToString())
+                {
+                    MessagingCenter.Unsubscribe<Appointment>(this, "appointmentCreated");
+                    MessagingCenter.Unsubscribe<string>(this, "pushNotificationReceived");
+                }
+            });
+
+            // Need to subscribe on ctor as well since first userLogin message is delivered before this object is created
             MessagingCenter.Subscribe<Appointment>(this, "appointmentCreated", this.OnAppointmentCreated);
             MessagingCenter.Subscribe<string>(this, "pushNotificationReceived", this.OnPushNotificacionReceived);
         }

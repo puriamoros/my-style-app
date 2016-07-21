@@ -7,6 +7,7 @@ using MyStyleApp.Models;
 using System.Net.Http;
 using MyStyleApp.Constants;
 using Xamarin.Forms;
+using MyStyleApp.Enums;
 
 namespace MyStyleApp.Services.Backend
 {
@@ -53,11 +54,15 @@ namespace MyStyleApp.Services.Backend
 
         public async Task LogoutAsync()
         {
+            UserTypeEnum userType = this.LoggedUser.UserType;
+
             // Delete user<->platform association
             await this.UpdatePlatformAsync(this.LoggedUser.Id, "", "");
 
             await this.HttpService.DeleteApiKeyAuthorizationAsync();
             this.LoggedUser = null;
+
+            MessagingCenter.Send<string>(userType.ToString(), "userLogout");
         }
 
         public async Task<User> MeAsync()
@@ -78,6 +83,8 @@ namespace MyStyleApp.Services.Backend
 
             if(oldLoggedUserId != this.LoggedUser.Id)
             {
+                MessagingCenter.Send<string>(this.LoggedUser.UserType.ToString(), "userLogin");
+
                 this._pushNotificationsService.RegisterDevice();
             }
 

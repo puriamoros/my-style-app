@@ -1,5 +1,4 @@
 ﻿using MyStyleApp.Enums;
-using System;
 using Xamarin.Forms;
 
 namespace MyStyleApp.Views
@@ -8,10 +7,20 @@ namespace MyStyleApp.Views
     {
         protected override bool OnBackButtonPressed()
         {
-            MessagingCenter.Send<string>(AccountModeEnum.View.ToString(), "changeAccountMode");
+            if(this.EditButton.IsVisible)
+            {
+                return base.OnBackButtonPressed();
+            }
+            else
+            {
+                // We are on edit mode and back button has been tapped, so we want to go back to view mode
 
-            // Disable hardware back button
-            return true;
+                // Send message to change mode
+                MessagingCenter.Send<string>(AccountModeEnum.View.ToString(), "changeAccountMode");
+
+                // Ignore hardware back button tap
+                return true;
+            }
         }
     }
 }

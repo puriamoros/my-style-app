@@ -39,6 +39,21 @@ namespace MyStyleApp.ViewModels
             this._usersService = usersService;
             this.Title = this.LocalizedStrings.GetString("my_account");
 
+            this.SubscribeToMessages();
+        }
+
+        private void SubscribeToMessages()
+        {
+            MessagingCenter.Subscribe<string>(this, "userLogin", (userType) =>
+            {
+                MessagingCenter.Subscribe<string>(this, "changeAccountMode", this.OnAccountModeChanged);
+            });
+            MessagingCenter.Subscribe<string>(this, "userLogout", (userType) =>
+            {
+                MessagingCenter.Unsubscribe<string>(this, "changeAccountMode");
+            });
+
+            // Need to subscribe on ctor as well since first userLogin message is delivered before this object is created
             MessagingCenter.Subscribe<string>(this, "changeAccountMode", this.OnAccountModeChanged);
         }
 

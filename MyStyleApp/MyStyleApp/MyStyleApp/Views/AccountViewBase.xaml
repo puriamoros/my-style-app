@@ -117,7 +117,7 @@
           Text="{Binding LocalizedStrings[create_account]}"
           Command="{Binding CreateAccountCommand}"/>
          
-        <controls:CustomButton
+        <controls:CustomButton x:Name="EditButton"
           IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=View}"
           Text="{Binding LocalizedStrings[edit]}"
           Command="{Binding EditAccountCommand}"/>

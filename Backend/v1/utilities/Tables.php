@@ -56,6 +56,10 @@ class Tables
 				'idServiceCategory',
 				'duration'
 			),
+			'staff' => array(
+				'idUser',
+				'idEstablishment'
+			),
 			'translations' => array(
 				'id',
 				'en',

@@ -7,7 +7,7 @@ namespace MyStyleApp.Views
     {
         protected override bool OnBackButtonPressed()
         {
-            if(this.EditButton.IsVisible)
+            if(this.GetEditButton().IsVisible)
             {
                 return base.OnBackButtonPressed();
             }

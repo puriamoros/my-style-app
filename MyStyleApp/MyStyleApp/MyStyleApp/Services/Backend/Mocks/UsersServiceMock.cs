@@ -65,25 +65,25 @@ namespace MyStyleApp.Services.Backend.Mocks
         {
         }
 
-        public async Task<IList<User>> GetStaffAsync(Establishment establishment)
+        public async Task<IList<Staff>> GetStaffAsync(Establishment establishment)
         {
-            IList<User> listStaff = new List<User>();
+            IList<Staff> listStaff = new List<Staff>();
 
-            listStaff.Add(new User()
+            listStaff.Add(new Staff()
             {
                 Id = 1,
                 Name = "Empleado1",
             }
             );
 
-            listStaff.Add(new User()
+            listStaff.Add(new Staff()
             {
                 Id = 2,
                 Name = "Empleado2",
             }
             );
 
-            listStaff.Add(new User()
+            listStaff.Add(new Staff()
             {
                 Id = 3,
                 Name = "Empleado3",

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-07-2016 a las 16:19:10
+-- Tiempo de generación: 21-07-2016 a las 19:58:08
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.21
 
@@ -379,6 +379,15 @@ CREATE TABLE `staff` (
   `idEstablishment` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `staff`
+--
+
+INSERT INTO `staff` (`idUser`, `idEstablishment`) VALUES
+(20, 2),
+(21, 2),
+(23, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -480,10 +489,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `apiKey`, `userType`, `phone`, `platform`, `pushToken`) VALUES
-(1, 'Helio', 'Huete López de las Huertas', 'helio.huete@gmail.com', '$2y$10$HcPK6svqWeNqsMlcGNx.Ce0GR0mvq/QvfUTH0nXUwpR.jc660MSa6', 'cc06c9f321e156c2468669728e2be8b8', 1, '123456789', 'Android', 'eSPuiEPZLqM:APA91bGw2w1OVhxqnzSkFxTcLNTNi9XcS-Lj34r1evA1CfODBq7p10gv9m7WtFG2_7ssNcuJB2lZhS_X7hd5eYQTndqI7qcMzyz5RcKdJSIOhkyFVGapDLYAPpzh8GoeZMD08PyPek4G'),
-(19, 'Puri', 'Amorós', 'puri.amoros@gmail.com', '$2y$10$AZfna1yNJg.NEjPjpNU/mefD4XuNoVD4k2cc7ojv0W5MIafTk8rV.', '3bc23b47841173b7027d911bc055d113', 2, '987654321', 'Windows', 'https://db5.notify.windows.com/?token=AwYAAABzlV1f%2b%2f1MR9qoNkd2Wgqp%2fkMNG6svunv2TqadYGMbyRvHcqTvJEgQ1oFjrzodqDGEHU4WjguX3TMhym5JzwCCMPDOd45Cc6d%2b2Jq1KjAB8QQsQuG7uK2fyLVJXh%2fx8ds%3d'),
-(20, 'aaa', 'bbb', 'aa@bb.com', '$2y$10$r1NGrTmPIZqvjaO.3nGaQO8g4ovt.EiX3TKcSHh1Yh4PQAEh2Ef/W', 'f166df0a695856c42e1827a31f90f947', 1, '123456789', '', ''),
-(21, 'sdfasdf', 'asdfasdfdf', 'piunchi@gmail.com', '$2y$10$W.nmnDfq4A.fyoLz89d9U.R2eWcbdQ7WabRNYz5RlZ2tgSVDbLFnq', 'cb96faa601c5951c670e7894502267e3', 3, '123456789', '', '');
+(1, 'Helio', 'Huete López de las Huertas', 'helio.huete@gmail.com', '$2y$10$HcPK6svqWeNqsMlcGNx.Ce0GR0mvq/QvfUTH0nXUwpR.jc660MSa6', 'cc06c9f321e156c2468669728e2be8b8', 1, '123456789', 'Windows', 'https://db5.notify.windows.com/?token=AwYAAABzlV1f%2b%2f1MR9qoNkd2Wgqp%2fkMNG6svunv2TqadYGMbyRvHcqTvJEgQ1oFjrzodqDGEHU4WjguX3TMhym5JzwCCMPDOd45Cc6d%2b2Jq1KjAB8QQsQuG7uK2fyLVJXh%2fx8ds%3d'),
+(19, 'Puri', 'Amorós', 'puri.amoros@gmail.com', '$2y$10$AZfna1yNJg.NEjPjpNU/mefD4XuNoVD4k2cc7ojv0W5MIafTk8rV.', '3bc23b47841173b7027d911bc055d113', 2, '987654321', 'Windows', 'https://db5.notify.windows.com/?token=AwYAAADd1N6GI%2fKAWrHkR4BWoC%2fMxi3GiOrevf7ku6Htilf%2bOTE%2bUve70nm5O9xJqtfgJINzxffmFjBEUSOXmfR5oHMw2FdBWypSAdzo%2baBBFQ1bpjWQXvOjGFt0nkX%2fsQ0EXOY%3d'),
+(20, 'Marta', 'Asdf', 'marta@gmail.com', '$2y$10$r1NGrTmPIZqvjaO.3nGaQO8g4ovt.EiX3TKcSHh1Yh4PQAEh2Ef/W', 'f166df0a695856c42e1827a31f90f947', 1, '123456789', '', ''),
+(21, 'sdfasdf', 'asdfasdfdf', 'piunchi@gmail.com', '$2y$10$W.nmnDfq4A.fyoLz89d9U.R2eWcbdQ7WabRNYz5RlZ2tgSVDbLFnq', 'cb96faa601c5951c670e7894502267e3', 3, '123456789', '', ''),
+(23, 'Antonio', 'Perez', 'antonio1.perez23@gmail.com', '$2y$10$yVus9HtHwcC152DGkB0PdeCPG5GTC10O9qHLtuud.0AQpyHt3lBWe', 'c0d99b5c244bb84712560dfaa56e5f7e', 4, '958123456', '', '');
 
 --
 -- Índices para tablas volcadas
@@ -618,7 +628,7 @@ ALTER TABLE `slots`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

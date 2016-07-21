@@ -10,6 +10,7 @@ require_once(__DIR__.'/models/Favourites.php');
 require_once(__DIR__.'/models/Provinces.php');
 require_once(__DIR__.'/models/ServiceCategories.php');
 require_once(__DIR__.'/models/Services.php');
+require_once(__DIR__.'/models/Staff.php');
 
 $view = new JsonView();
 
@@ -43,7 +44,8 @@ $knownResources = array(
 		"favourites" => "Favourites",
 		"provinces" => "Provinces",
 		"servicecategories" => "ServiceCategories",
-		"services" => "Services"
+		"services" => "Services",
+		"staff" => "Staff"
 	);
 	
 // Check if the resource exists

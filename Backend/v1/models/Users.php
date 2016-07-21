@@ -93,7 +93,7 @@ class Users extends ModelWithIdBase
 		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
     }
 	
-	private function unsetPrivateFields(&$array)
+	protected function unsetPrivateFields(&$array)
 	{
 		foreach($this->privateFields as $field) {
 			unset($array[$field]);
@@ -166,6 +166,8 @@ class Users extends ModelWithIdBase
 		$data = $this->getBodyData();
 		$data[$this->users->password] = $this->encryptPassword($data[$this->users->password]);
 		$data[$this->users->apiKey] = $this->generateApiKey();
+		$data[$this->users->platform] = '';
+		$data[$this->users->pushToken] = '';
 
 		// TODO: Validate fields
 		

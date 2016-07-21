@@ -14,5 +14,10 @@ namespace MyStyleApp.Views
         {
             InitializeComponent();
         }
+
+        public Button GetEditButton()
+        {
+            return this.EditButton;
+        }
     }
 }

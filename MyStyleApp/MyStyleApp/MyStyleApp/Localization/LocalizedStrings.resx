@@ -408,4 +408,7 @@
   <data name="user_type_4" xml:space="preserve">
     <value>Authorized staff</value>
   </data>
+  <data name="notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
 </root>

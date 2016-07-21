@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:CustomContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyStyleApp.Views.AppointmentDetailsView"
+             xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
+             xmlns:gestures="clr-namespace:MyStyleApp.Views.Gestures"
+             xmlns:views="clr-namespace:MyStyleApp.Views"
+             xmlns:mvvmcorebehaviors="clr-namespace:MvvmCore.Behaviors"
+             Padding="{StaticResource PagePadding}"
+             Title="{Binding LocalizedStrings[appointments_details]}">
+
+  <ScrollView>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <StackLayout Grid.Row="0">  
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="58*" />
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="30*" />
+          </Grid.ColumnDefinitions>
+          <RelativeLayout Grid.Column="0" VerticalOptions="Center">
+            <Image Aspect="AspectFit" Source="Calendar.png"
+              RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+          </RelativeLayout>
+          <Label Grid.Column="1" VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+            Text="{Binding Appointment.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=d}" />
+          <RelativeLayout Grid.Column="2" VerticalOptions="Center">
+            <Image Aspect="AspectFit" Source="Clock.png"
+              RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+          </RelativeLayout>
+          <Label Grid.Column="3" VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+            Text="{Binding Appointment.Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" />
+        </Grid>
+
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="94*" />
+          </Grid.ColumnDefinitions>
+          <RelativeLayout Grid.Column="0" VerticalOptions="Center">
+            <Image Aspect="AspectFit" Source="Client.png"
+              RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+          </RelativeLayout>
+          <StackLayout Grid.Column="1">
+            <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+              Text="{Binding Appointment.ClientName}" SizeChanged="OnLabelSizeChanged"/>
+          </StackLayout>
+        </Grid>
+
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="60*" />
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="28*" />
+          </Grid.ColumnDefinitions>
+
+          <RelativeLayout Grid.Column="0" VerticalOptions="Center">
+            <Image Aspect="AspectFit" Source="Mirror.png"
+              RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+          </RelativeLayout>
+
+          <StackLayout Grid.Column="1">
+            <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+              Text="{Binding Appointment.ServiceName}" SizeChanged="OnLabelSizeChanged"/>
+          </StackLayout>
+
+          <RelativeLayout Grid.Column="2" VerticalOptions="Center">
+            <Image Aspect="AspectFit" Source="EuroPriceTag.png"
+              RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+          </RelativeLayout>
+
+          <StackLayout Grid.Column="3">
+            <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+              Text="{Binding Appointment.ServicePrice, Converter={StaticResource FloatToPriceConverter}}" SizeChanged="OnLabelSizeChanged"/>
+          </StackLayout>
+        </Grid>
+
+        <StackLayout>
+          <Label Style="{StaticResource MediumTextStyle}"
+              Text="{Binding LocalizedStrings[notes]}"/>
+          <Entry
+              Placeholder="{Binding LocalizedStrings[surname_placeholder]}"
+              Text="{Binding Notes}"
+              Keyboard="Text"
+              HeightRequest="60"/>
+        </StackLayout>
+      </StackLayout>
+     
+      <StackLayout Grid.Row="1"
+          Padding="{StaticResource PageContentPadding}"
+          VerticalOptions="End">
+        <controls:CustomButton
+          Text="{Binding LocalizedStrings[save_changes]}"
+          Command="{Binding SaveCommand}"/>
+      </StackLayout>
+         
+      <controls:WaitingOverlayControl
+        IsVisible="{Binding IsBusy}"
+        Text="{Binding LocalizedStrings[waiting]}"/>
+    </Grid>
+  </ScrollView>
+</views:CustomContentPage>

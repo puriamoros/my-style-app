@@ -11,5 +11,8 @@ namespace MyStyleApp.Models
     {
         [JsonProperty(Required = Required.Always, PropertyName = "idEstablishment")]
         public string IdEstablishment { get; set; }
+
+        [JsonProperty(Required = Required.Default, PropertyName = "staffName")]
+        public string StaffName { get; set; }
     }
 }

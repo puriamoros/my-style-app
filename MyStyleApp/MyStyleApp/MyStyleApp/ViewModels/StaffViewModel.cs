@@ -17,7 +17,7 @@ namespace MyStyleApp.ViewModels
     public class StaffViewModel : NavigableViewModelBase
     {
         private ObservableCollection<Establishment> _establishmentList;
-        private ObservableCollection<User> _staffList;
+        private ObservableCollection<Staff> _staffList;
 
         private IUsersService _usersService;
         private IEstablishmentsService _establishmentsService;
@@ -80,7 +80,7 @@ namespace MyStyleApp.ViewModels
                     {
                         var staff = await this._usersService.GetStaffAsync(this.SelectedEstablishment);
                          
-                        this.StaffList = new ObservableCollection<User>(staff);
+                        this.StaffList = new ObservableCollection<Staff>(staff);
                     }
                     else
                     {
@@ -92,7 +92,7 @@ namespace MyStyleApp.ViewModels
                 });
         }
 
-        public ObservableCollection<User> StaffList
+        public ObservableCollection<Staff> StaffList
         {
             get { return _staffList; }
             set { SetProperty(ref _staffList, value); }

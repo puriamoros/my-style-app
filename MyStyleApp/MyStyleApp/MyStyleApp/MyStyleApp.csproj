@@ -159,6 +159,9 @@
     <Compile Include="ViewModels\NavigableViewModelBase.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainClientViewModel.cs" />
+    <Compile Include="Views\AppointmentDetailsView.xaml.cs">
+      <DependentUpon>AppointmentDetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CustomTabbedPage.cs" />
     <Compile Include="Views\EstablishmentAppointmentsView.xaml.cs">
       <DependentUpon>EstablishmentAppointmentsView.xaml</DependentUpon>
@@ -353,6 +356,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\StaffView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\AppointmentDetailsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

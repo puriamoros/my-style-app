@@ -50,7 +50,6 @@ namespace MyStyleApp.ViewModels
             this.CancelCommand = new Command<Appointment>(this.CancelAsync, this.CanCancel);
             this.ConfirmCommand = new Command<Appointment>(this.ConfirmAsync, this.CanConfirm);
 
-            MessagingCenter.Subscribe<Appointment>(this, "appointmentCreated", this.OnAppointmentCreated);
             MessagingCenter.Subscribe<string>(this, "pushNotificationReceived", this.OnPushNotificacionReceived);
 
             this.InitializeAsync();
@@ -249,12 +248,6 @@ namespace MyStyleApp.ViewModels
             var list = new List<Appointment>(this.AppointmentList);
             list.Sort((one, other) => { return one.Date.CompareTo(other.Date); });
             this.AppointmentList = new ObservableCollection<Appointment>(list);
-        }
-
-        private void OnAppointmentCreated(Appointment appointment)
-        {
-            this.AppointmentList.Add(appointment);
-            this.RefreshAppointmentsList();
         }
     }
 }

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-07-2016 a las 19:58:08
+-- Tiempo de generación: 22-07-2016 a las 18:05:29
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.21
 
@@ -60,9 +60,13 @@ INSERT INTO `appointments` (`id`, `idClient`, `idEstablishment`, `idService`, `d
 (18, 19, 1, 1, '2016-07-20 11:00:00', 1, ''),
 (19, 19, 1, 1, '2016-07-20 10:00:00', 0, ''),
 (20, 19, 1, 4, '2016-07-18 17:30:00', 2, ''),
-(21, 1, 1, 5, '2016-07-28 17:30:00', 0, ''),
+(21, 1, 1, 5, '2016-07-28 17:30:00', 1, ''),
 (22, 1, 1, 5, '2016-07-27 11:30:00', 1, ''),
-(23, 1, 4, 5, '2016-07-20 18:30:00', 0, '');
+(23, 1, 4, 5, '2016-07-20 18:30:00', 0, ''),
+(24, 1, 1, 1, '2016-07-22 10:00:00', 0, ''),
+(25, 1, 4, 1, '2016-07-22 16:00:00', 1, ''),
+(26, 1, 1, 1, '2016-07-22 10:30:00', 0, ''),
+(27, 1, 4, 1, '2016-07-22 18:00:00', 1, '');
 
 -- --------------------------------------------------------
 
@@ -81,18 +85,21 @@ CREATE TABLE `establishments` (
   `idProvince` int(11) NOT NULL,
   `concurrence` int(11) NOT NULL,
   `hours1` varchar(11) NOT NULL,
-  `hours2` varchar(11) NOT NULL
+  `hours2` varchar(11) NOT NULL,
+  `autoConfirm` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `establishments`
 --
 
-INSERT INTO `establishments` (`id`, `name`, `address`, `phone`, `idEstablishmentType`, `idOwner`, `idProvince`, `concurrence`, `hours1`, `hours2`) VALUES
-(1, 'Peluquería 1', 'C/ Pintor Fernando Belda nº1, Bajo C', '958111111', 1, 19, 1, 1, '10:00-14:00', '16:00-20:00'),
-(2, 'Peluquería 2', 'C/ Trajano nº2', '951357357', 2, 19, 1, 2, '08:00-20:00', ''),
-(3, 'Peluquería 3', 'C/ Camino de Ronda nº3', '357159486', 1, 19, 2, 3, '06:00-15:00', ''),
-(4, 'Peluquería 4', 'Carretera de Murcia nº4, bajo izq bajo bajo', '123456789', 3, 19, 1, 4, '16:00-00:00', '');
+INSERT INTO `establishments` (`id`, `name`, `address`, `phone`, `idEstablishmentType`, `idOwner`, `idProvince`, `concurrence`, `hours1`, `hours2`, `autoConfirm`) VALUES
+(1, 'Peluquería 1', 'C/ Pintor Fernando Belda nº1, Bajo C', '958111111', 1, 19, 1, 1, '10:00-14:00', '16:00-20:00', 0),
+(2, 'Peluquería 2', 'C/ Trajano nº2', '951357357', 2, 19, 1, 2, '08:00-20:00', '', 0),
+(3, 'Peluquería 3', 'C/ Camino de Ronda nº3', '357159486', 1, 19, 2, 3, '06:00-15:00', '', 0),
+(4, 'Peluquería 4', 'Carretera de Murcia nº4, bajo izq bajo bajo', '123456789', 3, 19, 1, 4, '16:00-00:00', '', 1),
+(5, 'peluquería 5', 'C/. tururu nº4', '958123456', 3, 2, 1, 4, '08:00-20:00', '', 1),
+(6, 'peluquería 6', 'C/. tururu nº4', '958123456', 3, 2, 1, 4, '08:00-20:00', '', 1);
 
 -- --------------------------------------------------------
 
@@ -135,7 +142,8 @@ CREATE TABLE `favourites` (
 INSERT INTO `favourites` (`id`, `idClient`, `idEstablishment`) VALUES
 (50, 1, 1),
 (52, 19, 1),
-(51, 19, 4);
+(51, 19, 4),
+(53, 19, 5);
 
 -- --------------------------------------------------------
 
@@ -173,7 +181,27 @@ INSERT INTO `offer` (`idEstablishment`, `idService`, `price`) VALUES
 (4, 22, 25.5),
 (4, 23, 16),
 (4, 24, 25.5),
-(4, 25, 16);
+(4, 25, 16),
+(5, 1, 12.5),
+(5, 2, 25.5),
+(5, 3, 16),
+(5, 4, 25.5),
+(5, 5, 16),
+(5, 21, 12.5),
+(5, 22, 25.5),
+(5, 23, 16),
+(5, 24, 25.5),
+(5, 25, 16),
+(6, 1, 12.5),
+(6, 2, 25.5),
+(6, 3, 16),
+(6, 4, 25.5),
+(6, 5, 16),
+(6, 21, 12.5),
+(6, 22, 25.5),
+(6, 23, 16),
+(6, 24, 25.5),
+(6, 25, 16);
 
 -- --------------------------------------------------------
 
@@ -489,8 +517,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `apiKey`, `userType`, `phone`, `platform`, `pushToken`) VALUES
-(1, 'Helio', 'Huete López de las Huertas', 'helio.huete@gmail.com', '$2y$10$HcPK6svqWeNqsMlcGNx.Ce0GR0mvq/QvfUTH0nXUwpR.jc660MSa6', 'cc06c9f321e156c2468669728e2be8b8', 1, '123456789', 'Windows', 'https://db5.notify.windows.com/?token=AwYAAABzlV1f%2b%2f1MR9qoNkd2Wgqp%2fkMNG6svunv2TqadYGMbyRvHcqTvJEgQ1oFjrzodqDGEHU4WjguX3TMhym5JzwCCMPDOd45Cc6d%2b2Jq1KjAB8QQsQuG7uK2fyLVJXh%2fx8ds%3d'),
-(19, 'Puri', 'Amorós', 'puri.amoros@gmail.com', '$2y$10$AZfna1yNJg.NEjPjpNU/mefD4XuNoVD4k2cc7ojv0W5MIafTk8rV.', '3bc23b47841173b7027d911bc055d113', 2, '987654321', 'Windows', 'https://db5.notify.windows.com/?token=AwYAAADd1N6GI%2fKAWrHkR4BWoC%2fMxi3GiOrevf7ku6Htilf%2bOTE%2bUve70nm5O9xJqtfgJINzxffmFjBEUSOXmfR5oHMw2FdBWypSAdzo%2baBBFQ1bpjWQXvOjGFt0nkX%2fsQ0EXOY%3d'),
+(1, 'Helio', 'Huete López de las Huertas', 'helio.huete@gmail.com', '$2y$10$HcPK6svqWeNqsMlcGNx.Ce0GR0mvq/QvfUTH0nXUwpR.jc660MSa6', 'cc06c9f321e156c2468669728e2be8b8', 1, '123456789', 'Android', ''),
+(19, 'Puri', 'Amorós', 'puri.amoros@gmail.com', '$2y$10$AZfna1yNJg.NEjPjpNU/mefD4XuNoVD4k2cc7ojv0W5MIafTk8rV.', '3bc23b47841173b7027d911bc055d113', 2, '987654321', 'Android', 'eSPuiEPZLqM:APA91bGw2w1OVhxqnzSkFxTcLNTNi9XcS-Lj34r1evA1CfODBq7p10gv9m7WtFG2_7ssNcuJB2lZhS_X7hd5eYQTndqI7qcMzyz5RcKdJSIOhkyFVGapDLYAPpzh8GoeZMD08PyPek4G'),
 (20, 'Marta', 'Asdf', 'marta@gmail.com', '$2y$10$r1NGrTmPIZqvjaO.3nGaQO8g4ovt.EiX3TKcSHh1Yh4PQAEh2Ef/W', 'f166df0a695856c42e1827a31f90f947', 1, '123456789', '', ''),
 (21, 'sdfasdf', 'asdfasdfdf', 'piunchi@gmail.com', '$2y$10$W.nmnDfq4A.fyoLz89d9U.R2eWcbdQ7WabRNYz5RlZ2tgSVDbLFnq', 'cb96faa601c5951c670e7894502267e3', 3, '123456789', '', ''),
 (23, 'Antonio', 'Perez', 'antonio1.perez23@gmail.com', '$2y$10$yVus9HtHwcC152DGkB0PdeCPG5GTC10O9qHLtuud.0AQpyHt3lBWe', 'c0d99b5c244bb84712560dfaa56e5f7e', 4, '958123456', '', '');
@@ -588,12 +616,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT de la tabla `establishments`
 --
 ALTER TABLE `establishments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `establishment_types`
 --
@@ -603,7 +631,7 @@ ALTER TABLE `establishment_types`
 -- AUTO_INCREMENT de la tabla `favourites`
 --
 ALTER TABLE `favourites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 --
 -- AUTO_INCREMENT de la tabla `provinces`
 --

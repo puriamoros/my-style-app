@@ -331,10 +331,20 @@ namespace MyStyleApp.ViewModels
                 if(success)
                 {
                     // Show result ok to user
-                    await this.UserNotificator.DisplayAlert(
-                       this.LocalizedStrings.GetString("booking_requested_title"),
-                       this.LocalizedStrings.GetString("booking_requested_body"),
-                       this.LocalizedStrings.GetString("ok"));
+                    if (this._establishment.AutoConfirm == true)
+                    {
+                        await this.UserNotificator.DisplayAlert(
+                           this.LocalizedStrings.GetString("booking_auto_confirmed_title"),
+                           this.LocalizedStrings.GetString("booking_auto_confirmed_body"),
+                           this.LocalizedStrings.GetString("ok"));
+                    }
+                    else
+                    {
+                        await this.UserNotificator.DisplayAlert(
+                           this.LocalizedStrings.GetString("booking_requested_title"),
+                           this.LocalizedStrings.GetString("booking_requested_body"),
+                           this.LocalizedStrings.GetString("ok"));
+                    }
                 }
             }
         }

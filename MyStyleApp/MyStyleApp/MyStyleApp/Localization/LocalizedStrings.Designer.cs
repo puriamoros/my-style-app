@@ -170,6 +170,24 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your booking request has been automatically accepted and confirmed.
+        /// </summary>
+        internal static string booking_auto_confirmed_body {
+            get {
+                return ResourceManager.GetString("booking_auto_confirmed_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Booking accepted and confirmed.
+        /// </summary>
+        internal static string booking_auto_confirmed_title {
+            get {
+                return ResourceManager.GetString("booking_auto_confirmed_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You are about to request a booking with the following data:\n- Establishment: ${ESTABLISMENT_NAME}\n- Service: ${SERVICE_NAME}\n- Date: ${DATE}\n\nDo you want to continue with the request?.
         /// </summary>
         internal static string booking_data_body {

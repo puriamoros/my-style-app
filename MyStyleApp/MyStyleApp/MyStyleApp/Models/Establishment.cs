@@ -38,6 +38,9 @@ namespace MyStyleApp.Models
         [JsonProperty(Required = Required.Always, PropertyName = "hours2")]
         public string Hours2 { get; set; }
 
+        [JsonProperty(Required = Required.Always, PropertyName = "autoConfirm")]
+        public bool AutoConfirm { get; set; }
+
         [JsonProperty(Required = Required.Default, PropertyName = "services")]
         public IList<ShortenService> ShortenServices { get; set; }
 

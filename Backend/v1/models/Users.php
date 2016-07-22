@@ -93,13 +93,6 @@ class Users extends ModelWithIdBase
 		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
     }
 	
-	protected function unsetPrivateFields(&$array)
-	{
-		foreach($this->privateFields as $field) {
-			unset($array[$field]);
-		}
-	}
-	
 	private function login()
 	{
 		// Check authorization
@@ -115,7 +108,7 @@ class Users extends ModelWithIdBase
 	{
 		$result = parent::getElements($queryParams);
 		for ($i = 0; $i < count($result); $i++) {
-			$this->unsetPrivateFields($result[$i]);
+			$this->unsetFields($result[$i], $this->privateFields);
 		}
 		return $result;
 	}
@@ -132,7 +125,7 @@ class Users extends ModelWithIdBase
 	{
 		$result = parent::getElement($id);
 		if(!is_null($result)) {
-			$this->unsetPrivateFields($result);
+			$this->unsetFields($result, $this->privateFields);
 		}
 		return $result;
 	}
@@ -173,7 +166,7 @@ class Users extends ModelWithIdBase
 		
 		// Create user
 		$result = $this->dbCreate($data);
-		$this->unsetPrivateFields($result);
+		$this->unsetFields($result, $this->privateFields);
 		
 		// Print response
 		http_response_code(201);

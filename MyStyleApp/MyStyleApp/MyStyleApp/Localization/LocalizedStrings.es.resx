@@ -267,6 +267,12 @@
   <data name="booking_requested_body" xml:space="preserve">
     <value>Su solicitud de reserva ha sido guardada. Puede verla en la sección de citas. Recuerde que recibirá un email de confirmación cuando su solicitud sea aceptada</value>
   </data>
+  <data name="booking_auto_confirmed_title" xml:space="preserve">
+    <value>Reserva aceptada y confirmada</value>
+  </data>
+  <data name="booking_auto_confirmed_body" xml:space="preserve">
+    <value>Su solicitud de reserva ha sido aceptada y confirmada automáticamente</value>
+  </data>
   <data name="establishment_details" xml:space="preserve">
     <value>Detalles</value>
   </data>

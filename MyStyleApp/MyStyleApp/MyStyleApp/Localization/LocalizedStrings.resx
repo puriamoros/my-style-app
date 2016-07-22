@@ -267,6 +267,12 @@
   <data name="booking_requested_body" xml:space="preserve">
     <value>The booking request has been saved. You can see it in the Appointments section. Remember that you will receive a confirmation email when your request is accepted</value>
   </data>
+  <data name="booking_auto_confirmed_title" xml:space="preserve">
+    <value>Booking accepted and confirmed</value>
+  </data>
+  <data name="booking_auto_confirmed_body" xml:space="preserve">
+    <value>Your booking request has been automatically accepted and confirmed</value>
+  </data>
   <data name="establishment_details" xml:space="preserve">
     <value>Details</value>
   </data>

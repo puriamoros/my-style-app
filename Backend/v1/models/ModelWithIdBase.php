@@ -204,4 +204,18 @@ abstract class ModelWithIdBase
 	{
 		return DBCommands::dbDelete($this->table, $this->idField, $id);
 	}
+	
+	protected function unsetFields(&$array, $fields)
+	{
+		foreach($fields as $field) {
+			unset($array[$field]);
+		}
+	}
+	
+	protected function setBooleanField(&$array, $field)
+	{
+		if(isset($array[$field])) {
+			$array[$field] = ($array[$field]=='1') ? true : false;
+		}
+	}
 }

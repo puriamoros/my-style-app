@@ -29,7 +29,8 @@ class Tables
 				'idProvince',
 				'concurrence',
 				'hours1',
-				'hours2'
+				'hours2',
+				'autoConfirm'
 			),
 			'favourites' => array(
 				'id',

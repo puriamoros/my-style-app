@@ -27,32 +27,7 @@ class Establishments extends ModelWithIdBase
 		// Fields for extra data
 		$this->servicesExtraField = 'services';
 		$this->favouritesExtraField = 'idFavourite';
-		
-		// Staff
-		/*$this->staffTable = 'staff';
-		$this->staffFields = array(
-			$this->idEstablishment,
-			'idUser'
-		);*/
     }
-	
-	/*public function get($queryArray, $queryParams)
-    {
-		if(count($queryArray) >= 3 && count($queryArray) <= 4) {
-			// Staff
-			if ($queryArray[2] == $this->staffTable) {
-				if(count($queryArray) == 3) {
-					return $this->getEmployees($queryArray[1], $queryParams);
-				}
-				else {
-					return $this->getEmployee($queryArray[1], $queryArray[3]);
-				}
-			}
-		}
-		
-		// Establishments
-		return parent::get($queryArray, $queryParams);
-    }*/
 	
 	protected function dbGet($queryParams)
 	{
@@ -96,6 +71,8 @@ class Establishments extends ModelWithIdBase
 				);
 				unset($result[$i][$this->offer->price]);
 				$result[$i][$this->servicesExtraField] = [$service];
+				
+				$this->setBooleanField($result[$i], $this->establishments->autoConfirm);
 			}
 			
 			return $result;
@@ -149,6 +126,8 @@ class Establishments extends ModelWithIdBase
 		// idFavourite can be null => set it to 0 if it is null
 		$result[$this->favouritesExtraField] = is_null($result[$favouritesIdFieldRenamed]) ? '0' : $result[$favouritesIdFieldRenamed];
 		unset($result[$favouritesIdFieldRenamed]);
+		
+		$this->setBooleanField($result, $this->establishments->autoConfirm);
 			
 		return $result;
 	}
@@ -163,6 +142,13 @@ class Establishments extends ModelWithIdBase
 		$id = $result[$this->establishments->id];
 		$this->dbCreateServices($id, $services);
 		
+		return $result;
+	}
+	
+	protected function dbCreate($data)
+	{
+		$result = parent::dbCreate($data);
+		$this->setBooleanField($result, $this->establishments->autoConfirm);
 		return $result;
 	}
 	
@@ -217,34 +203,4 @@ class Establishments extends ModelWithIdBase
 	{
 		DBCommands::dbDelete($this->offer->table, $this->offer->idEstablishment, $idEstablishment);
 	}
-	
-	/*private function dbGetEmployees($queryParams)
-	{
-		$servicesFieldsButId = array_diff($this->offer->fields, [$this->offer->idEstablishment]);
-		$searchFields = array(
-			$this->offer->idEstablishment
-		);
-		
-		return DBCommands::dbGet($this->offer->table, $servicesFieldsButId, $searchFields, $queryParams);
-	}
-	
-	private function dbCreateEmployee($idEstablishment, $services)
-	{
-		foreach($services as $service) {
-			$data = $service;
-			$data[$this->offer->idEstablishment] = $idEstablishment;
-			DBCommands::dbCreateNoId($this->offer->table, $this->offer->fields, $data);
-		}
-	}
-	
-	private function dbUpdateEmployee($idEstablishment, $services)
-	{
-		$this->dbDeleteServices($idEstablishment);
-		$this->dbCreateServices($idEstablishment, $services);
-	}
-	
-	private function dbDeleteEmployee($idEstablishment, $idUser)
-	{
-		DBCommands::dbDelete($this->staffTable, $this->offer->idEstablishment, $idEstablishment);
-	}*/
 }

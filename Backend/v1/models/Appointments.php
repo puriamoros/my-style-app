@@ -171,8 +171,8 @@ class Appointments extends ModelWithIdBase
 	
 	protected function dbCreate($data)
 	{
-		$this->checkCanCreate($data);
-		$data[$this->appointments->status] = 0;
+		$establishment = $this->checkCanCreate($data);
+		$data[$this->appointments->status] = $establishment[$this->establishments->autoConfirm];
 		return DBCommands::dbCreate($this->appointments->table, $this->appointments->fields, $this->appointments->id, $data);
 	}
 	
@@ -351,5 +351,7 @@ class Appointments extends ModelWithIdBase
 		if(!$enoughTime) {
 			throw new ApiException(STATE_ESTABLISHMENT_FULL, 'The establishment is full at that hour interval');
 		}
+		
+		return $establishment;
 	}
 }

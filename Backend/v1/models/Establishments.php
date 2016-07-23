@@ -29,6 +29,18 @@ class Establishments extends ModelWithIdBase
 		$this->favouritesExtraField = 'idFavourite';
     }
 	
+	public function put($queryArray)
+    {
+		if(count($queryArray) == 2) {
+			return $this->updateElement($queryArray[1]);
+		}
+		else if(count($queryArray) == 3 && $queryArray[2] == $this->servicesExtraField) {
+			return $this->updateServices($queryArray[1]);
+		}
+		
+		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
+    }
+	
 	protected function dbGet($queryParams)
 	{
 		if(isset($queryParams[$this->offer->idService]) && isset($queryParams[$this->favourites->idClient])) {
@@ -71,8 +83,6 @@ class Establishments extends ModelWithIdBase
 				);
 				unset($result[$i][$this->offer->price]);
 				$result[$i][$this->servicesExtraField] = [$service];
-				
-				$this->setBooleanField($result[$i], $this->establishments->autoConfirm);
 			}
 			
 			return $result;
@@ -126,8 +136,6 @@ class Establishments extends ModelWithIdBase
 		// idFavourite can be null => set it to 0 if it is null
 		$result[$this->favouritesExtraField] = is_null($result[$favouritesIdFieldRenamed]) ? '0' : $result[$favouritesIdFieldRenamed];
 		unset($result[$favouritesIdFieldRenamed]);
-		
-		$this->setBooleanField($result, $this->establishments->autoConfirm);
 			
 		return $result;
 	}
@@ -138,9 +146,11 @@ class Establishments extends ModelWithIdBase
 		
 		// Create services
 		$data = $this->getBodyData();
-		$services = $data[$this->servicesExtraField];
-		$id = $result[$this->establishments->id];
-		$this->dbCreateServices($id, $services);
+		if(isset($data[$this->servicesExtraField])) {
+			$services = $data[$this->servicesExtraField];
+			$id = $result[$this->establishments->id];
+			$this->dbCreateServices($id, $services);
+		}
 		
 		return $result;
 	}
@@ -148,7 +158,6 @@ class Establishments extends ModelWithIdBase
 	protected function dbCreate($data)
 	{
 		$result = parent::dbCreate($data);
-		$this->setBooleanField($result, $this->establishments->autoConfirm);
 		return $result;
 	}
 	
@@ -158,8 +167,10 @@ class Establishments extends ModelWithIdBase
 		
 		// Update services
 		$data = $this->getBodyData();
-		$services = $data[$this->servicesExtraField];
-		$this->dbUpdateServices($id, $services);
+		if(isset($data[$this->servicesExtraField])) {
+			$services = $data[$this->servicesExtraField];
+			$this->dbUpdateServices($id, $services);
+		}
 		
 		return;
 	}
@@ -171,6 +182,26 @@ class Establishments extends ModelWithIdBase
 		// Delete services
 		$this->dbDeleteServices($id);
 		
+		return;
+	}
+	
+	protected function updateServices($idEstablishment)
+	{
+		$data = $this->getBodyData();
+		
+		// Check authorization
+		$this->authorizeDefault();
+
+		// TODO: Validate fields
+		
+		// Update
+		if(isset($data[$this->servicesExtraField])) {
+			$services = $data[$this->servicesExtraField];
+			$this->dbUpdateServices($idEstablishment, $services);
+		}
+		
+		// Print response
+		http_response_code(204);
 		return;
 	}
 	

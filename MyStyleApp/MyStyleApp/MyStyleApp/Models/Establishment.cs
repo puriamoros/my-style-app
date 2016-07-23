@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MyStyleApp.Enums;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace MyStyleApp.Models
@@ -38,8 +39,8 @@ namespace MyStyleApp.Models
         [JsonProperty(Required = Required.Always, PropertyName = "hours2")]
         public string Hours2 { get; set; }
 
-        [JsonProperty(Required = Required.Always, PropertyName = "autoConfirm")]
-        public bool AutoConfirm { get; set; }
+        [JsonProperty(Required = Required.Always, PropertyName = "confirmType")]
+        public ConfirmTypeEnum ConfirmType { get; set; }
 
         [JsonProperty(Required = Required.Default, PropertyName = "services")]
         public IList<ShortenService> ShortenServices { get; set; }

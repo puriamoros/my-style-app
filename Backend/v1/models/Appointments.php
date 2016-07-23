@@ -3,6 +3,7 @@
 require_once(__DIR__.'/../data/DBConnection.php');
 require_once(__DIR__.'/../utilities/ApiException.php');
 require_once(__DIR__.'/../data/StatusCodes.php');
+require_once(__DIR__.'/../data/ModelConstants.php');
 require_once(__DIR__.'/../utilities/Authorization.php');
 require_once(__DIR__.'/../utilities/Tables.php');
 require_once(__DIR__.'/ModelWithIdBase.php');
@@ -60,10 +61,30 @@ class Appointments extends ModelWithIdBase
 	{
 		$user = $this->authorizeDefault();
 		
-		// TODO: autorizar tambien al owner a ver las citas de sus establecimientos
-		if(isset($queryParams[$this->appointments->idClient]) && $user[$this->users->id] !== $queryParams[$this->appointments->idClient]) {
+		if(!isset($queryParams[$this->appointments->idClient]) && !isset($queryParams[$this->appointments->idEstablishment])) {
 			throw new ApiException(STATE_NOT_AUTHORIZED, "Not authorized", 401);
 		}
+		
+		if(isset($queryParams[$this->appointments->idClient]) && $user[$this->users->id] !== $queryParams[$this->appointments->idClient]) {
+			// Don't authorize to get appointments from other users
+			throw new ApiException(STATE_NOT_AUTHORIZED, "Not authorized", 401);
+		}
+		
+		// DELETE THIS SINCE CLIENTS NEED TO ASK FOR ESTABLISHMENTS APPOINTMENTS TO BE ABLE TO BOOK
+		/*if(isset($queryParams[$this->appointments->idEstablishment])) {
+			$establishments = DBCommands::dbGet($this->establishments->table, [$this->establishments->id], [$this->establishments->idOwner], [$this->establishments->idOwner => $user[$this->users->id]]);
+			$found = false;
+			for($i = 0; $i < count($establishments) && !$found; $i++) {
+				if($establishments[$i][$this->establishments->id] == $queryParams[$this->appointments->idEstablishment]) {
+					$found = true;
+				}
+			}
+			
+			if(!$found) {
+				// Don't authorize to get appointments of non owned establishments
+				throw new ApiException(STATE_NOT_AUTHORIZED, "Not authorized", 401);
+			}
+		}*/
 	}
 	// TODO: hacer authorize para POST, PUT y DELETE
 	
@@ -152,18 +173,48 @@ class Appointments extends ModelWithIdBase
 	
 	protected function dbUpdate($id, $data)
 	{
-		$this->checkCanUpdate($id, $data);
+		$appointment = $this->checkCanUpdate($id, $data);
 		$result = DBCommands::dbUpdate($this->appointments->table, [$this->appointments->status], $this->idField, $id, $data);
 		
-		$appointment = $this->getElement($id);
-		$status = $data[$this->appointments->status];
-		if($status == 1) {
-			PushNotifications::Notify(
-				$appointment[$this->appointments->idClient],
-				'Appointment confirmed!',
-				'Check details on Appointments section',
-				'appointmentConfirmed'
-			);
+		$idUserToPush = 0;
+		$establishment = DBCommands::dbGetOne($this->establishments->table, $this->establishments->fields, $this->establishments->id, $appointment[$this->appointments->idEstablishment]);
+		$idClient = $appointment[$this->appointments->idClient];
+		$idOwner = $establishment[$this->establishments->idOwner];
+		if($this->authorizedUser[$this->users->id] == $appointment[$this->appointments->idClient]) {
+			$idUserToPush = $idOwner;
+		}
+		else if($this->authorizedUser[$this->users->id] == $establishment[$this->establishments->idOwner]) {
+			$idUserToPush = $idClient;
+		}
+		
+		if($idUserToPush > 0) {
+			$newStatus = $data[$this->appointments->status];
+			if($newStatus == APPOINTMENT_STATUS_CONFIRMED && $idUserToPush == $idClient) {
+				PushNotifications::Notify(
+					$idClient,
+					'Appointment confirmed!',
+					'Check details on Appointments section',
+					'appointmentConfirmed'
+				);
+			}
+			else if($newStatus == APPOINTMENT_STATUS_CANCELLED) {
+				if($idUserToPush == $idClient) {
+					PushNotifications::Notify(
+						$idClient,
+						'Appointment cancelled!',
+						'Check details on Appointments section',
+						'appointmentCancelled'
+					);
+				}
+				else {
+					PushNotifications::Notify(
+						$idOwner,
+						'Appointment cancelled on ' . $establishment[$this->establishments->name] . '!',
+						'Date: ' . $appointment[$this->appointments->date],
+						'appointmentCancelled||' . $appointment[$this->appointments->idEstablishment] . '||' . $appointment[$this->appointments->date]
+					);
+				}
+			}
 		}
 		
 		return $result;
@@ -172,8 +223,23 @@ class Appointments extends ModelWithIdBase
 	protected function dbCreate($data)
 	{
 		$establishment = $this->checkCanCreate($data);
-		$data[$this->appointments->status] = $establishment[$this->establishments->autoConfirm];
-		return DBCommands::dbCreate($this->appointments->table, $this->appointments->fields, $this->appointments->id, $data);
+		$data[$this->appointments->status] =
+			($establishment[$this->establishments->confirmType] == CONFIRM_TYPE_MANUAL) ?
+			APPOINTMENT_STATUS_PENDING :
+			APPOINTMENT_STATUS_CONFIRMED;
+		$result = DBCommands::dbCreate($this->appointments->table, $this->appointments->fields, $this->appointments->id, $data);
+		
+		$status = $result[$this->appointments->status];
+		if($status == APPOINTMENT_STATUS_CONFIRMED || $status == APPOINTMENT_STATUS_PENDING) {
+			PushNotifications::Notify(
+				$establishment[$this->establishments->idOwner],
+				'New appointment on ' . $establishment[$this->establishments->name] . '!',
+				'Date: ' . $result[$this->appointments->date],
+				'appointmentCreated||' . $result[$this->appointments->idEstablishment] . '||' . $result[$this->appointments->date]
+			);
+		}
+		
+		return $result;
 	}
 	
 	public function delete($queryArray)
@@ -182,23 +248,32 @@ class Appointments extends ModelWithIdBase
     }
 	
 	private function checkCanUpdate($id, $data) {
-		$status = $data[$this->appointments->status];
-		if($status == 2) { // Cancel status
-			$appointment = DBCommands::dbGetOne($this->appointments->table, $this->appointments->fields, $this->appointments->id, $id);
-			if(is_null($appointment)) {
-				throw new ApiException(STATE_DB_ERROR, "Appointment not found");
-			}
+		$appointment = DBCommands::dbGetOne($this->appointments->table, $this->appointments->fields, $this->appointments->id, $id);
+		if(is_null($appointment)) {
+			throw new ApiException(STATE_DB_ERROR, "Appointment not found");
+		}
+		
+		$currentStatus = $appointment[$this->appointments->status];
+		$newStatus = $data[$this->appointments->status];
+		
+		if(($currentStatus == APPOINTMENT_STATUS_CONFIRMED && $newStatus == APPOINTMENT_STATUS_CANCELLED) ||
+			($currentStatus == APPOINTMENT_STATUS_PENDING && $newStatus == APPOINTMENT_STATUS_CONFIRMED)) {
 			
-			$appointmentStatus = $appointment[$this->appointments->status];
-			if($appointmentStatus == 1) { // Confirmed status
-				$date = $appointment[$this->appointments->date];
-				$intervalInMinutes = (date_create($date)->getTimestamp() - date_create()->getTimestamp()) / 60;
-				
-				if($intervalInMinutes < 24*60) {
+			$date = $appointment[$this->appointments->date];
+			$intervalInMinutes = (date_create($date)->getTimestamp() - date_create()->getTimestamp()) / 60;
+			
+			// Appointments can be accepted or confirmed until one day before the appointment date
+			if($intervalInMinutes < 24*60) {
+				if($newStatus == APPOINTMENT_STATUS_CANCELLED) {
 					throw new ApiException(STATE_APPOINTMENT_CANCELLATION_ERROR, "Too late to cancel the appointment");
+				}
+				else if($newStatus == APPOINTMENT_STATUS_CONFIRMED) {
+					throw new ApiException(STATE_APPOINTMENT_CONFIRMATION_ERROR, "Too late to confirm the appointment");
 				}
 			}
 		}
+		
+		return $appointment;
 	}
 	
 	private function checkCanCreate($data) {

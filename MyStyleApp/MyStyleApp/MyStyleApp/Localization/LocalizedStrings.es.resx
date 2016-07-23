@@ -355,7 +355,10 @@
     <value>Cancelada</value>
   </data>
   <data name="appointment_cancellation_error" xml:space="preserve">
-    <value>El límite de cancelación de una cita es el día antes de la fecha de la cita</value>
+    <value>El límite para cancelar una cita es el día antes de la fecha de la cita</value>
+  </data>
+  <data name="appointment_confirmation_error" xml:space="preserve">
+    <value>El límite para confirmar una cita es el día antes de la fecha de la cita</value>
   </data>
   <data name="appointment_cancel_body" xml:space="preserve">
     <value>Estás a punto de cancelar una cita. ¿Deseas continuar con la cancelación?</value>

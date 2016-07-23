@@ -54,6 +54,7 @@
     <Compile Include="Enums\AccountModeEnum.cs" />
     <Compile Include="Enums\AppointmentStatusEnum.cs" />
     <Compile Include="Enums\BackendStatusCodeEnum.cs" />
+    <Compile Include="Enums\ConfirmTypeEnum.cs" />
     <Compile Include="Enums\EstablishmentTypeEnum.cs" />
     <Compile Include="Enums\ProvinceEnum.cs" />
     <Compile Include="Enums\UserTypeEnum.cs" />

@@ -50,16 +50,58 @@ namespace MyStyleApp.ViewModels
             this.CancelCommand = new Command<Appointment>(this.CancelAsync, this.CanCancel);
             this.ConfirmCommand = new Command<Appointment>(this.ConfirmAsync, this.CanConfirm);
 
-            MessagingCenter.Subscribe<string>(this, "pushNotificationReceived", this.OnPushNotificacionReceived);
-
             this.InitializeAsync();
+
+            this.SubscribeToMessages();
+        }
+
+        private void SubscribeToMessages()
+        {
+            MessagingCenter.Subscribe<string>(this, "userLogin", (userType) =>
+            {
+                if (userType != UserTypeEnum.Client.ToString())
+                {
+                    MessagingCenter.Subscribe<string>(this, "pushNotificationReceived", this.OnPushNotificacionReceived);
+                }
+            });
+            MessagingCenter.Subscribe<string>(this, "userLogout", (userType) =>
+            {
+                if (userType != UserTypeEnum.Client.ToString())
+                {
+                    MessagingCenter.Unsubscribe<string>(this, "pushNotificationReceived");
+                }
+            });
+
+            // Need to subscribe on ctor as well since first userLogin message is delivered before this object is created
+            MessagingCenter.Subscribe<string>(this, "pushNotificationReceived", this.OnPushNotificacionReceived);
         }
 
         private void OnPushNotificacionReceived(string context)
         {
-            if (context == "appointmentCancelled" || context == "appointmentPending")
+            if (context.StartsWith("appointmentCancelled") || context.StartsWith("appointmentPending"))
             {
-                this.InitializeAsync();
+                string[] split = context.Split(new string[] { "||" }, StringSplitOptions.RemoveEmptyEntries);
+                if(split.Length == 3)
+                {
+                    try
+                    {
+                        int idEstablishment = int.Parse(split[1]);
+                        DateTime date = DateTime.Parse(split[2]);
+
+                        if(idEstablishment == this.SelectedEstablishment.Id &&
+                            date.Year == this.Date.Year &&
+                            date.Month == this.Date.Month &&
+                            date.Day == this.Date.Day)
+                        {
+                            this.OnDataChanged();
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                }
             }
         }
 
@@ -225,11 +267,29 @@ namespace MyStyleApp.ViewModels
                 await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    await this._appointmentsService.UpdateAppointmentStatusAsync(appointment, AppointmentStatusEnum.Confirmed);
-                    appointment.Status = AppointmentStatusEnum.Confirmed;
-                    this.RefreshAppointmentsList();
-                    this.CancelCommand.ChangeCanExecute();
-                    this.ConfirmCommand.ChangeCanExecute();
+                    try
+                    {
+                        await this._appointmentsService.UpdateAppointmentStatusAsync(appointment, AppointmentStatusEnum.Confirmed);
+                        appointment.Status = AppointmentStatusEnum.Confirmed;
+                        this.RefreshAppointmentsList();
+                        this.CancelCommand.ChangeCanExecute();
+                        this.ConfirmCommand.ChangeCanExecute();
+                    }
+                    catch (BackendException ex)
+                    {
+                        if (ex.BackendError.State == (int)BackendStatusCodeEnum.StateAppointmentConfirmationError)
+                        {
+                            await this.UserNotificator.DisplayAlert(
+                                this.LocalizedStrings.GetString("error"),
+                                this.LocalizedStrings.GetString("appointment_confirmation_error"),
+                                this.LocalizedStrings.GetString("ok"));
+                            return;
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
                 });
             }
         }
@@ -238,7 +298,7 @@ namespace MyStyleApp.ViewModels
         {
             if (appointment != null)
             {
-                return appointment.Status != AppointmentStatusEnum.Confirmed;
+                return appointment.Status == AppointmentStatusEnum.Pending;
             }
             return false;
         }

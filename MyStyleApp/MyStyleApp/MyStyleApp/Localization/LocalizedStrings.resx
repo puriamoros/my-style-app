@@ -357,6 +357,9 @@
   <data name="appointment_cancellation_error" xml:space="preserve">
     <value>The cancellation limit for an appointment es one day before the appointment date</value>
   </data>
+  <data name="appointment_confirmation_error" xml:space="preserve">
+    <value>The confirmation limit for an appointment es one day before the appointment date</value>
+  </data>
   <data name="appointment_cancel_body" xml:space="preserve">
     <value>You are about to cancel an appointment. Do you want to continue with the cancellation?</value>
   </data>

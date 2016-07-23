@@ -17,6 +17,7 @@ namespace MyStyleApp.Enums
         StateDuplicatedKeyError,
         StateEstablishmentClosed,
         StateEstablishmentFull,
-        StateAppointmentCancellationError
+        StateAppointmentCancellationError,
+        StateAppointmentConfirmationError
     }
 }

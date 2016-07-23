@@ -30,7 +30,7 @@ class Tables
 				'concurrence',
 				'hours1',
 				'hours2',
-				'autoConfirm'
+				'confirmType'
 			),
 			'favourites' => array(
 				'id',

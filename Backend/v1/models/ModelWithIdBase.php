@@ -31,9 +31,7 @@ abstract class ModelWithIdBase
 	public function post($queryArray)
     {
 		if(count($queryArray) == 1) {
-			$body = file_get_contents('php://input');
-			$data = json_decode($body);
-			return $this->createElement($data);
+			return $this->createElement();
 		}
 		
 		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
@@ -59,7 +57,8 @@ abstract class ModelWithIdBase
 	
 	protected function authorizeDefault()
 	{
-		return Authorization::authorizeApiKey();
+		$this->authorizedUser = Authorization::authorizeApiKey();
+		return $this->authorizedUser;
 	}
 	
 	protected function authorizeGetElements($queryParams)
@@ -209,13 +208,6 @@ abstract class ModelWithIdBase
 	{
 		foreach($fields as $field) {
 			unset($array[$field]);
-		}
-	}
-	
-	protected function setBooleanField(&$array, $field)
-	{
-		if(isset($array[$field])) {
-			$array[$field] = ($array[$field]=='1') ? true : false;
 		}
 	}
 }

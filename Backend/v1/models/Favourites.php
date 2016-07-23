@@ -92,8 +92,6 @@ class Favourites extends ModelWithIdBase
 			
 			$result[$i][$this->favouritesExtraField] = $result[$i][$favouritesIdFieldRenamed];
 			unset($result[$i][$favouritesIdFieldRenamed]);
-			
-			$this->setBooleanField($result[$i], $this->establishments->autoConfirm);
 		}
 		
 		return $result;

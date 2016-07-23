@@ -3,7 +3,7 @@
 require_once(__DIR__.'/ApiException.php');
 require_once(__DIR__.'/../data/StatusCodes.php');
 require_once(__DIR__.'/../data/PushConstants.php');
-require_once(__DIR__.'/../data/PlatformConstants.php');
+require_once(__DIR__.'/../data/ModelConstants.php');
 require_once(__DIR__.'/../models/Users.php');
 require_once(__DIR__.'/Tables.php');
 
@@ -17,13 +17,13 @@ class PushNotifications {
 			$platform = $result[Tables::getInstance()->users->platform];
 			$pushToken = $result[Tables::getInstance()->users->pushToken];
 			$method = null;
-			if($platform === WINDOWS || $platform === WIN_PHONE) {
+			if($platform === PLATFORM_WINDOWS || $platform === PLATFORM_WIN_PHONE) {
 				$method = 'windows';
 			}
-			else if($platform === ANDROID) {
+			else if($platform === PLATFORM_ANDROID) {
 				$method = 'android';
 			}
-			else if($platform === IOS) {
+			else if($platform === PLATFORM_IOS) {
 				$method = 'iOS';
 			}
 			

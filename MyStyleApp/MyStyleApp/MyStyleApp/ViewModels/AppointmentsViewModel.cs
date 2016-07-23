@@ -67,7 +67,7 @@ namespace MyStyleApp.ViewModels
 
         private void OnPushNotificacionReceived(string context)
         {
-            if (context == "appointmentConfirmed")
+            if (context == "appointmentConfirmed" || context == "appointmentCancelled")
             {
                 this.InitializeAsync();
             }

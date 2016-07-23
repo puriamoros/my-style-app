@@ -331,14 +331,14 @@ namespace MyStyleApp.ViewModels
                 if(success)
                 {
                     // Show result ok to user
-                    if (this._establishment.AutoConfirm == true)
+                    if (this._establishment.ConfirmType == ConfirmTypeEnum.Automatic)
                     {
                         await this.UserNotificator.DisplayAlert(
                            this.LocalizedStrings.GetString("booking_auto_confirmed_title"),
                            this.LocalizedStrings.GetString("booking_auto_confirmed_body"),
                            this.LocalizedStrings.GetString("ok"));
                     }
-                    else
+                    else // Manual
                     {
                         await this.UserNotificator.DisplayAlert(
                            this.LocalizedStrings.GetString("booking_requested_title"),

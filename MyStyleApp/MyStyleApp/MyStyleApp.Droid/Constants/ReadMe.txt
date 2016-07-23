@@ -1,0 +1,1 @@
+DroidAppConstants.cs not added to repository for security reasons

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyStyleApp.WinPhone.Constants;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -72,6 +73,7 @@ namespace MyStyleApp.WinPhone
                 rootFrame.CacheSize = 1;
 
                 Xamarin.Forms.Forms.Init(e);
+                Xamarin.FormsMaps.Init(WinPhoneAppConstants.MAPS_AUTHENTICATION_TOKEN);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {

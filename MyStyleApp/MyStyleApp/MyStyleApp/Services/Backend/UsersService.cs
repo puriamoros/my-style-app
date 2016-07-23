@@ -24,7 +24,6 @@ namespace MyStyleApp.Services.Backend
 
         private async void OnPushNotificationTokenReceived(string token)
         {
-            System.Diagnostics.Debug.WriteLine("Push notifications token received: " + token);
             if(this.LoggedUser != null)
             {
                 try

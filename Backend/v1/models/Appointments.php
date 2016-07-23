@@ -29,6 +29,9 @@ class Appointments extends ModelWithIdBase
 		// Services table data
 		$this->services = Tables::getInstance()->services;
 		
+		// Staff table data
+		$this->staff = Tables::getInstance()->staff;
+		
 		// Fields for extra data
 		$this->fromDate = 'from';
 		$this->toDate = 'to';
@@ -176,44 +179,38 @@ class Appointments extends ModelWithIdBase
 		$appointment = $this->checkCanUpdate($id, $data);
 		$result = DBCommands::dbUpdate($this->appointments->table, [$this->appointments->status], $this->idField, $id, $data);
 		
-		$idUserToPush = 0;
-		$establishment = DBCommands::dbGetOne($this->establishments->table, $this->establishments->fields, $this->establishments->id, $appointment[$this->appointments->idEstablishment]);
+		$notifyClient = true;
 		$idClient = $appointment[$this->appointments->idClient];
-		$idOwner = $establishment[$this->establishments->idOwner];
-		if($this->authorizedUser[$this->users->id] == $appointment[$this->appointments->idClient]) {
-			$idUserToPush = $idOwner;
-		}
-		else if($this->authorizedUser[$this->users->id] == $establishment[$this->establishments->idOwner]) {
-			$idUserToPush = $idClient;
+		if($this->authorizedUser[$this->users->id] == $idClient) {
+			$notifyClient = false;
 		}
 		
-		if($idUserToPush > 0) {
-			$newStatus = $data[$this->appointments->status];
-			if($newStatus == APPOINTMENT_STATUS_CONFIRMED && $idUserToPush == $idClient) {
-				PushNotifications::Notify(
+		$newStatus = $data[$this->appointments->status];
+		if($newStatus == APPOINTMENT_STATUS_CONFIRMED && $notifyClient) {
+			PushNotifications::NotifyUser(
+				$idClient,
+				'Appointment confirmed!',
+				'Check details on Appointments section',
+				'appointmentConfirmed'
+			);
+		}
+		else if($newStatus == APPOINTMENT_STATUS_CANCELLED) {
+			if($notifyClient) {
+				PushNotifications::NotifyUser(
 					$idClient,
-					'Appointment confirmed!',
+					'Appointment cancelled!',
 					'Check details on Appointments section',
-					'appointmentConfirmed'
+					'appointmentCancelled'
 				);
 			}
-			else if($newStatus == APPOINTMENT_STATUS_CANCELLED) {
-				if($idUserToPush == $idClient) {
-					PushNotifications::Notify(
-						$idClient,
-						'Appointment cancelled!',
-						'Check details on Appointments section',
-						'appointmentCancelled'
-					);
-				}
-				else {
-					PushNotifications::Notify(
-						$idOwner,
-						'Appointment cancelled on ' . $establishment[$this->establishments->name] . '!',
-						'Date: ' . $appointment[$this->appointments->date],
-						'appointmentCancelled||' . $appointment[$this->appointments->idEstablishment] . '||' . $appointment[$this->appointments->date]
-					);
-				}
+			else {
+				$establishment = DBCommands::dbGetOne($this->establishments->table, $this->establishments->fields, $this->establishments->id, $appointment[$this->appointments->idEstablishment]);
+				PushNotifications::NotifyEstablishment(
+					$establishment,
+					'Appointment cancelled!',
+					$establishment[$this->establishments->name] . ': ' . $appointment[$this->appointments->date],
+					'appointmentCancelled||' . $appointment[$this->appointments->idEstablishment] . '||' . $appointment[$this->appointments->date]
+				);
 			}
 		}
 		
@@ -231,10 +228,10 @@ class Appointments extends ModelWithIdBase
 		
 		$status = $result[$this->appointments->status];
 		if($status == APPOINTMENT_STATUS_CONFIRMED || $status == APPOINTMENT_STATUS_PENDING) {
-			PushNotifications::Notify(
-				$establishment[$this->establishments->idOwner],
-				'New appointment on ' . $establishment[$this->establishments->name] . '!',
-				'Date: ' . $result[$this->appointments->date],
+			PushNotifications::NotifyEstablishment(
+				$establishment,
+				'New appointment!',
+				$establishment[$this->establishments->name] . ': ' . $result[$this->appointments->date],
 				'appointmentCreated||' . $result[$this->appointments->idEstablishment] . '||' . $result[$this->appointments->date]
 			);
 		}

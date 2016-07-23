@@ -117,5 +117,31 @@ class Staff extends Users
 		
 		return $result;
 	}
+	
+	public static function getStaffPlatform($establishment)
+	{
+		$idOwner = $establishment[Tables::getInstance()->establishments->idOwner];
+		$staff = DBCommands::dbGet(
+			Tables::getInstance()->staff->table,
+			[Tables::getInstance()->staff->idUser],
+			[Tables::getInstance()->staff->idEstablishment],
+			[Tables::getInstance()->staff->idEstablishment => $establishment[Tables::getInstance()->establishments->id]]);
+		array_push($staff, array(Tables::getInstance()->staff->idUser => $idOwner));
+		
+		$staffIds = array();
+		for ($i = 0; $i < count($staff); $i++) {
+			array_push($staffIds, $staff[$i][Tables::getInstance()->staff->idUser]);
+		}
+	
+		// Get platform and pushToken
+		$fields = array(
+			Tables::getInstance()->users->platform,
+			Tables::getInstance()->users->pushToken
+		);
+		$additionalConditions = array(
+			new Condition(Tables::getInstance()->users->id, 'in', '(' . implode(',', $staffIds) . ')', false));
+			
+		return DBCommands::dbGet(Tables::getInstance()->users->table, $fields, [], [], $additionalConditions);
+	}
 }
 	

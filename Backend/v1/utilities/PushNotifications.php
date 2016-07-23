@@ -5,32 +5,48 @@ require_once(__DIR__.'/../data/StatusCodes.php');
 require_once(__DIR__.'/../data/PushConstants.php');
 require_once(__DIR__.'/../data/ModelConstants.php');
 require_once(__DIR__.'/../models/Users.php');
+require_once(__DIR__.'/../models/Staff.php');
 require_once(__DIR__.'/Tables.php');
 
 // Server file
 class PushNotifications {
 
-	public static function Notify($idUser, $title, $body, $context)
+	public static function NotifyUser($idUser, $title, $body, $context)
 	{
-		$result = Users::getPlatform($idUser);
+		$result = Users::getUserPlatform($idUser);
 		if(!is_null($result)) {
 			$platform = $result[Tables::getInstance()->users->platform];
 			$pushToken = $result[Tables::getInstance()->users->pushToken];
-			$method = null;
-			if($platform === PLATFORM_WINDOWS || $platform === PLATFORM_WIN_PHONE) {
-				$method = 'windows';
-			}
-			else if($platform === PLATFORM_ANDROID) {
-				$method = 'android';
-			}
-			else if($platform === PLATFORM_IOS) {
-				$method = 'iOS';
-			}
-			
-			if(!is_null($method))
-			{
-				self::$method($pushToken, $title, $body, $context);
-			}
+			self::Notify($platform, $pushToken, $title, $body, $context);
+		}
+	}
+	
+	public static function NotifyEstablishment($establisment, $title, $body, $context)
+	{
+		$results = Staff::getStaffPlatform($establisment);
+		foreach($results as $result) {
+			$platform = $result[Tables::getInstance()->users->platform];
+			$pushToken = $result[Tables::getInstance()->users->pushToken];
+			self::Notify($platform, $pushToken, $title, $body, $context);
+		}
+	}
+	
+	private static function Notify($platform, $pushToken, $title, $body, $context)
+	{
+		$method = null;
+		if($platform === PLATFORM_WINDOWS || $platform === PLATFORM_WIN_PHONE) {
+			$method = 'windows';
+		}
+		else if($platform === PLATFORM_ANDROID) {
+			$method = 'android';
+		}
+		else if($platform === PLATFORM_IOS) {
+			$method = 'iOS';
+		}
+		
+		if(!is_null($method))
+		{
+			self::$method($pushToken, $title, $body, $context);
 		}
 	}
 	
@@ -125,7 +141,8 @@ class PushNotifications {
 			// Close connection
 			curl_close($ch);
 
-			//return $info['http_code'];
+			//throw new ApiException(STATE_INVALID_URL, $info['http_code']);
+			//throw new ApiException(STATE_INVALID_URL, $response);
 			return $response;
         }
     }

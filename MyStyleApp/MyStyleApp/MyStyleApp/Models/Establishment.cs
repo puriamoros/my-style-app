@@ -42,6 +42,12 @@ namespace MyStyleApp.Models
         [JsonProperty(Required = Required.Always, PropertyName = "confirmType")]
         public ConfirmTypeEnum ConfirmType { get; set; }
 
+        [JsonProperty(Required = Required.Always, PropertyName = "latitude")]
+        public double Latitude { get; set; }
+
+        [JsonProperty(Required = Required.Always, PropertyName = "longitude")]
+        public double Longitude { get; set; }
+
         [JsonProperty(Required = Required.Default, PropertyName = "services")]
         public IList<ShortenService> ShortenServices { get; set; }
 

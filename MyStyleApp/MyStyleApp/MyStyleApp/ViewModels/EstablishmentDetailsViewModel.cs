@@ -37,6 +37,7 @@ namespace MyStyleApp.ViewModels
         public Command BookCommand { get; private set; }
         public ICommand AddToFavouritesCommand { get; private set; }
         public ICommand DeleteFavouriteCommand { get; private set; }
+        public ICommand ShowMapCommand { get; private set; }
 
         public EstablishmentDetailsViewModel(
             INavigator navigator,
@@ -53,6 +54,7 @@ namespace MyStyleApp.ViewModels
             this.BookCommand = new Command(this.BookAsync, this.CanBook);
             this.AddToFavouritesCommand = new Command(this.AddToFavouritesAsync);
             this.DeleteFavouriteCommand = new Command(this.DeleteFavouriteAsync);
+            this.ShowMapCommand = new Command(this.ShowMapAsync);
 
             this._favouritesService = favouritesService;
             this._serviceCategoriesService = serviceCategoriesService;
@@ -301,6 +303,18 @@ namespace MyStyleApp.ViewModels
                 {
                     await this._favouritesService.DeleteFavouriteAsync(this.Establishment);
                     MessagingCenter.Send<Establishment>(this.Establishment, "favouriteDeleted");
+                });
+        }
+
+        private async void ShowMapAsync()
+        {
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    await this.PushNavPageAsync<MapViewModel>((mapVM) =>
+                    {
+                        mapVM.Initialize(this.Establishment);
+                    });
                 });
         }
 

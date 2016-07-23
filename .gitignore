@@ -11,3 +11,5 @@ MyStyleApp/MyStyleApp/MyStyleApp.WinPhone/obj
 *.csproj.user
 Thumbs.db
 Backend/v1/data/PushConstants.php
+MyStyleApp/MyStyleApp/MyStyleApp.Droid/Constants/DroidAppConstants.cs
+MyStyleApp/MyStyleApp/MyStyleApp.WinPhone/Constants/WinPhoneAppConstants.cs

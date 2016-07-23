@@ -15,15 +15,13 @@ namespace MyStyleApp.WinPhone.Services
             var uri = channel.Uri;
             channel.PushNotificationReceived += Channel_PushNotificationReceived;
 
-            //System.Diagnostics.Debug.WriteLine(channel.ExpirationTime);
-            System.Diagnostics.Debug.WriteLine("Channel uri received: " + uri);
+            System.Diagnostics.Debug.WriteLine("Channel uri received");
 
             Xamarin.Forms.MessagingCenter.Send<string>(uri, "pushNotificationTokenReceived");
         }
 
         private void Channel_PushNotificationReceived(PushNotificationChannel sender, PushNotificationReceivedEventArgs args)
         {
-            System.Diagnostics.Debug.WriteLine("Notification received: " + args.NotificationType.ToString());
             switch (args.NotificationType)
             {
                 case PushNotificationType.Toast:
@@ -33,7 +31,6 @@ namespace MyStyleApp.WinPhone.Services
                     {
                         context = nodeList.Item(0).InnerText;
                     }
-                    System.Diagnostics.Debug.WriteLine("Notification context: " + context);
                     Xamarin.Forms.MessagingCenter.Send<string>(context, "pushNotificationReceived");
                     break;
                 case PushNotificationType.Tile:

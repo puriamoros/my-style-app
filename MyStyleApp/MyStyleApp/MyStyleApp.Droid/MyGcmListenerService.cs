@@ -14,10 +14,6 @@ namespace MyStyleApp.Droid
             var title = data.GetString("title");
             var body = data.GetString("body");
             var context = data.GetString("context");
-            Log.Debug("MyStyleApp", "From:    " + from);
-            Log.Debug("MyStyleApp", "Title: " + title);
-            Log.Debug("MyStyleApp", "Body: " + body);
-            Log.Debug("MyStyleApp", "Context: " + context);
             SendNotification(title, body, context);
         }
 

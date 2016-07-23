@@ -420,4 +420,7 @@
   <data name="notes" xml:space="preserve">
     <value>Notas</value>
   </data>
+  <data name="map" xml:space="preserve">
+    <value>Mapa</value>
+  </data>
 </root>

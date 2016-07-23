@@ -48,11 +48,15 @@
     </array>
     <key>UILaunchStoryboardName</key>
     <string>LaunchScreen</string>
-	<key>CFBundleLocalizations</key>
-	<array>
-		<string>es</string>
-	</array>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+    <key>CFBundleLocalizations</key>
+    <array>
+      <string>es</string>
+    </array>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Can we use your location</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We are using your location</string>
   </dict>
 </plist>

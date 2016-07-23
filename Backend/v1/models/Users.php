@@ -298,16 +298,13 @@ class Users extends ModelWithIdBase
 		return null;
 	}
 	
-	public static function getPlatform($id)
+	public static function getUserPlatform($idUser)
 	{
-		// Check authorization
-		Authorization::authorizeApiKey();
-			
 		// Get platform and pushToken
 		$fields = array(
 			Tables::getInstance()->users->platform,
 			Tables::getInstance()->users->pushToken
 		);
-		return DBCommands::dbGetOne(Tables::getInstance()->users->table, $fields, Tables::getInstance()->users->id, $id);
+		return DBCommands::dbGetOne(Tables::getInstance()->users->table, $fields, Tables::getInstance()->users->id, $idUser);
 	}
 }

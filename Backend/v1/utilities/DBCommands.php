@@ -35,7 +35,7 @@ class DBCommands
 			if(!is_null($additionalConditions)) {
 				foreach($additionalConditions as $condition) {
 					$command .= $where ? " AND " : " WHERE ";
-					$command .= $condition->field . $condition->operator . (($condition->doBindParam) ? "?" : $condition->value);
+					$command .= $condition->field . ' ' . $condition->operator . ' ' . (($condition->doBindParam) ? "?" : $condition->value);
 					$where = true;
 				}
 			}
@@ -96,7 +96,7 @@ class DBCommands
 				$on = false;
 				foreach($joinConditions[$i] as $condition) {
 					$command .= $on ? " AND " : " ON ";
-					$command .= $condition->field . $condition->operator . (($condition->doBindParam) ? "?" : $condition->value);
+					$command .= $condition->field . ' ' . $condition->operator . ' ' . (($condition->doBindParam) ? "?" : $condition->value);
 					$on = true;
 				}
 			}
@@ -111,7 +111,7 @@ class DBCommands
 			if(!is_null($additionalConditions)) {
 				foreach($additionalConditions as $condition) {
 					$command .= $where ? " AND " : " WHERE ";
-					$command .= $condition->field . $condition->operator . (($condition->doBindParam) ? "?" : $condition->value);
+					$command .= $condition->field . ' ' . $condition->operator . ' ' . (($condition->doBindParam) ? "?" : $condition->value);
 					$where = true;
 				}
 			}
@@ -244,7 +244,7 @@ class DBCommands
 				$on = false;
 				foreach($joinConditions[$i] as $condition) {
 					$command .= $on ? " AND " : " ON ";
-					$command .= $condition->field . $condition->operator . (($condition->doBindParam) ? "?" : $condition->value);
+					$command .= $condition->field . ' ' . $condition->operator . ' ' . (($condition->doBindParam) ? "?" : $condition->value);
 					$on = true;
 				}
 			}

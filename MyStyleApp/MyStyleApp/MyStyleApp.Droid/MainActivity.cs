@@ -22,6 +22,7 @@ namespace MyStyleApp.Droid
             base.ActionBar.Hide();
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
+            Xamarin.FormsMaps.Init(this, bundle);
             LoadApplication(new App());
 
             base.ActionBar.Show();

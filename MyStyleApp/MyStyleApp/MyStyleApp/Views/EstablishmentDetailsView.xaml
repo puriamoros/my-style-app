@@ -4,6 +4,7 @@
              x:Class="MyStyleApp.Views.EstablishmentDetailsView"
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
              xmlns:views="clr-namespace:MyStyleApp.Views"
+             xmlns:gestures="clr-namespace:MyStyleApp.Views.Gestures"
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[establishment_details]}">
   <ScrollView>
@@ -33,11 +34,13 @@
             </Grid.ColumnDefinitions>
             <RelativeLayout Grid.Column="0" VerticalOptions="Start" >
               <Image Aspect="AspectFit" Source="Marker.png"
-                RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                gestures:TappedGesture.Command="{Binding ShowMapCommand}"/>
             </RelativeLayout>
             <StackLayout Grid.Column="1">
               <Label Style="{StaticResource MediumTextStyle}"
-            Text="{Binding Establishment.Address}" SizeChanged="OnLabelSizeChanged"/>
+                Text="{Binding Establishment.Address}" SizeChanged="OnLabelSizeChanged"
+                gestures:TappedGesture.Command="{Binding ShowMapCommand}"/>
             </StackLayout>
           </Grid>
                    

@@ -78,7 +78,8 @@ namespace MyStyleApp.ViewModels
 
         private void OnPushNotificacionReceived(string context)
         {
-            if (context.StartsWith("appointmentCancelled") || context.StartsWith("appointmentPending"))
+            if (this.SelectedEstablishment != null &&
+                (context.StartsWith("appointmentCancelled") || context.StartsWith("appointmentCreated")))
             {
                 string[] split = context.Split(new string[] { "||" }, StringSplitOptions.RemoveEmptyEntries);
                 if(split.Length == 3)

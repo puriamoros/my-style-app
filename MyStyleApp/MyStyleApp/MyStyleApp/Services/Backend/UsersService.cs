@@ -68,7 +68,12 @@ namespace MyStyleApp.Services.Backend
             UserTypeEnum userType = this.LoggedUser.UserType;
 
             // Delete user<->platform association
-            UserPlatform userPlatform = new UserPlatform();
+            UserPlatform userPlatform = new UserPlatform()
+            {
+                Platform = "",
+                PushToken = "",
+                LanguageCode = ""
+            };
             await this.UpdatePlatformAsync(userPlatform);
 
             await this.HttpService.DeleteApiKeyAuthorizationAsync();

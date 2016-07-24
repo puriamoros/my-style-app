@@ -14,10 +14,16 @@ namespace MyStyleApp.Services.Backend
     public class UsersService : BackendServiceBase, IUsersService
     {
         private IPushNotificationsService _pushNotificationsService;
-        
-        public UsersService(HttpService httpService, IPushNotificationsService pushNotificationsService) :
+        private LocalizedStringsService _localizedStringsService;
+
+
+        public UsersService(
+            HttpService httpService,
+            LocalizedStringsService localizedStringsService,
+            IPushNotificationsService pushNotificationsService) :
             base(httpService)
         {
+            this._localizedStringsService = localizedStringsService;
             this._pushNotificationsService = pushNotificationsService;
             MessagingCenter.Subscribe<string>(this, "pushNotificationTokenReceived", this.OnPushNotificationTokenReceived);
         }
@@ -29,7 +35,13 @@ namespace MyStyleApp.Services.Backend
                 try
                 {
                     // Create user<->platform association
-                    await this.UpdatePlatformAsync(this.LoggedUser.Id, Device.OS.ToString(), token);
+                    UserPlatform userPlatform = new UserPlatform()
+                    {
+                        Platform = Device.OS.ToString(),
+                        PushToken = token,
+                        LanguageCode = this._localizedStringsService.GetString("language_code")
+                    };
+                    await this.UpdatePlatformAsync(userPlatform);
                 }
                 catch (Exception)
                 {
@@ -56,7 +68,8 @@ namespace MyStyleApp.Services.Backend
             UserTypeEnum userType = this.LoggedUser.UserType;
 
             // Delete user<->platform association
-            await this.UpdatePlatformAsync(this.LoggedUser.Id, "", "");
+            UserPlatform userPlatform = new UserPlatform();
+            await this.UpdatePlatformAsync(userPlatform);
 
             await this.HttpService.DeleteApiKeyAuthorizationAsync();
             this.LoggedUser = null;
@@ -127,19 +140,15 @@ namespace MyStyleApp.Services.Backend
                 new object[] { id });
         }
 
-        public async Task UpdatePlatformAsync(int id, string platform, string pushToken)
+        public async Task UpdatePlatformAsync(UserPlatform userPlatform)
         {
-            UserPlatform userPlatform = new UserPlatform();
-            userPlatform.Platform = platform;
-            userPlatform.PushToken = pushToken;
-
             string authorization = await this.HttpService.GetApiKeyAuthorizationAsync();
             await this.HttpService.InvokeWithContentAsync<UserPlatform>(
                 HttpMethod.Put,
                 BackendConstants.PLATFORM_URL,
                 authorization,
                 userPlatform,
-                new object[] { id });
+                new object[] { this.LoggedUser.Id });
         }
 
         public async Task<IList<Staff>> GetStaffAsync(Establishment establishment)

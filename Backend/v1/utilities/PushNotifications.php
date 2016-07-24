@@ -11,22 +11,32 @@ require_once(__DIR__.'/Tables.php');
 // Server file
 class PushNotifications {
 
-	public static function NotifyUser($idUser, $title, $body, $context)
+	public static function NotifyUser($idUser, $translationsMap, $context)
 	{
 		$result = Users::getUserPlatform($idUser);
 		if(!is_null($result)) {
 			$platform = $result[Tables::getInstance()->users->platform];
 			$pushToken = $result[Tables::getInstance()->users->pushToken];
+			
+			$languageCode = (isset($translationsMap['body'][$result[Tables::getInstance()->users->languageCode]])) ? $result[Tables::getInstance()->users->languageCode] : 'en';
+			$title = $translationsMap['title'][$languageCode];
+			$body = $translationsMap['body'][$languageCode];
+			
 			self::Notify($platform, $pushToken, $title, $body, $context);
 		}
 	}
 	
-	public static function NotifyEstablishment($establisment, $title, $body, $context)
+	public static function NotifyEstablishment($establisment, $translationsMap, $context)
 	{
 		$results = Staff::getStaffPlatform($establisment);
 		foreach($results as $result) {
 			$platform = $result[Tables::getInstance()->users->platform];
 			$pushToken = $result[Tables::getInstance()->users->pushToken];
+			
+			$languageCode = (isset($translationsMap['body'][$result[Tables::getInstance()->users->languageCode]])) ? $result[Tables::getInstance()->users->languageCode] : 'en';
+			$title = $translationsMap['title'][$languageCode];
+			$body = $translationsMap['body'][$languageCode];
+			
 			self::Notify($platform, $pushToken, $title, $body, $context);
 		}
 	}

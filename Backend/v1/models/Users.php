@@ -212,11 +212,11 @@ class Users extends ModelWithIdBase
 		Authorization::authorizeApiKey();
 		
 		$data = $this->getBodyData();
-		if(isset($data[$this->users->platform]) && isset($data[$this->users->pushToken])) {
+		if(isset($data[$this->users->platform]) && isset($data[$this->users->pushToken]) && isset($data[$this->users->languageCode])) {
 			// TODO: Validate fields
 			
 			// Update platform and pushToken
-			return DBCommands::dbUpdate($this->table, [$this->users->platform, $this->users->pushToken], $this->idField, $id, $data);
+			return DBCommands::dbUpdate($this->table, [$this->users->platform, $this->users->pushToken, $this->users->languageCode], $this->idField, $id, $data);
 			
 			// Print response
 			http_response_code(204);
@@ -300,10 +300,11 @@ class Users extends ModelWithIdBase
 	
 	public static function getUserPlatform($idUser)
 	{
-		// Get platform and pushToken
+		// Get platform, pushToken and languageCode
 		$fields = array(
 			Tables::getInstance()->users->platform,
-			Tables::getInstance()->users->pushToken
+			Tables::getInstance()->users->pushToken,
+			Tables::getInstance()->users->languageCode
 		);
 		return DBCommands::dbGetOne(Tables::getInstance()->users->table, $fields, Tables::getInstance()->users->id, $idUser);
 	}

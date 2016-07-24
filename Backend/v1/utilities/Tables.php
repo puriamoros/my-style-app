@@ -78,7 +78,8 @@ class Tables
 				'userType',
 				'phone',
 				'platform',
-				'pushToken'
+				'pushToken',
+				'languageCode'
 			)
 		);
 		

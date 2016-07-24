@@ -4,6 +4,7 @@ require_once(__DIR__.'/../data/DBConnection.php');
 require_once(__DIR__.'/../utilities/ApiException.php');
 require_once(__DIR__.'/../data/StatusCodes.php');
 require_once(__DIR__.'/../data/ModelConstants.php');
+require_once(__DIR__.'/../data/DateFormats.php');
 require_once(__DIR__.'/../utilities/Authorization.php');
 require_once(__DIR__.'/../utilities/Tables.php');
 require_once(__DIR__.'/ModelWithIdBase.php');
@@ -187,28 +188,50 @@ class Appointments extends ModelWithIdBase
 		
 		$newStatus = $data[$this->appointments->status];
 		if($newStatus == APPOINTMENT_STATUS_CONFIRMED && $notifyClient) {
+			$idKeyMap = array(
+				59 => 'title',
+				61 => 'body'
+			);
+			$translationsMap = Translations::getInstance()->getTranslationsMap($idKeyMap);
+			
 			PushNotifications::NotifyUser(
 				$idClient,
-				'Appointment confirmed!',
-				'Check details on Appointments section',
+				$translationsMap,
 				'appointmentConfirmed'
 			);
 		}
 		else if($newStatus == APPOINTMENT_STATUS_CANCELLED) {
 			if($notifyClient) {
+				$idKeyMap = array(
+					60 => 'title',
+					61 => 'body'
+				);
+				$translationsMap = Translations::getInstance()->getTranslationsMap($idKeyMap);
+			
 				PushNotifications::NotifyUser(
 					$idClient,
-					'Appointment cancelled!',
-					'Check details on Appointments section',
+					$translationsMap,
 					'appointmentCancelled'
 				);
 			}
 			else {
+				$date = date_create($appointment[$this->appointments->date]);
 				$establishment = DBCommands::dbGetOne($this->establishments->table, $this->establishments->fields, $this->establishments->id, $appointment[$this->appointments->idEstablishment]);
+				
+				$idKeyMap = array(
+					60 => 'title',
+					62 => 'body'
+				);
+				$translationsMap = Translations::getInstance()->getTranslationsMap($idKeyMap);
+				foreach($translationsMap['body'] as $key => $value) {
+					$value = str_replace('${ESTABLISHMENT_NAME}', $establishment[$this->establishments->name], $value);
+					$value = str_replace('${APPOINTMENT_DATE}', date_format($date, DateFormats::getInstance()->getDateFormat($key)), $value);
+					$translationsMap['body'][$key] = $value;
+				}
+				
 				PushNotifications::NotifyEstablishment(
 					$establishment,
-					'Appointment cancelled!',
-					$establishment[$this->establishments->name] . ': ' . $appointment[$this->appointments->date],
+					$translationsMap,
 					'appointmentCancelled||' . $appointment[$this->appointments->idEstablishment] . '||' . $appointment[$this->appointments->date]
 				);
 			}
@@ -228,10 +251,22 @@ class Appointments extends ModelWithIdBase
 		
 		$status = $result[$this->appointments->status];
 		if($status == APPOINTMENT_STATUS_CONFIRMED || $status == APPOINTMENT_STATUS_PENDING) {
+			$date = date_create($result[$this->appointments->date]);
+			
+			$idKeyMap = array(
+				58 => 'title',
+				62 => 'body'
+			);
+			$translationsMap = Translations::getInstance()->getTranslationsMap($idKeyMap);
+			foreach($translationsMap['body'] as $key => $value) {
+				$value = str_replace('${ESTABLISHMENT_NAME}', $establishment[$this->establishments->name], $value);
+				$value = str_replace('${APPOINTMENT_DATE}', date_format($date, DateFormats::getInstance()->getDateFormat($key)), $value);
+				$translationsMap['body'][$key] = $value;
+			}
+			
 			PushNotifications::NotifyEstablishment(
 				$establishment,
-				'New appointment!',
-				$establishment[$this->establishments->name] . ': ' . $result[$this->appointments->date],
+				$translationsMap,
 				'appointmentCreated||' . $result[$this->appointments->idEstablishment] . '||' . $result[$this->appointments->date]
 			);
 		}

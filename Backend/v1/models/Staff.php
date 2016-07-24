@@ -133,10 +133,11 @@ class Staff extends Users
 			array_push($staffIds, $staff[$i][Tables::getInstance()->staff->idUser]);
 		}
 	
-		// Get platform and pushToken
+		// Get platform, pushToken and languageCode
 		$fields = array(
 			Tables::getInstance()->users->platform,
-			Tables::getInstance()->users->pushToken
+			Tables::getInstance()->users->pushToken,
+			Tables::getInstance()->users->languageCode
 		);
 		$additionalConditions = array(
 			new Condition(Tables::getInstance()->users->id, 'in', '(' . implode(',', $staffIds) . ')', false));

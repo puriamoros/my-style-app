@@ -61,7 +61,7 @@ namespace MyStyleApp.Services.Backend.Mocks
         { 
         }
 
-        public async Task UpdatePlatformAsync(int id, string platform, string pushToken)
+        public async Task UpdatePlatformAsync(UserPlatform userPlatform)
         {
         }
 

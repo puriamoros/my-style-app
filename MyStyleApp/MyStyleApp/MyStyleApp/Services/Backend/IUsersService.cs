@@ -13,7 +13,7 @@ namespace MyStyleApp.Services.Backend
         Task<ApiKey> RegisterUserAsync(User user);
         Task UpdateUserAsync(int id, User user);
         Task UpdatePasswordAsync(int id, string oldPassword, string newPassword);
-        Task UpdatePlatformAsync(int id, string platform, string pushToken);
+        Task UpdatePlatformAsync(UserPlatform userPlatform);
         Task<IList<Staff>> GetStaffAsync(Establishment establishment);
     }
 }

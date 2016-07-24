@@ -32,6 +32,27 @@ class Translations
 		}
 	}
 	
+	public function getTranslationsMap($idKeyMap) {
+		$ids = array();
+		foreach($idKeyMap as $key => $value) {
+			array_push($ids, $key);
+		}
+	
+		$additionalConditions = array(
+			new Condition($this->translations->id, 'in', '(' . implode(',', $ids) . ')', false));
+		$results = DBCommands::dbGet($this->translations->table, $this->translations->fields, [], [], $additionalConditions);
+		
+		$translatedMap = array();
+		foreach($results as $result) {
+			$key = $idKeyMap[$result[$this->translations->id]];
+			$value = $result;
+			unset($value[$this->translations->id]);
+			$translatedMap[$key] = $value;
+		}
+		
+		return $translatedMap;
+	}
+	
 	public function getTranslated($table, $fields, $idField, $idTranslation, $translationExtraField, $queryParams)
 	{
 		$mixedFields = $fields;

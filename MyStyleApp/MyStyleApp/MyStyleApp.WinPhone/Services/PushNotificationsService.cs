@@ -9,13 +9,20 @@ namespace MyStyleApp.WinPhone.Services
     {
         public void RegisterDevice()
         {
-            var channelTask = PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync().AsTask();
-            channelTask.Wait();
-            var channel = channelTask.Result;
-            var uri = channel.Uri;
-            channel.PushNotificationReceived += Channel_PushNotificationReceived;
-
-            System.Diagnostics.Debug.WriteLine("Channel uri received");
+            string uri = "";
+            try
+            {
+                var channelTask = PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync().AsTask();
+                channelTask.Wait();
+                var channel = channelTask.Result;
+                uri = channel.Uri;
+                channel.PushNotificationReceived += Channel_PushNotificationReceived;
+                System.Diagnostics.Debug.WriteLine("Channel uri received");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error receiving channel uri: "+ ex.ToString());
+            }
 
             Xamarin.Forms.MessagingCenter.Send<string>(uri, "pushNotificationTokenReceived");
         }

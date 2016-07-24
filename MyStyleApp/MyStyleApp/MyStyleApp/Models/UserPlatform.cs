@@ -9,5 +9,8 @@ namespace MyStyleApp.Models
 
         [JsonProperty(Required = Required.Always, PropertyName = "pushToken")]
         public string PushToken { get; set; }
+
+        [JsonProperty(Required = Required.Always, PropertyName = "languageCode")]
+        public string LanguageCode { get; set; }
     }
 }

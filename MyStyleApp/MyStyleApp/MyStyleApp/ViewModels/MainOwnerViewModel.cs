@@ -8,8 +8,8 @@ namespace MyStyleApp.ViewModels
     public class MainOwnerViewModel : NavigableViewModelBase
     {
         private EstablishmentAppointmentsViewModel _establishmentAppointmentsViewModel;
-        private MyEstablishmentsViewModel _myEstablishmentsViewModel;
-        private StaffViewModel _staffViewModel;
+        private OwnerEstablishmentsViewModel _ownerEstablishmentsViewModel;
+        private EstablishmentStaffViewModel _establishmentStaffViewModel;
         private AccountDetailsViewModel _accountDetailsViewModel;
         private IUsersService _userService;
 
@@ -19,28 +19,28 @@ namespace MyStyleApp.ViewModels
             LocalizedStringsService localizedStringsService,
             IUsersService userService,
             EstablishmentAppointmentsViewModel establishmentAppointmentsViewModel,
-            MyEstablishmentsViewModel myEstablishmentsViewModel,
-            StaffViewModel staffViewModel,
+            OwnerEstablishmentsViewModel ownerEstablishmentsViewModel,
+            EstablishmentStaffViewModel establishmentStaffViewModel,
             AccountDetailsViewModel accountDetailsViewModel) : 
             base(navigator, userNotificator, localizedStringsService)
         {
             this._userService = userService;
             this._establishmentAppointmentsViewModel = establishmentAppointmentsViewModel;
-            this._myEstablishmentsViewModel = myEstablishmentsViewModel;
-            this._staffViewModel = staffViewModel;
+            this._ownerEstablishmentsViewModel = ownerEstablishmentsViewModel;
+            this._establishmentStaffViewModel = establishmentStaffViewModel;
             this._accountDetailsViewModel = accountDetailsViewModel;
 
             this._establishmentAppointmentsViewModel.Parent = this;
-            this._myEstablishmentsViewModel.Parent = this;
-            this._staffViewModel.Parent = this;
+            this._ownerEstablishmentsViewModel.Parent = this;
+            this._establishmentStaffViewModel.Parent = this;
             this._accountDetailsViewModel.Parent = this;
         }
 
         public void Initialize()
         {
             this._establishmentAppointmentsViewModel.InitializeAsync();
-            this._myEstablishmentsViewModel.InitializeAsync();
-            this._staffViewModel.InitializeAsync();
+            this._ownerEstablishmentsViewModel.InitializeAsync();
+            this._establishmentStaffViewModel.InitializeAsync();
             this._accountDetailsViewModel.Initialize(this._userService.LoggedUser);
 
             this.SetMainPageTabAsync<EstablishmentAppointmentsViewModel>();
@@ -51,14 +51,14 @@ namespace MyStyleApp.ViewModels
             get { return this._establishmentAppointmentsViewModel; }
         }
 
-        public MyEstablishmentsViewModel MyEstablishmentsViewModel
+        public OwnerEstablishmentsViewModel OwnerEstablishmentsViewModel
         {
-            get { return this._myEstablishmentsViewModel; }
+            get { return this._ownerEstablishmentsViewModel; }
         }
 
-        public StaffViewModel StaffViewModel
+        public EstablishmentStaffViewModel EstablishmentStaffViewModel
         {
-            get { return this._staffViewModel; }
+            get { return this._establishmentStaffViewModel; }
         }
 
         public AccountDetailsViewModel AccountDetailsViewModel

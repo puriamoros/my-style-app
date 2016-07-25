@@ -2,25 +2,25 @@
 {
     public class MainClientView : CustomTabbedPage
     {
-        private AppointmentsView _appointmentsView;
+        private ClientAppointmentsView _clientAppointmentsView;
         private FavouritesView _favouritesView;
-        private SearchView _searchView;
+        private EstablishmentSearchView _establishmentSearchView;
         private AccountDetailsView _accountDetailsView;
 
         public MainClientView(
-            AppointmentsView appointmentsView,
+            ClientAppointmentsView clientAppointmentsView,
             FavouritesView favouritesView,
-            SearchView searchView,
+            EstablishmentSearchView establishmentSearchView,
             AccountDetailsView accountDetailsView)
         {
-            this._appointmentsView = appointmentsView;
+            this._clientAppointmentsView = clientAppointmentsView;
             this._favouritesView = favouritesView;
-            this._searchView = searchView;
+            this._establishmentSearchView = establishmentSearchView;
             this._accountDetailsView = accountDetailsView;
 
-            this.AddNavigationChild(this._appointmentsView, "LocalizedStrings[appointments]", "Calendar.png");
+            this.AddNavigationChild(this._clientAppointmentsView, "LocalizedStrings[appointments]", "Calendar.png");
             this.AddNavigationChild(this._favouritesView, "LocalizedStrings[favourites]", "Star.png");
-            this.AddNavigationChild(this._searchView, "LocalizedStrings[establishments]", "Barbershop.png");
+            this.AddNavigationChild(this._establishmentSearchView, "LocalizedStrings[establishments]", "Barbershop.png");
             this.AddNavigationChild(this._accountDetailsView, "LocalizedStrings[my_account]", "User.png");
         }
     }

@@ -244,7 +244,7 @@
     <value>View details</value>
   </data>
   <data name="delete_favourite" xml:space="preserve">
-    <value>Delete favourite</value>
+    <value>Remove from favourites</value>
   </data>
   <data name="generic_error" xml:space="preserve">
     <value>There has been an error.\nPlease, check your internet connection or try again later.</value>

@@ -332,7 +332,7 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete favourite.
+        ///   Looks up a localized string similar to Remove from favourites.
         /// </summary>
         internal static string delete_favourite {
             get {

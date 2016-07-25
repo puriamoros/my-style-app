@@ -12,7 +12,7 @@ using MyStyleApp.Enums;
 
 namespace MyStyleApp.ViewModels
 {
-    public class SearchViewModel : NavigableViewModelBase
+    public class EstablishmentSearchViewModel : NavigableViewModelBase
     {
         private ProvincesService _provincesService;
         private EstablishmentTypesService _establishmentTypesService;
@@ -32,7 +32,7 @@ namespace MyStyleApp.ViewModels
 
         public Command SearchCommand { get; private set; }
 
-        public SearchViewModel(
+        public EstablishmentSearchViewModel(
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
@@ -231,7 +231,7 @@ namespace MyStyleApp.ViewModels
                     }
                     else
                     {
-                        await this.PushNavPageAsync<EstablishmentsViewModel>((establishmentsVM) =>
+                        await this.PushNavPageAsync<EstablishmentSearchResultsViewModel>((establishmentsVM) =>
                         {
                             establishmentsVM.EstablishmentsList = new ObservableCollection<Establishment>(list);
                             establishmentsVM.SelectedService = this.SelectedService;

@@ -83,7 +83,7 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    await this.SetMainPageTabAsync<SearchViewModel>(async (searchVM) =>
+                    await this.SetMainPageTabAsync<EstablishmentSearchViewModel>(async (searchVM) =>
                     {
                         await searchVM.ExecuteBlockingUIAsync(
                             async () =>

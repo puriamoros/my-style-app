@@ -244,7 +244,7 @@
     <value>Ver detalles</value>
   </data>
   <data name="delete_favourite" xml:space="preserve">
-    <value>Borrar favorito</value>
+    <value>Quitar de favoritos</value>
   </data>
   <data name="generic_error" xml:space="preserve">
     <value>Se ha produciod un error.\nCompruebe que está conectado a internet o inténtelo de nuevo más tarde.</value>

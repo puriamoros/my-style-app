@@ -145,7 +145,7 @@
     <Compile Include="ViewModels\CreateAccountViewModel.cs" />
     <Compile Include="ViewModels\AccountDetailsViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModelBase.cs" />
-    <Compile Include="ViewModels\AppointmentsViewModel.cs" />
+    <Compile Include="ViewModels\ClientAppointmentsViewModel.cs" />
     <Compile Include="Models\Establishment.cs" />
     <Compile Include="ViewModels\BookViewModel.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
@@ -153,11 +153,11 @@
     <Compile Include="ViewModels\EstablishmentDetailsViewModel.cs" />
     <Compile Include="ViewModels\MainOwnerViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
-    <Compile Include="ViewModels\StaffViewModel.cs" />
-    <Compile Include="ViewModels\MyEstablishmentsViewModel.cs" />
-    <Compile Include="ViewModels\EstablishmentsViewModel.cs" />
+    <Compile Include="ViewModels\EstablishmentStaffViewModel.cs" />
+    <Compile Include="ViewModels\OwnerEstablishmentsViewModel.cs" />
+    <Compile Include="ViewModels\EstablishmentSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\FavouritesViewModel.cs" />
-    <Compile Include="ViewModels\SearchViewModel.cs" />
+    <Compile Include="ViewModels\EstablishmentSearchViewModel.cs" />
     <Compile Include="ViewModels\StartViewModel.cs" />
     <Compile Include="ViewModels\NavigableViewModelBase.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -175,8 +175,8 @@
     <Compile Include="Views\AccountViewBase.xaml.cs">
       <DependentUpon>AccountViewBase.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\AppointmentsView.xaml.cs">
-      <DependentUpon>AppointmentsView.xaml</DependentUpon>
+    <Compile Include="Views\ClientAppointmentsView.xaml.cs">
+      <DependentUpon>ClientAppointmentsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BookView.xaml.cs">
       <DependentUpon>BookView.xaml</DependentUpon>
@@ -200,14 +200,14 @@
     <Compile Include="Views\MapView.xaml.cs">
       <DependentUpon>MapView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\StaffView.xaml.cs">
-      <DependentUpon>StaffView.xaml</DependentUpon>
+    <Compile Include="Views\EstablishmentStaffView.xaml.cs">
+      <DependentUpon>EstablishmentStaffView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MyEstablishmentsView.xaml.cs">
-      <DependentUpon>MyEstablishmentsView.xaml</DependentUpon>
+    <Compile Include="Views\OwnerEstablishmentsView.xaml.cs">
+      <DependentUpon>OwnerEstablishmentsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EstablishmentsView.xaml.cs">
-      <DependentUpon>EstablishmentsView.xaml</DependentUpon>
+    <Compile Include="Views\EstablishmentSearchResultsView.xaml.cs">
+      <DependentUpon>EstablishmentSearchResultsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FavouritesView.xaml.cs">
       <DependentUpon>FavouritesView.xaml</DependentUpon>
@@ -218,8 +218,8 @@
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CustomNavigationPage.cs" />
-    <Compile Include="Views\SearchView.xaml.cs">
-      <DependentUpon>SearchView.xaml</DependentUpon>
+    <Compile Include="Views\EstablishmentSearchView.xaml.cs">
+      <DependentUpon>EstablishmentSearchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
@@ -299,7 +299,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\AppointmentsView.xaml">
+    <EmbeddedResource Include="Views\ClientAppointmentsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -311,7 +311,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\SearchView.xaml">
+    <EmbeddedResource Include="Views\EstablishmentSearchView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -323,7 +323,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\EstablishmentsView.xaml">
+    <EmbeddedResource Include="Views\EstablishmentSearchResultsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -353,7 +353,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\MyEstablishmentsView.xaml">
+    <EmbeddedResource Include="Views\OwnerEstablishmentsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -365,7 +365,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\StaffView.xaml">
+    <EmbeddedResource Include="Views\EstablishmentStaffView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

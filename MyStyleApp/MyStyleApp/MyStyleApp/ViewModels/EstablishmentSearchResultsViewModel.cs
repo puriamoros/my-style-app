@@ -14,7 +14,7 @@ using System.Collections.Specialized;
 
 namespace MyStyleApp.ViewModels
 {
-    class EstablishmentsViewModel : NavigableViewModelBase
+    class EstablishmentSearchResultsViewModel : NavigableViewModelBase
     {
         private ObservableCollection<Establishment> _establishmentList;
         private Service _selectedService;
@@ -26,7 +26,7 @@ namespace MyStyleApp.ViewModels
         public ICommand AddToFavouritesCommand { get; private set; }
         public ICommand DeleteFavouriteCommand { get; private set; }
 
-        public EstablishmentsViewModel(
+        public EstablishmentSearchResultsViewModel(
             INavigator navigator, 
             IUserNotificator userNotificator, 
             LocalizedStringsService localizedStringsService,

@@ -7,17 +7,24 @@ namespace MyStyleApp.WinPhone.Services
 {
     public class PushNotificationsService : MyStyleApp.Services.IPushNotificationsService
     {
+
         public void RegisterDevice()
         {
             string uri = "";
             try
             {
                 var channelTask = PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync().AsTask();
-                channelTask.Wait();
-                var channel = channelTask.Result;
-                uri = channel.Uri;
-                channel.PushNotificationReceived += Channel_PushNotificationReceived;
-                System.Diagnostics.Debug.WriteLine("Channel uri received");
+                if(channelTask.Wait(10000))
+                {
+                    var channel = channelTask.Result;
+                    uri = channel.Uri;
+                    channel.PushNotificationReceived += Channel_PushNotificationReceived;
+                    System.Diagnostics.Debug.WriteLine("Channel uri received");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Error receiving channel uri: timeout");
+                }
             }
             catch (Exception ex)
             {

@@ -14,7 +14,7 @@ using System.Collections.Specialized;
 
 namespace MyStyleApp.ViewModels
 {
-    public class MyEstablishmentsViewModel : NavigableViewModelBase
+    public class OwnerEstablishmentsViewModel : NavigableViewModelBase
     {
         private ObservableCollection<Establishment> _establishmentsList;
         private IEstablishmentsService _establishmentsService;       
@@ -22,7 +22,7 @@ namespace MyStyleApp.ViewModels
         public ICommand ViewDetailsCommand { get; private set; }
         public ICommand NewEstablishmentCommand { get; private set; }
 
-        public MyEstablishmentsViewModel(
+        public OwnerEstablishmentsViewModel(
             INavigator navigator, 
             IUserNotificator userNotificator, 
             LocalizedStringsService localizedStringsService,

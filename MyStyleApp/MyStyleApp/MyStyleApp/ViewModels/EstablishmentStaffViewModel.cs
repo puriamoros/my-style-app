@@ -14,7 +14,7 @@ using System.Collections.Specialized;
 
 namespace MyStyleApp.ViewModels
 {
-    public class StaffViewModel : NavigableViewModelBase
+    public class EstablishmentStaffViewModel : NavigableViewModelBase
     {
         private ObservableCollection<Establishment> _establishmentList;
         private ObservableCollection<Staff> _staffList;
@@ -27,7 +27,7 @@ namespace MyStyleApp.ViewModels
         public ICommand ViewDetailsCommand { get; private set; }
         public ICommand NewStaffCommand { get; private set; }
 
-        public StaffViewModel(
+        public EstablishmentStaffViewModel(
             INavigator navigator, 
             IUserNotificator userNotificator, 
             LocalizedStringsService localizedStringsService,

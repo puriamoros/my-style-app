@@ -8,9 +8,9 @@ using Xamarin.Forms;
 
 namespace MyStyleApp.Views
 {
-    public partial class EstablishmentsView : CustomContentPage
+    public partial class OwnerEstablishmentsView : CustomContentPage
     {
-        public EstablishmentsView()
+        public OwnerEstablishmentsView()
         {
             InitializeComponent();
         }

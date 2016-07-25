@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace MyStyleApp.ViewModels
 {
-    public class AppointmentsViewModel : NavigableViewModelBase
+    public class ClientAppointmentsViewModel : NavigableViewModelBase
     {
         private IUsersService _userService;
         private IServicesService _servicesService;
@@ -23,7 +23,7 @@ namespace MyStyleApp.ViewModels
 
         public Command CancelCommand { get; private set; }
 
-        public AppointmentsViewModel(
+        public ClientAppointmentsViewModel(
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,

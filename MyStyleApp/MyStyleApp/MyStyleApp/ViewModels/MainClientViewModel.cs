@@ -7,9 +7,9 @@ namespace MyStyleApp.ViewModels
 {
     public class MainClientViewModel : NavigableViewModelBase
     {
-        private AppointmentsViewModel _appointmentsViewModel;
+        private ClientAppointmentsViewModel _clientAppointmentsViewModel;
         private FavouritesViewModel _favouritesViewModel;
-        private SearchViewModel _searchViewModel;
+        private EstablishmentSearchViewModel _establishmentSearchViewModel;
         private AccountDetailsViewModel _accountDetailsViewModel;
         private IUsersService _userService;
 
@@ -18,37 +18,37 @@ namespace MyStyleApp.ViewModels
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
             IUsersService userService,
-            AppointmentsViewModel appointmentsViewModel,
+            ClientAppointmentsViewModel clientAppointmentsViewModel,
             FavouritesViewModel favouritesViewModel,
-            SearchViewModel searchViewModel,
+            EstablishmentSearchViewModel establishmentSearchViewModel,
             AccountDetailsViewModel accountDetailsViewModel) : 
             base(navigator, userNotificator, localizedStringsService)
         {
             this._userService = userService;
-            this._appointmentsViewModel = appointmentsViewModel;
+            this._clientAppointmentsViewModel = clientAppointmentsViewModel;
             this._favouritesViewModel = favouritesViewModel;
-            this._searchViewModel = searchViewModel;
+            this._establishmentSearchViewModel = establishmentSearchViewModel;
             this._accountDetailsViewModel = accountDetailsViewModel;
 
-            this._appointmentsViewModel.Parent = this;
+            this._clientAppointmentsViewModel.Parent = this;
             this._favouritesViewModel.Parent = this;
-            this._searchViewModel.Parent = this;
+            this._establishmentSearchViewModel.Parent = this;
             this._accountDetailsViewModel.Parent = this;
         }
 
         public void Initialize()
         {
-            this._appointmentsViewModel.InitializeAsync();
+            this._clientAppointmentsViewModel.InitializeAsync();
             this._favouritesViewModel.InitializeAsync();
-            this._searchViewModel.InitializeAsync();
+            this._establishmentSearchViewModel.InitializeAsync();
             this._accountDetailsViewModel.Initialize(this._userService.LoggedUser);
 
-            this.SetMainPageTabAsync<AppointmentsViewModel>();
+            this.SetMainPageTabAsync<ClientAppointmentsViewModel>();
         }
 
-        public AppointmentsViewModel AppointmentsViewModel
+        public ClientAppointmentsViewModel ClientAppointmentsViewModel
         {
-            get { return this._appointmentsViewModel; }
+            get { return this._clientAppointmentsViewModel; }
         }
 
         public FavouritesViewModel FavouritesViewModel
@@ -56,9 +56,9 @@ namespace MyStyleApp.ViewModels
             get { return this._favouritesViewModel; }
         }
 
-        public SearchViewModel SearchViewModel
+        public EstablishmentSearchViewModel EstablishmentSearchViewModel
         {
-            get { return this._searchViewModel; }
+            get { return this._establishmentSearchViewModel; }
         }
 
         public AccountDetailsViewModel AccountDetailsViewModel

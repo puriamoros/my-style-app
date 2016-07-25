@@ -9,12 +9,18 @@ namespace MyStyleApp.Services.Backend
 {
     public interface IEstablishmentsService
     {
-        Task<IList<Establishment>> GetEstablishmentsAsync(
+        Task<IList<Establishment>> SearchEstablishmentsAsync(
             Province province,
             Service service);
 
         Task<Establishment> GetEstablishmentAsync(int id);
 
-        Task<IList<Establishment>> GetMyEstablishmentsAsync();
+        Task<IList<Establishment>> GetOwnerEstablishmentsAsync();
+
+        Task<Establishment> CreateEstablishmentAsync(Establishment establishment);
+
+        Task UpdateEstablishmentAsync(Establishment establishment);
+
+        Task UpdateEstablishmentServicesAsync(Establishment establishment);
     }       
 }

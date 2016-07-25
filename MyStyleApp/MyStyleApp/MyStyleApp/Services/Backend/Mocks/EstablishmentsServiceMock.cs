@@ -9,7 +9,7 @@ namespace MyStyleApp.Services.Backend.Mocks
 {
     public class EstablishmentsServiceMock : IEstablishmentsService
     {
-        public async Task<IList<Establishment>> GetEstablishmentsAsync(
+        public async Task<IList<Establishment>> SearchEstablishmentsAsync(
             Province province,
             Service service)
         {
@@ -85,7 +85,7 @@ namespace MyStyleApp.Services.Backend.Mocks
             return establishment;
         }
 
-        public async Task<IList<Establishment>> GetMyEstablishmentsAsync()
+        public async Task<IList<Establishment>> GetOwnerEstablishmentsAsync()
         {
             IList<Establishment> listEstablishments = new List<Establishment>();
 
@@ -120,6 +120,26 @@ namespace MyStyleApp.Services.Backend.Mocks
             );
 
             return listEstablishments;
+        }
+
+        public async Task<Establishment> CreateEstablishmentAsync(Establishment establishment)
+        {
+            return new Establishment()
+            {
+                Id = 1,
+                Name = "Establecimiento1",
+                Address = "Dirección1",
+                Phone = "951456587",
+                IdEstablishmentType = 1
+            };
+        }
+
+        public async Task UpdateEstablishmentAsync(Establishment establishment)
+        {
+        }
+
+        public async Task UpdateEstablishmentServicesAsync(Establishment establishment)
+        {
         }
     }
 }

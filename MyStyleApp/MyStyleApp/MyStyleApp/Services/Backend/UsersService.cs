@@ -120,7 +120,7 @@ namespace MyStyleApp.Services.Backend
             return apiKey;
         }
 
-        public async Task UpdateUserAsync(int id, User user)
+        public async Task UpdateUserAsync(User user)
         {
             string apiKey = await this.HttpService.GetApiKeyAuthorizationAsync();
             await this.HttpService.InvokeWithContentAsync<User>(
@@ -128,7 +128,7 @@ namespace MyStyleApp.Services.Backend
                 BackendConstants.USER_URL,
                 apiKey,
                 user,
-                new object[] { id });
+                new object[] { this.LoggedUser.Id });
         }
 
         public async Task UpdatePasswordAsync(int id, string oldPassword, string newPassword)
@@ -167,6 +167,30 @@ namespace MyStyleApp.Services.Backend
                     new object[] { establishment.Id });
 
             return staffList;
+        }
+
+        public async Task UpdateStaffAsync(Staff staff)
+        {
+            string apiKey = await this.HttpService.GetApiKeyAuthorizationAsync();
+
+            await this.HttpService.InvokeWithContentAsync<Staff>(
+                HttpMethod.Put,
+                BackendConstants.UPDATE_STAFF_URL,
+                apiKey,
+                staff,
+                new object[] { staff.Id });
+        }
+
+        public async Task<Staff> CreateStaffAsync(Staff staff)
+        {
+            string apiKey = await this.HttpService.GetApiKeyAuthorizationAsync();
+
+            return await this.HttpService.InvokeWithContentAsync<Staff, Staff>(
+                HttpMethod.Post,
+                BackendConstants.CREATE_STAFF_URL,
+                apiKey,
+                staff,
+                null);        
         }
     }
 }

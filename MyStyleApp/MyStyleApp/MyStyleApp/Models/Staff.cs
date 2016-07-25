@@ -10,7 +10,7 @@ namespace MyStyleApp.Models
     public class Staff : User
     {
         [JsonProperty(Required = Required.Always, PropertyName = "idEstablishment")]
-        public string IdEstablishment { get; set; }
+        public int IdEstablishment { get; set; }
 
         [JsonProperty(Required = Required.Default, PropertyName = "staffName")]
         public string StaffName { get; set; }

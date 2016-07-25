@@ -872,6 +872,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Staff account.
+        /// </summary>
+        internal static string staff_account {
+            get {
+                return ResourceManager.GetString("staff_account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Surname.
         /// </summary>
         internal static string surname {
@@ -908,7 +917,7 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Owner.
+        ///   Looks up a localized string similar to Limited staff.
         /// </summary>
         internal static string user_type_2 {
             get {
@@ -931,6 +940,15 @@ namespace MyStyleApp.Localization {
         internal static string user_type_4 {
             get {
                 return ResourceManager.GetString("user_type_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Owner.
+        /// </summary>
+        internal static string user_type_5 {
+            get {
+                return ResourceManager.GetString("user_type_5", resourceCulture);
             }
         }
         

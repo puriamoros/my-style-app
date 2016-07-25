@@ -3,8 +3,9 @@
     public enum UserTypeEnum
     {
         Client = 1,
-        Owner,
+        LimitedStaff,
         Staff,
-        AuthorizedStaff
+        AuthorizedStaff,
+        Owner
     }
 }

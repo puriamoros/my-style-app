@@ -60,6 +60,8 @@
     <Compile Include="Enums\UserTypeEnum.cs" />
     <Compile Include="Exceptions\BackendException.cs" />
     <Compile Include="Models\GenericStatus.cs" />
+    <Compile Include="Models\UserType.cs" />
+    <Compile Include="Models\ShortenServiceListContainer.cs" />
     <Compile Include="Models\Slot.cs" />
     <Compile Include="Models\Staff.cs" />
     <Compile Include="Models\UserPassword.cs" />
@@ -141,6 +143,7 @@
     <Compile Include="Validators\RegexValidator.cs" />
     <Compile Include="Validators\RequiredValidator.cs" />
     <Compile Include="Validators\SimpleValidator.cs" />
+    <Compile Include="ViewModels\StaffAccountDetailsViewModel.cs" />
     <Compile Include="ViewModels\EstablishmentAppointmentsViewModel.cs" />
     <Compile Include="ViewModels\CreateAccountViewModel.cs" />
     <Compile Include="ViewModels\AccountDetailsViewModel.cs" />
@@ -162,6 +165,7 @@
     <Compile Include="ViewModels\NavigableViewModelBase.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainClientViewModel.cs" />
+    <Compile Include="Views\StaffAccountDetailsView.cs" />
     <Compile Include="Views\AppointmentDetailsView.xaml.cs">
       <DependentUpon>AppointmentDetailsView.xaml</DependentUpon>
     </Compile>

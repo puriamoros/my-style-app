@@ -219,7 +219,7 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    var list = await this._establishmentsService.GetEstablishmentsAsync(this.SelectedProvince, this.SelectedService);
+                    var list = await this._establishmentsService.SearchEstablishmentsAsync(this.SelectedProvince, this.SelectedService);
                     //var list = await this._establishmentsService.GetEstablishmentsAsync(new Province() { Id = 1 }, new Service() { Id = 1 });
                     if (list.Count <= 0)
                     {

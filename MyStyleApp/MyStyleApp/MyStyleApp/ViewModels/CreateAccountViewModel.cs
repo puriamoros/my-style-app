@@ -33,7 +33,7 @@ namespace MyStyleApp.ViewModels
             LocalizedStringsService localizedStringsService,
             ValidationService validationService,
             IUsersService usersService) :
-            base(navigator, userNotificator, localizedStringsService)
+            base(navigator, userNotificator, localizedStringsService, usersService)
         {
             this._validationService = validationService;
             this._usersService = usersService;
@@ -52,48 +52,48 @@ namespace MyStyleApp.ViewModels
 
             // Name
             this._validationService.AddValidator(
-                new RequiredValidator(this.Name, STRING_NAME));
+                new RequiredValidator(this.User.Name, STRING_NAME));
             this._validationService.AddValidator(
                 new RegexValidator(
-                    this.Name, RegexConstants.NOT_INSECURE_CHARS,
+                    this.User.Name, RegexConstants.NOT_INSECURE_CHARS,
                     "error_insecure_chars", STRING_NAME));
             this._validationService.AddValidator(
-                new LengthValidator(this.Name, STRING_NAME, 2, 100));
+                new LengthValidator(this.User.Name, STRING_NAME, 2, 100));
 
             // Surname
             this._validationService.AddValidator(
-                new RequiredValidator(this.Surname, STRING_SURNAME));
+                new RequiredValidator(this.User.Surname, STRING_SURNAME));
             this._validationService.AddValidator(
                 new RegexValidator(
-                    this.Surname, RegexConstants.NOT_INSECURE_CHARS,
+                    this.User.Surname, RegexConstants.NOT_INSECURE_CHARS,
                     "error_insecure_chars", STRING_SURNAME));
             this._validationService.AddValidator(
-                new LengthValidator(this.Surname, STRING_SURNAME, 2, 100));
+                new LengthValidator(this.User.Surname, STRING_SURNAME, 2, 100));
 
             // Phone
             this._validationService.AddValidator(
-                new RequiredValidator(this.Phone, STRING_PHONE));
+                new RequiredValidator(this.User.Phone, STRING_PHONE));
             this._validationService.AddValidator(
                 new RegexValidator(
-                    this.Phone, RegexConstants.NOT_INSECURE_CHARS,
+                    this.User.Phone, RegexConstants.NOT_INSECURE_CHARS,
                     "error_insecure_chars", STRING_PHONE));
             this._validationService.AddValidator(
-                new LengthValidator(this.Phone, STRING_PHONE, 9, 9));
+                new LengthValidator(this.User.Phone, STRING_PHONE, 9, 9));
             this._validationService.AddValidator(
                 new RegexValidator(
-                    this.Phone, RegexConstants.PHONE,
+                    this.User.Phone, RegexConstants.PHONE,
                     "error_invalid_field", STRING_PHONE));
 
             // Email
             this._validationService.AddValidator(
-                new RequiredValidator(this.Email, STRING_EMAIL));
+                new RequiredValidator(this.User.Email, STRING_EMAIL));
             this._validationService.AddValidator(
                 new RegexValidator(
-                    this.Email, RegexConstants.NOT_INSECURE_CHARS,
+                    this.User.Email, RegexConstants.NOT_INSECURE_CHARS,
                     "error_insecure_chars", STRING_EMAIL));
             this._validationService.AddValidator(
                 new RegexValidator(
-                    this.Email, RegexConstants.EMAIL,
+                    this.User.Email, RegexConstants.EMAIL,
                     "error_invalid_field", STRING_EMAIL));
 
             // RepeatEmail
@@ -109,18 +109,18 @@ namespace MyStyleApp.ViewModels
                     "error_invalid_field", STRING_EMAIL));
 
             this._validationService.AddValidator(
-                new EqualValidator(this.Email, this.RepeatEmail, STRING_EMAIL, STRING_REPEATED_EMAIL));
+                new EqualValidator(this.User.Email, this.RepeatEmail, STRING_EMAIL, STRING_REPEATED_EMAIL));
 
             // Password
             this._validationService.AddValidator(
-                new RequiredValidator(this.Password, STRING_PASSWORD));
+                new RequiredValidator(this.User.Password, STRING_PASSWORD));
 
             // RepeatPassword
             this._validationService.AddValidator(
                 new RequiredValidator(this.RepeatPassword, STRING_REPEATED_PASSWORD));
 
             this._validationService.AddValidator(
-                new EqualValidator(this.Password, this.RepeatPassword, STRING_PASSWORD, STRING_REPEATED_PASSWORD));
+                new EqualValidator(this.User.Password, this.RepeatPassword, STRING_PASSWORD, STRING_REPEATED_PASSWORD));
 
             return this._validationService.GetValidationError();
         }
@@ -139,17 +139,9 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    User newUser = new User();
-                    newUser.Name = this.Name;
-                    newUser.Surname = this.Surname;
-                    newUser.Email = this.Email;
-                    newUser.Phone = this.Phone;
-                    newUser.Password = this.Password;
-                    newUser.UserType = 0;
-
                     try
                     {
-                        await this._usersService.RegisterUserAsync(newUser);
+                        await this._usersService.RegisterUserAsync(this.User);
                     }
                     catch (BackendException ex)
                     {

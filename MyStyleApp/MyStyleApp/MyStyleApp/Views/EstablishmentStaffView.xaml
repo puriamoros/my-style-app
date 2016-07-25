@@ -66,11 +66,11 @@
                   IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}" />
               </StackLayout>
                 
-              <!--<ViewCell.ContextActions> 
-                <MenuItem Text="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.LocalizedStrings[view_details]}"
-                  Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.ViewDetailsCommand}"
-                  CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
-              </ViewCell.ContextActions>-->
+              <ViewCell.ContextActions> 
+                <MenuItem Text="{Binding Source={x:Reference StaffList}, Path=BindingContext.LocalizedStrings[view_details]}"
+                  Command="{Binding Source={x:Reference StaffList}, Path=BindingContext.ViewDetailsCommand}"
+                  CommandParameter="{Binding Source={x:Reference Staff}, Path=BindingContext}" />
+              </ViewCell.ContextActions>
             </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>

@@ -53,7 +53,7 @@ namespace MyStyleApp.Services.Backend.Mocks
             return apiKey;
         }
 
-        public async Task UpdateUserAsync(int id, User user)
+        public async Task UpdateUserAsync(User user)
         {
         }
 
@@ -91,6 +91,19 @@ namespace MyStyleApp.Services.Backend.Mocks
             );
 
             return listStaff;
+        }
+
+        public async Task UpdateStaffAsync(Staff staff)
+        {
+        }
+
+        public async Task<Staff> CreateStaffAsync(Staff staff)
+        {
+            return new Staff()
+            {
+                Id = 1,
+                Name = "Empleado1",
+            };
         }
     }
 }

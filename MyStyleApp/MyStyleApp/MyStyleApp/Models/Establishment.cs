@@ -53,5 +53,15 @@ namespace MyStyleApp.Models
 
         [JsonIgnore]
         public string ProvinceName { get; set; }
+
+        // Need this to solve an extrange behaviour in BindablePicker
+        public override bool Equals(object obj)
+        {
+            if(obj is Establishment)
+            {
+                return ((Establishment)obj).Id == this.Id;
+            }
+            return false;
+        }
     }
 }

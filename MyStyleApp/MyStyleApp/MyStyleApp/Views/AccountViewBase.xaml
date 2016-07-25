@@ -31,7 +31,7 @@
             Style="{StaticResource MediumTextStyle}" />
           <Entry
             Placeholder="{Binding LocalizedStrings[name_placeholder]}"
-            Text="{Binding Name}"
+            Text="{Binding User.Name}"
             Keyboard="Text"
             IsEnabled="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=!View}" />
         </StackLayout>
@@ -41,7 +41,7 @@
             Style="{StaticResource MediumTextStyle}" />
           <Entry
             Placeholder="{Binding LocalizedStrings[surname_placeholder]}"
-            Text="{Binding Surname}"
+            Text="{Binding User.Surname}"
             Keyboard="Text"
             IsEnabled="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=!View}" />
         </StackLayout>
@@ -51,7 +51,7 @@
                 Style="{StaticResource MediumTextStyle}" />
           <Entry
             Placeholder="{Binding LocalizedStrings[phone_placeholder]}"
-            Text="{Binding Phone}"
+            Text="{Binding User.Phone}"
             Keyboard="Numeric"
             IsEnabled="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=!View}" />
         </StackLayout>
@@ -62,7 +62,7 @@
             Style="{StaticResource MediumTextStyle}" />
           <Entry
             Placeholder="{Binding LocalizedStrings[email_placeholder]}"
-            Text="{Binding Email}"
+            Text="{Binding User.Email}"
             Keyboard="Email"
             IsEnabled="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=!View}" />
         </StackLayout>
@@ -86,7 +86,7 @@
           <Entry
             IsPassword="True"
             Placeholder="{Binding LocalizedStrings[password_placeholder]}"
-            Text="{Binding Password}" />
+            Text="{Binding User.Password}" />
         </StackLayout>
         
         <StackLayout Spacing="0" 
@@ -101,8 +101,9 @@
         </StackLayout>
         
         <!--Onwer-->
+        
         <StackLayout Padding="0,0,0,10" Spacing="0"
-          IsVisible="{Binding UserType, Converter={StaticResource UserTypeToBoolConverter}, ConverterParameter=Owner}">
+          IsVisible="{Binding IsOwnerLogged}">
           <Label
             Text="{Binding LocalizedStrings[user_type]}"
             Style="{StaticResource MediumTextStyle}"/>
@@ -114,7 +115,7 @@
         </StackLayout>
 
         <StackLayout Padding="0,0,0,10" Spacing="0"
-          IsVisible="{Binding UserType, Converter={StaticResource UserTypeToBoolConverter}, ConverterParameter=Owner}">
+          IsVisible="{Binding IsOwnerLogged}">
           <Label
             Text="{Binding LocalizedStrings[establishment]}"
             Style="{StaticResource MediumTextStyle}"/>
@@ -123,7 +124,8 @@
             DisplayProperty="Name"
             SelectedItem="{Binding SelectedEstablishment}"
             Title="{Binding ChooseItemPlaceholder}"/>
-        </StackLayout>        
+        </StackLayout>
+        
         <!--Onwer-->
         
         <StackLayout>
@@ -142,24 +144,31 @@
           IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=Create}"
           Text="{Binding LocalizedStrings[create_account]}"
           Command="{Binding CreateAccountCommand}"/>
-         
-        <controls:CustomButton x:Name="EditButton"
+
+        <StackLayout IsVisible="{Binding IsOwnerLogged, Converter={StaticResource NegateConverter}}">
+          <controls:CustomButton x:Name="EditButton"
           IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=View}"
           Text="{Binding LocalizedStrings[edit]}"
           Command="{Binding EditAccountCommand}"/>
+       
+          <controls:CustomButton
+            IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=View}"
+            Text="{Binding LocalizedStrings[change_password]}"
+            Command="{Binding ChangePasswordAccountCommand}"/>
+          
+          <controls:CustomButton
+            IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=View}"
+            Text="{Binding LocalizedStrings[log_out]}"
+            Command="{Binding LogOutCommand}"/>
+        </StackLayout>  
         
         <controls:CustomButton
-          IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=View}"
-          Text="{Binding LocalizedStrings[change_password]}"
-          Command="{Binding ChangePasswordAccountCommand}"/>
-          
-        <controls:CustomButton
-          IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=View}"
-          Text="{Binding LocalizedStrings[log_out]}"
-          Command="{Binding LogOutCommand}"/>
-          
-        <controls:CustomButton
           IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=Edit}"
+          Text="{Binding LocalizedStrings[save_changes]}"
+          Command="{Binding SaveAccountCommand}"/>
+
+        <controls:CustomButton
+          IsVisible="{Binding IsOwnerLogged}"
           Text="{Binding LocalizedStrings[save_changes]}"
           Command="{Binding SaveAccountCommand}"/>
         

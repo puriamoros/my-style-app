@@ -115,7 +115,7 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    var establishments = await this._establishmentsService.GetMyEstablishmentsAsync();
+                    var establishments = await this._establishmentsService.GetOwnerEstablishmentsAsync();
 
                     this.EstablishmentList = new ObservableCollection<Establishment>(establishments);
                 });

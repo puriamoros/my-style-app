@@ -409,7 +409,7 @@
     <value>Client</value>
   </data>
   <data name="user_type_2" xml:space="preserve">
-    <value>Owner</value>
+    <value>Limited staff</value>
   </data>
   <data name="user_type_3" xml:space="preserve">
     <value>Staff</value>
@@ -417,10 +417,16 @@
   <data name="user_type_4" xml:space="preserve">
     <value>Authorized staff</value>
   </data>
+  <data name="user_type_5" xml:space="preserve">
+    <value>Owner</value>
+  </data>
   <data name="notes" xml:space="preserve">
     <value>Notes</value>
   </data>
   <data name="map" xml:space="preserve">
     <value>Map</value>
+  </data>
+  <data name="staff_account" xml:space="preserve">
+    <value>Staff account</value>
   </data>
 </root>

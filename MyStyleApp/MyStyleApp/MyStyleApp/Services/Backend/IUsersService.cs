@@ -11,9 +11,12 @@ namespace MyStyleApp.Services.Backend
         Task LogoutAsync();
         Task<User> MeAsync();
         Task<ApiKey> RegisterUserAsync(User user);
-        Task UpdateUserAsync(int id, User user);
+        Task UpdateUserAsync(User user);
         Task UpdatePasswordAsync(int id, string oldPassword, string newPassword);
         Task UpdatePlatformAsync(UserPlatform userPlatform);
+
         Task<IList<Staff>> GetStaffAsync(Establishment establishment);
+        Task UpdateStaffAsync(Staff staff);
+        Task<Staff> CreateStaffAsync(Staff staff);
     }
 }

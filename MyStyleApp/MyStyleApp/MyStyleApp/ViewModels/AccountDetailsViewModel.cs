@@ -22,9 +22,9 @@ namespace MyStyleApp.ViewModels
         private const string STRING_REPEATED_EMAIL = "repeat_email";
         private const string STRING_PASSWORD = "password";
 
-        private ValidationService _validationService;
+        protected ValidationService _validationService;
 
-        private IUsersService _usersService;
+        protected IUsersService _usersService;
 
 
         public AccountDetailsViewModel(
@@ -33,7 +33,7 @@ namespace MyStyleApp.ViewModels
             LocalizedStringsService localizedStringsService,
             ValidationService validationService,
             IUsersService usersService) :
-            base(navigator, userNotificator, localizedStringsService)
+            base(navigator, userNotificator, localizedStringsService, usersService)
         {
             this._validationService = validationService;
             this._usersService = usersService;
@@ -42,7 +42,7 @@ namespace MyStyleApp.ViewModels
             this.SubscribeToMessages();
         }
 
-        private void SubscribeToMessages()
+        protected virtual void SubscribeToMessages()
         {
             MessagingCenter.Subscribe<string>(this, "userLogin", (userType) =>
             {
@@ -60,57 +60,58 @@ namespace MyStyleApp.ViewModels
         public void Initialize(User user)
         {
             base.Initialize(user, AccountModeEnum.View);
+
         }
 
-        private string GetValidationError()
+        protected virtual void ConfigureValidationService()
         {
             // Alwais clear validators before adding
             this._validationService.ClearValidators();
 
             // Name
             this._validationService.AddValidator(
-                new RequiredValidator(this.Name, STRING_NAME));
+                new RequiredValidator(this.User.Name, STRING_NAME));
             this._validationService.AddValidator(
                 new RegexValidator(
-                    this.Name, RegexConstants.NOT_INSECURE_CHARS,
+                    this.User.Name, RegexConstants.NOT_INSECURE_CHARS,
                     "error_insecure_chars", STRING_NAME));
             this._validationService.AddValidator(
-                new LengthValidator(this.Name, STRING_NAME, 2, 100));
+                new LengthValidator(this.User.Name, STRING_NAME, 2, 100));
 
             // Surname
             this._validationService.AddValidator(
-                new RequiredValidator(this.Surname, STRING_SURNAME));
+                new RequiredValidator(this.User.Surname, STRING_SURNAME));
             this._validationService.AddValidator(
                 new RegexValidator(
-                    this.Surname, RegexConstants.NOT_INSECURE_CHARS,
+                    this.User.Surname, RegexConstants.NOT_INSECURE_CHARS,
                     "error_insecure_chars", STRING_SURNAME));
             this._validationService.AddValidator(
-                new LengthValidator(this.Surname, STRING_SURNAME, 2, 100));
+                new LengthValidator(this.User.Surname, STRING_SURNAME, 2, 100));
 
             // Phone 
             this._validationService.AddValidator(
-                new RequiredValidator(this.Phone, STRING_PHONE));
+                new RequiredValidator(this.User.Phone, STRING_PHONE));
             this._validationService.AddValidator(
                 new RegexValidator(
-                    this.Phone, RegexConstants.NOT_INSECURE_CHARS,
+                    this.User.Phone, RegexConstants.NOT_INSECURE_CHARS,
                     "error_insecure_chars", STRING_PHONE));
             this._validationService.AddValidator(
-                new LengthValidator(this.Phone, STRING_PHONE, 9, 9));
+                new LengthValidator(this.User.Phone, STRING_PHONE, 9, 9));
             this._validationService.AddValidator(
                 new RegexValidator(
-                    this.Phone, RegexConstants.PHONE,
+                    this.User.Phone, RegexConstants.PHONE,
                     "error_invalid_field", STRING_PHONE));
 
             // Email
             this._validationService.AddValidator(
-                new RequiredValidator(this.Email, STRING_EMAIL));
+                new RequiredValidator(this.User.Email, STRING_EMAIL));
             this._validationService.AddValidator(
                 new RegexValidator(
-                    this.Email, RegexConstants.NOT_INSECURE_CHARS,
+                    this.User.Email, RegexConstants.NOT_INSECURE_CHARS,
                     "error_insecure_chars", STRING_EMAIL));
             this._validationService.AddValidator(
                 new RegexValidator(
-                    this.Email, RegexConstants.EMAIL,
+                    this.User.Email, RegexConstants.EMAIL,
                     "error_invalid_field", STRING_EMAIL));
 
             // RepeatEmail
@@ -126,8 +127,13 @@ namespace MyStyleApp.ViewModels
                     "error_invalid_field", STRING_EMAIL));
 
             this._validationService.AddValidator(
-                new EqualValidator(this.Email, this.RepeatEmail, STRING_EMAIL, STRING_REPEATED_EMAIL));
- 
+                new EqualValidator(this.User.Email, this.RepeatEmail, STRING_EMAIL, STRING_REPEATED_EMAIL));
+
+        }
+        protected string GetValidationError()
+        {
+            this.ConfigureValidationService();
+
             return this._validationService.GetValidationError();
         }
 
@@ -146,16 +152,9 @@ namespace MyStyleApp.ViewModels
                 await this.ExecuteBlockingUIAsync(
                     async () =>
                     {
-                        User updateUser = new User();
-                        updateUser.Name = this.Name;
-                        updateUser.Surname = this.Surname;
-                        updateUser.Email = this.Email;
-                        updateUser.Phone = this.Phone;
-                        updateUser.UserType = this._usersService.LoggedUser.UserType;
-                        
                         try
                         {
-                            await this._usersService.UpdateUserAsync(this._usersService.LoggedUser.Id, updateUser);
+                            await this._usersService.UpdateUserAsync(this.User);
                         }
                         catch (BackendException ex)
                         {

@@ -35,13 +35,30 @@ namespace MyStyleApp.ViewModels
             IEstablishmentsService establishmentsService) : 
             base(navigator, userNotificator, localizedStringsService)
         {
-            //this.ViewDetailsCommand = new Command<Establishment>(this.ViewDetailsAsync);
+            this.ViewDetailsCommand = new Command<Staff>(this.ViewDetailsAsync);
             //this.NewEstablishmentCommand = new Command<Establishment>(this.NewEstablishmentAsync);
 
             this._usersService = usersService;
             this._establishmentsService = establishmentsService;
 
             this.InitializeAsync();
+
+            this.SubscribeToMessages();
+        }
+
+        protected virtual void SubscribeToMessages()
+        {
+            MessagingCenter.Subscribe<string>(this, "userLogin", (userType) =>
+            {
+                MessagingCenter.Subscribe<Staff>(this, "staffChanged", this.OnStaffChanged);
+            });
+            MessagingCenter.Subscribe<string>(this, "userLogout", (userType) =>
+            {
+                MessagingCenter.Unsubscribe<Staff>(this, "staffChanged");
+            });
+
+            // Need to subscribe on ctor as well since first userLogin message is delivered before this object is created
+            MessagingCenter.Subscribe<Staff>(this, "staffChanged", this.OnStaffChanged);
         }
 
         public async void InitializeAsync()
@@ -49,10 +66,29 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    var establishments = await this._establishmentsService.GetMyEstablishmentsAsync();
+                    var establishments = await this._establishmentsService.GetOwnerEstablishmentsAsync();
 
                     this.EstablishmentList = new ObservableCollection<Establishment>(establishments);
                 });
+        }
+
+        private void OnStaffChanged(Staff staff)
+        {
+            bool hadThisStaff = false;
+            if(this.StaffList != null)
+            {
+                var result =
+                    from oldStaff in StaffList
+                    where oldStaff.Id == staff.Id
+                    select oldStaff;
+
+                hadThisStaff = result.Count() > 0;
+            }
+
+            if(hadThisStaff || (SelectedEstablishment != null && SelectedEstablishment.Id == staff.IdEstablishment))
+            {
+                this.OnEstablishmentChanged();
+            }
         }
 
         public ObservableCollection<Establishment> EstablishmentList
@@ -98,18 +134,17 @@ namespace MyStyleApp.ViewModels
             set { SetProperty(ref _staffList, value); }
         }
 
-        private async void ViewDetailsAsync(User staff)
+        private async void ViewDetailsAsync(Staff staff)
         {
-            //await this.ExecuteBlockingUIAsync(
-            //    async () =>
-            //    {
-            //        //await this.PushNavPageAsync<EstablishmentDetailsViewModel>(async (myEstablishmentDetailsVM) =>
-            //        //{
-            //        //    // Get establishment details from BE
-            //        //    var myEstablishmentDetails = await this._establishmentsService.GetEstablishmentAsync(establishment.Id);
-            //        //}
-            //        //);
-            //    });
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    await this.PushNavPageAsync<StaffAccountDetailsViewModel>(async (staffAccountDetailsVM) =>
+                    {
+                        await staffAccountDetailsVM.Initialize(staff);
+                    }
+                    );
+                });
         }
 
         private async void NewStaffAsync()

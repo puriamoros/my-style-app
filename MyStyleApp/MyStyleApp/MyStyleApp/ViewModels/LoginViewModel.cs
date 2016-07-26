@@ -151,7 +151,7 @@ namespace MyStyleApp.ViewModels
                 {
                     await this.PushNavPageAsync<CreateAccountViewModel>((accountVM) =>
                     {
-                        accountVM.Initialize(null);
+                        accountVM.Initialize();
                     });
                 });
         }

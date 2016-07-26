@@ -101,30 +101,28 @@
         </StackLayout>
         
         <!--Onwer-->
-        <StackLayout IsVisible="{Binding UserType, Converter={StaticResource UserTypeToBoolConverter}, ConverterParameter=!Owner}">
-          <StackLayout Padding="0,0,0,10" Spacing="0"
-            IsVisible="{Binding IsOwnerLogged}">
-            <Label
-              Text="{Binding LocalizedStrings[user_type]}"
-              Style="{StaticResource MediumTextStyle}"/>
-            <controls:BindablePicker
-              ItemsSource="{Binding UserTypeList}"
-              DisplayProperty="Name"
-              SelectedItem="{Binding SelectedUserType}"
-              Title="{Binding ChooseItemPlaceholder}"/>
-          </StackLayout>
+        <StackLayout Padding="0,0,0,10" Spacing="0"
+          IsVisible="{Binding Parent, Converter={StaticResource ObjectToBoolConverter}, ConverterParameter=!}">
+          <Label
+            Text="{Binding LocalizedStrings[user_type]}"
+            Style="{StaticResource MediumTextStyle}"/>
+          <controls:BindablePicker
+            ItemsSource="{Binding UserTypeList}"
+            DisplayProperty="Name"
+            SelectedItem="{Binding SelectedUserType}"
+            Title="{Binding ChooseItemPlaceholder}"/>
+        </StackLayout>
 
-          <StackLayout Padding="0,0,0,10" Spacing="0"
-            IsVisible="{Binding IsOwnerLogged}">
-            <Label
-              Text="{Binding LocalizedStrings[establishment]}"
-              Style="{StaticResource MediumTextStyle}"/>
-            <controls:BindablePicker
-              ItemsSource="{Binding EstablishmentList}"
-              DisplayProperty="Name"
-              SelectedItem="{Binding SelectedEstablishment}"
-              Title="{Binding ChooseItemPlaceholder}"/>
-          </StackLayout>
+        <StackLayout Padding="0,0,0,10" Spacing="0"
+          IsVisible="{Binding Parent, Converter={StaticResource ObjectToBoolConverter}, ConverterParameter=!}">
+          <Label
+            Text="{Binding LocalizedStrings[establishment]}"
+            Style="{StaticResource MediumTextStyle}"/>
+          <controls:BindablePicker
+            ItemsSource="{Binding EstablishmentList}"
+            DisplayProperty="Name"
+            SelectedItem="{Binding SelectedEstablishment}"
+            Title="{Binding ChooseItemPlaceholder}"/>
         </StackLayout>
         <!--Onwer-->
         
@@ -155,12 +153,12 @@
             IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=View}"
             Text="{Binding LocalizedStrings[change_password]}"
             Command="{Binding ChangePasswordAccountCommand}"/>
-          
+
           <controls:CustomButton
             IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=View}"
             Text="{Binding LocalizedStrings[log_out]}"
             Command="{Binding LogOutCommand}"/>
-        </StackLayout>  
+        </StackLayout>
         
         <controls:CustomButton
           IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=Edit}"
@@ -168,7 +166,7 @@
           Command="{Binding SaveAccountCommand}"/>
 
         <controls:CustomButton
-          IsVisible="{Binding IsOwnerLogged}"
+          IsVisible="{Binding Parent, Converter={StaticResource ObjectToBoolConverter}, ConverterParameter=!}"
           Text="{Binding LocalizedStrings[save_changes]}"
           Command="{Binding SaveAccountCommand}"/>
         

@@ -611,6 +611,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Modified account.
+        /// </summary>
+        internal static string modified_account {
+            get {
+                return ResourceManager.GetString("modified_account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to My account.
         /// </summary>
         internal static string my_account {

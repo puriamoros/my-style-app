@@ -23,7 +23,7 @@ namespace MyStyleApp.ViewModels
         private const string STRING_PASSWORD = "password";
         private const string STRING_REPEATED_PASSWORD = "repeat_password";
 
-        private ValidationService _validationService;
+        protected ValidationService _validationService;
 
         private IUsersService _usersService;
 
@@ -40,12 +40,12 @@ namespace MyStyleApp.ViewModels
             this.Title = this.LocalizedStrings.GetString("create_account");
         }
 
-        public void Initialize(User user)
+        public void Initialize()
         {
-            base.Initialize(user, AccountModeEnum.Create);
+            base.Initialize(null, AccountModeEnum.Create);
         }
 
-        private string GetValidationError()
+        protected virtual void ConfigureValidationService()
         {
             // Alwais clear validators before adding
             this._validationService.ClearValidators();
@@ -121,6 +121,11 @@ namespace MyStyleApp.ViewModels
 
             this._validationService.AddValidator(
                 new EqualValidator(this.User.Password, this.RepeatPassword, STRING_PASSWORD, STRING_REPEATED_PASSWORD));
+        }
+
+        private string GetValidationError()
+        {
+            this.ConfigureValidationService();
 
             return this._validationService.GetValidationError();
         }

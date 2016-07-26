@@ -429,4 +429,7 @@
   <data name="staff_account" xml:space="preserve">
     <value>Staff account</value>
   </data>
+  <data name="modified_account" xml:space="preserve">
+    <value>Modified account</value>
+  </data>
 </root>

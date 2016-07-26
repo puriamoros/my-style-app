@@ -118,6 +118,12 @@ namespace MyStyleApp.ViewModels
                             // TODO:
                             // avisar al usuario con un popup de que el cambio se ha aplicado
                             // habría que mandar un push al empleado que se ha cambiado para que haga logout y entre con sus nuevos permisos
+
+                            await this.UserNotificator.DisplayAlert(
+                               this.LocalizedStrings.GetString("modified_account"),
+                               this.LocalizedStrings.GetString("modified_account"),
+                               this.LocalizedStrings.GetString("ok"));
+
                         }
                         catch (BackendException ex)
                         {

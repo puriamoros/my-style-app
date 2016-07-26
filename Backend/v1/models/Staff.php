@@ -7,6 +7,7 @@ require_once(__DIR__.'/../utilities/Authorization.php');
 require_once(__DIR__.'/../utilities/Tables.php');
 require_once(__DIR__.'/Users.php');
 require_once(__DIR__.'/Condition.php');
+require_once(__DIR__.'/../utilities/PushNotifications.php');
 
 class Staff extends Users
 {
@@ -83,6 +84,26 @@ class Staff extends Users
 		return $result;
 	}
 	
+	protected function dbGetOne($id)
+	{
+		$mixedFields = $this->users->fields;
+		array_push($mixedFields, $this->staff->idEstablishment);
+	
+		$result = DBCommands::dbGetOneJoin(
+			[$this->users->table, $this->staff->table],
+			[
+				[new Condition($this->users->table . '.' . $this->users->id, '=',  $this->staff->table . '.' . $this->staff->idUser, false)]
+			],
+			['INNER'],
+			$mixedFields, $this->users->id, $id);
+		
+		if(!is_null($result)){
+			$result[$this->staffName] = $result[$this->users->name] . ' ' . $result[$this->users->surname]; 
+		}
+		
+		return $result;
+	}
+	
 	protected function dbCreate($data)
 	{
 		if(isset($data[$this->staff->idEstablishment])){
@@ -101,10 +122,27 @@ class Staff extends Users
 	
 	protected function dbUpdate($id, $data)
 	{
+		$oldData = $this->dbGetOne($id);
+		
 		$result = parent::dbUpdate($id, $data);
 		
 		if(isset($data[$this->staff->idEstablishment])){
 			DBCommands::dbUpdate($this->staff->table, $this->staff->fields, $this->staff->idUser, $id, $data);
+		}
+		
+		if((isset($data[$this->user->userType]) && $oldData[$this->user->userType] != $data[$this->user->userType]) ||
+			(isset($data[$this->staff->idEstablishment]) && $oldData[$this->staff->idEstablishment] != $data[$this->staff->idEstablishment])) {
+			$idKeyMap = array(
+				63 => 'title',
+				64 => 'body'
+			);
+			$translationsMap = Translations::getInstance()->getTranslationsMap($idKeyMap);
+			
+			PushNotifications::NotifyUser(
+				$id,
+				$translationsMap,
+				'staffModified'
+			);
 		}
 				
 		return $result;

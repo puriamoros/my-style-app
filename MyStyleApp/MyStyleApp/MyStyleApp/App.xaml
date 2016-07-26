@@ -42,12 +42,27 @@
                   iOS="5,0,5,0"
                   Android="5,0,5,0"
                   WinPhone="5,0,5,32" />
+      <OnPlatform x:Key="ListGroupOutherPadding"
+                  x:TypeArguments="Thickness"
+                  iOS="0"
+                  Android="0"
+                  WinPhone="10" />
+      <OnPlatform x:Key="ListGroupInnerPadding"
+                  x:TypeArguments="Thickness"
+                  iOS="0"
+                  Android="0"
+                  WinPhone="10" />
 
       <!-- Colors -->
       <Color x:Key="ErrorColor">Red</Color>
       <Color x:Key="ConfirmedColor">#089C05</Color>
       <Color x:Key="PendingColor">#FB9E05</Color>
       <Color x:Key="CancelledColor">#D40606</Color>
+      <OnPlatform x:Key="ListGroupBackgroundColor"
+                  x:TypeArguments="Color"
+                  iOS="Default"
+                  Android="Default"
+                  WinPhone="Accent" />
 
       <!-- Font sizes -->
       <Style x:Key="TextStyle" TargetType="Label">

@@ -21,6 +21,8 @@ namespace MyStyleApp.ViewModels
 
         private IUsersService _usersService;
         private IEstablishmentsService _establishmentsService;
+        private IServicesService _servicesService;
+        private IServiceCategoriesService _serviceCategoriesService;
 
         private Establishment _selectedEstablishment;
 
@@ -32,7 +34,9 @@ namespace MyStyleApp.ViewModels
             IUserNotificator userNotificator, 
             LocalizedStringsService localizedStringsService,
             IUsersService usersService,
-            IEstablishmentsService establishmentsService) : 
+            IEstablishmentsService establishmentsService,
+            IServicesService servicesService,
+            IServiceCategoriesService serviceCategoriesService) : 
             base(navigator, userNotificator, localizedStringsService)
         {
             this.ViewDetailsCommand = new Command<Staff>(this.ViewDetailsAsync);
@@ -40,6 +44,8 @@ namespace MyStyleApp.ViewModels
 
             this._usersService = usersService;
             this._establishmentsService = establishmentsService;
+            this._servicesService = servicesService;
+            this._serviceCategoriesService = serviceCategoriesService;
 
             this.InitializeAsync();
 
@@ -157,9 +163,13 @@ namespace MyStyleApp.ViewModels
                     //    await createStaffAccountVM.Initialize();
                     //});
 
-                    await this.PushNavPageModalAsync<EstablishmentServicesViewModel>(async (establishmentServicesViewModel) =>
+                    var establishment = await this._establishmentsService.GetEstablishmentAsync(this.SelectedEstablishment.Id);
+                    var servicesCategories = await this._serviceCategoriesService.GetServiceCategoriesAsync();
+                    var services = await this._servicesService.GetServicesAsync();
+
+                    await this.PushNavPageModalAsync<EstablishmentServicesViewModel>((establishmentServicesViewModel) =>
                     {
-                        await establishmentServicesViewModel.InitializeAsync(this.SelectedEstablishment);
+                        establishmentServicesViewModel.Initialize(establishment, servicesCategories, services);
                     });
                 });
         }

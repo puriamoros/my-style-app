@@ -14,14 +14,20 @@
 
       <ListView.GroupHeaderTemplate>
         <DataTemplate>
-          <TextCell Text="{Binding Key}"/>
+          <ViewCell>
+            <ContentView Padding="{StaticResource ListGroupOutherPadding}">
+              <ContentView BackgroundColor="{StaticResource ListGroupBackgroundColor}" Padding="{StaticResource ListGroupInnerPadding}">
+                <Label VerticalOptions="End" Text="{Binding Key}" Style="{StaticResource MediumTextStyle}"/>
+              </ContentView>
+            </ContentView>
+          </ViewCell>
         </DataTemplate>
       </ListView.GroupHeaderTemplate>
 
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>
-            <RelativeLayout Padding="0,20,0,0">
+            <RelativeLayout Padding="0,5,0,5">
               <Switch x:Name="ServiceSwitch"
                 HorizontalOptions="Start"
                 IsToggled="{Binding Selected}"
@@ -30,7 +36,7 @@
               <StackLayout
                 RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.25}"
                 RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.55}">
-                <Label VerticalOptions="Center" Text="{Binding Name}" Style="{StaticResource SmallTextStyle}" SizeChanged="OnLabelSizeChanged"/>
+                <Label VerticalOptions="End" Text="{Binding Name}" Style="{StaticResource SmallTextStyle}" SizeChanged="OnLabelSizeChanged"/>
               </StackLayout>
 
               <Entry

@@ -11,7 +11,7 @@ namespace MyStyleApp.Converters
             if(value is string)
             {
                 string valueStr = value as string;
-                bool result = !String.IsNullOrEmpty(valueStr);
+                bool result = !string.IsNullOrEmpty(valueStr);
 
                 bool negate = false;
                 if (parameter is string)

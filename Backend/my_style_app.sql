@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-07-2016 a las 14:58:45
+-- Tiempo de generación: 27-07-2016 a las 00:32:43
 -- Versión del servidor: 10.1.13-MariaDB
--- Versión de PHP: 5.6.20
+-- Versión de PHP: 5.6.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -314,21 +314,6 @@ INSERT INTO `services` (`id`, `idTranslation`, `idServiceCategory`, `duration`) 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `services_history`
---
-
-DROP TABLE IF EXISTS `services_history`;
-CREATE TABLE `services_history` (
-  `idClient` int(11) NOT NULL,
-  `idEstablishment` int(11) NOT NULL,
-  `idService` int(11) NOT NULL,
-  `date` varchar(50) NOT NULL,
-  `notes` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `service_categories`
 --
 
@@ -355,19 +340,6 @@ INSERT INTO `service_categories` (`id`, `idTranslation`, `idEstablishmentType`) 
 (9, 9, 2),
 (10, 10, 2),
 (11, 11, 2);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `slots`
---
-
-DROP TABLE IF EXISTS `slots`;
-CREATE TABLE `slots` (
-  `id` int(11) NOT NULL,
-  `date` date NOT NULL,
-  `idAppointment` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -471,7 +443,7 @@ INSERT INTO `translations` (`id`, `en`, `es`) VALUES
 (61, 'Check details on Appointments section', 'Comrpueba los detalles en la sección de Citas'),
 (62, '${ESTABLISHMENT_NAME}: ${APPOINTMENT_DATE}', '${ESTABLISHMENT_NAME}: ${APPOINTMENT_DATE}'),
 (63, 'Staff account updated!', '¡Cuenta de empleado actualizada!'),
-(64, 'Your staff account has been updated', 'Su cuenta de usuario ha sido actualizada');
+(64, 'Your staff account has been updated', 'Su cuenta de empleado ha sido actualizada');
 
 -- --------------------------------------------------------
 
@@ -553,21 +525,9 @@ ALTER TABLE `services`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `services_history`
---
-ALTER TABLE `services_history`
-  ADD PRIMARY KEY (`idClient`,`idEstablishment`,`idService`);
-
---
 -- Indices de la tabla `service_categories`
 --
 ALTER TABLE `service_categories`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `slots`
---
-ALTER TABLE `slots`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -629,11 +589,6 @@ ALTER TABLE `services`
 --
 ALTER TABLE `service_categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT de la tabla `slots`
---
-ALTER TABLE `slots`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `users`
 --

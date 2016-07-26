@@ -42,6 +42,7 @@ namespace MyStyleApp
             builder.RegisterType<MainOwnerView>().SingleInstance();
             builder.RegisterType<MapView>().SingleInstance();
             builder.RegisterType<StaffAccountDetailsView>().SingleInstance();
+            builder.RegisterType<EstablishmentServicesView>().SingleInstance();
 
             // Register ViewModels
             builder.RegisterType<StartViewModel>().SingleInstance();
@@ -63,6 +64,7 @@ namespace MyStyleApp
             builder.RegisterType<MainOwnerViewModel>().SingleInstance();
             builder.RegisterType<MapViewModel>().SingleInstance();
             builder.RegisterType<StaffAccountDetailsViewModel>().SingleInstance();
+            builder.RegisterType<EstablishmentServicesViewModel>().SingleInstance();
 
             // Register Services
             builder.RegisterType<LocalizedStringsService>().SingleInstance();
@@ -111,6 +113,7 @@ namespace MyStyleApp
             viewFactory.Register<MainOwnerViewModel, MainOwnerView>();
             viewFactory.Register<MapViewModel, MapView>();
             viewFactory.Register<StaffAccountDetailsViewModel, StaffAccountDetailsView>();
+            viewFactory.Register<EstablishmentServicesViewModel, EstablishmentServicesView>();
         }
 
         protected override void ConfigureApplication(IContainer container)

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-07-2016 a las 18:05:29
+-- Tiempo de generación: 26-07-2016 a las 10:48:28
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.21
 
@@ -42,31 +42,9 @@ CREATE TABLE `appointments` (
 --
 
 INSERT INTO `appointments` (`id`, `idClient`, `idEstablishment`, `idService`, `date`, `status`, `notes`) VALUES
-(1, 1, 1, 4, '2016-07-09 10:30:00', 1, 'asdf'),
-(2, 1, 2, 22, '2016-07-04 15:30:00', 0, 'hola'),
-(3, 1, 2, 24, '2016-07-04 16:00:00', 2, 'hola'),
-(6, 1, 1, 4, '2016-07-08 18:00:00', 1, 'hola'),
-(7, 1, 1, 1, '2016-07-10 11:00:00', 0, ''),
-(8, 1, 1, 5, '2016-07-10 17:00:00', 2, ''),
-(9, 1, 1, 1, '2016-07-10 13:00:00', 1, ''),
-(10, 1, 1, 5, '2016-07-12 11:00:00', 0, ''),
-(11, 1, 1, 5, '2016-07-11 11:00:00', 0, ''),
-(12, 1, 4, 5, '2016-07-12 18:30:00', 0, ''),
-(13, 1, 4, 5, '2016-07-12 16:30:00', 0, ''),
-(14, 1, 4, 4, '2016-07-12 22:30:00', 0, ''),
-(15, 1, 1, 4, '2016-07-14 17:00:00', 1, ''),
-(16, 1, 1, 1, '2016-07-15 13:30:00', 1, ''),
-(17, 1, 4, 21, '2016-07-18 17:30:00', 1, ''),
-(18, 19, 1, 1, '2016-07-20 11:00:00', 1, ''),
-(19, 19, 1, 1, '2016-07-20 10:00:00', 0, ''),
-(20, 19, 1, 4, '2016-07-18 17:30:00', 2, ''),
-(21, 1, 1, 5, '2016-07-28 17:30:00', 1, ''),
-(22, 1, 1, 5, '2016-07-27 11:30:00', 1, ''),
-(23, 1, 4, 5, '2016-07-20 18:30:00', 0, ''),
-(24, 1, 1, 1, '2016-07-22 10:00:00', 0, ''),
-(25, 1, 4, 1, '2016-07-22 16:00:00', 1, ''),
-(26, 1, 1, 1, '2016-07-22 10:30:00', 0, ''),
-(27, 1, 4, 1, '2016-07-22 18:00:00', 1, '');
+(1, 1, 1, 1, '2016-07-28 10:00:00', 2, ''),
+(2, 1, 1, 1, '2016-07-24 11:00:00', 0, ''),
+(3, 1, 1, 1, '2016-07-28 11:00:00', 2, '');
 
 -- --------------------------------------------------------
 
@@ -86,20 +64,22 @@ CREATE TABLE `establishments` (
   `concurrence` int(11) NOT NULL,
   `hours1` varchar(11) NOT NULL,
   `hours2` varchar(11) NOT NULL,
-  `autoConfirm` tinyint(1) NOT NULL
+  `confirmType` tinyint(1) NOT NULL,
+  `latitude` double NOT NULL,
+  `longitude` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `establishments`
 --
 
-INSERT INTO `establishments` (`id`, `name`, `address`, `phone`, `idEstablishmentType`, `idOwner`, `idProvince`, `concurrence`, `hours1`, `hours2`, `autoConfirm`) VALUES
-(1, 'Peluquería 1', 'C/ Pintor Fernando Belda nº1, Bajo C', '958111111', 1, 19, 1, 1, '10:00-14:00', '16:00-20:00', 0),
-(2, 'Peluquería 2', 'C/ Trajano nº2', '951357357', 2, 19, 1, 2, '08:00-20:00', '', 0),
-(3, 'Peluquería 3', 'C/ Camino de Ronda nº3', '357159486', 1, 19, 2, 3, '06:00-15:00', '', 0),
-(4, 'Peluquería 4', 'Carretera de Murcia nº4, bajo izq bajo bajo', '123456789', 3, 19, 1, 4, '16:00-00:00', '', 1),
-(5, 'peluquería 5', 'C/. tururu nº4', '958123456', 3, 2, 1, 4, '08:00-20:00', '', 1),
-(6, 'peluquería 6', 'C/. tururu nº4', '958123456', 3, 2, 1, 4, '08:00-20:00', '', 1);
+INSERT INTO `establishments` (`id`, `name`, `address`, `phone`, `idEstablishmentType`, `idOwner`, `idProvince`, `concurrence`, `hours1`, `hours2`, `confirmType`, `latitude`, `longitude`) VALUES
+(1, 'Peluquería 1', 'C/ Pintor Fernando Belda nº1, Bajo C', '958111111', 1, 19, 1, 1, '10:00-14:00', '16:00-20:00', 0, 37.1877284, -3.6328434),
+(2, 'Peluquería 2', 'C/ Trajano nº2', '951357357', 2, 19, 1, 2, '08:00-20:00', '', 0, 0, 0),
+(3, 'Peluquería 3', 'C/ Camino de Ronda nº3', '357159486', 1, 19, 2, 3, '06:00-15:00', '', 0, 0, 0),
+(4, 'Peluquería 4', 'Carretera de Murcia nº4, bajo izq bajo bajo', '123456789', 3, 19, 1, 4, '16:00-00:00', '', 1, 0, 0),
+(5, 'peluquería 5', 'C/. tururu nº4', '958123456', 3, 2, 1, 4, '08:00-20:00', '', 1, 0, 0),
+(6, 'peluquería 6', 'C/. tururu nº4', '958123456', 3, 2, 1, 4, '08:00-20:00', '', 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -141,6 +121,7 @@ CREATE TABLE `favourites` (
 
 INSERT INTO `favourites` (`id`, `idClient`, `idEstablishment`) VALUES
 (50, 1, 1),
+(54, 1, 4),
 (52, 19, 1),
 (51, 19, 4),
 (53, 19, 5);
@@ -182,16 +163,9 @@ INSERT INTO `offer` (`idEstablishment`, `idService`, `price`) VALUES
 (4, 23, 16),
 (4, 24, 25.5),
 (4, 25, 16),
-(5, 1, 12.5),
-(5, 2, 25.5),
-(5, 3, 16),
+(5, 3, 12.5),
 (5, 4, 25.5),
 (5, 5, 16),
-(5, 21, 12.5),
-(5, 22, 25.5),
-(5, 23, 16),
-(5, 24, 25.5),
-(5, 25, 16),
 (6, 1, 12.5),
 (6, 2, 25.5),
 (6, 3, 16),
@@ -340,21 +314,6 @@ INSERT INTO `services` (`id`, `idTranslation`, `idServiceCategory`, `duration`) 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `services_history`
---
-
-DROP TABLE IF EXISTS `services_history`;
-CREATE TABLE `services_history` (
-  `idClient` int(11) NOT NULL,
-  `idEstablishment` int(11) NOT NULL,
-  `idService` int(11) NOT NULL,
-  `date` varchar(50) NOT NULL,
-  `notes` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `service_categories`
 --
 
@@ -381,19 +340,6 @@ INSERT INTO `service_categories` (`id`, `idTranslation`, `idEstablishmentType`) 
 (9, 9, 2),
 (10, 10, 2),
 (11, 11, 2);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `slots`
---
-
-DROP TABLE IF EXISTS `slots`;
-CREATE TABLE `slots` (
-  `id` int(11) NOT NULL,
-  `date` date NOT NULL,
-  `idAppointment` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -490,7 +436,12 @@ INSERT INTO `translations` (`id`, `en`, `es`) VALUES
 (54, 'Acne', 'Acné'),
 (55, 'Social makeup', 'Maquillaje social'),
 (56, 'Party makeup', 'Maquillaje fiesta'),
-(57, 'Carnival or fantasy makeup', 'Maquillaje carnaval o fantasía');
+(57, 'Carnival or fantasy makeup', 'Maquillaje carnaval o fantasía'),
+(58, 'New appointment!', '¡Nueva cita!'),
+(59, 'Appointment confirmed!', '¡Cita confirmada!'),
+(60, 'Appointment cancelled!', '¡Cita cancelada!'),
+(61, 'Check details on Appointments section', 'Comrpueba los detalles en la sección de Citas'),
+(62, '${ESTABLISHMENT_NAME}: ${APPOINTMENT_DATE}', '${ESTABLISHMENT_NAME}: ${APPOINTMENT_DATE}');
 
 -- --------------------------------------------------------
 
@@ -509,19 +460,20 @@ CREATE TABLE `users` (
   `userType` int(11) NOT NULL,
   `phone` varchar(9) NOT NULL,
   `platform` varchar(20) NOT NULL,
-  `pushToken` varchar(300) NOT NULL
+  `pushToken` varchar(300) NOT NULL,
+  `languageCode` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `apiKey`, `userType`, `phone`, `platform`, `pushToken`) VALUES
-(1, 'Helio', 'Huete López de las Huertas', 'helio.huete@gmail.com', '$2y$10$HcPK6svqWeNqsMlcGNx.Ce0GR0mvq/QvfUTH0nXUwpR.jc660MSa6', 'cc06c9f321e156c2468669728e2be8b8', 1, '123456789', 'Android', ''),
-(19, 'Puri', 'Amorós', 'puri.amoros@gmail.com', '$2y$10$AZfna1yNJg.NEjPjpNU/mefD4XuNoVD4k2cc7ojv0W5MIafTk8rV.', '3bc23b47841173b7027d911bc055d113', 2, '987654321', 'Android', 'eSPuiEPZLqM:APA91bGw2w1OVhxqnzSkFxTcLNTNi9XcS-Lj34r1evA1CfODBq7p10gv9m7WtFG2_7ssNcuJB2lZhS_X7hd5eYQTndqI7qcMzyz5RcKdJSIOhkyFVGapDLYAPpzh8GoeZMD08PyPek4G'),
-(20, 'Marta', 'Asdf', 'marta@gmail.com', '$2y$10$r1NGrTmPIZqvjaO.3nGaQO8g4ovt.EiX3TKcSHh1Yh4PQAEh2Ef/W', 'f166df0a695856c42e1827a31f90f947', 1, '123456789', '', ''),
-(21, 'sdfasdf', 'asdfasdfdf', 'piunchi@gmail.com', '$2y$10$W.nmnDfq4A.fyoLz89d9U.R2eWcbdQ7WabRNYz5RlZ2tgSVDbLFnq', 'cb96faa601c5951c670e7894502267e3', 3, '123456789', '', ''),
-(23, 'Antonio', 'Perez', 'antonio1.perez23@gmail.com', '$2y$10$yVus9HtHwcC152DGkB0PdeCPG5GTC10O9qHLtuud.0AQpyHt3lBWe', 'c0d99b5c244bb84712560dfaa56e5f7e', 4, '958123456', '', '');
+INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `apiKey`, `userType`, `phone`, `platform`, `pushToken`, `languageCode`) VALUES
+(1, 'Helio', 'Huete López de las Huertas', 'helio.huete@gmail.com', '$2y$10$HcPK6svqWeNqsMlcGNx.Ce0GR0mvq/QvfUTH0nXUwpR.jc660MSa6', 'cc06c9f321e156c2468669728e2be8b8', 1, '123456789', '', '', ''),
+(19, 'Puri', 'Amorós', 'puri.amoros@gmail.com', '$2y$10$AZfna1yNJg.NEjPjpNU/mefD4XuNoVD4k2cc7ojv0W5MIafTk8rV.', '3bc23b47841173b7027d911bc055d113', 5, '987654321', 'Windows', 'https://db5.notify.windows.com/?token=AwYAAABDna5EPBTwTI9hcKiqNq3YtzalYuy2Rc%2b1PmhV6TxmGjISNCT3aaLCqScxGuUPB3h0Ic8xkVJiYP7HICZ4HosquuRFT4N2kaQjVDpc0fLBtSL9xjeZYlpiWOk67icRQAI%3d', 'en'),
+(20, 'Marta', 'Asdf', 'marta@gmail.com', '$2y$10$r1NGrTmPIZqvjaO.3nGaQO8g4ovt.EiX3TKcSHh1Yh4PQAEh2Ef/W', 'f166df0a695856c42e1827a31f90f947', 2, '123456789', '', '', ''),
+(21, 'sdfasdf', 'asdfasdfdf', 'piunchi@gmail.com', '$2y$10$W.nmnDfq4A.fyoLz89d9U.R2eWcbdQ7WabRNYz5RlZ2tgSVDbLFnq', 'cb96faa601c5951c670e7894502267e3', 3, '123456789', '', '', ''),
+(23, 'Antonio', 'Perez', 'antonio1.perez23@gmail.com', '$2y$10$yVus9HtHwcC152DGkB0PdeCPG5GTC10O9qHLtuud.0AQpyHt3lBWe', 'c0d99b5c244bb84712560dfaa56e5f7e', 2, '958123456', '', '', '');
 
 --
 -- Índices para tablas volcadas
@@ -571,21 +523,9 @@ ALTER TABLE `services`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `services_history`
---
-ALTER TABLE `services_history`
-  ADD PRIMARY KEY (`idClient`,`idEstablishment`,`idService`);
-
---
 -- Indices de la tabla `service_categories`
 --
 ALTER TABLE `service_categories`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `slots`
---
-ALTER TABLE `slots`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -616,7 +556,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `establishments`
 --
@@ -631,7 +571,7 @@ ALTER TABLE `establishment_types`
 -- AUTO_INCREMENT de la tabla `favourites`
 --
 ALTER TABLE `favourites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 --
 -- AUTO_INCREMENT de la tabla `provinces`
 --
@@ -647,11 +587,6 @@ ALTER TABLE `services`
 --
 ALTER TABLE `service_categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT de la tabla `slots`
---
-ALTER TABLE `slots`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `users`
 --

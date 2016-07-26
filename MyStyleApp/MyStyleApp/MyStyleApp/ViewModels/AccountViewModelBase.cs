@@ -161,21 +161,6 @@ namespace MyStyleApp.ViewModels
             set { SetProperty(ref _errorText, value); }
         }
 
-        public bool IsOwnerLogged
-        {
-            get
-            {
-                if(this._usersService.LoggedUser == null)
-                {
-                    return false;
-                }
-                else
-                {
-                    return this._usersService.LoggedUser.UserType == UserTypeEnum.Owner;
-                } 
-            }
-        }
-
         protected virtual async void CreateAccountAsync()
         { 
         }

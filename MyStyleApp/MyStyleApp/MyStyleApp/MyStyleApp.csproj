@@ -144,6 +144,7 @@
     <Compile Include="Validators\RegexValidator.cs" />
     <Compile Include="Validators\RequiredValidator.cs" />
     <Compile Include="Validators\SimpleValidator.cs" />
+	<Compile Include="ViewModels\CreateStaffAccountViewModel.cs" />
     <Compile Include="ViewModels\StaffAccountDetailsViewModel.cs" />
     <Compile Include="ViewModels\EstablishmentAppointmentsViewModel.cs" />
     <Compile Include="ViewModels\CreateAccountViewModel.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="ViewModels\NavigableViewModelBase.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainClientViewModel.cs" />
+	<Compile Include="Views\CreateStaffAccountView.cs" />
     <Compile Include="Views\StaffAccountDetailsView.cs" />
     <Compile Include="Views\AppointmentDetailsView.xaml.cs">
       <DependentUpon>AppointmentDetailsView.xaml</DependentUpon>

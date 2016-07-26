@@ -19,7 +19,8 @@ class Users extends ModelWithIdBase
 			$this->users->password,
 			$this->users->apiKey,
 			$this->users->platform,
-			$this->users->pushToken
+			$this->users->pushToken,
+			$this->users->languageCode
 		);
 		
 		// Call parent ctor
@@ -161,6 +162,7 @@ class Users extends ModelWithIdBase
 		$data[$this->users->apiKey] = $this->generateApiKey();
 		$data[$this->users->platform] = '';
 		$data[$this->users->pushToken] = '';
+		$data[$this->users->languageCode] = '';
 
 		// TODO: Validate fields
 		

@@ -782,6 +782,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to price.
+        /// </summary>
+        internal static string price {
+            get {
+                return ResourceManager.GetString("price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Province.
         /// </summary>
         internal static string province {

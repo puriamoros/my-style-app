@@ -6,22 +6,51 @@
              Padding="{StaticResource PagePadding}">
 
   <StackLayout>
-    <ListView x:Name="GroupedView" ItemsSource="{Binding GroupedTextDataList}"
-             GroupDisplayBinding="{Binding Key}"
-             GroupShortNameBinding="{Binding ShortKey}"
-             IsGroupingEnabled="true">
+    <ListView x:Name="GroupedView" ItemsSource="{Binding GroupedServiceList}"
+      HasUnevenRows="True"
+      GroupDisplayBinding="{Binding Key}"
+      GroupShortNameBinding="{Binding ShortKey}"
+      IsGroupingEnabled="True">
+
+      <ListView.GroupHeaderTemplate>
+        <DataTemplate>
+          <TextCell Text="{Binding Key}"/>
+        </DataTemplate>
+      </ListView.GroupHeaderTemplate>
 
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>
-            <StackLayout Padding="10,5,0,5">
-              <Label Text="{Binding Title}" FontSize="24"/>
-              <Label Text="{Binding Subtitle}" FontSize="16"/>
-            </StackLayout>
+            <RelativeLayout Padding="0,20,0,0">
+              <Switch x:Name="ServiceSwitch"
+                HorizontalOptions="Start"
+                IsToggled="{Binding Selected}"
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.25}"/>
+              <StackLayout
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.25}"
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.55}">
+                <Label VerticalOptions="Center" Text="{Binding Name}" Style="{StaticResource SmallTextStyle}" SizeChanged="OnLabelSizeChanged"/>
+              </StackLayout>
+
+              <Entry
+                Placeholder="{Binding LocalizedStrings[price]}"
+                Text="{Binding Price}"
+                HorizontalTextAlignment="End"
+                Keyboard="Numeric"
+                IsVisible="{Binding Source={x:Reference ServiceSwitch}, Path=IsToggled}"
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.8}"
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.15}"/>
+              <Label Text=" €"  Style="{StaticResource MediumTextStyle}"
+                IsVisible="{Binding Source={x:Reference ServiceSwitch}, Path=IsToggled}"
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.95}"
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5}"/>
+
+            </RelativeLayout>
           </ViewCell>
         </DataTemplate>
       </ListView.ItemTemplate>
     </ListView>
   </StackLayout>
-  
+
 </views:CustomContentPage>

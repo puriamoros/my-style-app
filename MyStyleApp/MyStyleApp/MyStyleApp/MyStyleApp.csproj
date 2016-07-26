@@ -48,6 +48,7 @@
     <Compile Include="Converters\FloatToPriceConverter.cs" />
     <Compile Include="Converters\IntToBoolConverter.cs" />
     <Compile Include="Converters\ItemTappedEventArgsConverter.cs" />
+    <Compile Include="Converters\NumberToStringConverter.cs" />
     <Compile Include="Converters\ObjectToBoolConverter.cs" />
     <Compile Include="Converters\PlatformToBoolConverter.cs" />
     <Compile Include="Converters\StringToBoolConverter.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Enums\UserTypeEnum.cs" />
     <Compile Include="Exceptions\BackendException.cs" />
     <Compile Include="Models\GenericStatus.cs" />
+    <Compile Include="Models\SelectedService.cs" />
     <Compile Include="Models\UserType.cs" />
     <Compile Include="Models\ShortenServiceListContainer.cs" />
     <Compile Include="Models\Slot.cs" />
@@ -145,7 +147,7 @@
     <Compile Include="Validators\RequiredValidator.cs" />
     <Compile Include="Validators\SimpleValidator.cs" />
     <Compile Include="ViewModels\EstablishmentServicesViewModel.cs" />
-	<Compile Include="ViewModels\CreateStaffAccountViewModel.cs" />
+    <Compile Include="ViewModels\CreateStaffAccountViewModel.cs" />
     <Compile Include="ViewModels\StaffAccountDetailsViewModel.cs" />
     <Compile Include="ViewModels\EstablishmentAppointmentsViewModel.cs" />
     <Compile Include="ViewModels\CreateAccountViewModel.cs" />
@@ -171,7 +173,7 @@
     <Compile Include="Views\EstablishmentServicesView.xaml.cs">
       <DependentUpon>EstablishmentServicesView.xaml</DependentUpon>
     </Compile>
-	<Compile Include="Views\CreateStaffAccountView.cs" />
+    <Compile Include="Views\CreateStaffAccountView.cs" />
     <Compile Include="Views\StaffAccountDetailsView.cs" />
     <Compile Include="Views\AppointmentDetailsView.xaml.cs">
       <DependentUpon>AppointmentDetailsView.xaml</DependentUpon>

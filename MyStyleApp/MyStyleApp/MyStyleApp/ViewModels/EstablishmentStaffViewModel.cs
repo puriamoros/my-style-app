@@ -152,11 +152,15 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    await this.PushNavPageAsync<CreateStaffAccountViewModel>(async (createStaffAccountVM) =>
+                    //await this.PushNavPageAsync<CreateStaffAccountViewModel>(async (createStaffAccountVM) =>
+                    //{
+                    //    await createStaffAccountVM.Initialize();
+                    //});
+
+                    await this.PushNavPageModalAsync<EstablishmentServicesViewModel>(async (establishmentServicesViewModel) =>
                     {
-                        await createStaffAccountVM.Initialize();
-                    }
-                    );
+                        await establishmentServicesViewModel.InitializeAsync(this.SelectedEstablishment);
+                    });
                 });
         }
 

@@ -42,6 +42,8 @@ namespace MyStyleApp
             builder.RegisterType<MainOwnerView>().SingleInstance();
             builder.RegisterType<MapView>().SingleInstance();
             builder.RegisterType<StaffAccountDetailsView>().SingleInstance();
+
+            builder.RegisterType<EstablishmentServicesView>().SingleInstance();
             builder.RegisterType<CreateStaffAccountView>().SingleInstance();
 
             // Register ViewModels
@@ -64,6 +66,7 @@ namespace MyStyleApp
             builder.RegisterType<MainOwnerViewModel>().SingleInstance();
             builder.RegisterType<MapViewModel>().SingleInstance();
             builder.RegisterType<StaffAccountDetailsViewModel>().SingleInstance();
+            builder.RegisterType<EstablishmentServicesViewModel>().SingleInstance();
             builder.RegisterType<CreateStaffAccountViewModel>().SingleInstance();
 
             // Register Services
@@ -113,6 +116,7 @@ namespace MyStyleApp
             viewFactory.Register<MainOwnerViewModel, MainOwnerView>();
             viewFactory.Register<MapViewModel, MapView>();
             viewFactory.Register<StaffAccountDetailsViewModel, StaffAccountDetailsView>();
+            viewFactory.Register<EstablishmentServicesViewModel, EstablishmentServicesView>();
             viewFactory.Register<CreateStaffAccountViewModel, CreateStaffAccountView>();
         }
 

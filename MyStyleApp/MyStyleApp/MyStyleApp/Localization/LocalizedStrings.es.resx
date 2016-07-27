@@ -435,4 +435,16 @@
   <data name="price" xml:space="preserve">
     <value>precio</value>
   </data>
+  <data name="delete_staff" xml:space="preserve">
+    <value>Borrar empleado</value>
+  </data>
+  <data name="delete_staff_body" xml:space="preserve">
+    <value>Estás a punto de borrar un empleado. ¿Deseas continuar?</value>
+  </data>
+  <data name="client_history" xml:space="preserve">
+    <value>Client history</value>
+  </data>
+  <data name="appointment_details" xml:space="preserve">
+    <value>Detalle de cita</value>
+  </data>
 </root>

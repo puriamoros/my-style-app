@@ -192,5 +192,17 @@ namespace MyStyleApp.Services.Backend
                 staff,
                 null);        
         }
+
+        public async Task DeleteStaffAsync(Staff staff)
+        {
+            string apiKey = await this.HttpService.GetApiKeyAuthorizationAsync();
+
+            await this.HttpService.InvokeWithContentAsync<Staff>(
+                HttpMethod.Delete,
+                BackendConstants.DELETE_STAFF_URL,
+                apiKey,
+                staff,
+                new object[] { staff.Id });
+        }
     }
 }

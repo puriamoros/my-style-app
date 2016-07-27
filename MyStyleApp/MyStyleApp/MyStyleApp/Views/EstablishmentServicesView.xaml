@@ -6,7 +6,9 @@
              Padding="{StaticResource PagePadding}">
 
   <StackLayout>
-    <ListView x:Name="GroupedView" ItemsSource="{Binding GroupedServiceList}"
+    <Entry x:Name="SearchEntry"
+      Placeholder="{Binding LocalizedStrings[search]}"/>
+    <ListView x:Name="GroupedServiceList" ItemsSource="{Binding GroupedServiceList}"
       HasUnevenRows="True"
       GroupDisplayBinding="{Binding Key}"
       GroupShortNameBinding="{Binding ShortKey}"
@@ -26,8 +28,9 @@
 
       <ListView.ItemTemplate>
         <DataTemplate>
-          <ViewCell>
-            <RelativeLayout Padding="0,5,0,5">
+          <ViewCell x:Name="ViewCell">
+
+            <RelativeLayout Padding="0,5,0,5" IsVisible="{Binding Visible}" HeightRequest="{Binding HeightRequest}">
               <Switch x:Name="ServiceSwitch"
                 HorizontalOptions="Start"
                 IsToggled="{Binding Selected}"
@@ -51,8 +54,8 @@
                 IsVisible="{Binding Source={x:Reference ServiceSwitch}, Path=IsToggled}"
                 RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.95}"
                 RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5}"/>
-
             </RelativeLayout>
+            
           </ViewCell>
         </DataTemplate>
       </ListView.ItemTemplate>

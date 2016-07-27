@@ -28,6 +28,7 @@ namespace MyStyleApp.ViewModels
 
         public ICommand ViewDetailsCommand { get; private set; }
         public ICommand NewStaffCommand { get; private set; }
+        public ICommand DeleteStaffCommand { get; private set; }
 
         public EstablishmentStaffViewModel(
             INavigator navigator, 
@@ -41,6 +42,7 @@ namespace MyStyleApp.ViewModels
         {
             this.ViewDetailsCommand = new Command<Staff>(this.ViewDetailsAsync);
             this.NewStaffCommand = new Command(this.NewStaffAsync);
+            this.DeleteStaffCommand = new Command<Staff>(this.DeleteStaffAsync);
 
             this._usersService = usersService;
             this._establishmentsService = establishmentsService;
@@ -172,6 +174,26 @@ namespace MyStyleApp.ViewModels
                         establishmentServicesViewModel.Initialize(establishment, servicesCategories, services);
                     });
                 });
+        }
+
+        private async void DeleteStaffAsync(Staff staff)
+        {
+            bool result = await this.UserNotificator.DisplayAlert(
+                                    this.LocalizedStrings.GetString("delete_staff"),
+                                    this.LocalizedStrings.GetString("delete_staff_body"),
+                                    this.LocalizedStrings.GetString("ok"),
+                                    this.LocalizedStrings.GetString("cancel"));
+
+            if(result)
+            {
+                await this.ExecuteBlockingUIAsync(
+                    async () =>
+                    {
+                        await this._usersService.DeleteStaffAsync(staff);
+
+                        this.StaffList.Remove(staff);
+                    });
+            }                      
         }
 
     }

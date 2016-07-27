@@ -51,7 +51,12 @@
               Text="{Binding Appointment.ClientName}" SizeChanged="OnLabelSizeChanged"/>
           </StackLayout>
         </Grid>
-
+        
+        <StackLayout>
+          <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+            Text="{Binding Appointment.EstablishmentName}"/>
+        </StackLayout>
+        
         <Grid>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*" />

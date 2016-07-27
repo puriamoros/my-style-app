@@ -18,5 +18,6 @@ namespace MyStyleApp.Services.Backend
         Task<IList<Staff>> GetStaffAsync(Establishment establishment);
         Task UpdateStaffAsync(Staff staff);
         Task<Staff> CreateStaffAsync(Staff staff);
+        Task DeleteStaffAsync(Staff staff);
     }
 }

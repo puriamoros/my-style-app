@@ -31,6 +31,7 @@
         public const string GET_STAFF_URL = "staff?idEstablishment={0}";
         public const string UPDATE_STAFF_URL = "staff/{0}";
         public const string CREATE_STAFF_URL = "staff";
+        public const string DELETE_STAFF_URL = "staff/{0}";
 
     }
 }

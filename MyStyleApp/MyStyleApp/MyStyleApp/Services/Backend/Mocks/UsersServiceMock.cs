@@ -105,5 +105,9 @@ namespace MyStyleApp.Services.Backend.Mocks
                 Name = "Empleado1",
             };
         }
+
+        public async Task DeleteStaffAsync(Staff staff)
+        {
+        }
     }
 }

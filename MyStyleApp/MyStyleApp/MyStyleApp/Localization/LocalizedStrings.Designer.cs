@@ -134,6 +134,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Appointment details.
+        /// </summary>
+        internal static string appointment_details {
+            get {
+                return ResourceManager.GetString("appointment_details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pending confirmation.
         /// </summary>
         internal static string appointment_status_0 {
@@ -296,6 +305,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Historial del cliente.
+        /// </summary>
+        internal static string client_history {
+            get {
+                return ResourceManager.GetString("client_history", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
         internal static string confirm {
@@ -337,6 +355,24 @@ namespace MyStyleApp.Localization {
         internal static string delete_favourite {
             get {
                 return ResourceManager.GetString("delete_favourite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete staff.
+        /// </summary>
+        internal static string delete_staff {
+            get {
+                return ResourceManager.GetString("delete_staff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are about to delete a staff. Do you want to continue?.
+        /// </summary>
+        internal static string delete_staff_body {
+            get {
+                return ResourceManager.GetString("delete_staff_body", resourceCulture);
             }
         }
         

@@ -148,6 +148,7 @@
     <Compile Include="Validators\SimpleValidator.cs" />
     <Compile Include="ViewModels\EstablishmentServicesViewModel.cs" />
     <Compile Include="ViewModels\CreateStaffAccountViewModel.cs" />
+    <Compile Include="ViewModels\AppointmentDetailsViewModel.cs" />
     <Compile Include="ViewModels\StaffAccountDetailsViewModel.cs" />
     <Compile Include="ViewModels\EstablishmentAppointmentsViewModel.cs" />
     <Compile Include="ViewModels\CreateAccountViewModel.cs" />

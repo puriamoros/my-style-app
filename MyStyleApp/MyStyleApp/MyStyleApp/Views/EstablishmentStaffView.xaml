@@ -40,26 +40,10 @@
                 <Grid>
                   <StackLayout Padding="5,5,5,5">
                     <StackLayout>
-                      <Label Style="{StaticResource LargeTextStyle}" FontAttributes="Bold"
-                        Text="{Binding StaffName}" SizeChanged="OnLabelSizeChanged"/>
-                    </StackLayout>
-                    
-                    <!--<Grid>
-                      <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="7*" />
-                        <ColumnDefinition Width="93*" />
-                      </Grid.ColumnDefinitions>
-                      <RelativeLayout Grid.Column="0" VerticalOptions="Start" >
-                        <Image Aspect="AspectFit" Source="Marker.png"
-                          RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
-                      </RelativeLayout>
-                      <StackLayout Grid.Column="1">
-                        <Label Style="{StaticResource MediumTextStyle}"
-                          Text="{Binding Address}" SizeChanged="OnLabelSizeChanged"/>
-                      </StackLayout>
-                    </Grid>-->
-                  </StackLayout>
-                    
+                      <Label Style="{StaticResource MediumTextStyle}" FontAttributes="Bold"
+                        Text="{Binding StaffName}" />
+                    </StackLayout>                 
+                  </StackLayout>                   
                 </Grid>
                
                 <BoxView HeightRequest="1" BackgroundColor="Gray"
@@ -69,6 +53,9 @@
               <ViewCell.ContextActions> 
                 <MenuItem Text="{Binding Source={x:Reference StaffList}, Path=BindingContext.LocalizedStrings[view_details]}"
                   Command="{Binding Source={x:Reference StaffList}, Path=BindingContext.ViewDetailsCommand}"
+                  CommandParameter="{Binding Source={x:Reference Staff}, Path=BindingContext}" />
+                <MenuItem Text="{Binding Source={x:Reference StaffList}, Path=BindingContext.LocalizedStrings[delete_staff]}"
+                  Command="{Binding Source={x:Reference StaffList}, Path=BindingContext.DeleteStaffCommand}"
                   CommandParameter="{Binding Source={x:Reference Staff}, Path=BindingContext}" />
               </ViewCell.ContextActions>
             </ViewCell>

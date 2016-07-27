@@ -38,8 +38,8 @@
       <ListView x:Name="AppointmentList"
         ItemsSource="{Binding AppointmentList}"
         HasUnevenRows="True"
-        gestures:ListViewItemTapped.Command="{Binding AppointmentDetailsCommand}"> 
-        <!--cambiar el command-->
+        gestures:ListViewItemTapped.Command="{Binding AppointmentDetailsCommand}"
+        ItemSelected="OnItemListSelection"> 
                     
         <ListView.ItemTemplate>
           <DataTemplate>
@@ -144,6 +144,14 @@
                   CommandParameter="{Binding Source={x:Reference Appointment}, Path=BindingContext}" />
                 <MenuItem Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[confirm]}"
                   Command="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.ConfirmCommand}"
+                  CommandParameter="{Binding Source={x:Reference Appointment}, Path=BindingContext}" />
+                
+                <MenuItem Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[view_details]}"
+                  Command="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.AppointmentDetailsCommand}"
+                  CommandParameter="{Binding Source={x:Reference Appointment}, Path=BindingContext}" />
+                
+                <MenuItem Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[client_history]}"
+                  Command="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.ClientHistorytCommand}"
                   CommandParameter="{Binding Source={x:Reference Appointment}, Path=BindingContext}" />
               </ViewCell.ContextActions>
             

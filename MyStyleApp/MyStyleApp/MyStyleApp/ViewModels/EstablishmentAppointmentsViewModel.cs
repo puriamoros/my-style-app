@@ -31,6 +31,8 @@ namespace MyStyleApp.ViewModels
 
         public Command CancelCommand { get; private set; }
         public Command ConfirmCommand { get; private set; }
+        public Command AppointmentDetailsCommand { get; private set; }
+        public Command ClientHistorytCommand { get; private set; }
 
         public EstablishmentAppointmentsViewModel(
             INavigator navigator,
@@ -49,6 +51,8 @@ namespace MyStyleApp.ViewModels
 
             this.CancelCommand = new Command<Appointment>(this.CancelAsync, this.CanCancel);
             this.ConfirmCommand = new Command<Appointment>(this.ConfirmAsync, this.CanConfirm);
+            //this.AppointmentDetailsCommand = new Command<Appointment>(this.AppointmentDetailsAsync);
+            //this.ClientHistorytCommand = new Command<Appointment>(this.ClientHistorytAsync);
 
             this.InitializeAsync();
 
@@ -309,6 +313,22 @@ namespace MyStyleApp.ViewModels
             var list = new List<Appointment>(this.AppointmentList);
             list.Sort((one, other) => { return one.Date.CompareTo(other.Date); });
             this.AppointmentList = new ObservableCollection<Appointment>(list);
+        }
+
+        private async void AppointmentDetailsAsync()
+        {
+            //await this.PushNavPageModalAsync<AppointmentsDetailsViewModel>((appointmentsDetailsVM) =>
+            //{
+            //    appointmentsDetailsVM.Initialize();
+            //});
+        }
+
+        private async void ClientHistorytAsync()
+        {
+            //await this.PushNavPageModalAsync<AppointmentsDetailsViewModel>((appointmentsDetailsVM) =>
+            //{
+            //    appointmentsDetailsVM.Initialize();
+            //});
         }
     }
 }

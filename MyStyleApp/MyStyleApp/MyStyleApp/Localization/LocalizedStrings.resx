@@ -435,4 +435,16 @@
   <data name="price" xml:space="preserve">
     <value>price</value>
   </data>
+  <data name="delete_staff" xml:space="preserve">
+    <value>Delete staff</value>
+  </data>
+  <data name="delete_staff_body" xml:space="preserve">
+    <value>You are about to delete a staff. Do you want to continue?</value>
+  </data>
+  <data name="client_history" xml:space="preserve">
+    <value>Historial del cliente</value>
+  </data>
+  <data name="appointment_details" xml:space="preserve">
+    <value>Appointment details</value>
+  </data>
 </root>

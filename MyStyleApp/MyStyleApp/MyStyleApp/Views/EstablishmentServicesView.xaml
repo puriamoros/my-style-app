@@ -3,16 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyStyleApp.Views.EstablishmentServicesView"
              xmlns:views="clr-namespace:MyStyleApp.Views"
+             xmlns:gestures="clr-namespace:MyStyleApp.Views.Gestures"
              Padding="{StaticResource PagePadding}">
 
   <StackLayout>
     <Entry x:Name="SearchEntry"
-      Placeholder="{Binding LocalizedStrings[search]}"/>
+      Placeholder="{Binding LocalizedStrings[search]}"
+      HorizontalTextAlignment="Center"
+      TextChanged="OnSearchTextChanged"/>
     <ListView x:Name="GroupedServiceList" ItemsSource="{Binding GroupedServiceList}"
       HasUnevenRows="True"
       GroupDisplayBinding="{Binding Key}"
       GroupShortNameBinding="{Binding ShortKey}"
-      IsGroupingEnabled="True">
+      IsGroupingEnabled="True"
+      ItemSelected="OnItemListSelection">
 
       <ListView.GroupHeaderTemplate>
         <DataTemplate>
@@ -29,32 +33,37 @@
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell x:Name="ViewCell">
-
-            <RelativeLayout Padding="0,5,0,5" IsVisible="{Binding Visible}" HeightRequest="{Binding HeightRequest}">
-              <Switch x:Name="ServiceSwitch"
-                HorizontalOptions="Start"
-                IsToggled="{Binding Selected}"
-                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
-                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.25}"/>
-              <StackLayout
-                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.25}"
-                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.55}">
-                <Label VerticalOptions="End" Text="{Binding Name}" Style="{StaticResource SmallTextStyle}" SizeChanged="OnLabelSizeChanged"/>
+            
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="74*" />
+                <ColumnDefinition Width="26*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+              <Switch x:Name="ServiceSwitch" Grid.Column="0"
+                IsToggled="{Binding Selected}" Style="{StaticResource SwitchStyle}" />
+              
+              <StackLayout Grid.Column="1">
+                <Label Text="{Binding Name}" Style="{StaticResource SmallTextStyle}"
+                  SizeChanged="OnLabelSizeChanged" VerticalTextAlignment="Center"/>
               </StackLayout>
 
-              <Entry
-                Placeholder="{Binding LocalizedStrings[price]}"
-                Text="{Binding Price}"
-                HorizontalTextAlignment="End"
-                Keyboard="Numeric"
-                IsVisible="{Binding Source={x:Reference ServiceSwitch}, Path=IsToggled}"
-                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.8}"
-                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.15}"/>
-              <Label Text=" €"  Style="{StaticResource MediumTextStyle}"
-                IsVisible="{Binding Source={x:Reference ServiceSwitch}, Path=IsToggled}"
-                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.95}"
-                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5}"/>
-            </RelativeLayout>
+              <StackLayout Grid.Column="2">
+                <Entry
+                  Placeholder="{Binding LocalizedStrings[price]}"
+                  Text="{Binding PriceStr}"
+                  Keyboard="Numeric"
+                  IsVisible="{Binding Source={x:Reference ServiceSwitch}, Path=IsToggled}"/>
+              </StackLayout>
+              
+              <StackLayout Grid.Column="3" Padding="0,0,2,0">
+                <Label Text="€" HorizontalTextAlignment="Center"
+                  Style="{StaticResource MediumTextStyle}"
+                  IsVisible="{Binding Source={x:Reference ServiceSwitch}, Path=IsToggled}"/>
+              </StackLayout>
+            </Grid>
+            
             
           </ViewCell>
         </DataTemplate>

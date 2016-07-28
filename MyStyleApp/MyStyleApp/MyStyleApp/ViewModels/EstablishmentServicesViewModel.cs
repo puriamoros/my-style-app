@@ -9,6 +9,8 @@ using MyStyleApp.Models;
 using MyStyleApp.Utils;
 using MyStyleApp.Services.Backend;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace MyStyleApp.ViewModels
 {
@@ -16,6 +18,8 @@ namespace MyStyleApp.ViewModels
     {
         private Establishment _establishment;
         private IEstablishmentsService _establishmentsService;
+
+        private string _searchText;
 
         private ObservableCollection<Grouping<string, SelectedService>> _groupedServiceList;
 
@@ -29,8 +33,9 @@ namespace MyStyleApp.ViewModels
             this._establishmentsService = establishmentsService;
         }
 
-        public void Initialize(Establishment establishment, IList<ServiceCategory> servicesCategories, IList<Service> services)
+        public void Initialize(Establishment establishment, IList<ServiceCategory> serviceCategories, IList<Service> services)
         {
+            MessagingCenter.Send<string>("", "establishmentServicesInitialized");
             this.Establishment = establishment;
 
             Dictionary<int, float> establismentShortenServices = new Dictionary<int, float>();
@@ -39,8 +44,44 @@ namespace MyStyleApp.ViewModels
                 establismentShortenServices.Add(shortenService.Id, shortenService.Price);
             }
 
+            Dictionary<int, List<Service>> establismentServices = new Dictionary<int, List<Service>>();
+            foreach (var service in services)
+            {
+                service.Price = (establismentShortenServices.ContainsKey(service.Id)) ? establismentShortenServices[service.Id] : 0;
+                if(!establismentServices.ContainsKey(service.IdServiceCategory))
+                {
+                    establismentServices.Add(service.IdServiceCategory, new List<Service>());
+                }
+                establismentServices[service.IdServiceCategory].Add(service);
+            }
+
             var list = new List<Grouping<string, SelectedService>>();
-            foreach (var serviceCategory in servicesCategories)
+            foreach(var serviceCategory in serviceCategories)
+            {
+                var selectedServiceList = new List<SelectedService>();
+                foreach (var service in establismentServices[serviceCategory.Id])
+                {
+                    var selectedService = new SelectedService()
+                    {
+                        Id = service.Id,
+                        Name = service.Name,
+                        IdServiceCategory = service.IdServiceCategory,
+                        Duration = service.Duration,
+                        Price = service.Price,
+                        PriceStr = (establismentShortenServices.ContainsKey(service.Id)) ? service.Price.ToString("0.00") : "",
+                        Selected = establismentShortenServices.ContainsKey(service.Id)
+                    };
+                    selectedServiceList.Add(selectedService);
+                }
+                selectedServiceList.Sort((one, other) =>
+                {
+                    return one.Name.CompareTo(other.Name);
+                });
+                list.Add(new Grouping<string, SelectedService>(serviceCategory.Name, selectedServiceList));
+            }
+
+
+            /*foreach (var serviceCategory in serviceCategories)
             {
                 var categoryServices = 
                     from service in services
@@ -53,11 +94,12 @@ namespace MyStyleApp.ViewModels
                         IdServiceCategory = service.IdServiceCategory,
                         Duration = service.Duration,
                         Price = (establismentShortenServices.ContainsKey(service.Id)) ? establismentShortenServices[service.Id] : 0.0f,
+                        PriceStr = (establismentShortenServices.ContainsKey(service.Id)) ? establismentShortenServices[service.Id].ToString("0.00") : "",
                         Selected = establismentShortenServices.ContainsKey(service.Id)
                     };
 
                 list.Add(new Grouping<string, SelectedService>(serviceCategory.Name, categoryServices));
-            }
+            }*/
 
             list.Sort((one, other) =>
             {
@@ -77,6 +119,12 @@ namespace MyStyleApp.ViewModels
         {
             get { return _groupedServiceList; }
             set { SetProperty(ref _groupedServiceList, value); }
+        }
+
+        public string SearchText
+        {
+            get { return _searchText; }
+            set { SetProperty(ref _searchText, value); }
         }
     }
 }

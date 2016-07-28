@@ -13,46 +13,60 @@ namespace MyStyleApp.Views
         public EstablishmentServicesView()
         {
             InitializeComponent();
-            this.SearchEntry.TextChanged += SearchEntry_TextChanged;
+
+            Xamarin.Forms.MessagingCenter.Subscribe<string>(this, "establishmentServicesInitialized", (ignored) =>
+            {
+                this.SearchEntry.Text = "";
+                this.originalList = null;
+            });
         }
 
-        private void SearchEntry_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
+        private void OnSearchTextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
-            var text = this.SearchEntry.Text.ToLower();
-
-            if(originalList == null)
+            if(this.GroupedServiceList.ItemsSource != null)
             {
-                originalList = new List<Grouping<string, SelectedService>>();
-
-                var enumerator = this.GroupedServiceList.ItemsSource.GetEnumerator();
-                while (enumerator.MoveNext())
+                if (originalList == null)
                 {
-                    if (enumerator.Current is Grouping<string, SelectedService>)
+                    originalList = new List<Grouping<string, SelectedService>>();
+
+                    var enumerator = this.GroupedServiceList.ItemsSource.GetEnumerator();
+                    while (enumerator.MoveNext())
                     {
-                        var grouping = enumerator.Current as Grouping<string, SelectedService>;
-                        originalList.Add(grouping);
+                        if (enumerator.Current is Grouping<string, SelectedService>)
+                        {
+                            var grouping = enumerator.Current as Grouping<string, SelectedService>;
+                            originalList.Add(grouping);
+                        }
                     }
                 }
-            }
 
-            var list = new List<Grouping<string, SelectedService>>();
-            foreach(var grouping in originalList)
-            {
-                var servicesList = new List<SelectedService>();
-                foreach(var service in grouping)
+                if (string.IsNullOrEmpty(this.SearchEntry.Text))
                 {
-                    if(service.Name.ToLower().Contains(text))
+                    this.GroupedServiceList.ItemsSource = originalList;
+                }
+                else
+                {
+                    var text = this.SearchEntry.Text.ToLower();
+                    var list = new List<Grouping<string, SelectedService>>();
+                    foreach (var grouping in originalList)
                     {
-                        servicesList.Add(service);
+                        var servicesList = new List<SelectedService>();
+                        foreach (var service in grouping)
+                        {
+                            if (service.Name.ToLower().Contains(text))
+                            {
+                                servicesList.Add(service);
+                            }
+                        }
+                        if (servicesList.Count > 0)
+                        {
+                            list.Add(new Grouping<string, SelectedService>(grouping.Key, servicesList));
+                        }
                     }
-                }
-                if(servicesList.Count > 0)
-                {
-                    list.Add(new Grouping<string, SelectedService>(grouping.Key, servicesList));
+
+                    this.GroupedServiceList.ItemsSource = list;
                 }
             }
-
-            this.GroupedServiceList.ItemsSource = list;
         }
     }
 }

@@ -442,9 +442,9 @@
     <value>Estás a punto de borrar un empleado. ¿Deseas continuar?</value>
   </data>
   <data name="client_history" xml:space="preserve">
-    <value>Client history</value>
+    <value>Historial del cliente</value>
   </data>
   <data name="appointment_details" xml:space="preserve">
-    <value>Detalle de cita</value>
+    <value>Detalle de la cita</value>
   </data>
 </root>

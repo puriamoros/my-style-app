@@ -442,7 +442,7 @@
     <value>You are about to delete a staff. Do you want to continue?</value>
   </data>
   <data name="client_history" xml:space="preserve">
-    <value>Historial del cliente</value>
+    <value>Client history</value>
   </data>
   <data name="appointment_details" xml:space="preserve">
     <value>Appointment details</value>

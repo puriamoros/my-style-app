@@ -10,6 +10,8 @@ namespace MyStyleApp.Models
 {
     public class SelectedService : Service
     {
+        public string PriceStr { get; set; }
+
         public bool Selected { get; set; }
     }
 }

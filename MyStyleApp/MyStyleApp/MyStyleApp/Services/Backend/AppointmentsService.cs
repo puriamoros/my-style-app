@@ -69,5 +69,17 @@ namespace MyStyleApp.Services.Backend
                 new GenericStatus() { Status = (int) status },
                 new object[] { appointment.Id });
         }
+
+        public async Task UpdateAppointmentNotesAsync(Appointment appointment)
+        {
+            string authorization = await this.HttpService.GetApiKeyAuthorizationAsync();
+
+            //await this.HttpService.InvokeWithContentAsync<GenericStatus>(
+            //    HttpMethod.Put,
+            //    BackendConstants.APPOINTMENT_STATUS_URL,
+            //    authorization,
+            //    new GenericStatus() { Status = (int)status },
+            //    new object[] { appointment.Id });
+        }
     }
 }

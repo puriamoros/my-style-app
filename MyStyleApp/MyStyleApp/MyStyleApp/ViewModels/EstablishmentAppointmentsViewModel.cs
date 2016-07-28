@@ -31,7 +31,7 @@ namespace MyStyleApp.ViewModels
 
         public Command CancelCommand { get; private set; }
         public Command ConfirmCommand { get; private set; }
-        public Command AppointmentDetailsCommand { get; private set; }
+        public Command<Appointment> AppointmentDetailsCommand { get; private set; }
         public Command ClientHistorytCommand { get; private set; }
 
         public EstablishmentAppointmentsViewModel(
@@ -51,7 +51,7 @@ namespace MyStyleApp.ViewModels
 
             this.CancelCommand = new Command<Appointment>(this.CancelAsync, this.CanCancel);
             this.ConfirmCommand = new Command<Appointment>(this.ConfirmAsync, this.CanConfirm);
-            //this.AppointmentDetailsCommand = new Command<Appointment>(this.AppointmentDetailsAsync);
+            this.AppointmentDetailsCommand = new Command<Appointment>(this.AppointmentDetailsAsync);
             //this.ClientHistorytCommand = new Command<Appointment>(this.ClientHistorytAsync);
 
             this.InitializeAsync();
@@ -315,17 +315,17 @@ namespace MyStyleApp.ViewModels
             this.AppointmentList = new ObservableCollection<Appointment>(list);
         }
 
-        private async void AppointmentDetailsAsync()
+        private async void AppointmentDetailsAsync(Appointment appointment)
         {
-            //await this.PushNavPageModalAsync<AppointmentsDetailsViewModel>((appointmentsDetailsVM) =>
-            //{
-            //    appointmentsDetailsVM.Initialize();
-            //});
+            await this.PushNavPageAsync<AppointmentDetailsViewModel>((appointmentDetailsVM) =>
+            {
+                appointmentDetailsVM.Initialize(appointment);
+            });
         }
 
         private async void ClientHistorytAsync()
         {
-            //await this.PushNavPageModalAsync<AppointmentsDetailsViewModel>((appointmentsDetailsVM) =>
+            //await this.PushNavPageAsync<AppointmentsDetailsViewModel>((appointmentsDetailsVM) =>
             //{
             //    appointmentsDetailsVM.Initialize();
             //});

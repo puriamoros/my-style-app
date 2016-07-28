@@ -14,6 +14,12 @@ namespace MyStyleApp.ViewModels
 {
     public class AppointmentDetailsViewModel : NavigableViewModelBase
     {
+        private IAppointmentsService _appointmentsService;
+        private Appointment _appointment;
+        private string _notes;
+
+        private Command SaveNotesCommand;
+
         public AppointmentDetailsViewModel(
             INavigator navigator,
             IUserNotificator userNotificator,
@@ -23,80 +29,43 @@ namespace MyStyleApp.ViewModels
             IAppointmentsService appointmentsService,
             IEstablishmentsService establishmentsService) :
             base(navigator, userNotificator, localizedStringsService)
-        { 
-            
-            this.Title = this.LocalizedStrings.GetString("appointment_details");
+        {
+            this._appointmentsService = appointmentsService;
 
+            this.SaveNotesCommand = new Command<Appointment>(this.SaveNotesAsync);
         }
 
-        
+        public void Initialize(Appointment appointment)
+        {
+            this.Appointment = new Appointment();
 
-        //protected override void ConfigureValidationService()
-        //{
-        //    base.ConfigureValidationService();
-        //}
+            this.Appointment.Date = appointment.Date;
+            this.Appointment.ClientName = appointment.ClientName;
+            this.Appointment.EstablishmentName = appointment.EstablishmentName;
+            this.Appointment.ServiceName = appointment.ServiceName;
+            this.Appointment.ServicePrice = appointment.ServicePrice;
+            this.Appointment.Notes = appointment.Notes;
+        }
 
-        //protected override async void SaveAccountAsync()
-        //{
-        //    string validationError = this.GetValidationError();
+        public Appointment Appointment
+        {
+            get { return _appointment; }
+            set { SetProperty(ref _appointment, value); }
+        }
 
-        //    if (validationError == null)
-        //    {
-        //        this.ErrorText = "";
-        //        await this.ExecuteBlockingUIAsync(
-        //            async () =>
-        //            {
-        //                try
-        //                {
-        //                    Staff staff = new Staff()
-        //                    {
-        //                        Id = this.User.Id,
-        //                        Name = this.User.Name,
-        //                        Surname = this.User.Surname,
-        //                        Phone = this.User.Phone,
-        //                        Email = this.User.Email,
-        //                        Password = "",
-        //                        UserType = (UserTypeEnum)this.SelectedUserType.Id,
-        //                        IdEstablishment = this.SelectedEstablishment.Id
-        //                    };
+        public async void SaveNotesAsync(Appointment appointment)
+        {
+            if(this.Appointment.Notes == null)
+            {
+                this.Appointment.Notes = "";
+            }
+            await this.ExecuteBlockingUIAsync(
+                    async () =>
+                    {
+                        await this._appointmentsService.UpdateAppointmentNotesAsync(this.Appointment);
+                        
+                    });
+        }
 
-        //                    await this._usersService.UpdateStaffAsync(staff);
-
-        //                    MessagingCenter.Send<Staff>(staff, "staffChanged");
-
-        //                    // TODO:
-        //                    // avisar al usuario con un popup de que el cambio se ha aplicado
-        //                    // habría que mandar un push al empleado que se ha cambiado para que haga logout y entre con sus nuevos permisos
-
-        //                    await this.UserNotificator.DisplayAlert(
-        //                       this.LocalizedStrings.GetString("modified_account"),
-        //                       this.LocalizedStrings.GetString("modified_account"),
-        //                       this.LocalizedStrings.GetString("ok"));
-
-        //                }
-        //                catch (BackendException ex)
-        //                {
-        //                    if (ex.BackendError.State == (int)BackendStatusCodeEnum.StateDuplicatedKeyError)
-        //                    {
-        //                        this.ErrorText = this.LocalizedStrings.GetString("error_duplicated_email");
-        //                        return;
-        //                    }
-        //                    else
-        //                    {
-        //                        throw;
-        //                    }
-        //                }
-        //            });
-        //    }
-        //    else
-        //    {
-        //        this.ErrorText = validationError;
-        //    }
-        //}
-
-        //protected override bool CanSaveAccount()
-        //{
-        //    return this.SelectedEstablishment != null && this.SelectedUserType != null;
-        //}
     }
 }

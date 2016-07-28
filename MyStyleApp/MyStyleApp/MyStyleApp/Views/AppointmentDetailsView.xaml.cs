@@ -1,18 +1,18 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-//using Xamarin.Forms;
+using Xamarin.Forms;
 
-//namespace MyStyleApp.Views
-//{
-//    public partial class AppointmentDetailsView : ContentPage
-//    {
-//        public AppointmentDetailsView()
-//        {
-//            InitializeComponent();
-//        }
-//    }
-//}
+namespace MyStyleApp.Views
+{
+    public partial class AppointmentDetailsView : CustomContentPage
+    {
+        public AppointmentDetailsView()
+        {
+            InitializeComponent();
+        }
+    }
+}

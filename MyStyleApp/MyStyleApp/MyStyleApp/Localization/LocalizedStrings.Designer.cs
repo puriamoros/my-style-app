@@ -305,7 +305,7 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Historial del cliente.
+        ///   Looks up a localized string similar to Client history.
         /// </summary>
         internal static string client_history {
             get {

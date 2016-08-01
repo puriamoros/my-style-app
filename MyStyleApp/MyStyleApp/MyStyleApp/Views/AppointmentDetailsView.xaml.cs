@@ -13,6 +13,15 @@ namespace MyStyleApp.Views
         public AppointmentDetailsView()
         {
             InitializeComponent();
+            this.NotesLayout.SizeChanged += OnNotesLayoutSizeChanged;
+        }
+
+        private void OnNotesLayoutSizeChanged(object sender, EventArgs e)
+        {
+            if(NotesLayout.HeightRequest == -1)
+            {
+                NotesLayout.HeightRequest = NotesLayout.Height;
+            }
         }
     }
 }

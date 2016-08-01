@@ -50,6 +50,7 @@
                   Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.ViewDetailsCommand}"
                   CommandParameter="{Binding Source={x:Reference Favourite}, Path=BindingContext}" />
                 <MenuItem Text="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.LocalizedStrings[delete_favourite]}"
+                  IsDestructive="True"
                   Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.DeleteFavouriteCommand}"
                   CommandParameter="{Binding Source={x:Reference Favourite}, Path=BindingContext}" />
               </ViewCell.ContextActions>

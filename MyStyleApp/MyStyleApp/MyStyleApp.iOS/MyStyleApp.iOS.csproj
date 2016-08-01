@@ -52,10 +52,10 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
-    <CodesignKey>iPhone Developer: helio.huete@gmail.com (73M24TJJH2)</CodesignKey>
+    <CodesignKey>iPhone Developer: puri.amoros@gmail.com (W896LU4T8R)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>550b089f-e6f8-496f-9b52-c90a7d0b9d6f</CodesignProvision>
+    <CodesignProvision>fccbcb48-27aa-4c74-84a9-c4e3b0472496</CodesignProvision>
     <CodesignResourceRules />
     <CodesignExtraArgs />
   </PropertyGroup>

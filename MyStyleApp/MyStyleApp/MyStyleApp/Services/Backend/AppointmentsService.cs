@@ -32,6 +32,18 @@ namespace MyStyleApp.Services.Backend
                     from.ToString(BackendConstants.DATETIME_FORMAT) });
         }
 
+        public async Task<List<Appointment>> GetAllClientAppointmentsAsync(User user)
+        {
+            string authorization = await this.HttpService.GetApiKeyAuthorizationAsync();
+
+            return await this.HttpService.InvokeAsync<List<Appointment>>(
+                HttpMethod.Get,
+                BackendConstants.GET_ALL_CLIENT_APPOINTMENTS_URL,
+                authorization,
+                new object[] { user.Id });
+        }
+        
+
         public async Task<List<Appointment>> GetEstablishmentAppointmentsAsync(Establishment establishment, DateTime from, DateTime to)
         {
             string authorization = await this.HttpService.GetApiKeyAuthorizationAsync();
@@ -64,22 +76,22 @@ namespace MyStyleApp.Services.Backend
 
             await this.HttpService.InvokeWithContentAsync<GenericStatus>(
                 HttpMethod.Put,
-                BackendConstants.APPOINTMENT_STATUS_URL,
+                BackendConstants.APPOINTMENT_URL,
                 authorization,
                 new GenericStatus() { Status = (int) status },
                 new object[] { appointment.Id });
         }
 
-        public async Task UpdateAppointmentNotesAsync(Appointment appointment)
+        public async Task UpdateAppointmentNotesAsync(Appointment appointment, string notes)
         {
             string authorization = await this.HttpService.GetApiKeyAuthorizationAsync();
 
-            //await this.HttpService.InvokeWithContentAsync<GenericStatus>(
-            //    HttpMethod.Put,
-            //    BackendConstants.APPOINTMENT_STATUS_URL,
-            //    authorization,
-            //    new GenericStatus() { Status = (int)status },
-            //    new object[] { appointment.Id });
+            await this.HttpService.InvokeWithContentAsync<AppointmentNotes>(
+                HttpMethod.Put,
+                BackendConstants.APPOINTMENT_URL,
+                authorization,
+                new AppointmentNotes() { Notes = notes },
+                new object[] { appointment.Id });
         }
     }
 }

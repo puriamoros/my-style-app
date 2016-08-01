@@ -9,6 +9,7 @@ using MyStyleApp.Services.Backend;
 using System.Collections.ObjectModel;
 using MyStyleApp.Exceptions;
 using Xamarin.Forms;
+using System.Windows.Input;
 
 namespace MyStyleApp.ViewModels
 {
@@ -18,7 +19,7 @@ namespace MyStyleApp.ViewModels
         private Appointment _appointment;
         private string _notes;
 
-        private Command SaveNotesCommand;
+        public ICommand SaveNotesCommand { get; private set; }
 
         public AppointmentDetailsViewModel(
             INavigator navigator,
@@ -32,19 +33,13 @@ namespace MyStyleApp.ViewModels
         {
             this._appointmentsService = appointmentsService;
 
-            this.SaveNotesCommand = new Command<Appointment>(this.SaveNotesAsync);
+            this.SaveNotesCommand = new Command(this.SaveNotesAsync);
         }
 
         public void Initialize(Appointment appointment)
         {
-            this.Appointment = new Appointment();
-
-            this.Appointment.Date = appointment.Date;
-            this.Appointment.ClientName = appointment.ClientName;
-            this.Appointment.EstablishmentName = appointment.EstablishmentName;
-            this.Appointment.ServiceName = appointment.ServiceName;
-            this.Appointment.ServicePrice = appointment.ServicePrice;
-            this.Appointment.Notes = appointment.Notes;
+            this.Appointment = appointment;
+            this.Notes = appointment.Notes;
         }
 
         public Appointment Appointment
@@ -53,17 +48,25 @@ namespace MyStyleApp.ViewModels
             set { SetProperty(ref _appointment, value); }
         }
 
-        public async void SaveNotesAsync(Appointment appointment)
+        public string Notes
         {
-            if(this.Appointment.Notes == null)
+            get { return _notes; }
+            set { SetProperty(ref _notes, value); }
+        }
+
+        public async void SaveNotesAsync()
+        {
+            if(this.Notes == null)
             {
-                this.Appointment.Notes = "";
+                this.Notes = "";
             }
             await this.ExecuteBlockingUIAsync(
                     async () =>
                     {
-                        await this._appointmentsService.UpdateAppointmentNotesAsync(this.Appointment);
-                        
+                        await this._appointmentsService.UpdateAppointmentNotesAsync(this.Appointment, this.Notes);
+                        this.Appointment.Notes = this.Notes;
+
+                        //TODO: avisar al usuario de que las notas se han actualizado
                     });
         }
 

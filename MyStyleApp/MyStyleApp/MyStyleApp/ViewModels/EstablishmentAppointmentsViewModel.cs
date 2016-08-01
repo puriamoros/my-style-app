@@ -52,7 +52,7 @@ namespace MyStyleApp.ViewModels
             this.CancelCommand = new Command<Appointment>(this.CancelAsync, this.CanCancel);
             this.ConfirmCommand = new Command<Appointment>(this.ConfirmAsync, this.CanConfirm);
             this.AppointmentDetailsCommand = new Command<Appointment>(this.AppointmentDetailsAsync);
-            //this.ClientHistorytCommand = new Command<Appointment>(this.ClientHistorytAsync);
+            this.ClientHistorytCommand = new Command<Appointment>(this.ClientHistorytAsync);
 
             this.InitializeAsync();
 
@@ -323,12 +323,12 @@ namespace MyStyleApp.ViewModels
             });
         }
 
-        private async void ClientHistorytAsync()
+        private async void ClientHistorytAsync(Appointment appointment)
         {
-            //await this.PushNavPageAsync<AppointmentsDetailsViewModel>((appointmentsDetailsVM) =>
-            //{
-            //    appointmentsDetailsVM.Initialize();
-            //});
+            await this.PushNavPageAsync<ClientHistoryViewModel>((clientHistoryVM) =>
+            {
+                clientHistoryVM.Initialize(appointment);
+            });
         }
     }
 }

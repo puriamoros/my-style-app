@@ -50,14 +50,14 @@ class Users extends ModelWithIdBase
 		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
     }
 	
-	protected function authorizeGetElement($id)
+	/*protected function authorizeGetElement($id)
 	{
 		$user = $this->authorizeDefault();
 		
 		if($user[$this->users->id] !== $id) {
 			throw new ApiException(STATE_NOT_AUTHORIZED, "Not authorized", 401);
 		}
-	}
+	}*/
 	
 	public function post($queryArray)
     {

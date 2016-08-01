@@ -13,6 +13,7 @@ namespace MyStyleApp.Views.Controls
                 this.BorderColor = Color.FromRgb(0, 122, 255);
                 this.BorderRadius = 10;
                 this.BorderWidth = 2;
+                this.FontAttributes = FontAttributes.Bold;
             }
         }
     }

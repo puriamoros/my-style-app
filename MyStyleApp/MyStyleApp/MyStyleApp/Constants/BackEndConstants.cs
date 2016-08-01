@@ -25,9 +25,10 @@
         public const string ADD_FAVOURITES_URL = "favourites";
         public const string DELETE_FAVOURITES_URL = "favourites/{0}";
         public const string GET_CLIENT_APPOINTMENTS_URL = "appointments?idClient={0}&from={1}";
+        public const string GET_ALL_CLIENT_APPOINTMENTS_URL = "appointments?idClient={0}";
         public const string GET_ESTABLISHMENT_APPOINTMENTS_URL = "appointments?idEstablishment={0}&from={1}&to={2}";
         public const string APPOINTMENTS_URL = "appointments";
-        public const string APPOINTMENT_STATUS_URL = "appointments/{0}/status";
+        public const string APPOINTMENT_URL = "appointments/{0}";
         public const string GET_STAFF_URL = "staff?idEstablishment={0}";
         public const string UPDATE_STAFF_URL = "staff/{0}";
         public const string CREATE_STAFF_URL = "staff";

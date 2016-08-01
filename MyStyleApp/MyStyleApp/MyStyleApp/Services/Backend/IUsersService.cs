@@ -14,6 +14,7 @@ namespace MyStyleApp.Services.Backend
         Task UpdateUserAsync(User user);
         Task UpdatePasswordAsync(int id, string oldPassword, string newPassword);
         Task UpdatePlatformAsync(UserPlatform userPlatform);
+        Task<User> GetUserAsync(int idUser);
 
         Task<IList<Staff>> GetStaffAsync(Establishment establishment);
         Task UpdateStaffAsync(Staff staff);

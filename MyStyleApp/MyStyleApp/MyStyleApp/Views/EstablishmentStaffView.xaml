@@ -55,6 +55,7 @@
                   Command="{Binding Source={x:Reference StaffList}, Path=BindingContext.ViewDetailsCommand}"
                   CommandParameter="{Binding Source={x:Reference Staff}, Path=BindingContext}" />
                 <MenuItem Text="{Binding Source={x:Reference StaffList}, Path=BindingContext.LocalizedStrings[delete_staff]}"
+                  IsDestructive="True"
                   Command="{Binding Source={x:Reference StaffList}, Path=BindingContext.DeleteStaffCommand}"
                   CommandParameter="{Binding Source={x:Reference Staff}, Path=BindingContext}" />
               </ViewCell.ContextActions>

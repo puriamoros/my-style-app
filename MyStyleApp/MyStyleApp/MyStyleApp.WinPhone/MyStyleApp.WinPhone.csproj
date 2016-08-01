@@ -110,6 +110,8 @@
     <Content Include="Assets\WideLogo.scale-240.png" />
     <Content Include="Calendar.png" />
     <Content Include="Cancelled.png" />
+    <Content Include="Email.png" />
+    <Content Include="Establishment.png" />
     <Content Include="Phone.png" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Client.png" />

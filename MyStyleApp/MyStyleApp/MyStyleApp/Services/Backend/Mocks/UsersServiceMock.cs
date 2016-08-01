@@ -65,6 +65,12 @@ namespace MyStyleApp.Services.Backend.Mocks
         {
         }
 
+        public async Task<User> GetUserAsync(int idUser)
+        {
+            User user = new User();
+            return user;
+        }
+
         public async Task<IList<Staff>> GetStaffAsync(Establishment establishment)
         {
             IList<Staff> listStaff = new List<Staff>();

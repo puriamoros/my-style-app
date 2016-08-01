@@ -61,6 +61,7 @@
     <Compile Include="Enums\ProvinceEnum.cs" />
     <Compile Include="Enums\UserTypeEnum.cs" />
     <Compile Include="Exceptions\BackendException.cs" />
+    <Compile Include="Models\AppointmentNotes.cs" />
     <Compile Include="Models\GenericStatus.cs" />
     <Compile Include="Models\SelectedService.cs" />
     <Compile Include="Models\UserType.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Validators\RegexValidator.cs" />
     <Compile Include="Validators\RequiredValidator.cs" />
     <Compile Include="Validators\SimpleValidator.cs" />
+    <Compile Include="ViewModels\ClientHistoryViewModel.cs" />
     <Compile Include="ViewModels\EstablishmentServicesViewModel.cs" />
     <Compile Include="ViewModels\CreateStaffAccountViewModel.cs" />
     <Compile Include="ViewModels\AppointmentDetailsViewModel.cs" />
@@ -171,6 +173,9 @@
     <Compile Include="ViewModels\NavigableViewModelBase.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainClientViewModel.cs" />
+    <Compile Include="Views\ClientHistoryView.xaml.cs">
+      <DependentUpon>ClientHistoryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EstablishmentServicesView.xaml.cs">
       <DependentUpon>EstablishmentServicesView.xaml</DependentUpon>
     </Compile>
@@ -398,6 +403,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\EstablishmentServicesView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ClientHistoryView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

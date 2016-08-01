@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:CustomContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyStyleApp.Views.ClientHistoryView"
+             xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
+             xmlns:gestures="clr-namespace:MyStyleApp.Views.Gestures"
+             xmlns:views="clr-namespace:MyStyleApp.Views"
+             xmlns:mvvmcorebehaviors="clr-namespace:MvvmCore.Behaviors"
+             Padding="{StaticResource PagePadding}"
+             Title="{Binding LocalizedStrings[client_history]}">
+  <ScrollView>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+      <StackLayout>
+        <Label
+          Text="{Binding LocalizedStrings[client_history]}"
+          Style="{StaticResource LargeTextStyle}"
+          HorizontalOptions="Center"
+          IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
+          
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="94*" />
+          </Grid.ColumnDefinitions>
+          <RelativeLayout Grid.Column="0" VerticalOptions="Center">
+            <Image Aspect="AspectFit" Source="Client.png"
+              RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+          </RelativeLayout>
+          <StackLayout Grid.Column="1">
+            <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+              Text="{Binding Appointment.ClientName}" SizeChanged="OnLabelSizeChanged"/>
+          </StackLayout>
+        </Grid>
+          
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="94*" />
+          </Grid.ColumnDefinitions>   
+          <RelativeLayout Grid.Column="0" VerticalOptions="Center">
+            <Image Aspect="AspectFit" Source="Email.png"
+              RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+          </RelativeLayout>
+          <StackLayout Grid.Column="1">
+            <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+              Text="{Binding User.Email}" SizeChanged="OnLabelSizeChanged"/>
+          </StackLayout>          
+        </Grid>
+        
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="94*" />
+          </Grid.ColumnDefinitions>
+          <RelativeLayout Grid.Column="0" VerticalOptions="Center">
+            <Image Aspect="AspectFit" Source="Phone.png"
+              RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+          </RelativeLayout>
+          <StackLayout Grid.Column="1">
+            <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+              Text="{Binding User.Phone}" />
+          </StackLayout>
+        </Grid>
+        
+        
+        <BoxView HeightRequest="1" BackgroundColor="Gray"
+          IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}" /> 
+        
+        <!--Lista de appointments-->
+        <ListView>
+          
+        </ListView>
+        
+      </StackLayout>
+
+      <controls:WaitingOverlayControl Grid.Row="0" Grid.RowSpan="2"
+        IsVisible="{Binding IsBusy}"
+        Text="{Binding LocalizedStrings[waiting]}"/>
+    </Grid>
+  </ScrollView>
+  
+  
+</views:CustomContentPage>

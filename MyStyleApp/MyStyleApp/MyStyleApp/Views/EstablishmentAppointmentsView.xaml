@@ -140,6 +140,7 @@
             
               <ViewCell.ContextActions>
                 <MenuItem Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[cancel]}"
+                  IsDestructive="True"
                   Command="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.CancelCommand}"
                   CommandParameter="{Binding Source={x:Reference Appointment}, Path=BindingContext}" />
                 

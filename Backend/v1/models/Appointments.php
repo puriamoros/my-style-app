@@ -166,10 +166,8 @@ class Appointments extends ModelWithIdBase
 	
 	public function put($queryArray)
     {
-		if(count($queryArray) == 3) {
-			if($queryArray[2] == 'status') {
-				return $this->updateElement($queryArray[1]);
-			}
+		if(count($queryArray) == 2) {
+			return $this->updateElement($queryArray[1]);
 		}
 		
 		throw new ApiException(STATE_INVALID_URL, "Invalid URL");
@@ -177,63 +175,73 @@ class Appointments extends ModelWithIdBase
 	
 	protected function dbUpdate($id, $data)
 	{
-		$appointment = $this->checkCanUpdate($id, $data);
-		$result = DBCommands::dbUpdate($this->appointments->table, [$this->appointments->status], $this->idField, $id, $data);
-		
-		$notifyClient = true;
-		$idClient = $appointment[$this->appointments->idClient];
-		if($this->authorizedUser[$this->users->id] == $idClient) {
-			$notifyClient = false;
+		if (!isset($data[$this->appointments->status]) && !isset($data[$this->appointments->notes])) {
+			throw new ApiException(STATE_NOT_AUTHORIZED, "Not authorized", 401);
 		}
 		
-		$newStatus = $data[$this->appointments->status];
-		if($newStatus == APPOINTMENT_STATUS_CONFIRMED && $notifyClient) {
-			$idKeyMap = array(
-				59 => 'title',
-				61 => 'body'
-			);
-			$translationsMap = Translations::getInstance()->getTranslationsMap($idKeyMap);
+		$appointment = null;
+		if (isset($data[$this->appointments->status])) {
+			$appointment = $this->checkCanUpdate($id, $data);
+		}
+		
+		$result = DBCommands::dbUpdate($this->appointments->table, [$this->appointments->status, $this->appointments->notes], $this->idField, $id, $data);
+		
+		if (isset($data[$this->appointments->status])) {
+			$notifyClient = true;
+			$idClient = $appointment[$this->appointments->idClient];
+			if($this->authorizedUser[$this->users->id] == $idClient) {
+				$notifyClient = false;
+			}
 			
-			PushNotifications::NotifyUser(
-				$idClient,
-				$translationsMap,
-				'appointmentConfirmed'
-			);
-		}
-		else if($newStatus == APPOINTMENT_STATUS_CANCELLED) {
-			if($notifyClient) {
+			$newStatus = $data[$this->appointments->status];
+			if($newStatus == APPOINTMENT_STATUS_CONFIRMED && $notifyClient) {
 				$idKeyMap = array(
-					60 => 'title',
+					59 => 'title',
 					61 => 'body'
 				);
 				$translationsMap = Translations::getInstance()->getTranslationsMap($idKeyMap);
-			
+				
 				PushNotifications::NotifyUser(
 					$idClient,
 					$translationsMap,
-					'appointmentCancelled'
+					'appointmentConfirmed'
 				);
 			}
-			else {
-				$date = date_create($appointment[$this->appointments->date]);
-				$establishment = DBCommands::dbGetOne($this->establishments->table, $this->establishments->fields, $this->establishments->id, $appointment[$this->appointments->idEstablishment]);
+			else if($newStatus == APPOINTMENT_STATUS_CANCELLED) {
+				if($notifyClient) {
+					$idKeyMap = array(
+						60 => 'title',
+						61 => 'body'
+					);
+					$translationsMap = Translations::getInstance()->getTranslationsMap($idKeyMap);
 				
-				$idKeyMap = array(
-					60 => 'title',
-					62 => 'body'
-				);
-				$translationsMap = Translations::getInstance()->getTranslationsMap($idKeyMap);
-				foreach($translationsMap['body'] as $key => $value) {
-					$value = str_replace('${ESTABLISHMENT_NAME}', $establishment[$this->establishments->name], $value);
-					$value = str_replace('${APPOINTMENT_DATE}', date_format($date, DateFormats::getInstance()->getDateFormat($key)), $value);
-					$translationsMap['body'][$key] = $value;
+					PushNotifications::NotifyUser(
+						$idClient,
+						$translationsMap,
+						'appointmentCancelled'
+					);
 				}
-				
-				PushNotifications::NotifyEstablishment(
-					$establishment,
-					$translationsMap,
-					'appointmentCancelled||' . $appointment[$this->appointments->idEstablishment] . '||' . $appointment[$this->appointments->date]
-				);
+				else {
+					$date = date_create($appointment[$this->appointments->date]);
+					$establishment = DBCommands::dbGetOne($this->establishments->table, $this->establishments->fields, $this->establishments->id, $appointment[$this->appointments->idEstablishment]);
+					
+					$idKeyMap = array(
+						60 => 'title',
+						62 => 'body'
+					);
+					$translationsMap = Translations::getInstance()->getTranslationsMap($idKeyMap);
+					foreach($translationsMap['body'] as $key => $value) {
+						$value = str_replace('${ESTABLISHMENT_NAME}', $establishment[$this->establishments->name], $value);
+						$value = str_replace('${APPOINTMENT_DATE}', date_format($date, DateFormats::getInstance()->getDateFormat($key)), $value);
+						$translationsMap['body'][$key] = $value;
+					}
+					
+					PushNotifications::NotifyEstablishment(
+						$establishment,
+						$translationsMap,
+						'appointmentCancelled||' . $appointment[$this->appointments->idEstablishment] . '||' . $appointment[$this->appointments->date]
+					);
+				}
 			}
 		}
 		

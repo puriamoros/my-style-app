@@ -8,20 +8,59 @@
              xmlns:mvvmcorebehaviors="clr-namespace:MvvmCore.Behaviors"
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[client_history]}">
-  <ScrollView>
+
     <Grid>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="*" />
-        <RowDefinition Height="Auto" />
-      </Grid.RowDefinitions>
-      <StackLayout>
+
+      <StackLayout Padding="{StaticResource PageContentPadding}">
         <Label
           Text="{Binding LocalizedStrings[client_history]}"
           Style="{StaticResource LargeTextStyle}"
           HorizontalOptions="Center"
           IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
-          
-        <Grid>
+
+        <RelativeLayout>
+          <StackLayout
+            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.005}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.06}"
+            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.06}">
+            <Image Aspect="AspectFit" Source="Client.png"/>
+          </StackLayout>
+          <StackLayout
+            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.075}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.925}">
+            <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+              Text="{Binding Appointment.ClientName}" SizeChanged="OnLabelSizeChanged"/>
+          </StackLayout>
+        </RelativeLayout>
+        <RelativeLayout>
+          <StackLayout
+            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.005}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.06}"
+            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.06}">
+            <Image Aspect="AspectFit" Source="Email.png"/>
+          </StackLayout>
+          <StackLayout
+            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.075}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.925}">
+            <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+              Text="{Binding User.Email}" SizeChanged="OnLabelSizeChanged"/>
+          </StackLayout>
+        </RelativeLayout>
+        <RelativeLayout>
+          <StackLayout
+            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.005}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.06}"
+            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.06}">
+            <Image Aspect="AspectFit" Source="Phone.png"/>
+          </StackLayout>
+          <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+            Text="{Binding User.Phone}" SizeChanged="OnLabelSizeChanged"
+            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.075}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.925}"/>
+        </RelativeLayout>
+        <!--<Grid>
+        <StackLayout>
+        <Grid BackgroundColor="Red">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*" />
             <ColumnDefinition Width="94*" />
@@ -35,8 +74,8 @@
               Text="{Binding Appointment.ClientName}" SizeChanged="OnLabelSizeChanged"/>
           </StackLayout>
         </Grid>
-          
-        <Grid>
+
+        <Grid BackgroundColor="Blue">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*" />
             <ColumnDefinition Width="94*" />
@@ -51,37 +90,112 @@
           </StackLayout>          
         </Grid>
         
-        <Grid>
+        <Grid BackgroundColor="Green">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*" />
             <ColumnDefinition Width="94*" />
           </Grid.ColumnDefinitions>
-          <RelativeLayout Grid.Column="0" VerticalOptions="Center">
-            <Image Aspect="AspectFit" Source="Phone.png"
+          <RelativeLayout Grid.Column="0" VerticalOptions="Center" BackgroundColor="Red">
+            <Image Aspect="AspectFit" Source="Phone.png" VerticalOptions="Center"
               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
           </RelativeLayout>
-          <StackLayout Grid.Column="1">
+          <StackLayout Grid.Column="1" BackgroundColor="Blue">
             <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
               Text="{Binding User.Phone}" />
           </StackLayout>
         </Grid>
-        
+        </StackLayout>
+        </Grid>-->
+      
+        <StackLayout Padding="0,20,0,0">
+          <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+            Text="{Binding Appointment.EstablishmentName}" SizeChanged="OnLabelSizeChanged"/>
+        </StackLayout>
         
         <BoxView HeightRequest="1" BackgroundColor="Gray"
           IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}" /> 
-        
-        <!--Lista de appointments-->
-        <ListView>
-          
+                    
+        <ListView x:Name="AppointmentList"
+          ItemsSource="{Binding AppointmentList}"
+          HasUnevenRows="True"
+          gestures:ListViewItemTapped.Command="{Binding AppointmentDetailsCommand}"
+          ItemSelected="OnItemListSelection">
+
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell x:Name="Appointment">
+                <StackLayout Padding="{StaticResource ListViewItemPadding}">
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="6*" />
+                      <ColumnDefinition Width="60*" />
+                      <ColumnDefinition Width="6*" />
+                      <ColumnDefinition Width="28*" />
+                    </Grid.ColumnDefinitions>
+                    <RelativeLayout Grid.Column="0" VerticalOptions="Center">
+                      <Image Aspect="AspectFit" Source="Calendar.png"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                    </RelativeLayout>
+                    <Label Grid.Column="1" VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+                      Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=d}" />
+                    <RelativeLayout Grid.Column="2" VerticalOptions="Center">
+                      <Image Aspect="AspectFit" Source="Clock.png"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                    </RelativeLayout>
+                    <Label Grid.Column="3" VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+                      Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" />
+                  </Grid>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="6*" />
+                      <ColumnDefinition Width="60*" />
+                      <ColumnDefinition Width="6*" />
+                      <ColumnDefinition Width="28*" />
+                    </Grid.ColumnDefinitions>
+
+                    <RelativeLayout Grid.Column="0" VerticalOptions="Center">
+                      <Image Aspect="AspectFit" Source="Mirror.png"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                    </RelativeLayout>
+
+                    <StackLayout Grid.Column="1">
+                      <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+                        Text="{Binding ServiceName}" SizeChanged="OnLabelSizeChanged"/>
+                    </StackLayout>
+
+                    <RelativeLayout Grid.Column="2" VerticalOptions="Center">
+                      <Image Aspect="AspectFit" Source="EuroPriceTag.png"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                    </RelativeLayout>
+
+                    <StackLayout Grid.Column="3">
+                      <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+                        Text="{Binding ServicePrice, Converter={StaticResource FloatToPriceConverter}}" SizeChanged="OnLabelSizeChanged"/>
+                    </StackLayout>
+                  </Grid>
+
+                  <BoxView HeightRequest="1" BackgroundColor="Gray"
+                    IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}" />
+                
+                </StackLayout>
+
+                <ViewCell.ContextActions>
+                  <MenuItem Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[view_details]}"
+                    IsDestructive="True"
+                    Command="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.AppointmentDetailsCommand}"
+                    CommandParameter="{Binding Source={x:Reference Appointment}, Path=BindingContext}" />
+                </ViewCell.ContextActions>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>        
         </ListView>
         
       </StackLayout>
 
-      <controls:WaitingOverlayControl Grid.Row="0" Grid.RowSpan="2"
+      <controls:WaitingOverlayControl
         IsVisible="{Binding IsBusy}"
         Text="{Binding LocalizedStrings[waiting]}"/>
     </Grid>
-  </ScrollView>
   
   
 </views:CustomContentPage>

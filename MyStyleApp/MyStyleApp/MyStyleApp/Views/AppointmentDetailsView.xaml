@@ -14,7 +14,7 @@
         <RowDefinition Height="*" />
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
-      <StackLayout Grid.Row="0">
+      <StackLayout Grid.Row="0" Padding="{StaticResource PageContentPadding}">
         <StackLayout Padding="0,0,0,10">
           <Label
           Text="{Binding LocalizedStrings[appointment_details]}"
@@ -58,22 +58,7 @@
               Text="{Binding Appointment.ClientName}" SizeChanged="OnLabelSizeChanged"/>
           </StackLayout>
         </Grid>
-          
-         <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="6*" />
-            <ColumnDefinition Width="94*" />
-          </Grid.ColumnDefinitions>   
-          <RelativeLayout Grid.Column="0" VerticalOptions="Center">
-            <Image Aspect="AspectFit" Source="Establishment.png"
-              RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
-          </RelativeLayout>
-          <StackLayout Grid.Column="1">
-            <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
-              Text="{Binding Appointment.EstablishmentName}" SizeChanged="OnLabelSizeChanged"/>
-          </StackLayout>          
-        </Grid>
-
+     
         <Grid>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*" />

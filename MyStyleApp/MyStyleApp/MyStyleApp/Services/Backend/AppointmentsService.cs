@@ -32,7 +32,7 @@ namespace MyStyleApp.Services.Backend
                     from.ToString(BackendConstants.DATETIME_FORMAT) });
         }
 
-        public async Task<List<Appointment>> GetAllClientAppointmentsAsync(User user)
+        public async Task<List<Appointment>> GetAllClientAppointmentsAsync(User user, int idEstablishment)
         {
             string authorization = await this.HttpService.GetApiKeyAuthorizationAsync();
 
@@ -40,7 +40,7 @@ namespace MyStyleApp.Services.Backend
                 HttpMethod.Get,
                 BackendConstants.GET_ALL_CLIENT_APPOINTMENTS_URL,
                 authorization,
-                new object[] { user.Id });
+                new object[] { user.Id, idEstablishment });
         }
         
 

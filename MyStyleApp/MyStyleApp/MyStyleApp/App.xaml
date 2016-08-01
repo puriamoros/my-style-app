@@ -30,6 +30,11 @@
       <OnPlatform x:Key="PageContentPadding"
                   x:TypeArguments="Thickness"
                   iOS="5,0,5,0"
+                  Android="5,5,5,0"
+                  WinPhone="0" />
+      <OnPlatform x:Key="ModalPageContentPadding"
+                  x:TypeArguments="Thickness"
+                  iOS="5,0,5,0"
                   Android="5"
                   WinPhone="5" />
       <OnPlatform x:Key="ListViewItemPadding"

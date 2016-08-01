@@ -9,6 +9,7 @@ using MyStyleApp.Services.Backend;
 using System.Collections.ObjectModel;
 using MyStyleApp.Exceptions;
 using Xamarin.Forms;
+using System.Windows.Input;
 
 namespace MyStyleApp.ViewModels
 {
@@ -16,10 +17,13 @@ namespace MyStyleApp.ViewModels
     {
         private IAppointmentsService _appointmentsService;
         private IUsersService _usersService;
+        private IServicesService _servicesService;
 
         private User _user;
         private Appointment _appointment;
         private ObservableCollection<Appointment> _appointmentList;
+
+        public ICommand AppointmentDetailsCommand { get; private set; }
 
         public ClientHistoryViewModel(
             INavigator navigator,
@@ -33,7 +37,9 @@ namespace MyStyleApp.ViewModels
         {
             this._usersService = usersService;
             this._appointmentsService = appointmentsService;
-            
+            this._servicesService = servicesService;
+
+            this.AppointmentDetailsCommand = new Command<Appointment>(this.AppointmentDetailsAsync);
         }
 
         public async void Initialize(Appointment appointment)
@@ -45,7 +51,27 @@ namespace MyStyleApp.ViewModels
                 {
                     this.User = await this._usersService.GetUserAsync(appointment.IdClient);
 
-                    var list = await this._appointmentsService.GetAllClientAppointmentsAsync(this.User);
+                    var list = await this._appointmentsService.GetAllClientAppointmentsAsync(this.User, this.Appointment.IdEstablishment);
+
+                    var services = await this._servicesService.GetServicesAsync();
+
+                    foreach (Appointment item in list)
+                    {
+                        var result = from service in services
+                                     where service.Id == item.IdService
+                                     select service;
+
+                        if (result.Count() > 0)
+                        {
+                            item.ServiceName = result.ElementAt(0).Name;
+                        }
+                    }
+
+                    list.Sort((appointment1, appointment2) =>
+                    {
+                        return -appointment1.Date.CompareTo(appointment2.Date);
+                    });
+
                     this.AppointmentList = new ObservableCollection<Appointment>(list); 
                 });
         }
@@ -66,6 +92,14 @@ namespace MyStyleApp.ViewModels
         {
             get { return _appointmentList; }
             set { SetProperty(ref _appointmentList, value); }
+        }
+
+        private async void AppointmentDetailsAsync(Appointment appointment)
+        {
+            await this.PushNavPageAsync<AppointmentDetailsViewModel>((appointmentDetailsVM) =>
+            {
+                appointmentDetailsVM.Initialize(appointment);
+            });
         }
     }
 }

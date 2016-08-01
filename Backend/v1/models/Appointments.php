@@ -69,8 +69,8 @@ class Appointments extends ModelWithIdBase
 			throw new ApiException(STATE_NOT_AUTHORIZED, "Not authorized", 401);
 		}
 		
-		if(isset($queryParams[$this->appointments->idClient]) && $user[$this->users->id] !== $queryParams[$this->appointments->idClient]) {
-			// Don't authorize to get appointments from other users
+		if(isset($queryParams[$this->appointments->idClient]) && !isset($queryParams[$this->appointments->idEstablishment]) &&
+			$user[$this->users->id] !== $queryParams[$this->appointments->idClient] && $user[$this->users->userType] != USER_TYPE_OWNER) {
 			throw new ApiException(STATE_NOT_AUTHORIZED, "Not authorized", 401);
 		}
 		

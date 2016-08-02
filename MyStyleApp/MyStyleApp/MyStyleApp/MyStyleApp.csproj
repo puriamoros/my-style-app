@@ -176,6 +176,7 @@
     <Compile Include="Views\ClientHistoryView.xaml.cs">
       <DependentUpon>ClientHistoryView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\CheckBoxImage.cs" />
     <Compile Include="Views\EstablishmentServicesView.xaml.cs">
       <DependentUpon>EstablishmentServicesView.xaml</DependentUpon>
     </Compile>

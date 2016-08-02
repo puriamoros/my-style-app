@@ -4,13 +4,23 @@
              x:Class="MyStyleApp.Views.EstablishmentServicesView"
              xmlns:views="clr-namespace:MyStyleApp.Views"
              xmlns:gestures="clr-namespace:MyStyleApp.Views.Gestures"
+             xmlns:controls="clr-namespace:MyStyleApp.Views.Controls;assembly=MyStyleApp"
              Padding="{StaticResource PagePadding}">
-
+  
   <StackLayout>
     <Entry x:Name="SearchEntry"
       Placeholder="{Binding LocalizedStrings[search]}"
       HorizontalTextAlignment="Center"
       TextChanged="OnSearchTextChanged"/>
+
+    <controls:CheckBoxImage Grid.Column="0"
+                                      WidthRequest="50"
+                                      HeightRequest="50"
+                Aspect="AspectFit"
+                IsChecked="True"
+                CheckedSource="FavouriteFilled.png"
+                UncheckedSource="Favourite.png"/>    
+
     <ListView x:Name="GroupedServiceList" ItemsSource="{Binding GroupedServiceList}"
       HasUnevenRows="True"
       GroupDisplayBinding="{Binding Key}"
@@ -29,20 +39,32 @@
           </ViewCell>
         </DataTemplate>
       </ListView.GroupHeaderTemplate>
-
+      
       <ListView.ItemTemplate>
         <DataTemplate>
-          <ViewCell x:Name="ViewCell">
+          <ViewCell>
             
             <Grid>
-              <Grid.ColumnDefinitions>
+              <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="74*" />
                 <ColumnDefinition Width="26*" />
                 <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
               <Switch x:Name="ServiceSwitch" Grid.Column="0"
-                IsToggled="{Binding Selected}" Style="{StaticResource SwitchStyle}" />
+                IsToggled="{Binding Selected}" Style="{StaticResource SwitchStyle}" />-->
+              
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="74*" />
+                <ColumnDefinition Width="26*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+              <Image Grid.Column="0"
+                WidthRequest="50"
+                HeightRequest="50"
+                Aspect="AspectFit"
+                Source="FavouriteFilled.png"/>
               
               <StackLayout Grid.Column="1">
                 <Label Text="{Binding Name}" Style="{StaticResource SmallTextStyle}"

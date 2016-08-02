@@ -3,6 +3,7 @@ using MyStyleApp.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace MyStyleApp.Views
 {
@@ -14,11 +15,23 @@ namespace MyStyleApp.Views
         {
             InitializeComponent();
 
+            this.SearchEntry.TextChanged += OnSearchTextChanged;
+            this.CancelButton.Clicked += OnCancelClicked;
+
             Xamarin.Forms.MessagingCenter.Subscribe<string>(this, "establishmentServicesInitialized", (ignored) =>
             {
                 this.SearchEntry.Text = "";
+                this.CancelButton.IsVisible = false;
                 this.originalList = null;
             });
+        }
+
+        private async void OnCancelClicked(object sender, System.EventArgs e)
+        {
+            this.SearchEntry.Text = "";
+            await Task.Delay(100);
+            this.GroupedServiceList.Focus();
+            this.CancelButton.IsVisible = false;
         }
 
         private void OnSearchTextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
@@ -46,6 +59,7 @@ namespace MyStyleApp.Views
                 }
                 else
                 {
+                    this.CancelButton.IsVisible = true;
                     var text = this.SearchEntry.Text.ToLower();
                     var list = new List<Grouping<string, SelectedService>>();
                     foreach (var grouping in originalList)

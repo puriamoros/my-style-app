@@ -8,19 +8,12 @@
              Padding="{StaticResource PagePadding}">
   
   <StackLayout>
-    <Entry x:Name="SearchEntry"
-      Placeholder="{Binding LocalizedStrings[search]}"
-      HorizontalTextAlignment="Center"
-      TextChanged="OnSearchTextChanged"/>
-
-    <controls:CheckBoxImage Grid.Column="0"
-                                      WidthRequest="50"
-                                      HeightRequest="50"
-                Aspect="AspectFit"
-                IsChecked="True"
-                CheckedSource="FavouriteFilled.png"
-                UncheckedSource="Favourite.png"/>    
-
+    <StackLayout Orientation="Horizontal" Padding="5,0,5,0">
+      <Entry x:Name="SearchEntry" HorizontalOptions="FillAndExpand"
+        Placeholder="{Binding LocalizedStrings[search]}"
+        HorizontalTextAlignment="Center"/>
+      <Button x:Name="CancelButton" Text="{Binding LocalizedStrings[cancel]}" HorizontalOptions="End" />
+    </StackLayout>
     <ListView x:Name="GroupedServiceList" ItemsSource="{Binding GroupedServiceList}"
       HasUnevenRows="True"
       GroupDisplayBinding="{Binding Key}"
@@ -45,26 +38,14 @@
           <ViewCell>
             
             <Grid>
-              <!--<Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="74*" />
-                <ColumnDefinition Width="26*" />
-                <ColumnDefinition Width="Auto" />
-              </Grid.ColumnDefinitions>
-              <Switch x:Name="ServiceSwitch" Grid.Column="0"
-                IsToggled="{Binding Selected}" Style="{StaticResource SwitchStyle}" />-->
-              
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="74*" />
                 <ColumnDefinition Width="26*" />
                 <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
-              <Image Grid.Column="0"
-                WidthRequest="50"
-                HeightRequest="50"
-                Aspect="AspectFit"
-                Source="FavouriteFilled.png"/>
+              <Switch x:Name="ServiceSwitch" Grid.Column="0"
+                IsToggled="{Binding Selected}" Style="{StaticResource SwitchStyle}" />
               
               <StackLayout Grid.Column="1">
                 <Label Text="{Binding Name}" Style="{StaticResource SmallTextStyle}"
@@ -73,7 +54,7 @@
 
               <StackLayout Grid.Column="2">
                 <Entry
-                  Placeholder="{Binding LocalizedStrings[price]}"
+                  Placeholder="{Binding Source={x:Reference GroupedServiceList}, Path=BindingContext.LocalizedStrings[price]}"
                   Text="{Binding PriceStr}"
                   Keyboard="Numeric"
                   IsVisible="{Binding Source={x:Reference ServiceSwitch}, Path=IsToggled}"/>
@@ -86,6 +67,38 @@
               </StackLayout>
             </Grid>
             
+            <!--<Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="70*" />
+                <ColumnDefinition Width="22*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+             <RelativeLayout Grid.Column="0" VerticalOptions="Center">
+                <controls:CheckBoxImage x:Name="ServiceSwitch" IsChecked="{Binding Selected}"
+                  Aspect="AspectFit" CheckedSource="FavouriteFilled.png" UncheckedSource="Favourite.png"
+                  RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+              </RelativeLayout>
+              
+              <StackLayout Grid.Column="1">
+                <Label Text="{Binding Name}" Style="{StaticResource SmallTextStyle}"
+                  SizeChanged="OnLabelSizeChanged" VerticalTextAlignment="Center"/>
+              </StackLayout>
+
+              <StackLayout Grid.Column="2">
+                <Entry
+                  Placeholder="{Binding LocalizedStrings[price]}"
+                  Text="{Binding PriceStr}"
+                  Keyboard="Numeric"
+                  IsVisible="{Binding Source={x:Reference ServiceSwitch}, Path=IsChecked}"/>
+              </StackLayout>
+              
+              <StackLayout Grid.Column="3" Padding="0,0,2,0">
+                <Label Text="€" HorizontalTextAlignment="Center"
+                  Style="{StaticResource MediumTextStyle}"
+                  IsVisible="{Binding Source={x:Reference ServiceSwitch}, Path=IsChecked}"/>
+              </StackLayout>
+            </Grid>-->
             
           </ViewCell>
         </DataTemplate>

@@ -35,8 +35,8 @@ namespace MyStyleApp.ViewModels
 
         public void Initialize(Establishment establishment, IList<ServiceCategory> serviceCategories, IList<Service> services)
         {
-            MessagingCenter.Send<string>("", "establishmentServicesInitialized");
             this.Establishment = establishment;
+            this.SearchText = null;
 
             Dictionary<int, float> establismentShortenServices = new Dictionary<int, float>();
             foreach(var shortenService in this.Establishment.ShortenServices)
@@ -69,7 +69,9 @@ namespace MyStyleApp.ViewModels
                         Duration = service.Duration,
                         Price = service.Price,
                         PriceStr = (establismentShortenServices.ContainsKey(service.Id)) ? service.Price.ToString("0.00") : "",
-                        Selected = establismentShortenServices.ContainsKey(service.Id)
+                        Selected = establismentShortenServices.ContainsKey(service.Id),
+                        Visible = true,
+                        HeightRequest = -1
                     };
                     selectedServiceList.Add(selectedService);
                 }

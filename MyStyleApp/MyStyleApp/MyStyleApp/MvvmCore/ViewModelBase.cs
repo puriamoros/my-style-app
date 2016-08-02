@@ -15,14 +15,14 @@ namespace MvvmCore
 			set { SetProperty(ref _title, value); }
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+        public INavigation Navigation { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
 		public void SetState<T>(Action<T> action) where T : class, IViewModel
 		{
 			action(this as T);
 		}
-
-        public INavigation Navigation { get; set; }
 
         protected virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
 		{

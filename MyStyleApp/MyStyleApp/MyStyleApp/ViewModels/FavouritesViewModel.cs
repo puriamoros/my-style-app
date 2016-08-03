@@ -21,6 +21,7 @@ namespace MyStyleApp.ViewModels
 
         public ICommand ViewDetailsCommand { get; private set; }
         public ICommand DeleteFavouriteCommand { get; private set; }
+        public ICommand ShowMapCommand { get; private set; }
 
         public FavouritesViewModel(
             INavigator navigator,
@@ -32,6 +33,7 @@ namespace MyStyleApp.ViewModels
         {
             this.ViewDetailsCommand = new Command<Establishment>(this.ViewDetailsAsync);
             this.DeleteFavouriteCommand = new Command<Establishment>(this.DeleteFavouriteAsync);
+            this.ShowMapCommand = new Command<Establishment>(this.ShowMapAsync);
             this._favouritesService = favouritesService;
             this._establishmentsService = establishmentsService;
 
@@ -83,31 +85,37 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    await this.SetMainPageTabAsync<EstablishmentSearchViewModel>(async (searchVM) =>
+                    // Get establishment details from BE
+                    var establishmentDetails = await this._establishmentsService.GetEstablishmentAsync(establishment.Id);
+
+                    //await this.SetMainPageTabAsync<EstablishmentSearchViewModel>(async (searchVM) =>
+                    //{
+                    //    await searchVM.ExecuteBlockingUIAsync(
+                    //        async () =>
+                    //        {
+                    //            await searchVM.PopNavPageToRootAsync();
+
+                    //            // Hack to workaround a bug with Android when popping and then inmediately pushing
+                    //            if (Device.OS == TargetPlatform.Android)
+                    //            {
+                    //                await Task.Delay(10);
+                    //            }
+                    //            // Hack to workaround a bug with iOS when popping and then inmediately pushing
+                    //            if (Device.OS == TargetPlatform.iOS)
+                    //            {
+                    //                await Task.Delay(350);
+                    //            }
+
+                    //            await searchVM.PushNavPageAsync<EstablishmentDetailsViewModel>(async (establishmentDetailsVM) =>
+                    //            {
+                    //                await establishmentDetailsVM.InitilizeAsync(establishmentDetails, 0, 0);
+                    //            });
+                    //        });
+                    //});
+
+                    await this.PushNavPageAsync<EstablishmentDetailsViewModel>(async (establishmentDetailsVM) =>
                     {
-                        await searchVM.ExecuteBlockingUIAsync(
-                            async () =>
-                            {
-                                await searchVM.PopNavPageToRootAsync();
-
-                                // Hack to workaround a bug with Android when popping and then inmediately pushing
-                                if (Device.OS == TargetPlatform.Android)
-                                {
-                                    await Task.Delay(10);
-                                }
-                                // Hack to workaround a bug with iOS when popping and then inmediately pushing
-                                if (Device.OS == TargetPlatform.iOS)
-                                {
-                                    await Task.Delay(350);
-                                }
-
-                                await searchVM.PushNavPageAsync<EstablishmentDetailsViewModel>(async (establishmentDetailsVM) =>
-                                {
-                                    // Get establishment details from BE
-                                    var establishmentDetails = await this._establishmentsService.GetEstablishmentAsync(establishment.Id);
-                                    await establishmentDetailsVM.InitilizeAsync(establishmentDetails, 0, 0);
-                                });
-                            });
+                        await establishmentDetailsVM.InitilizeAsync(establishmentDetails, 0, 0);
                     });
                 });
         }
@@ -149,6 +157,21 @@ namespace MyStyleApp.ViewModels
             if (establishments.Count() > 0)
             {
                 this.FavouritesList.Remove(establishments.ElementAt(0));
+            }
+        }
+
+        private async void ShowMapAsync(Establishment establishment)
+        {
+            if (establishment.Latitude != 0 || establishment.Longitude != 0)
+            {
+                await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    await this.PushNavPageAsync<MapViewModel>((mapVM) =>
+                    {
+                        mapVM.Initialize(establishment);
+                    });
+                });
             }
         }
     }

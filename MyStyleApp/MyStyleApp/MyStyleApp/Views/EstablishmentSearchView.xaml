@@ -6,14 +6,15 @@
              xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[search]}" Icon="Barbershop.png">
+  
   <ScrollView>
-    <Grid>
+    <Grid RowSpacing="0">
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
       <StackLayout Grid.Row="0"
-        Padding="{StaticResource PageContentPadding}">
+        Padding="{StaticResource TabContentPadding}">
         <Label
             Text="{Binding LocalizedStrings[search]}"
             Style="{StaticResource LargeTextStyle}"
@@ -62,7 +63,7 @@
         </StackLayout>
       </StackLayout>
       <StackLayout Grid.Row="1"
-        Padding="{StaticResource PageContentPadding}"
+        Padding="{StaticResource TabContentEndPadding}"
         VerticalOptions="End">
         <controls:CustomButton
           Text="{Binding LocalizedStrings[search]}"

@@ -25,6 +25,7 @@ namespace MyStyleApp.ViewModels
         public ICommand BookCommand { get; private set; }
         public ICommand AddToFavouritesCommand { get; private set; }
         public ICommand DeleteFavouriteCommand { get; private set; }
+        public ICommand ShowMapCommand { get; private set; }
 
         public EstablishmentSearchResultsViewModel(
             INavigator navigator, 
@@ -38,6 +39,7 @@ namespace MyStyleApp.ViewModels
             this.BookCommand = new Command<Establishment>(this.BookAsync);
             this.AddToFavouritesCommand = new Command<Establishment>(this.AddToFavouritesAsync);
             this.DeleteFavouriteCommand = new Command<Establishment>(this.DeleteFavouriteAsync);
+            this.ShowMapCommand = new Command<Establishment>(this.ShowMapAsync);
 
             this._favouritesService = favouritesService;
             this._establishmentsService = establishmentsService;
@@ -147,6 +149,21 @@ namespace MyStyleApp.ViewModels
             {
                 establishments.ElementAt(0).IdFavourite = 0;
                 this.RefreshEstablishmentList();
+            }
+        }
+
+        private async void ShowMapAsync(Establishment establishment)
+        {
+            if (establishment.Latitude != 0 || establishment.Longitude != 0)
+            {
+                await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    await this.PushNavPageAsync<MapViewModel>((mapVM) =>
+                    {
+                        mapVM.Initialize(establishment);
+                    });
+                });
             }
         }
     }

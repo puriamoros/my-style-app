@@ -9,7 +9,7 @@
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[appointment_details]}">
   <ScrollView>
-    <Grid>
+    <Grid RowSpacing="0">
       <Grid.RowDefinitions>
         <RowDefinition Height="*" />
         <RowDefinition Height="Auto" />
@@ -112,7 +112,7 @@
       </StackLayout>
 
       <StackLayout Grid.Row="1"
-          Padding="{StaticResource PageContentPadding}"
+          Padding="{StaticResource PageContentEnd Padding}"
           VerticalOptions="End">
         <controls:CustomButton
           Text="{Binding LocalizedStrings[save_changes]}"

@@ -59,7 +59,7 @@ namespace MyStyleApp.ViewModels
 
         public void Initialize(User user)
         {
-            base.Initialize(user, AccountModeEnum.View);
+            base.Initialize(user, BaseModeEnum.View);
 
         }
 
@@ -139,7 +139,7 @@ namespace MyStyleApp.ViewModels
 
         protected override void EditAccount()
         {
-            this.Mode = AccountModeEnum.Edit;
+            this.Mode = BaseModeEnum.Edit;
         }
 
         protected override async void SaveAccountAsync()
@@ -170,7 +170,7 @@ namespace MyStyleApp.ViewModels
                         }
 
 
-                        this.Mode = AccountModeEnum.View;
+                        this.Mode = BaseModeEnum.View;
 
                         try
                         {
@@ -192,10 +192,10 @@ namespace MyStyleApp.ViewModels
 
         private void OnAccountModeChanged(string accountModeStr)
         {
-            AccountModeEnum accountMode;
+            BaseModeEnum accountMode;
             if (Enum.TryParse(accountModeStr, out accountMode))
             {
-                if (accountMode == AccountModeEnum.Edit || accountMode == AccountModeEnum.View)
+                if (accountMode == BaseModeEnum.Edit || accountMode == BaseModeEnum.View)
                 {
                     this.Initialize(this._usersService.LoggedUser);
                     this.Mode = accountMode;
@@ -206,7 +206,7 @@ namespace MyStyleApp.ViewModels
         protected override void Cancel()
         {
             this.Initialize(this._usersService.LoggedUser);
-            this.Mode = AccountModeEnum.View;
+            this.Mode = BaseModeEnum.View;
         }
 
         protected override async void ChangePasswordAccountAsync()

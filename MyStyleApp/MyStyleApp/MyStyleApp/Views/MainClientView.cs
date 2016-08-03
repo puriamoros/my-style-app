@@ -18,10 +18,10 @@
             this._establishmentSearchView = establishmentSearchView;
             this._accountDetailsView = accountDetailsView;
 
-            this.AddNavigationChild(this._clientAppointmentsView, "LocalizedStrings[appointments]", "Calendar.png");
-            this.AddNavigationChild(this._favouritesView, "LocalizedStrings[favourites]", "Star.png");
-            this.AddNavigationChild(this._establishmentSearchView, "LocalizedStrings[establishments]", "Barbershop.png");
-            this.AddNavigationChild(this._accountDetailsView, "LocalizedStrings[my_account]", "User.png");
+            this.AddChild(this._clientAppointmentsView, "LocalizedStrings[appointments]", "Calendar.png");
+            this.AddChild(this._favouritesView, "LocalizedStrings[favourites]", "Star.png");
+            this.AddChild(this._establishmentSearchView, "LocalizedStrings[establishments]", "Barbershop.png");
+            this.AddChild(this._accountDetailsView, "LocalizedStrings[my_account]", "User.png");
         }
     }
 }

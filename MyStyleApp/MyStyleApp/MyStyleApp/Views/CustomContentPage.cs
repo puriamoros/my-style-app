@@ -40,7 +40,7 @@ namespace MyStyleApp.Views
             }
         }
 
-        // Disable selection on ListViews
+        // Disable selection on ListViews (clicks)
         protected void OnItemListSelection(object sender, SelectedItemChangedEventArgs e)
         {
             ((ListView)sender).SelectedItem = null;

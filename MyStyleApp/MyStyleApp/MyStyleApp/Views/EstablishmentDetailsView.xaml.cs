@@ -13,6 +13,18 @@ namespace MyStyleApp.Views
         public EstablishmentDetailsView()
         {
             InitializeComponent();
+            if(Device.OS == TargetPlatform.Android)
+            {
+                this.SizeChanged += OnPageSizeChanged;
+            }
+        }
+
+        private void OnPageSizeChanged(object sender, EventArgs e)
+        {
+            if(this.MainGrid.HeightRequest < this.Height)
+            {
+                this.MainGrid.HeightRequest = this.Height;
+            }
         }
     }
 }

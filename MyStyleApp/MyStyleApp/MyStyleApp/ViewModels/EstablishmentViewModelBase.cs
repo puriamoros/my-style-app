@@ -29,7 +29,7 @@ namespace MyStyleApp.ViewModels
         //private ObservableCollection<Establishment> _establishmentList;
         //private Establishment _selectedEstablishment;
 
-        private AccountModeEnum _mode;
+        private BaseModeEnum _mode;
         
         public EstablishmentViewModelBase(
             INavigator navigator,
@@ -43,10 +43,10 @@ namespace MyStyleApp.ViewModels
             this.SaveEstablishmentCommand = new Command(this.SaveEstablishmentAsync, this.CanSaveEstablishment);
             this.CancelCommand = new Command(this.Cancel);
             
-            this.Mode = AccountModeEnum.View;           
+            this.Mode = BaseModeEnum.View;           
         }
 
-        protected void Initialize(Establishment establishment, AccountModeEnum mode)
+        protected void Initialize(Establishment establishment, BaseModeEnum mode)
         {
             if (establishment != null)
             {
@@ -91,7 +91,7 @@ namespace MyStyleApp.ViewModels
             set { SetProperty(ref _establishment, value); }
         }
 
-        public AccountModeEnum Mode
+        public BaseModeEnum Mode
         {
             get { return _mode; }
             set { SetProperty(ref _mode, value); }

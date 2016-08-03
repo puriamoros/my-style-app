@@ -9,8 +9,8 @@
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[appointments]}" Icon="Calendar.png">
 
-  <Grid>
-    <StackLayout Padding="{StaticResource PageContentPadding}">
+  <Grid RowSpacing="0">
+    <StackLayout Padding="{StaticResource TabContentPadding}">
 
       <StackLayout Padding="0,0,0,10" Spacing="0">
         <Label

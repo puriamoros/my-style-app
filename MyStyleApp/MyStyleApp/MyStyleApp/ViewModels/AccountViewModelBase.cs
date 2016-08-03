@@ -34,7 +34,7 @@ namespace MyStyleApp.ViewModels
         private ObservableCollection<Establishment> _establishmentList;
         private Establishment _selectedEstablishment;
 
-        private AccountModeEnum _mode;
+        private BaseModeEnum _mode;
         
         public AccountViewModelBase(
             INavigator navigator,
@@ -52,11 +52,11 @@ namespace MyStyleApp.ViewModels
             this.ChangePasswordAccountCommand = new Command(this.ChangePasswordAccountAsync);
             this.LogOutCommand = new Command(this.LogOutAsync);
             
-            this.Mode = AccountModeEnum.View;
+            this.Mode = BaseModeEnum.View;
             
         }
 
-        protected void Initialize(User user, AccountModeEnum mode)
+        protected void Initialize(User user, BaseModeEnum mode)
         {
             if (user != null)
             {
@@ -96,7 +96,7 @@ namespace MyStyleApp.ViewModels
             set { SetProperty(ref _user, value); }
         }
 
-        public AccountModeEnum Mode
+        public BaseModeEnum Mode
         {
             get { return _mode; }
             set { SetProperty(ref _mode, value); }

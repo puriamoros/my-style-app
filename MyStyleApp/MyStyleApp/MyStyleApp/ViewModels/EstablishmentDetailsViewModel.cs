@@ -308,7 +308,9 @@ namespace MyStyleApp.ViewModels
 
         private async void ShowMapAsync()
         {
-            await this.ExecuteBlockingUIAsync(
+            if(this.Establishment.Latitude != 0 || this.Establishment.Longitude != 0)
+            {
+                await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
                     await this.PushNavPageAsync<MapViewModel>((mapVM) =>
@@ -316,6 +318,7 @@ namespace MyStyleApp.ViewModels
                         mapVM.Initialize(this.Establishment);
                     });
                 });
+            }
         }
 
         private void RefreshEstablishment()

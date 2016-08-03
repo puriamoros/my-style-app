@@ -6,8 +6,8 @@
              xmlns:gestures="clr-namespace:MyStyleApp.Views.Gestures"
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls;assembly=MyStyleApp"
              Padding="{StaticResource PagePadding}">
-  
-  <StackLayout>
+
+  <StackLayout Padding="{StaticResource PageContentPadding}">
     
     <StackLayout Orientation="Horizontal" Padding="5,0,5,0">
       <Entry x:Name="SearchEntry" HorizontalOptions="FillAndExpand"

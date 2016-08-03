@@ -50,7 +50,7 @@ namespace MyStyleApp.ViewModels
 
         public void Initialize()
         {
-            base.Initialize(null, AccountModeEnum.Create);
+            base.Initialize(null, BaseModeEnum.Create);
             this.SelectedProvince = null;
         }
         public ObservableCollection<Province> ProvinceList

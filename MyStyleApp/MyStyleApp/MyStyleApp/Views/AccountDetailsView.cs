@@ -16,7 +16,7 @@ namespace MyStyleApp.Views
                 // We are on edit mode and back button has been tapped, so we want to go back to view mode
 
                 // Send message to change mode
-                MessagingCenter.Send<string>(AccountModeEnum.View.ToString(), "changeAccountMode");
+                MessagingCenter.Send<string>(BaseModeEnum.View.ToString(), "changeAccountMode");
 
                 // Ignore hardware back button tap
                 return true;

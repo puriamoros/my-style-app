@@ -8,7 +8,8 @@
              xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[results]}">
-  <Grid>
+  
+  <Grid RowSpacing="0">
     <StackLayout Padding="{StaticResource PageContentPadding}">
       <Label
             Text="{Binding LocalizedStrings[results]}"
@@ -45,7 +46,9 @@
                       <RelativeLayout Grid.Column="0">
                         <Image Aspect="AspectFit" Source="Marker.png"
                           RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
-                          RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.1}"/>
+                          RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.1}"
+                          gestures:TappedGesture.Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.ShowMapCommand}"
+                          gestures:TappedGesture.CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}"/>
                       </RelativeLayout>
                       <StackLayout Grid.Column="1">
                         <Label Style="{StaticResource MediumTextStyle}"

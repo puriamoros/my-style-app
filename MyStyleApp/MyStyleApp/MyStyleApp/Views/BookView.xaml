@@ -9,7 +9,7 @@
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[book]}">
 
-  <Grid>
+  <Grid RowSpacing="0">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />

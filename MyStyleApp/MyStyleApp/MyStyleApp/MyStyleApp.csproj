@@ -42,7 +42,7 @@
     <Compile Include="Constants\BackendConstants.cs" />
     <Compile Include="Constants\RegexConstants.cs" />
     <Compile Include="Converters\AppointmentStatusToBoolConverter.cs" />
-    <Compile Include="Converters\AccountModeToBoolConverter.cs" />
+    <Compile Include="Converters\BaseModeToBoolConverter.cs" />
     <Compile Include="Converters\NegateConverter.cs" />
     <Compile Include="Converters\IntToBoolConverter.cs" />
     <Compile Include="Converters\ItemTappedEventArgsConverter.cs" />
@@ -51,7 +51,7 @@
     <Compile Include="Converters\PlatformToBoolConverter.cs" />
     <Compile Include="Converters\StringToBoolConverter.cs" />
     <Compile Include="Converters\UserTypeToBoolConverter.cs" />
-    <Compile Include="Enums\AccountModeEnum.cs" />
+    <Compile Include="Enums\BaseModeEnum.cs" />
     <Compile Include="Enums\AppointmentStatusEnum.cs" />
     <Compile Include="Enums\BackendStatusCodeEnum.cs" />
     <Compile Include="Enums\ConfirmTypeEnum.cs" />

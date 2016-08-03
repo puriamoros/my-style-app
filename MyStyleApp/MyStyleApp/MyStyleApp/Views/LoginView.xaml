@@ -6,7 +6,7 @@
              xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}">
   <ScrollView>
-    <Grid>
+    <Grid RowSpacing="0">
       <StackLayout 
         Spacing="15" Padding="{StaticResource PageContentPadding}">
         <Label

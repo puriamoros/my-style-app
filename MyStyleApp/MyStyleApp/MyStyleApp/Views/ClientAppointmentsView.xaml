@@ -9,8 +9,8 @@
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[appointments]}" Icon="Calendar.png">
 
-  <Grid>
-    <StackLayout Padding="{StaticResource PageContentPadding}">
+  <Grid RowSpacing="0">
+    <StackLayout Padding="{StaticResource TabContentPadding}">
       <!-- Without HasUnevenRows="True", list items does not render well in Android -->
       <ListView x:Name="AppointmentList"
         ItemsSource="{Binding AppointmentList}"

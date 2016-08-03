@@ -1,6 +1,6 @@
 ﻿namespace MyStyleApp.Enums
 {
-    public enum AccountModeEnum
+    public enum BaseModeEnum
     {
         Create,
         View,

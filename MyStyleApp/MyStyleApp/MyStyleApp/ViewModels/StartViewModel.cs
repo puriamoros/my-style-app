@@ -100,14 +100,14 @@ namespace MyStyleApp.ViewModels
                         // There is a logged user, go to main view
                         if (this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.Client)
                         {
-                            await this.SetMainPageAsync<MainClientViewModel>((mainVM) =>
+                            await this.SetMainPageNavPageAsync<MainClientViewModel>((mainVM) =>
                             {
                                 mainVM.Initialize();
                             });
                         }
                         else if (this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.Owner)
                         {
-                            await this.SetMainPageAsync<MainOwnerViewModel>((mainVM) =>
+                            await this.SetMainPageNavPageAsync<MainOwnerViewModel>((mainVM) =>
                             {
                                 mainVM.Initialize();
                             });

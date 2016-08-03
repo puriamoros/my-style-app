@@ -42,7 +42,7 @@ namespace MyStyleApp.ViewModels
 
         public void Initialize()
         {
-            base.Initialize(null, AccountModeEnum.Create);
+            base.Initialize(null, BaseModeEnum.Create);
         }
 
         protected virtual void ConfigureValidationService()

@@ -7,8 +7,9 @@
              xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[favourites]}" Icon="Star.png">
-  <Grid>
-    <Grid Padding="{StaticResource PageContentPadding}">
+  
+  <Grid RowSpacing="0">
+    <Grid Padding="{StaticResource TabContentPadding}" RowSpacing="0">
       <!-- Without HasUnevenRows="True", list items does not render well in Android -->
       <ListView x:Name="FavouritesList"
         ItemsSource="{Binding FavouritesList}"
@@ -31,7 +32,9 @@
                   <RelativeLayout Grid.Column="0">
                     <Image Aspect="AspectFit" Source="Marker.png"
                       RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
-                      RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.1}"/>
+                      RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.1}"
+                      gestures:TappedGesture.Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.ShowMapCommand}"
+                      gestures:TappedGesture.CommandParameter="{Binding Source={x:Reference Favourite}, Path=BindingContext}"/>
                   </RelativeLayout>
                   <StackLayout Grid.Column="1">
                     <Label Text="{Binding Address}" Style="{StaticResource MediumTextStyle}" SizeChanged="OnLabelSizeChanged"/>

@@ -5,13 +5,13 @@ using Xamarin.Forms;
 
 namespace MyStyleApp.Converters
 {
-    public class AccountModeToBoolConverter : IValueConverter
+    public class BaseModeToBoolConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is AccountModeEnum)
+            if (value is BaseModeEnum)
             {
-                AccountModeEnum accountModeValue = (AccountModeEnum)value;
+                BaseModeEnum accountModeValue = (BaseModeEnum)value;
 
                 bool negate = false;
                 if (parameter is string)
@@ -24,7 +24,7 @@ namespace MyStyleApp.Converters
                     }
 
                     bool result = false;
-                    AccountModeEnum accountModeParam = AccountModeEnum.View;
+                    BaseModeEnum accountModeParam = BaseModeEnum.View;
                     Enum.TryParse(parameterStr, out accountModeParam);
                     if (accountModeValue == accountModeParam)
                     {

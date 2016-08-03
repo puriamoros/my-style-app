@@ -17,24 +17,6 @@ namespace MyStyleApp.Views
             this.CancelButton.Clicked += OnCancelClicked;
         }
 
-        private void OnServiceSwitchSizeChanged(object sender, System.EventArgs e)
-        {
-            if(Device.OS == TargetPlatform.Android && sender is Switch)
-            {
-                Switch sw = sender as Switch;
-                if(sw.Parent != null && sw.Parent is VisualElement)
-                {
-                    VisualElement parent = sw.Parent as VisualElement;
-                    var maxWidth = parent.Width * 0.2;
-                    if(sw.Width > maxWidth)
-                    {
-                        var scale = sw.Width / maxWidth;
-                        sw.Scale = scale;
-                    }
-                }
-            }
-        }
-
         private async void OnCancelClicked(object sender, System.EventArgs e)
         {
             await Task.Delay(100);

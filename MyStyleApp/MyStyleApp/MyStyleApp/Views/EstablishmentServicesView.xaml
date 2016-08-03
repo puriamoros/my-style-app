@@ -58,7 +58,7 @@
                 </Grid.ColumnDefinitions>
                 <Switch x:Name="ServiceSwitch" Grid.Column="0"
                   IsToggled="{Binding Selected}" Style="{StaticResource SwitchStyle}"
-                  SizeChanged="OnServiceSwitchSizeChanged"/>
+                  SizeChanged="OnSwitchSizeChanged"/>
 
                 <StackLayout Grid.Column="1">
                   <Label Text="{Binding Name}" Style="{StaticResource SmallTextStyle}"

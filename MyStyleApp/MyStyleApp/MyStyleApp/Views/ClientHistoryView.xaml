@@ -141,7 +141,12 @@
               </ViewCell.ContextActions>
             </ViewCell>
           </DataTemplate>
-        </ListView.ItemTemplate>        
+        </ListView.ItemTemplate>
+
+        <ListView.Footer>
+          <Label />
+        </ListView.Footer>
+        
       </ListView>
         
     </StackLayout>

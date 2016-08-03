@@ -20,7 +20,7 @@
 
             this.AddNavigationChild(this._establishmentAppointmentsView, "LocalizedStrings[appointments]", "Calendar.png");
             this.AddNavigationChild(this._ownerEstablishmentsView, "LocalizedStrings[establishments]", "Barbershop.png");
-            this.AddNavigationChild(this._establishmentStaffView, "LocalizedStrings[staff]", "Star.png");
+            this.AddNavigationChild(this._establishmentStaffView, "LocalizedStrings[staff]", "Staff.png");
             this.AddNavigationChild(this._accountDetailsView, "LocalizedStrings[my_account]", "User.png");
         }
     }

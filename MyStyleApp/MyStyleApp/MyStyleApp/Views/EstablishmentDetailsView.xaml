@@ -32,9 +32,10 @@
               <ColumnDefinition Width="7*" />
               <ColumnDefinition Width="93*" />
             </Grid.ColumnDefinitions>
-            <RelativeLayout Grid.Column="0" VerticalOptions="Start" >
+            <RelativeLayout Grid.Column="0">
               <Image Aspect="AspectFit" Source="Marker.png"
                 RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.1}"
                 gestures:TappedGesture.Command="{Binding ShowMapCommand}"/>
             </RelativeLayout>
             <StackLayout Grid.Column="1">

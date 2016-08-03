@@ -15,7 +15,8 @@
       <ListView x:Name="AppointmentList"
         ItemsSource="{Binding AppointmentList}"
         HasUnevenRows="True"
-        gestures:ListViewItemTapped.Command="{Binding AppointmentDetailsCommand}">
+        gestures:ListViewItemTapped.Command="{Binding AppointmentDetailsCommand}"
+        ItemSelected="OnItemListSelection">
                     
         <ListView.ItemTemplate>
           <DataTemplate>
@@ -38,13 +39,13 @@
                       RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
                   </RelativeLayout>
                   <Label Grid.Column="1" VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
-                    Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=d}" />
+                    Text="{Binding Date, StringFormat='{0:d}'}" />
                   <RelativeLayout Grid.Column="2" VerticalOptions="Center">
                     <Image Aspect="AspectFit" Source="Clock.png"
                       RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
                   </RelativeLayout>
                   <Label Grid.Column="3" VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
-                    Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" />
+                    Text="{Binding Date, StringFormat='{0:t}'}" />
                 </Grid>
 
                 <Grid>
@@ -55,24 +56,26 @@
                     <ColumnDefinition Width="30*" />
                   </Grid.ColumnDefinitions>
 
-                  <RelativeLayout Grid.Column="0" VerticalOptions="Center">
+                  <RelativeLayout Grid.Column="0">
                     <Image Aspect="AspectFit" Source="Mirror.png"
-                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                      RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.1}"/>
                   </RelativeLayout>
 
                   <StackLayout Grid.Column="1">
-                    <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
+                    <Label Style="{StaticResource MediumTextStyle}"
                       Text="{Binding ServiceName}" SizeChanged="OnLabelSizeChanged"/>
                   </StackLayout>
 
-                  <RelativeLayout Grid.Column="2" VerticalOptions="Center">
+                  <RelativeLayout Grid.Column="2">
                     <Image Aspect="AspectFit" Source="EuroPriceTag.png"
-                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                      RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.1}"/>
                   </RelativeLayout>
 
                   <StackLayout Grid.Column="3">
-                    <Label VerticalOptions="Center" Style="{StaticResource MediumTextStyle}"
-                      Text="{Binding ServicePrice, Converter={StaticResource FloatToPriceConverter}}" SizeChanged="OnLabelSizeChanged"/>
+                    <Label Style="{StaticResource MediumTextStyle}"
+                      Text="{Binding ServicePrice, StringFormat='{0:0.00}€'}" SizeChanged="OnLabelSizeChanged"/>
                   </StackLayout>
                 </Grid>
                                

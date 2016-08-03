@@ -43,7 +43,8 @@
       <ListView x:Name="SlotList"
         ItemsSource="{Binding SlotList}"
         HasUnevenRows="True"
-        gestures:ListViewItemTapped.Command="{Binding BookCommand}">
+        gestures:ListViewItemTapped.Command="{Binding BookCommand}"
+        ItemSelected="OnItemListSelection">
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell x:Name="Slot">
@@ -59,21 +60,14 @@
                   </RelativeLayout>
                   <StackLayout Grid.Column="1" Padding="3,0,0,0">
                     <Label IsVisible="{Binding CanBook}"
-                      Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" Style="{StaticResource MediumTextStyle}" />
+                      Text="{Binding Date, StringFormat='{0:t}'}" Style="{StaticResource MediumTextStyle}" />
                     <Label IsVisible="{Binding CanBook, Converter={StaticResource NegateConverter}}"
                       TextColor="{StaticResource ErrorColor}"
-                      Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" Style="{StaticResource MediumTextStyle}" />
+                      Text="{Binding Date, StringFormat='{0:t}'}" Style="{StaticResource MediumTextStyle}" />
                   </StackLayout>
                 </Grid>
               </StackLayout>
  
-              <!--<StackLayout Padding="{StaticResource ListViewItemPadding}">
-                <Label IsVisible="{Binding CanBook}"
-                  Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" Style="{StaticResource MediumTextStyle}" />
-                <Label IsVisible="{Binding CanBook, Converter={StaticResource NegateConverter}}"
-                  TextColor="{Binding ErrorColor}"
-                  Text="{Binding Date, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter=t}" Style="{StaticResource MediumTextStyle}" />
-              </StackLayout>-->
               <ViewCell.ContextActions>
                 <MenuItem Text="{Binding Source={x:Reference SlotList}, Path=BindingContext.LocalizedStrings[book]}"
                   Command="{Binding Source={x:Reference SlotList}, Path=BindingContext.BookCommand}"

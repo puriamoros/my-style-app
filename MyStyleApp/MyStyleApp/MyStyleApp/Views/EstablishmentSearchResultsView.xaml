@@ -20,7 +20,8 @@
       <ListView x:Name="EstablishmentsList"
         ItemsSource="{Binding EstablishmentsList}"
         HasUnevenRows="True"
-        gestures:ListViewItemTapped.Command="{Binding ViewDetailsCommand}">
+        gestures:ListViewItemTapped.Command="{Binding ViewDetailsCommand}"
+        ItemSelected="OnItemListSelection">
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell x:Name="Establishment">
@@ -41,19 +42,18 @@
                         <ColumnDefinition Width="7*" />
                         <ColumnDefinition Width="93*" />
                       </Grid.ColumnDefinitions>
-                      <RelativeLayout Grid.Column="0" VerticalOptions="Start" >
+                      <RelativeLayout Grid.Column="0">
                         <Image Aspect="AspectFit" Source="Marker.png"
-                          RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                          RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                          RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.1}"/>
                       </RelativeLayout>
                       <StackLayout Grid.Column="1">
                         <Label Style="{StaticResource MediumTextStyle}"
                           Text="{Binding Address}" SizeChanged="OnLabelSizeChanged"/>
                       </StackLayout>
-                    </Grid>
-                   
+                    </Grid>                   
                   </StackLayout>
                   
-
                   <RelativeLayout Grid.Column="1" VerticalOptions="Center">
                     <Image  Aspect="AspectFit" Source="Favourite.png" 
                       gestures:TappedGesture.Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.AddToFavouritesCommand}"
@@ -80,8 +80,8 @@
                       RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
                   </RelativeLayout>
                   <StackLayout Grid.Column="1">
-                    <Label Style="{StaticResource MediumTextStyle}" SizeChanged="OnLabelSizeChanged"
-                      Text="{Binding ShortenServices[0].Price, Converter={StaticResource FloatToPriceConverter}}" />
+                    <Label Style="{StaticResource MediumTextStyle}" 
+                      Text="{Binding ShortenServices[0].Price, StringFormat='{0:0.00}€'}" />
                   </StackLayout>  
                 </Grid>
 

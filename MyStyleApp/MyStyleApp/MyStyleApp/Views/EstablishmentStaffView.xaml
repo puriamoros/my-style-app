@@ -32,7 +32,8 @@
       <ListView x:Name="StaffList"
         ItemsSource="{Binding StaffList}"
         HasUnevenRows="True"
-        gestures:ListViewItemTapped.Command="{Binding ViewDetailsCommand}">
+        gestures:ListViewItemTapped.Command="{Binding ViewDetailsCommand}"
+        ItemSelected="OnItemListSelection">
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell x:Name="Staff">

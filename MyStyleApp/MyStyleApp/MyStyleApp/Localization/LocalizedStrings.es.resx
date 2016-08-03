@@ -457,13 +457,13 @@
     <value>Crear un establecimiento</value>
   </data>
   <data name="latitude" xml:space="preserve">
-    <value>Latitud</value>
+    <value>Latitud GPS</value>
   </data>
   <data name="latitude_placeholder" xml:space="preserve">
     <value>Introduce la latitud GPS</value>
   </data>
   <data name="longitude" xml:space="preserve">
-    <value>Longitud</value>
+    <value>Longitud GPS</value>
   </data>
   <data name="longitude_placeholder" xml:space="preserve">
     <value>Introduce la longitud GPS</value>
@@ -473,5 +473,11 @@
   </data>
   <data name="please_enter_services" xml:space="preserve">
     <value>Por favor introduce los servicios</value>
+  </data>
+  <data name="concurrence" xml:space="preserve">
+    <value>Citas simultáneas</value>
+  </data>
+  <data name="concurrence_placeholder" xml:space="preserve">
+    <value>Introduce las citas simultáneas</value>
   </data>
 </root>

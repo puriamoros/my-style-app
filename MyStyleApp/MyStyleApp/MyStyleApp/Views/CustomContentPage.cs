@@ -45,5 +45,24 @@ namespace MyStyleApp.Views
         {
             ((ListView)sender).SelectedItem = null;
         }
+
+        // Android switches are huge in some os versions, so check it and resize them if necessary
+        protected void OnSwitchSizeChanged(object sender, System.EventArgs e)
+        {
+            if (Device.OS == TargetPlatform.Android && sender is Switch)
+            {
+                Switch sw = sender as Switch;
+                if (sw.Parent != null && sw.Parent is VisualElement)
+                {
+                    VisualElement parent = sw.Parent as VisualElement;
+                    var maxWidth = parent.Width * 0.20;
+                    if (sw.Width > maxWidth)
+                    {
+                        var scale = maxWidth / sw.Width;
+                        sw.Scale = scale;
+                    }
+                }
+            }
+        }
     }
 }

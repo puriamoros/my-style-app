@@ -332,6 +332,24 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Simultaneous appointments.
+        /// </summary>
+        internal static string concurrence {
+            get {
+                return ResourceManager.GetString("concurrence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the simultaneous appointments.
+        /// </summary>
+        internal static string concurrence_placeholder {
+            get {
+                return ResourceManager.GetString("concurrence_placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
         internal static string confirm {
@@ -638,7 +656,7 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Latitude.
+        ///   Looks up a localized string similar to GPS Latitude.
         /// </summary>
         internal static string latitude {
             get {
@@ -647,7 +665,7 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter the latitude GPS.
+        ///   Looks up a localized string similar to Enter the GPS latitude.
         /// </summary>
         internal static string latitude_placeholder {
             get {
@@ -692,7 +710,7 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Longitude.
+        ///   Looks up a localized string similar to GPS Longitude.
         /// </summary>
         internal static string longitude {
             get {
@@ -701,7 +719,7 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter the lontitude GPS.
+        ///   Looks up a localized string similar to Enter the GPS lontitude .
         /// </summary>
         internal static string longitude_placeholder {
             get {

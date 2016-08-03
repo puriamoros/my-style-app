@@ -12,9 +12,7 @@
       <converters:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter" />
       <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
       <converters:PlatformToBoolConverter x:Key="PlatformToBoolConverter" />
-      <converters:FloatToPriceConverter x:Key="FloatToPriceConverter" />
       <converters:AccountModeToBoolConverter x:Key="AccountModeToBoolConverter" />
-      <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
       <converters:NegateConverter x:Key="NegateConverter" />
       <converters:AppointmentStatusToBoolConverter x:Key="AppointmentStatusToBoolConverter" />
       <converters:UserTypeToBoolConverter x:Key="UserTypeToBoolConverter" />

@@ -58,7 +58,7 @@
 
         <!--TODO: Province, Concurrence, hours1, hours2, confirmtype -->
         
-        <!--<StackLayout Padding="0,0,0,10" Spacing="0">
+        <StackLayout Padding="0,0,0,10" Spacing="0">
           <Label
             Text="{Binding LocalizedStrings[province]}"
             Style="{StaticResource MediumTextStyle}"/>
@@ -67,9 +67,9 @@
             DisplayProperty="Name"
             SelectedItem="{Binding SelectedProvince}"
             Title="{Binding ChooseItemPlaceholder}"/>
-        </StackLayout>-->
+        </StackLayout>
         
-        <!--<StackLayout Spacing="0">
+        <StackLayout Spacing="0">
           <Label
             Text="{Binding LocalizedStrings[concurrence]}"
             Style="{StaticResource MediumTextStyle}" />
@@ -79,7 +79,7 @@
             Keyboard="Numeric"
             IsEnabled="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=!View}"/>
         </StackLayout>
-        <StackLayout Spacing="0">
+        <!--<StackLayout Spacing="0">
           <Label
             Text="{Binding LocalizedStrings[hours1]}"
             Style="{StaticResource MediumTextStyle}" />
@@ -100,7 +100,8 @@
             IsEnabled="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=!View}"/>
         </StackLayout>-->
 
-        <!--<StackLayout Padding="0,0,0,10" Spacing="0">
+        <!-- hacer con un switch
+        <StackLayout Padding="0,0,0,10" Spacing="0">
           <Label
             Text="{Binding LocalizedStrings[confirm_type]}"
             Style="{StaticResource MediumTextStyle}"/>

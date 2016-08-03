@@ -457,21 +457,27 @@
     <value>Create establishment</value>
   </data>
   <data name="latitude" xml:space="preserve">
-    <value>Latitude</value>
+    <value>GPS Latitude</value>
   </data>
   <data name="latitude_placeholder" xml:space="preserve">
-    <value>Enter the latitude GPS</value>
+    <value>Enter the GPS latitude</value>
   </data>
   <data name="longitude" xml:space="preserve">
-    <value>Longitude</value>
+    <value>GPS Longitude</value>
   </data>
   <data name="longitude_placeholder" xml:space="preserve">
-    <value>Enter the lontitude GPS</value>
+    <value>Enter the GPS lontitude </value>
   </data>
   <data name="created_establishment" xml:space="preserve">
     <value>Created establishment</value>
   </data>
   <data name="please_enter_services" xml:space="preserve">
     <value>Please enter the services</value>
+  </data>
+  <data name="concurrence" xml:space="preserve">
+    <value>Simultaneous appointments</value>
+  </data>
+  <data name="concurrence_placeholder" xml:space="preserve">
+    <value>Enter the simultaneous appointments</value>
   </data>
 </root>

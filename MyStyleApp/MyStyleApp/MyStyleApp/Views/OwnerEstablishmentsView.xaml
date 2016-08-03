@@ -21,7 +21,8 @@
       <ListView x:Name="EstablishmentsList"
         ItemsSource="{Binding EstablishmentsList}"
         HasUnevenRows="True"
-        gestures:ListViewItemTapped.Command="{Binding ViewDetailsCommand}">
+        gestures:ListViewItemTapped.Command="{Binding ViewDetailsCommand}"
+        ItemSelected="OnItemListSelection">
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell x:Name="Establishment">
@@ -38,9 +39,10 @@
                         <ColumnDefinition Width="7*" />
                         <ColumnDefinition Width="93*" />
                       </Grid.ColumnDefinitions>
-                      <RelativeLayout Grid.Column="0" VerticalOptions="Start" >
+                      <RelativeLayout Grid.Column="0">
                         <Image Aspect="AspectFit" Source="Marker.png"
-                          RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+                          RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                          RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.1}"/>
                       </RelativeLayout>
                       <StackLayout Grid.Column="1">
                         <Label Style="{StaticResource MediumTextStyle}"

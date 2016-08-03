@@ -10,6 +10,7 @@ using MyStyleApp.Enums;
 using MyStyleApp.Models;
 using MyStyleApp.Services.Backend;
 using MyStyleApp.Exceptions;
+using System.Collections.ObjectModel;
 
 namespace MyStyleApp.ViewModels
 {
@@ -21,6 +22,10 @@ namespace MyStyleApp.ViewModels
         private const string STRING_LATITUDE = "latitude";
         private const string STRING_LONGITUDE = "longitude";
 
+        private ObservableCollection<Province> _provinceList;
+        private Province _selectedProvince;
+
+        private ProvincesService _provincesService;
         protected ValidationService _validationService;
 
         private IEstablishmentsService _establishmentsService;
@@ -29,19 +34,39 @@ namespace MyStyleApp.ViewModels
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
+            ProvincesService provincesService,
             ValidationService validationService,
             IUsersService usersService,
             IEstablishmentsService establishmentsService) :
             base(navigator, userNotificator, localizedStringsService, usersService)
         {
+            this._provincesService = provincesService;
             this._validationService = validationService;
             this._establishmentsService = establishmentsService;
             this.Title = this.LocalizedStrings.GetString("create_establishment");
+
+            this.ProvinceList = new ObservableCollection<Province>(this._provincesService.GetProvinces());
         }
 
         public void Initialize()
         {
             base.Initialize(null, AccountModeEnum.Create);
+            this.SelectedProvince = null;
+        }
+        public ObservableCollection<Province> ProvinceList
+        {
+            get { return _provinceList; }
+            set { SetProperty(ref _provinceList, value); }
+        }
+
+        public Province SelectedProvince
+        {
+            get { return _selectedProvince; }
+            set
+            {
+                SetProperty(ref _selectedProvince, value);
+                this.CreateEstablishmentCommand.ChangeCanExecute();
+            }
         }
 
         protected virtual void ConfigureValidationService()

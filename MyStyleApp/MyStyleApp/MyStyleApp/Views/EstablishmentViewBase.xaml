@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:CustomContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyStyleApp.Views.EstablishmentViewBase"
+             xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
+             xmlns:views="clr-namespace:MyStyleApp.Views"
+             Padding="{StaticResource PagePadding}"
+             Title="{Binding Title}">
+
+  <ScrollView>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <StackLayout Grid.Row="0"
+        Padding="{StaticResource PageContentPadding}"
+        Spacing="15">
+        <StackLayout Spacing="0"
+          IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=Create}">
+          <Label
+              Text="{Binding Title}"
+              Style="{StaticResource LargeTextStyle}"
+              HorizontalOptions="Center"
+              IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
+        </StackLayout>
+        
+        <StackLayout Spacing="0" >
+          <Label
+            Text="{Binding LocalizedStrings[name]}"
+            Style="{StaticResource MediumTextStyle}" />
+          <Entry
+            Placeholder="{Binding LocalizedStrings[name_placeholder]}"
+            Text="{Binding Establishment.Name}"
+            Keyboard="Text"
+            IsEnabled="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=!View}" />
+        </StackLayout>
+        <StackLayout Spacing="0" >
+          <Label
+            Text="{Binding LocalizedStrings[address]}"
+            Style="{StaticResource MediumTextStyle}" />
+          <Entry
+            Placeholder="{Binding LocalizedStrings[address_placeholder]}"
+            Text="{Binding Establishment.Address}"
+            Keyboard="Text"
+            IsEnabled="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=!View}" />
+        </StackLayout>
+        <StackLayout Spacing="0" >
+          <Label
+                Text="{Binding LocalizedStrings[phone]}"
+                Style="{StaticResource MediumTextStyle}" />
+          <Entry
+            Placeholder="{Binding LocalizedStrings[phone_placeholder]}"
+            Text="{Binding Establishment.Phone}"
+            Keyboard="Numeric"
+            IsEnabled="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=!View}" />
+        </StackLayout>
+
+        <!--TODO: Province, Concurrence, hours1, hours2, confirmtype -->
+        
+        <!--<StackLayout Padding="0,0,0,10" Spacing="0">
+          <Label
+            Text="{Binding LocalizedStrings[province]}"
+            Style="{StaticResource MediumTextStyle}"/>
+          <controls:BindablePicker
+            ItemsSource="{Binding ProvinceList}"
+            DisplayProperty="Name"
+            SelectedItem="{Binding SelectedProvince}"
+            Title="{Binding ChooseItemPlaceholder}"/>
+        </StackLayout>-->
+        
+        <!--<StackLayout Spacing="0">
+          <Label
+            Text="{Binding LocalizedStrings[concurrence]}"
+            Style="{StaticResource MediumTextStyle}" />
+          <Entry
+            Placeholder="{Binding LocalizedStrings[concurrence_placeholder]}"
+            Text="{Binding Concurrence}"
+            Keyboard="Numeric"
+            IsEnabled="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=!View}"/>
+        </StackLayout>
+        <StackLayout Spacing="0">
+          <Label
+            Text="{Binding LocalizedStrings[hours1]}"
+            Style="{StaticResource MediumTextStyle}" />
+          <Entry
+            Placeholder="{Binding LocalizedStrings[concurrence_placeholder]}"
+            Text="{Binding Hours1}"
+            Keyboard="Numeric"
+            IsEnabled="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=!View}"/>
+        </StackLayout>
+        <StackLayout Spacing="0">
+          <Label
+            Text="{Binding LocalizedStrings[hours2]}"
+            Style="{StaticResource MediumTextStyle}" />
+          <Entry
+            Placeholder="{Binding LocalizedStrings[concurrence_placeholder]}"
+            Text="{Binding Hours2}"
+            Keyboard="Numeric"
+            IsEnabled="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=!View}"/>
+        </StackLayout>-->
+
+        <!--<StackLayout Padding="0,0,0,10" Spacing="0">
+          <Label
+            Text="{Binding LocalizedStrings[confirm_type]}"
+            Style="{StaticResource MediumTextStyle}"/>
+          <controls:BindablePicker
+            ItemsSource="{Binding ConfirmTypeList}"
+            DisplayProperty="Name"
+            SelectedItem="{Binding ConfirmTypeProvince}"
+            Title="{Binding ChooseItemPlaceholder}"/>
+        </StackLayout>-->
+        
+        <StackLayout Spacing="0">
+          <Label
+            Text="{Binding LocalizedStrings[latitude]}"
+            Style="{StaticResource MediumTextStyle}" />
+          <Entry
+            Placeholder="{Binding LocalizedStrings[latitude_placeholder]}"
+            Text="{Binding latitude}"
+            IsEnabled="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=!View}"/>
+        </StackLayout>
+
+        <StackLayout Spacing="0">
+          <Label
+            Text="{Binding LocalizedStrings[longitude]}"
+            Style="{StaticResource MediumTextStyle}" />
+          <Entry
+            Placeholder="{Binding LocalizedStrings[longitude_placeholder]}"
+            Text="{Binding longitude}"
+            IsEnabled="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=!View}"/>
+        </StackLayout>
+      
+        <StackLayout>
+          <Label
+            Text="{Binding ErrorText}"
+            IsVisible="{Binding ErrorText, Converter={StaticResource StringToBoolConverter}}"
+            TextColor="{StaticResource ErrorColor}"
+            Style="{StaticResource SmallTextStyle}" />
+        </StackLayout>
+      </StackLayout>
+      
+      <StackLayout Grid.Row="1"
+        Padding="{StaticResource PageContentPadding}"
+        Spacing="5"
+        VerticalOptions="End">
+
+        <controls:CustomButton
+          IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=Create}"
+          Text="{Binding LocalizedStrings[create_establishment]}"
+          Command="{Binding CreateEstablishmentCommand}"/>
+        
+        <controls:CustomButton
+          IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=View}"
+          Text="{Binding LocalizedStrings[edit]}"
+          Command="{Binding EditEstablishmentCommand}"/>
+         
+        <controls:CustomButton
+          IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=Edit}"
+          Text="{Binding LocalizedStrings[save_changes]}"
+          Command="{Binding SaveEstablishmentCommand}"/>
+       
+        <controls:CustomButton
+          IsVisible="{Binding Mode, Converter={StaticResource AccountModeToBoolConverter}, ConverterParameter=Edit}"
+          Text="{Binding LocalizedStrings[cancel]}"
+          Command="{Binding CancelCommand}"/>
+      </StackLayout>
+      
+      <controls:WaitingOverlayControl Grid.Row="0" Grid.RowSpan="2"
+        IsVisible="{Binding IsBusy}"
+        Text="{Binding LocalizedStrings[waiting]}"/>
+    </Grid>
+  </ScrollView>
+  
+</views:CustomContentPage>

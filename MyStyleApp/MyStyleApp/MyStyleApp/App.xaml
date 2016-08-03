@@ -54,9 +54,14 @@
                   WinPhone="10" />
       <OnPlatform x:Key="ListGroupInnerPadding"
                   x:TypeArguments="Thickness"
-                  iOS="5"
+                  iOS="5,0,5,0"
                   Android="5"
                   WinPhone="10" />
+      <OnPlatform x:Key="ListGroupCellPadding"
+                  x:TypeArguments="Thickness"
+                  iOS="0,0,15,0"
+                  Android="0"
+                  WinPhone="0" />
 
       <!-- Colors -->
       <Color x:Key="ErrorColor">Red</Color>
@@ -74,7 +79,7 @@
         <Setter Property="Margin">
           <Setter.Value>
             <OnPlatform x:TypeArguments="Thickness"
-                        iOS="0"
+                        iOS="10,5,0,5"
                         Android="10,5,0,5"
                         WinPhone="-35,0,-15,0" />
           </Setter.Value>

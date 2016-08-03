@@ -147,6 +147,8 @@
     <Compile Include="Validators\RegexValidator.cs" />
     <Compile Include="Validators\RequiredValidator.cs" />
     <Compile Include="Validators\SimpleValidator.cs" />
+	<Compile Include="ViewModels\CreateEstablishmentViewModel.cs" />
+    <Compile Include="ViewModels\EstablishmentViewModelBase.cs" />
     <Compile Include="ViewModels\ClientHistoryViewModel.cs" />
     <Compile Include="ViewModels\EstablishmentServicesViewModel.cs" />
     <Compile Include="ViewModels\CreateStaffAccountViewModel.cs" />
@@ -173,6 +175,10 @@
     <Compile Include="ViewModels\NavigableViewModelBase.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainClientViewModel.cs" />
+	<Compile Include="Views\CreateEstablishmentView.cs" />
+    <Compile Include="Views\EstablishmentViewBase.xaml.cs">
+      <DependentUpon>EstablishmentViewBase.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ClientHistoryView.xaml.cs">
       <DependentUpon>ClientHistoryView.xaml</DependentUpon>
     </Compile>
@@ -410,6 +416,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\ClientHistoryView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EstablishmentViewBase.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

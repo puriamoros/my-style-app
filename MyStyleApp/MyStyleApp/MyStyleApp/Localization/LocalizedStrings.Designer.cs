@@ -71,6 +71,24 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        internal static string address {
+            get {
+                return ResourceManager.GetString("address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your address.
+        /// </summary>
+        internal static string address_placeholder {
+            get {
+                return ResourceManager.GetString("address_placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Any old.
         /// </summary>
         internal static string any_old {
@@ -332,11 +350,29 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create establishment.
+        /// </summary>
+        internal static string create_establishment {
+            get {
+                return ResourceManager.GetString("create_establishment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Created account.
         /// </summary>
         internal static string created_account {
             get {
                 return ResourceManager.GetString("created_account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created establishment.
+        /// </summary>
+        internal static string created_establishment {
+            get {
+                return ResourceManager.GetString("created_establishment", resourceCulture);
             }
         }
         
@@ -602,6 +638,24 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Latitude.
+        /// </summary>
+        internal static string latitude {
+            get {
+                return ResourceManager.GetString("latitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the latitude GPS.
+        /// </summary>
+        internal static string latitude_placeholder {
+            get {
+                return ResourceManager.GetString("latitude_placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log out.
         /// </summary>
         internal static string log_out {
@@ -634,6 +688,24 @@ namespace MyStyleApp.Localization {
         internal static string logout {
             get {
                 return ResourceManager.GetString("logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude.
+        /// </summary>
+        internal static string longitude {
+            get {
+                return ResourceManager.GetString("longitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the lontitude GPS.
+        /// </summary>
+        internal static string longitude_placeholder {
+            get {
+                return ResourceManager.GetString("longitude_placeholder", resourceCulture);
             }
         }
         
@@ -805,6 +877,15 @@ namespace MyStyleApp.Localization {
         internal static string phone_placeholder {
             get {
                 return ResourceManager.GetString("phone_placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter the services.
+        /// </summary>
+        internal static string please_enter_services {
+            get {
+                return ResourceManager.GetString("please_enter_services", resourceCulture);
             }
         }
         

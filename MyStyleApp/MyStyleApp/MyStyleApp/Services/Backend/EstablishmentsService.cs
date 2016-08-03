@@ -96,7 +96,7 @@ namespace MyStyleApp.Services.Backend
         {
             string credentials = await this.HttpService.GetApiKeyAuthorizationAsync();
 
-            // Do not update establishment services since there is anoher
+            // Do not update establishment services since there is another
             // method to do that (UpdateEstablishmentServicesAsync)
             IList<ShortenService> services = establishment.ShortenServices;
             establishment.ShortenServices = null;

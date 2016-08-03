@@ -10,9 +10,11 @@ namespace MyStyleApp.Views.Controls
         {
             if (Device.OS == TargetPlatform.iOS)
             {
+                this.BackgroundColor = Color.FromRgb(0, 122, 255);
                 this.BorderColor = Color.FromRgb(0, 122, 255);
-                this.BorderRadius = 10;
-                this.BorderWidth = 2;
+                this.BorderRadius = 5;
+                this.BorderWidth = 1;
+                this.TextColor = Color.White;
                 this.FontAttributes = FontAttributes.Bold;
             }
         }

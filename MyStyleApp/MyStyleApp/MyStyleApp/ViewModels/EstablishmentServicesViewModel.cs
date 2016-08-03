@@ -20,6 +20,9 @@ namespace MyStyleApp.ViewModels
         private IEstablishmentsService _establishmentsService;
 
         private string _searchText;
+        private bool _isCancelSearchVisible;
+
+        public ICommand CancelSearchCommand { get; private set; }
 
         private ObservableCollection<Grouping<string, SelectedService>> _groupedServiceList;
 
@@ -31,12 +34,14 @@ namespace MyStyleApp.ViewModels
             base(navigator, userNotificator, localizedStringsService)
         {
             this._establishmentsService = establishmentsService;
+            this.CancelSearchCommand = new Command(this.CancelSearch);
         }
 
         public void Initialize(Establishment establishment, IList<ServiceCategory> serviceCategories, IList<Service> services)
         {
             this.Establishment = establishment;
             this.SearchText = null;
+            this.IsCancelSearchVisible = false;
 
             Dictionary<int, float> establismentShortenServices = new Dictionary<int, float>();
             foreach(var shortenService in this.Establishment.ShortenServices)
@@ -70,7 +75,7 @@ namespace MyStyleApp.ViewModels
                         Price = service.Price,
                         PriceStr = (establismentShortenServices.ContainsKey(service.Id)) ? service.Price.ToString("0.00") : "",
                         Selected = establismentShortenServices.ContainsKey(service.Id),
-                        Visible = true,
+                        IsVisible = true,
                         HeightRequest = -1
                     };
                     selectedServiceList.Add(selectedService);
@@ -81,27 +86,6 @@ namespace MyStyleApp.ViewModels
                 });
                 list.Add(new Grouping<string, SelectedService>(serviceCategory.Name, selectedServiceList));
             }
-
-
-            /*foreach (var serviceCategory in serviceCategories)
-            {
-                var categoryServices = 
-                    from service in services
-                    where service.IdServiceCategory == serviceCategory.Id
-                    orderby service.Name
-                    select new SelectedService()
-                    {
-                        Id = service.Id,
-                        Name = service.Name,
-                        IdServiceCategory = service.IdServiceCategory,
-                        Duration = service.Duration,
-                        Price = (establismentShortenServices.ContainsKey(service.Id)) ? establismentShortenServices[service.Id] : 0.0f,
-                        PriceStr = (establismentShortenServices.ContainsKey(service.Id)) ? establismentShortenServices[service.Id].ToString("0.00") : "",
-                        Selected = establismentShortenServices.ContainsKey(service.Id)
-                    };
-
-                list.Add(new Grouping<string, SelectedService>(serviceCategory.Name, categoryServices));
-            }*/
 
             list.Sort((one, other) =>
             {
@@ -126,7 +110,44 @@ namespace MyStyleApp.ViewModels
         public string SearchText
         {
             get { return _searchText; }
-            set { SetProperty(ref _searchText, value); }
+            set
+            {
+                SetProperty(ref _searchText, value);
+                this.OnSearchTextChanged();
+            }
+        }
+
+        public bool IsCancelSearchVisible
+        {
+            get { return _isCancelSearchVisible; }
+            set { SetProperty(ref _isCancelSearchVisible, value); }
+        }
+
+        private void OnSearchTextChanged()
+        {
+            if (this.GroupedServiceList != null && this.SearchText != null)
+            {
+                var text = this.SearchText.ToLower();
+                this.IsCancelSearchVisible = text.Length > 0;
+                foreach(var grouping in this.GroupedServiceList)
+                {
+                    foreach (var service in grouping)
+                    {
+                        bool show = service.Name.ToLower().Contains(text);
+                        service.IsVisible = show;
+                        service.HeightRequest = (show) ? -1 : 0;
+                    }
+                }
+            }
+        }
+
+        private void CancelSearch()
+        {
+            if(this.SearchText != null)
+            {
+                this.SearchText = "";
+            }
+            this.IsCancelSearchVisible = false;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace MyStyleApp.ViewModels
             base(navigator, userNotificator, localizedStringsService)
         {
             //this.ViewDetailsCommand = new Command<Establishment>(this.ViewDetailsAsync);
-            //this.NewEstablishmentCommand = new Command<Establishment>(this.NewEstablishmentAsync);
+            this.NewEstablishmentCommand = new Command(this.NewEstablishmentAsync);
 
             this._establishmentsService = establishmentsService;
 
@@ -71,7 +71,15 @@ namespace MyStyleApp.ViewModels
 
         private async void NewEstablishmentAsync()
         {
-
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    await this.PushNavPageModalAsync<CreateEstablishmentViewModel>((CreateEstablishmentVM) =>
+                    {
+                        CreateEstablishmentVM.Initialize();
+                    }
+                    );
+                });
         }
 
     }

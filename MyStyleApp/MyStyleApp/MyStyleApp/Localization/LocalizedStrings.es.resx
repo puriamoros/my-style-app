@@ -447,4 +447,31 @@
   <data name="appointment_details" xml:space="preserve">
     <value>Detalle de la cita</value>
   </data>
+  <data name="address" xml:space="preserve">
+    <value>Dirección</value>
+  </data>
+  <data name="address_placeholder" xml:space="preserve">
+    <value>Introduce tu dirección</value>
+  </data>
+  <data name="create_establishment" xml:space="preserve">
+    <value>Crear un establecimiento</value>
+  </data>
+  <data name="latitude" xml:space="preserve">
+    <value>Latitud</value>
+  </data>
+  <data name="latitude_placeholder" xml:space="preserve">
+    <value>Introduce la latitud GPS</value>
+  </data>
+  <data name="longitude" xml:space="preserve">
+    <value>Longitud</value>
+  </data>
+  <data name="longitude_placeholder" xml:space="preserve">
+    <value>Introduce la longitud GPS</value>
+  </data>
+  <data name="created_establishment" xml:space="preserve">
+    <value>Establecimiento creado</value>
+  </data>
+  <data name="please_enter_services" xml:space="preserve">
+    <value>Por favor introduce los servicios</value>
+  </data>
 </root>

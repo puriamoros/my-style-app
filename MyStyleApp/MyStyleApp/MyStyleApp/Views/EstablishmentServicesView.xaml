@@ -8,13 +8,20 @@
              Padding="{StaticResource PagePadding}">
   
   <StackLayout>
+    
     <StackLayout Orientation="Horizontal" Padding="5,0,5,0">
       <Entry x:Name="SearchEntry" HorizontalOptions="FillAndExpand"
         Placeholder="{Binding LocalizedStrings[search]}"
         HorizontalTextAlignment="Center"
         Text="{Binding SearchText}"/>
-      <Button x:Name="CancelButton" Text="{Binding LocalizedStrings[cancel]}" HorizontalOptions="End" />
+      <Button x:Name="CancelButton"
+        Text="{Binding LocalizedStrings[cancel]}"
+        HorizontalOptions="End"
+        IsVisible="{Binding IsCancelSearchVisible}"
+        Command="{Binding CancelSearchCommand}"
+        HeightRequest="{Binding Source={x:Reference SearchEntry}, Path=Height}"/>
     </StackLayout>
+    
     <ListView x:Name="GroupedServiceList" ItemsSource="{Binding GroupedServiceList}"
       CachingStrategy="RecycleElement"
       HasUnevenRows="True"
@@ -39,7 +46,10 @@
         <DataTemplate>
           <ViewCell>
 
-              <Grid HeightRequest="{Binding HeightRequest}" IsVisible="{Binding Visible}">
+              <Grid
+                HeightRequest="{Binding HeightRequest}"
+                IsVisible="{Binding IsVisible}"
+                Padding="{StaticResource ListGroupCellPadding}">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="Auto" />
                   <ColumnDefinition Width="74*" />
@@ -68,40 +78,6 @@
                     IsVisible="{Binding Source={x:Reference ServiceSwitch}, Path=IsToggled}"/>
                 </StackLayout>
               </Grid>
-
-              <!--<Grid>
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="8*" />
-                <ColumnDefinition Width="70*" />
-                <ColumnDefinition Width="22*" />
-                <ColumnDefinition Width="Auto" />
-              </Grid.ColumnDefinitions>
-             <RelativeLayout Grid.Column="0" VerticalOptions="Center">
-                <controls:CheckBoxImage x:Name="ServiceSwitch" IsChecked="{Binding Selected}"
-                  Aspect="AspectFit" CheckedSource="FavouriteFilled.png" UncheckedSource="Favourite.png"
-                  RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
-              </RelativeLayout>
-              
-              <StackLayout Grid.Column="1">
-                <Label Text="{Binding Name}" Style="{StaticResource SmallTextStyle}"
-                  SizeChanged="OnLabelSizeChanged" VerticalTextAlignment="Center"/>
-              </StackLayout>
-
-              <StackLayout Grid.Column="2">
-                <Entry
-                  Placeholder="{Binding LocalizedStrings[price]}"
-                  Text="{Binding PriceStr}"
-                  Keyboard="Numeric"
-                  IsVisible="{Binding Source={x:Reference ServiceSwitch}, Path=IsChecked}"/>
-              </StackLayout>
-              
-              <StackLayout Grid.Column="3" Padding="0,0,2,0">
-                <Label Text="€" HorizontalTextAlignment="Center"
-                  Style="{StaticResource MediumTextStyle}"
-                  IsVisible="{Binding Source={x:Reference ServiceSwitch}, Path=IsChecked}"/>
-              </StackLayout>
-            </Grid>-->
-            
             
           </ViewCell>
         </DataTemplate>

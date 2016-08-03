@@ -46,6 +46,7 @@ namespace MyStyleApp
             builder.RegisterType<CreateStaffAccountView>().SingleInstance();
             builder.RegisterType<AppointmentDetailsView>().SingleInstance();
             builder.RegisterType<ClientHistoryView>().SingleInstance();
+            builder.RegisterType<CreateEstablishmentView>().SingleInstance();
 
             // Register ViewModels
             builder.RegisterType<StartViewModel>().SingleInstance();
@@ -71,6 +72,7 @@ namespace MyStyleApp
             builder.RegisterType<CreateStaffAccountViewModel>().SingleInstance();
             builder.RegisterType<AppointmentDetailsViewModel>().SingleInstance();
             builder.RegisterType<ClientHistoryViewModel>().SingleInstance();
+            builder.RegisterType<CreateEstablishmentViewModel>().SingleInstance();
 
             // Register Services
             builder.RegisterType<LocalizedStringsService>().SingleInstance();
@@ -123,6 +125,7 @@ namespace MyStyleApp
             viewFactory.Register<CreateStaffAccountViewModel, CreateStaffAccountView>();
             viewFactory.Register<AppointmentDetailsViewModel, AppointmentDetailsView>();
             viewFactory.Register<ClientHistoryViewModel, ClientHistoryView>();
+            viewFactory.Register<CreateEstablishmentViewModel, CreateEstablishmentView>();
         }
 
         protected override void ConfigureApplication(IContainer container)

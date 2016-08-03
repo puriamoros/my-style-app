@@ -76,7 +76,8 @@ namespace MyStyleApp.ViewModels
                         PriceStr = (establismentShortenServices.ContainsKey(service.Id)) ? service.Price.ToString("0.00") : "",
                         Selected = establismentShortenServices.ContainsKey(service.Id),
                         IsVisible = true,
-                        HeightRequest = -1
+                        HeightRequest = -1,
+                        IsEnabled = true
                     };
                     selectedServiceList.Add(selectedService);
                 }
@@ -133,9 +134,18 @@ namespace MyStyleApp.ViewModels
                 {
                     foreach (var service in grouping)
                     {
-                        bool show = service.Name.ToLower().Contains(text);
-                        service.IsVisible = show;
-                        service.HeightRequest = (show) ? -1 : 0;
+                        bool hasText = service.Name.ToLower().Contains(text);
+                        if(Device.OS == TargetPlatform.iOS)
+                        {
+                            // In iOS it is not possible to hide a list row, so we disable it
+                            service.IsEnabled = hasText;
+                        }
+                        else
+                        {
+                            // In the other platforms we can hide the list row
+                            service.IsVisible = hasText;
+                            service.HeightRequest = (hasText) ? -1 : 0;
+                        }
                     }
                 }
             }

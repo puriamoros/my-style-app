@@ -17,6 +17,7 @@ namespace MyStyleApp.Models
         // These properties are needed to use them with the View
         private int _heightRequest;
         private bool _isVisible;
+        private bool _isEnabled;
 
         public int HeightRequest
         {
@@ -28,6 +29,12 @@ namespace MyStyleApp.Models
         {
             get { return _isVisible; }
             set { SetProperty(ref _isVisible, value); }
+        }
+
+        public bool IsEnabled
+        {
+            get { return _isEnabled; }
+            set { SetProperty(ref _isEnabled, value); }
         }
 
         #region INotifyPropertyChanged

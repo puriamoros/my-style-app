@@ -57,7 +57,8 @@
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Switch x:Name="ServiceSwitch" Grid.Column="0"
-                  IsToggled="{Binding Selected}" Style="{StaticResource SwitchStyle}" />
+                  IsToggled="{Binding Selected}" Style="{StaticResource SwitchStyle}"
+                  SizeChanged="OnServiceSwitchSizeChanged"/>
 
                 <StackLayout Grid.Column="1">
                   <Label Text="{Binding Name}" Style="{StaticResource SmallTextStyle}"
@@ -77,6 +78,12 @@
                     Style="{StaticResource MediumTextStyle}"
                     IsVisible="{Binding Source={x:Reference ServiceSwitch}, Path=IsToggled}"/>
                 </StackLayout>
+                
+                <StackLayout Grid.Column="0" Grid.ColumnSpan="4"
+                  BackgroundColor="White" Opacity="0.5"
+                  IsVisible="{Binding IsEnabled, Converter={StaticResource NegateConverter}}">
+                </StackLayout>
+                
               </Grid>
             
           </ViewCell>

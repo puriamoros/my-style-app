@@ -18,6 +18,8 @@ namespace MyStyleApp.ViewModels
 
         private IEstablishmentsService _establishmentsService;
 
+        private int _staffId;
+
         public StaffAccountDetailsViewModel(
             INavigator navigator,
             IUserNotificator userNotificator,
@@ -55,6 +57,8 @@ namespace MyStyleApp.ViewModels
         {
             base.Initialize(staff);
 
+            this._staffId = staff.Id;
+
             this.SelectedEstablishment = null;
             this.EstablishmentList = null;
 
@@ -82,11 +86,6 @@ namespace MyStyleApp.ViewModels
             }
         }
 
-        protected override void ConfigureValidationService()
-        {
-            base.ConfigureValidationService();
-        }
-
         protected override async void SaveAccountAsync()
         {
             string validationError = this.GetValidationError();
@@ -101,12 +100,11 @@ namespace MyStyleApp.ViewModels
                         {
                             Staff staff = new Staff()
                             {
-                                Id = this.User.Id,
-                                Name = this.User.Name,
-                                Surname = this.User.Surname,
-                                Phone = this.User.Phone,
-                                Email = this.User.Email,
-                                Password = "",
+                                Id = this._staffId,
+                                Name = this.Name,
+                                Surname = this.Surname,
+                                Phone = this.Phone,
+                                Email = this.Email,
                                 UserType = (UserTypeEnum)this.SelectedUserType.Id,
                                 IdEstablishment = this.SelectedEstablishment.Id
                             };
@@ -147,7 +145,7 @@ namespace MyStyleApp.ViewModels
 
         protected override bool CanSaveAccount()
         {
-            return this.SelectedEstablishment != null && this.SelectedUserType != null;
+            return base.CanSaveAccount() && this.SelectedEstablishment != null && this.SelectedUserType != null;
         }
     }
 }

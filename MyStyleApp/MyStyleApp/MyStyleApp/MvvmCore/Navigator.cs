@@ -9,11 +9,19 @@ namespace MvvmCore
 		private readonly IViewFactory _viewFactory;
 		private readonly IDeviceService _deviceService;
 
-		public Navigator(IViewFactory viewFactory, IDeviceService deviceService)
+        public Navigator(IViewFactory viewFactory, IDeviceService deviceService)
 		{
 			_viewFactory = viewFactory;
 			_deviceService = deviceService;
 		}
+
+        private INavigation GetNavigation(INavigation navigation)
+        {
+            return navigation;
+            //return (Application.Current.MainPage is Xamarin.Forms.NavigationPage) ?
+            //    ((Xamarin.Forms.NavigationPage)Application.Current.MainPage).Navigation :
+            //    navigation;
+        }
 
         public Task<TViewModel> SetMainPageAsync<TViewModel>(Action<TViewModel> setStateAction = null)
             where TViewModel : class, IViewModel
@@ -102,7 +110,7 @@ namespace MvvmCore
             where TViewModel : class, IViewModel
         {
             var tcs = new TaskCompletionSource<TViewModel>();
-            if(navigation == null)
+            if(this.GetNavigation(navigation) == null)
             {
                 tcs.SetResult(null);
             }
@@ -113,9 +121,9 @@ namespace MvvmCore
                     TViewModel viewModel;
                     var view = _viewFactory.Resolve<TViewModel>(out viewModel, setStateAction);
                     bool found = false;
-                    for (int i = navigation.NavigationStack.Count - 1; i >= 0 && !found; i++)
+                    for (int i = this.GetNavigation(navigation).NavigationStack.Count - 1; i >= 0 && !found; i++)
                     {
-                        found = this.SetTab(navigation.NavigationStack[i], view);
+                        found = this.SetTab(this.GetNavigation(navigation).NavigationStack[i], view);
                     }
                     tcs.SetResult(viewModel);
                 });
@@ -127,7 +135,7 @@ namespace MvvmCore
             where TViewModel : class, IViewModel
         {
             var tcs = new TaskCompletionSource<TViewModel>();
-            if (navigation == null)
+            if (this.GetNavigation(navigation) == null)
             {
                 tcs.SetResult(null);
             }
@@ -137,9 +145,9 @@ namespace MvvmCore
                 {
                     var view = _viewFactory.Resolve(viewModel);
                     bool found = false;
-                    for (int i = navigation.NavigationStack.Count - 1; i >= 0 && !found; i++)
+                    for (int i = this.GetNavigation(navigation).NavigationStack.Count - 1; i >= 0 && !found; i++)
                     {
-                        found = this.SetTab(navigation.NavigationStack[i], view);
+                        found = this.SetTab(this.GetNavigation(navigation).NavigationStack[i], view);
                     }
                     tcs.SetResult(viewModel);
                 });
@@ -198,7 +206,7 @@ namespace MvvmCore
         public Task<IViewModel> PopNavPageAsync(INavigation navigation)
 		{
 			var tcs = new TaskCompletionSource<IViewModel>();
-            if (navigation == null)
+            if (this.GetNavigation(navigation) == null)
             {
                 tcs.SetResult(null);
             }
@@ -206,7 +214,7 @@ namespace MvvmCore
             {
                 _deviceService.BeginInvokeOnMainThread(async () =>
                 {
-                    Page view = await navigation.PopAsync();
+                    Page view = await this.GetNavigation(navigation).PopAsync();
                     tcs.SetResult(view.BindingContext as IViewModel);
 
                 });
@@ -217,7 +225,7 @@ namespace MvvmCore
 		public Task<IViewModel> PopNavPageModalAsync(INavigation navigation)
 		{
 			var tcs = new TaskCompletionSource<IViewModel>();
-            if (navigation == null)
+            if (this.GetNavigation(navigation) == null)
             {
                 tcs.SetResult(null);
             }
@@ -225,7 +233,7 @@ namespace MvvmCore
             {
                 _deviceService.BeginInvokeOnMainThread(async () =>
                 {
-                    Page view = await navigation.PopModalAsync();
+                    Page view = await this.GetNavigation(navigation).PopModalAsync();
                     tcs.SetResult(view.BindingContext as IViewModel);
                 });
             }
@@ -235,7 +243,7 @@ namespace MvvmCore
 		public Task PopNavPageToRootAsync(INavigation navigation)
 		{
 			var tcs = new TaskCompletionSource<object>();
-            if (navigation == null)
+            if (this.GetNavigation(navigation) == null)
             {
                 tcs.SetResult(null);
             }
@@ -248,7 +256,7 @@ namespace MvvmCore
                     if (_deviceService.OS == TargetPlatform.Windows ||
                         _deviceService.OS == TargetPlatform.WinPhone)
                     {
-                        INavigation rootNavigation = navigation.NavigationStack[0].Navigation;
+                        INavigation rootNavigation = this.GetNavigation(navigation).NavigationStack[0].Navigation;
                         while (rootNavigation.NavigationStack.Count > 1)
                         {
                             await rootNavigation.PopAsync();
@@ -256,7 +264,7 @@ namespace MvvmCore
                     }
                     else
                     {
-                        await navigation.PopToRootAsync();
+                        await this.GetNavigation(navigation).PopToRootAsync();
                     }
 
                     tcs.SetResult(null);
@@ -274,9 +282,7 @@ namespace MvvmCore
 			{
 				TViewModel viewModel;
 				var view = _viewFactory.Resolve(out viewModel, setStateAction);
-                /*INavigation rootNavigation = navigation.NavigationStack[0].Navigation;
-                await rootNavigation.PushAsync(view);*/
-                await navigation.PushAsync(view);
+                await this.GetNavigation(navigation).PushAsync(view);
                 tcs.SetResult(viewModel);
 			});
 			return tcs.Task;
@@ -290,7 +296,7 @@ namespace MvvmCore
 			_deviceService.BeginInvokeOnMainThread(async () =>
 			{
 				var view = _viewFactory.Resolve(viewModel);
-				await navigation.PushAsync(view);
+				await this.GetNavigation(navigation).PushAsync(view);
 				tcs.SetResult(viewModel);
 			});
 			return tcs.Task;
@@ -305,7 +311,7 @@ namespace MvvmCore
 			{
 				TViewModel viewModel;
 				var view = _viewFactory.Resolve<TViewModel>(out viewModel, setStateAction);
-				await navigation.PushModalAsync(view);
+				await this.GetNavigation(navigation).PushModalAsync(view);
 				tcs.SetResult(viewModel);
 			});
 			return tcs.Task;
@@ -319,7 +325,7 @@ namespace MvvmCore
 			_deviceService.BeginInvokeOnMainThread(async () =>
 			{
 				var view = _viewFactory.Resolve(viewModel);
-				await navigation.PushModalAsync(view);
+				await this.GetNavigation(navigation).PushModalAsync(view);
 				tcs.SetResult(viewModel);
 			});
 			return tcs.Task;
@@ -337,7 +343,7 @@ namespace MvvmCore
                 var view = _viewFactory.Resolve<TViewModel>(out viewModel, setStateAction);
                 TViewModelBefore viewModelBefore;
                 var viewBefore = _viewFactory.Resolve<TViewModelBefore>(out viewModelBefore);
-                navigation.InsertPageBefore(view, viewBefore);
+                this.GetNavigation(navigation).InsertPageBefore(view, viewBefore);
                 tcs.SetResult(null);
             });
             return tcs.Task;
@@ -353,7 +359,7 @@ namespace MvvmCore
             {
                 var view = _viewFactory.Resolve<TViewModel>(viewModel);
                 var viewBefore = _viewFactory.Resolve<TViewModelBefore>(viewModelBefore);
-                navigation.InsertPageBefore(view, viewBefore);
+                this.GetNavigation(navigation).InsertPageBefore(view, viewBefore);
                 tcs.SetResult(null);
             });
             return tcs.Task;
@@ -363,7 +369,7 @@ namespace MvvmCore
             where TViewModel : class, IViewModel
         {
             var tcs = new TaskCompletionSource<object>();
-            if (navigation == null)
+            if (this.GetNavigation(navigation) == null)
             {
                 tcs.SetResult(null);
             }
@@ -373,7 +379,7 @@ namespace MvvmCore
                 {
                     TViewModel viewModel;
                     var view = _viewFactory.Resolve<TViewModel>(out viewModel);
-                    navigation.RemovePage(view);
+                    this.GetNavigation(navigation).RemovePage(view);
                     tcs.SetResult(null);
                 });
             }

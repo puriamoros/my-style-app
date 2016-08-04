@@ -124,17 +124,24 @@ namespace MyStyleApp.ViewModels
 
                         if (this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.Client)
                         {
-                            await this.SetMainPageAsync<MainClientViewModel>((mainVM) =>
+                            await this.SetMainPageNavPageAsync<MainClientViewModel>((mainVM) =>
                             {
                                 mainVM.Initialize();
                             });
                         }
-                        else if (this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.Owner)
+                        else if (this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.Owner ||
+                            this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.LimitedStaff ||
+                            this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.Staff ||
+                            this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.AuthorizedStaff)
                         {
-                            await this.SetMainPageAsync<MainOwnerViewModel>((mainVM) =>
+                            await this.SetMainPageNavPageAsync<MainOwnerViewModel>((mainVM) =>
                             {
                                 mainVM.Initialize();
                             });
+                        }
+                        else
+                        {
+                            throw new Exception("Unknown user type");
                         }
                     }
                     catch (Exception)

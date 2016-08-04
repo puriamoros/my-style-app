@@ -15,6 +15,8 @@ namespace MvvmCore
 			set { SetProperty(ref _title, value); }
 		}
 
+        public IViewModel Parent { get; set; }
+
         public INavigation Navigation { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;

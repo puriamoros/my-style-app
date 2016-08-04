@@ -165,6 +165,12 @@
   <data name="error_required_field" xml:space="preserve">
     <value>El campo "${FIELD_NAME}" es obligatorio</value>
   </data>
+  <data name="error_number_positive_int" xml:space="preserve">
+    <value>El campo "${FIELD_NAME}" debe contener un número entero mayor 0</value>
+  </data>
+  <data name="error_number_double" xml:space="preserve">
+    <value>El campo "${FIELD_NAME}"debe contener un número</value>
+  </data>
   <data name="establishments" xml:space="preserve">
     <value>Establecimientos</value>
   </data>
@@ -212,6 +218,9 @@
   </data>
   <data name="service_category" xml:space="preserve">
     <value>Categoría de servicio</value>
+  </data>
+  <data name="establishment_type_0" xml:space="preserve">
+    <value>Desconocido</value>
   </data>
   <data name="establishment_type_1" xml:space="preserve">
     <value>Peluquería</value>
@@ -479,5 +488,23 @@
   </data>
   <data name="concurrence_placeholder" xml:space="preserve">
     <value>Introduce las citas simultáneas</value>
+  </data>
+  <data name="hours1" xml:space="preserve">
+    <value>Horas1</value>
+  </data>
+  <data name="hours2" xml:space="preserve">
+    <value>Horas2</value>
+  </data>
+  <data name="automatic_confirm_type" xml:space="preserve">
+    <value>Confirmación automática</value>
+  </data>
+  <data name="offered_services" xml:space="preserve">
+    <value>Servicios ofertados</value>
+  </data>
+  <data name="clear" xml:space="preserve">
+    <value>Borrar</value>
+  </data>
+  <data name="done" xml:space="preserve">
+    <value>Hecho</value>
   </data>
 </root>

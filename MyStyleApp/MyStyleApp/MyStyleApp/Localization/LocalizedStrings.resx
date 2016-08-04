@@ -165,6 +165,12 @@
   <data name="error_required_field" xml:space="preserve">
     <value>The field "${FIELD_NAME}" is required</value>
   </data>
+  <data name="error_number_positive_int" xml:space="preserve">
+    <value>The field "${FIELD_NAME}" must be an integer number greater than 0</value>
+  </data>
+  <data name="error_number_double" xml:space="preserve">
+    <value>The field "${FIELD_NAME}" must be an a number</value>
+  </data>
   <data name="establishments" xml:space="preserve">
     <value>Establishments</value>
   </data>
@@ -212,6 +218,9 @@
   </data>
   <data name="service_category" xml:space="preserve">
     <value>Service category</value>
+  </data>
+  <data name="establishment_type_0" xml:space="preserve">
+    <value>Unknown</value>
   </data>
   <data name="establishment_type_1" xml:space="preserve">
     <value>Hairdresser</value>
@@ -479,5 +488,23 @@
   </data>
   <data name="concurrence_placeholder" xml:space="preserve">
     <value>Enter the simultaneous appointments</value>
+  </data>
+  <data name="hours1" xml:space="preserve">
+    <value>Hours1</value>
+  </data>
+  <data name="hours2" xml:space="preserve">
+    <value>Hours2</value>
+  </data>
+  <data name="automatic_confirm_type" xml:space="preserve">
+    <value>Automatic confirmation</value>
+  </data>
+  <data name="offered_services" xml:space="preserve">
+    <value>Offered services</value>
+  </data>
+  <data name="clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="done" xml:space="preserve">
+    <value>Done</value>
   </data>
 </root>

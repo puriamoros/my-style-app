@@ -15,17 +15,8 @@ namespace MyStyleApp.ViewModels
 {
     public class CreateAccountViewModel : AccountViewModelBase
     {
-        private const string STRING_NAME = "name";
-        private const string STRING_SURNAME = "surname";
-        private const string STRING_PHONE = "phone";
-        private const string STRING_EMAIL = "email";
-        private const string STRING_REPEATED_EMAIL = "repeat_email";
-        private const string STRING_PASSWORD = "password";
-        private const string STRING_REPEATED_PASSWORD = "repeat_password";
-
-        protected ValidationService _validationService;
-
-        private IUsersService _usersService;
+        protected const string STRING_PASSWORD = "password";
+        protected const string STRING_REPEATED_PASSWORD = "repeat_password";
 
         public CreateAccountViewModel(
             INavigator navigator,
@@ -33,10 +24,8 @@ namespace MyStyleApp.ViewModels
             LocalizedStringsService localizedStringsService,
             ValidationService validationService,
             IUsersService usersService) :
-            base(navigator, userNotificator, localizedStringsService, usersService)
+            base(navigator, userNotificator, localizedStringsService, validationService, usersService)
         {
-            this._validationService = validationService;
-            this._usersService = usersService;
             this.Title = this.LocalizedStrings.GetString("create_account");
         }
 
@@ -45,82 +34,20 @@ namespace MyStyleApp.ViewModels
             base.Initialize(null, BaseModeEnum.Create);
         }
 
-        protected virtual void ConfigureValidationService()
+        protected override void ConfigureValidationService()
         {
-            // Alwais clear validators before adding
-            this._validationService.ClearValidators();
-
-            // Name
-            this._validationService.AddValidator(
-                new RequiredValidator(this.User.Name, STRING_NAME));
-            this._validationService.AddValidator(
-                new RegexValidator(
-                    this.User.Name, RegexConstants.NOT_INSECURE_CHARS,
-                    "error_insecure_chars", STRING_NAME));
-            this._validationService.AddValidator(
-                new LengthValidator(this.User.Name, STRING_NAME, 2, 100));
-
-            // Surname
-            this._validationService.AddValidator(
-                new RequiredValidator(this.User.Surname, STRING_SURNAME));
-            this._validationService.AddValidator(
-                new RegexValidator(
-                    this.User.Surname, RegexConstants.NOT_INSECURE_CHARS,
-                    "error_insecure_chars", STRING_SURNAME));
-            this._validationService.AddValidator(
-                new LengthValidator(this.User.Surname, STRING_SURNAME, 2, 100));
-
-            // Phone
-            this._validationService.AddValidator(
-                new RequiredValidator(this.User.Phone, STRING_PHONE));
-            this._validationService.AddValidator(
-                new RegexValidator(
-                    this.User.Phone, RegexConstants.NOT_INSECURE_CHARS,
-                    "error_insecure_chars", STRING_PHONE));
-            this._validationService.AddValidator(
-                new LengthValidator(this.User.Phone, STRING_PHONE, 9, 9));
-            this._validationService.AddValidator(
-                new RegexValidator(
-                    this.User.Phone, RegexConstants.PHONE,
-                    "error_invalid_field", STRING_PHONE));
-
-            // Email
-            this._validationService.AddValidator(
-                new RequiredValidator(this.User.Email, STRING_EMAIL));
-            this._validationService.AddValidator(
-                new RegexValidator(
-                    this.User.Email, RegexConstants.NOT_INSECURE_CHARS,
-                    "error_insecure_chars", STRING_EMAIL));
-            this._validationService.AddValidator(
-                new RegexValidator(
-                    this.User.Email, RegexConstants.EMAIL,
-                    "error_invalid_field", STRING_EMAIL));
-
-            // RepeatEmail
-            this._validationService.AddValidator(
-                new RequiredValidator(this.RepeatEmail, STRING_EMAIL));
-            this._validationService.AddValidator(
-                new RegexValidator(
-                    this.RepeatEmail, RegexConstants.NOT_INSECURE_CHARS,
-                    "error_insecure_chars", STRING_EMAIL));
-            this._validationService.AddValidator(
-                new RegexValidator(
-                    this.RepeatEmail, RegexConstants.EMAIL,
-                    "error_invalid_field", STRING_EMAIL));
-
-            this._validationService.AddValidator(
-                new EqualValidator(this.User.Email, this.RepeatEmail, STRING_EMAIL, STRING_REPEATED_EMAIL));
+            base.ConfigureValidationService();
 
             // Password
             this._validationService.AddValidator(
-                new RequiredValidator(this.User.Password, STRING_PASSWORD));
+                new RequiredValidator(this.Password, STRING_PASSWORD));
 
             // RepeatPassword
             this._validationService.AddValidator(
                 new RequiredValidator(this.RepeatPassword, STRING_REPEATED_PASSWORD));
 
             this._validationService.AddValidator(
-                new EqualValidator(this.User.Password, this.RepeatPassword, STRING_PASSWORD, STRING_REPEATED_PASSWORD));
+                new EqualValidator(this.Password, this.RepeatPassword, STRING_PASSWORD, STRING_REPEATED_PASSWORD));
         }
 
         private string GetValidationError()
@@ -146,7 +73,16 @@ namespace MyStyleApp.ViewModels
                 {
                     try
                     {
-                        await this._usersService.RegisterUserAsync(this.User);
+                        User user = new User()
+                        {
+                            Name = this.Name,
+                            Surname = this.Surname,
+                            Phone = this.Phone,
+                            Email = this.Email,
+                            Password = this.Password,
+                            UserType = UserTypeEnum.Client
+                        };
+                        await this._usersService.RegisterUserAsync(user);
                     }
                     catch (BackendException ex)
                     {

@@ -45,8 +45,6 @@ namespace MyStyleApp.ViewModels
             }
         }
 
-        public ViewModelBase Parent { get; set; }
-
         public async Task ExecuteBlockingUIAsync(Func<Task> action)
         {
             this.IsBusy = true;
@@ -59,7 +57,7 @@ namespace MyStyleApp.ViewModels
             }
             catch (Exception ex)
             {
-                await this.PushNavPageModalAsync<ErrorViewModel>((errorVM) =>
+                await this.PushNavPageAsync<ErrorViewModel>((errorVM) =>
                 {
                     errorVM.ErrorText = this.LocalizedStrings.GetString("generic_error");
                 });

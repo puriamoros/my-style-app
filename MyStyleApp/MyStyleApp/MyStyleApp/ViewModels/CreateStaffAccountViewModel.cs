@@ -91,12 +91,11 @@ namespace MyStyleApp.ViewModels
                     {
                         Staff staff = new Staff()
                         {
-                            Id = this.User.Id,
-                            Name = this.User.Name,
-                            Surname = this.User.Surname,
-                            Phone = this.User.Phone,
-                            Email = this.User.Email,
-                            Password = this.User.Password,
+                            Name = this.Name,
+                            Surname = this.Surname,
+                            Phone = this.Phone,
+                            Email = this.Email,
+                            Password = this.Password,
                             UserType = (UserTypeEnum)this.SelectedUserType.Id,
                             IdEstablishment = this.SelectedEstablishment.Id
                         };
@@ -128,7 +127,7 @@ namespace MyStyleApp.ViewModels
         
         protected override bool CanSaveAccount()
         {
-            return this.SelectedEstablishment != null && this.SelectedUserType != null;
+            return base.CanSaveAccount() && this.SelectedEstablishment != null && this.SelectedUserType != null;
         }
     }
 }

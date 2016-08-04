@@ -152,6 +152,9 @@ namespace MyStyleApp.ViewModels
 
                     this.ServiceCategoryList = new ObservableCollection<ServiceCategory>(establishmentServiceCategoriesList);
 
+                    // Hack to solve a problem with bindable pickers
+                    await Task.Delay(100);
+
                     var result2 = from item in this.ServiceCategoryList
                                  where item.Id == idServiceCategory
                                  select item;

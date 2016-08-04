@@ -197,6 +197,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Automatic confirmation.
+        /// </summary>
+        internal static string automatic_confirm_type {
+            get {
+                return ResourceManager.GetString("automatic_confirm_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Book.
         /// </summary>
         internal static string book {
@@ -323,6 +332,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        internal static string clear {
+            get {
+                return ResourceManager.GetString("clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Client history.
         /// </summary>
         internal static string client_history {
@@ -436,6 +454,15 @@ namespace MyStyleApp.Localization {
         internal static string do_login {
             get {
                 return ResourceManager.GetString("do_login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Done.
+        /// </summary>
+        internal static string done {
+            get {
+                return ResourceManager.GetString("done", resourceCulture);
             }
         }
         
@@ -557,6 +584,24 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The field &quot;${FIELD_NAME}&quot; must be an a number.
+        /// </summary>
+        internal static string error_number_double {
+            get {
+                return ResourceManager.GetString("error_number_double", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field &quot;${FIELD_NAME}&quot; must be an integer number greater than 0.
+        /// </summary>
+        internal static string error_number_positive_int {
+            get {
+                return ResourceManager.GetString("error_number_positive_int", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The field &quot;${FIELD_NAME}&quot; is required.
         /// </summary>
         internal static string error_required_field {
@@ -589,6 +634,15 @@ namespace MyStyleApp.Localization {
         internal static string establishment_type {
             get {
                 return ResourceManager.GetString("establishment_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        internal static string establishment_type_0 {
+            get {
+                return ResourceManager.GetString("establishment_type_0", resourceCulture);
             }
         }
         
@@ -643,6 +697,24 @@ namespace MyStyleApp.Localization {
         internal static string generic_error {
             get {
                 return ResourceManager.GetString("generic_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hours1.
+        /// </summary>
+        internal static string hours1 {
+            get {
+                return ResourceManager.GetString("hours1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hours2.
+        /// </summary>
+        internal static string hours2 {
+            get {
+                return ResourceManager.GetString("hours2", resourceCulture);
             }
         }
         
@@ -841,6 +913,15 @@ namespace MyStyleApp.Localization {
         internal static string notes {
             get {
                 return ResourceManager.GetString("notes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offered services.
+        /// </summary>
+        internal static string offered_services {
+            get {
+                return ResourceManager.GetString("offered_services", resourceCulture);
             }
         }
         

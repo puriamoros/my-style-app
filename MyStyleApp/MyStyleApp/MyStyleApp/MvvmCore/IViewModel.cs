@@ -9,6 +9,7 @@ namespace MvvmCore
 		string Title { get; set; }
         INavigation Navigation { get; set; }
 
+        IViewModel Parent { get; set; }
 
         void SetState<T>(Action<T> action) where T : class, IViewModel;
 		void OnAppearing ();

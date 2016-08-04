@@ -133,7 +133,7 @@ namespace MyStyleApp.ViewModels
                         if (selectedEstablishmentType.Id != (int)EstablishmentTypeEnum.HairdresserAndAesthetics)
                         {
                             var selected = from item in all
-                                           where item.IdEstablishmentType == selectedEstablishmentType.Id
+                                           where ((int)item.EstablishmentType) == selectedEstablishmentType.Id
                                            select item;
 
                             this.ServiceCategoryList = new ObservableCollection<ServiceCategory>(selected);

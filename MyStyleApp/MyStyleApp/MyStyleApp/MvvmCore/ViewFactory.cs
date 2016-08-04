@@ -112,10 +112,12 @@ namespace MvvmCore
             where TView : Page
             where TViewModel : class, IViewModel
         {
-            // Set binding for current page
             if(view != null && viewModel != null)
             {
+                // Set binding for current page
                 view.BindingContext = viewModel;
+
+                // Set viewmodel navigation
                 viewModel.Navigation = view.Navigation;
             }
 

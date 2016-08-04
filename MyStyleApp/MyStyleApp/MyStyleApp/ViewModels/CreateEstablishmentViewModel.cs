@@ -4,31 +4,23 @@ using MvvmCore;
 using MyStyleApp.Validators;
 using MyStyleApp.Constants;
 using System;
-using System.Windows.Input;
+using System.Linq;
 using Xamarin.Forms;
 using MyStyleApp.Enums;
 using MyStyleApp.Models;
 using MyStyleApp.Services.Backend;
 using MyStyleApp.Exceptions;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace MyStyleApp.ViewModels
 {
     public class CreateEstablishmentViewModel : EstablishmentViewModelBase
     {
-        private const string STRING_NAME = "name";
-        private const string STRING_ADDRESS = "addres";
-        private const string STRING_PHONE = "phone";
-        private const string STRING_LATITUDE = "latitude";
-        private const string STRING_LONGITUDE = "longitude";
-
-        private ObservableCollection<Province> _provinceList;
-        private Province _selectedProvince;
-
-        private ProvincesService _provincesService;
-        protected ValidationService _validationService;
-
+        IUsersService _usersService;
         private IEstablishmentsService _establishmentsService;
+        private IServicesService _servicesService;
+        private IServiceCategoriesService _serviceCategoriesService;
 
         public CreateEstablishmentViewModel(
             INavigator navigator,
@@ -37,15 +29,17 @@ namespace MyStyleApp.ViewModels
             ProvincesService provincesService,
             ValidationService validationService,
             IUsersService usersService,
-            IEstablishmentsService establishmentsService) :
-            base(navigator, userNotificator, localizedStringsService, usersService)
+            IEstablishmentsService establishmentsService,
+            IServicesService servicesService,
+            IServiceCategoriesService serviceCategoriesService) :
+            base(navigator, userNotificator, localizedStringsService, provincesService, validationService, usersService)
         {
-            this._provincesService = provincesService;
-            this._validationService = validationService;
+            this._usersService = usersService;
             this._establishmentsService = establishmentsService;
-            this.Title = this.LocalizedStrings.GetString("create_establishment");
+            this._servicesService = servicesService;
+            this._serviceCategoriesService = serviceCategoriesService;
 
-            this.ProvinceList = new ObservableCollection<Province>(this._provincesService.GetProvinces());
+            this.Title = this.LocalizedStrings.GetString("create_establishment");
         }
 
         public void Initialize()
@@ -53,68 +47,23 @@ namespace MyStyleApp.ViewModels
             base.Initialize(null, BaseModeEnum.Create);
             this.SelectedProvince = null;
         }
-        public ObservableCollection<Province> ProvinceList
+
+        protected override async void OfferedServices()
         {
-            get { return _provinceList; }
-            set { SetProperty(ref _provinceList, value); }
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    Establishment establishment = null;
+                    var servicesCategories = await this._serviceCategoriesService.GetServiceCategoriesAsync();
+                    var services = await this._servicesService.GetServicesAsync();
+
+                    await this.PushNavPageModalAsync<EstablishmentServicesViewModel>((establishmentServicesVM) =>
+                    {
+                        establishmentServicesVM.Initialize(establishment, servicesCategories, services, this.SetShortenServicesList);
+                    });
+                });
         }
 
-        public Province SelectedProvince
-        {
-            get { return _selectedProvince; }
-            set
-            {
-                SetProperty(ref _selectedProvince, value);
-                this.CreateEstablishmentCommand.ChangeCanExecute();
-            }
-        }
-
-        protected virtual void ConfigureValidationService()
-        {
-            // Alwais clear validators before adding
-            this._validationService.ClearValidators();
-
-            // Name
-            this._validationService.AddValidator(
-                new RequiredValidator(this.Establishment.Name, STRING_NAME));
-            this._validationService.AddValidator(
-                new RegexValidator(
-                    this.Establishment.Name, RegexConstants.NOT_INSECURE_CHARS,
-                    "error_insecure_chars", STRING_NAME));
-            this._validationService.AddValidator(
-                new LengthValidator(this.Establishment.Name, STRING_NAME, 2, 100));
-
-            // Address
-            this._validationService.AddValidator(
-                new RequiredValidator(this.Establishment.Address, STRING_ADDRESS));
-            this._validationService.AddValidator(
-                new RegexValidator(
-                    this.Establishment.Address, RegexConstants.NOT_INSECURE_CHARS,
-                    "error_insecure_chars", STRING_ADDRESS));
-            this._validationService.AddValidator(
-                new LengthValidator(this.Establishment.Address, STRING_ADDRESS, 2, 100));
-
-            // Phone
-            this._validationService.AddValidator(
-                new RequiredValidator(this.Establishment.Phone, STRING_PHONE));
-            this._validationService.AddValidator(
-                new RegexValidator(
-                    this.Establishment.Phone, RegexConstants.NOT_INSECURE_CHARS,
-                    "error_insecure_chars", STRING_PHONE));
-            this._validationService.AddValidator(
-                new LengthValidator(this.Establishment.Phone, STRING_PHONE, 9, 9));
-            this._validationService.AddValidator(
-                new RegexValidator(
-                    this.Establishment.Phone, RegexConstants.PHONE,
-                    "error_invalid_field", STRING_PHONE));           
-        }
-
-        private string GetValidationError()
-        {
-            this.ConfigureValidationService();
-
-            return this._validationService.GetValidationError();
-        }
 
         protected override async void CreateEstablishmentAsync()
         {
@@ -130,22 +79,24 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    try
+                    Establishment establishment = new Establishment()
                     {
-                        await this._establishmentsService.CreateEstablishmentAsync(this.Establishment);
-                    }
-                    catch (BackendException ex)
-                    {
-                        //if (ex.BackendError.State == (int)BackendStatusCodeEnum.StateDuplicatedKeyError)
-                        //{
-                        //    this.ErrorText = this.LocalizedStrings.GetString("error_duplicated_email");
-                        //    return;
-                        //}
-                        //else
-                        //{
-                        //    throw;
-                        //}
-                    }
+                        IdOwner = this._usersService.LoggedUser.Id,
+                        Name = this.Name,
+                        IdProvince = this.SelectedProvince.Id,
+                        Address = this.Address,
+                        Phone = this.Phone,
+                        Hours1 = "",
+                        Hours2 = "",
+                        ConfirmType = (this.AutoConfirm) ? ConfirmTypeEnum.Automatic : ConfirmTypeEnum.Manual,
+                        Concurrence = int.Parse(this.Concurrence),
+                        Latitude = double.Parse(this.Latitude),
+                        Longitude = double.Parse(this.Longitude),
+                        IdEstablishmentType = (int) this._establishmentType,
+                        ShortenServices = this._shortenServices
+                    };
+
+                    var newEstablishment = await this._establishmentsService.CreateEstablishmentAsync(establishment);
 
                     this.IsBusy = false;
 

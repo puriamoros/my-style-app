@@ -13,6 +13,8 @@ namespace MyStyleApp.Views
         public FavouritesView()
         {
             InitializeComponent();
+
+            var asdf = Device.GetNamedSize(NamedSize.Large, typeof(Label));
         }
     }
 }

@@ -2,7 +2,8 @@
 {
     public enum EstablishmentTypeEnum
     {
-        Hairdresser = 1,
+        Unknown = 0,
+        Hairdresser,
         Aesthetics,
         HairdresserAndAesthetics
     }

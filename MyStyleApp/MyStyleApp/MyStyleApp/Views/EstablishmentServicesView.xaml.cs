@@ -14,10 +14,10 @@ namespace MyStyleApp.Views
         {
             InitializeComponent();
             
-            this.CancelButton.Clicked += OnCancelClicked;
+            this.ClearButton.Clicked += OnClearClicked;
         }
 
-        private async void OnCancelClicked(object sender, System.EventArgs e)
+        private async void OnClearClicked(object sender, System.EventArgs e)
         {
             await Task.Delay(100);
             this.GroupedServiceList.Focus();

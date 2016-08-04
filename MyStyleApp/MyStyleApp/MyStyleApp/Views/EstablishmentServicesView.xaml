@@ -8,49 +8,54 @@
              Padding="{StaticResource PagePadding}"
              Title="{Binding LocalizedStrings[offered_services]}">
 
-  <StackLayout Padding="{StaticResource PageContentPadding}">
-    
-    <Label
-        Text="{Binding Title}"
-        Style="{StaticResource LargeTextStyle}"
-        HorizontalOptions="Center"
-        IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>
-    <StackLayout Orientation="Horizontal" Padding="5,0,5,0">
-      <Entry x:Name="SearchEntry" HorizontalOptions="FillAndExpand"
-        Placeholder="{Binding LocalizedStrings[search]}"
-        HorizontalTextAlignment="Center"
-        Text="{Binding SearchText}"/>
-      <Button x:Name="CancelButton"
-        Text="{Binding LocalizedStrings[cancel]}"
-        HorizontalOptions="End"
-        IsVisible="{Binding IsCancelSearchVisible}"
-        Command="{Binding CancelSearchCommand}"
-        HeightRequest="{Binding Source={x:Reference SearchEntry}, Path=Height}"/>
-    </StackLayout>
-    
-    <ListView x:Name="GroupedServiceList" ItemsSource="{Binding GroupedServiceList}"
-      CachingStrategy="RecycleElement"
-      HasUnevenRows="True"
-      GroupDisplayBinding="{Binding Key}"
-      GroupShortNameBinding="{Binding ShortKey}"
-      IsGroupingEnabled="True"
-      ItemSelected="OnItemListSelection">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <StackLayout Grid.Row="0" Padding="{StaticResource PageContentPadding}">
 
-      <ListView.GroupHeaderTemplate>
-        <DataTemplate>
-          <ViewCell>
-            <ContentView Padding="{StaticResource ListGroupOutherPadding}">
-              <ContentView BackgroundColor="{StaticResource ListGroupBackgroundColor}" Padding="{StaticResource ListGroupInnerPadding}">
-                <Label VerticalOptions="End" Text="{Binding Key}" Style="{StaticResource MediumTextStyle}"/>
+      <Label
+          Text="{Binding Title}"
+          Style="{StaticResource LargeTextStyle}"
+          HorizontalOptions="Center"
+          IsVisible="False"/>
+      <StackLayout Orientation="Horizontal" Padding="5,0,5,0">
+        <Entry x:Name="SearchEntry" HorizontalOptions="FillAndExpand"
+          Placeholder="{Binding LocalizedStrings[search]}"
+          HorizontalTextAlignment="Center"
+          Text="{Binding SearchText}"/>
+        <Button x:Name="ClearButton"
+          Text="{Binding LocalizedStrings[clear]}"
+          HorizontalOptions="End"
+          IsVisible="{Binding IsClearSearchVisible}"
+          Command="{Binding ClearSearchCommand}"
+          HeightRequest="{Binding Source={x:Reference SearchEntry}, Path=Height}"/>
+      </StackLayout>
+
+      <ListView x:Name="GroupedServiceList" ItemsSource="{Binding GroupedServiceList}"
+        CachingStrategy="RecycleElement"
+        HasUnevenRows="True"
+        GroupDisplayBinding="{Binding Key}"
+        GroupShortNameBinding="{Binding ShortKey}"
+        IsGroupingEnabled="True"
+        ItemSelected="OnItemListSelection">
+
+        <ListView.GroupHeaderTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <ContentView Padding="{StaticResource ListGroupOutherPadding}">
+                <ContentView BackgroundColor="{StaticResource ListGroupBackgroundColor}" Padding="{StaticResource ListGroupInnerPadding}">
+                  <Label VerticalOptions="End" Text="{Binding Key}" Style="{StaticResource MediumTextStyle}"/>
+                </ContentView>
               </ContentView>
-            </ContentView>
-          </ViewCell>
-        </DataTemplate>
-      </ListView.GroupHeaderTemplate>
-      
-      <ListView.ItemTemplate>
-        <DataTemplate>
-          <ViewCell>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.GroupHeaderTemplate>
+
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
 
               <Grid
                 HeightRequest="{Binding HeightRequest}"
@@ -84,23 +89,32 @@
                     Style="{StaticResource MediumTextStyle}"
                     IsVisible="{Binding Source={x:Reference ServiceSwitch}, Path=IsToggled}"/>
                 </StackLayout>
-                
+
                 <StackLayout Grid.Column="0" Grid.ColumnSpan="4"
                   BackgroundColor="White" Opacity="0.5"
                   IsVisible="{Binding IsEnabled, Converter={StaticResource NegateConverter}}">
                 </StackLayout>
-                
+
               </Grid>
-            
-          </ViewCell>
-        </DataTemplate>
-      </ListView.ItemTemplate>
-      
-      <ListView.Footer>
-        <Label />
-      </ListView.Footer>
-      
-    </ListView>
-  </StackLayout>
+
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+
+        <ListView.Footer>
+          <Label />
+        </ListView.Footer>
+
+      </ListView>
+    </StackLayout>
+    <StackLayout Grid.Row="1"
+        Padding="{StaticResource BottomContainerPadding}"
+        VerticalOptions="End">
+      <controls:CustomButton
+        Text="{Binding LocalizedStrings[done]}"
+        Command="{Binding SelectionDoneCommand}"/>
+    </StackLayout>
+  </Grid>
+  
 
 </views:CustomContentPage>

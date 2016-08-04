@@ -19,13 +19,15 @@ namespace MyStyleApp.Services.Backend
             this._establismentTypeList = new List<EstablishmentType>();
             foreach (EstablishmentTypeEnum establishmentType in Enum.GetValues(typeof(EstablishmentTypeEnum)))
             {
-                int id = (int)establishmentType;
-                this._establismentTypeList.Add(new EstablishmentType()
+                if(establishmentType != EstablishmentTypeEnum.Unknown)
                 {
-                    Id =id,
-                    Name = localizedStrings.GetString(LOCALIZATION_TOKEN + id)
+                    int id = (int)establishmentType;
+                    this._establismentTypeList.Add(new EstablishmentType()
+                    {
+                        Id = id,
+                        Name = localizedStrings.GetString(LOCALIZATION_TOKEN + id)
+                    });
                 }
-                );
             }
         }
 

@@ -74,7 +74,7 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    await this.PushNavPageModalAsync<CreateEstablishmentViewModel>((CreateEstablishmentVM) =>
+                    await this.PushNavPageAsync<CreateEstablishmentViewModel>((CreateEstablishmentVM) =>
                     {
                         CreateEstablishmentVM.Initialize();
                     }

@@ -105,12 +105,19 @@ namespace MyStyleApp.ViewModels
                                 mainVM.Initialize();
                             });
                         }
-                        else if (this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.Owner)
+                        else if (this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.Owner ||
+                            this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.LimitedStaff ||
+                            this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.Staff ||
+                            this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.AuthorizedStaff)
                         {
                             await this.SetMainPageNavPageAsync<MainOwnerViewModel>((mainVM) =>
                             {
                                 mainVM.Initialize();
                             });
+                        }
+                        else
+                        {
+                            throw new Exception("Unknown user type");
                         }
 
                     }

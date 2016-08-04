@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyStyleApp.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace MyStyleApp.Models
     public class SelectedService : Service, INotifyPropertyChanged
     {
         public string PriceStr { get; set; }
+
+        public EstablishmentTypeEnum EstablismentType { get; set; }
 
         public bool Selected { get; set; }
 

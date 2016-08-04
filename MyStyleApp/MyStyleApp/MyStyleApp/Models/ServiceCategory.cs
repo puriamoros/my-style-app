@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MyStyleApp.Enums;
+using Newtonsoft.Json;
 
 namespace MyStyleApp.Models
 {
@@ -11,6 +12,6 @@ namespace MyStyleApp.Models
         public string Name { get; set; }
 
         [JsonProperty(Required = Required.Always, PropertyName = "idEstablishmentType")]
-        public int IdEstablishmentType { get; set; }
+        public EstablishmentTypeEnum EstablishmentType { get; set; }
     }
 }

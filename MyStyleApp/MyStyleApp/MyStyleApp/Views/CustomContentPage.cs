@@ -17,8 +17,8 @@ namespace MyStyleApp.Views
         {
             base.OnAppearing();
 
-            // We just want a navigation bar on iOS
-            if (Device.OS != TargetPlatform.iOS)
+            // We just want a navigation bar on iOS and Android
+            if (Device.OS != TargetPlatform.iOS && Device.OS != TargetPlatform.Android)
             {
                 NavigationPage.SetHasNavigationBar(this, false);
             }

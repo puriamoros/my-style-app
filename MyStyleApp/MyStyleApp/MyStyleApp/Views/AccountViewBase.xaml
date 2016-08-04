@@ -20,9 +20,8 @@
           IsVisible="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=Create}">
           <Label
               Text="{Binding Title}"
-              Style="{StaticResource LargeTextStyle}"
-              HorizontalOptions="Center"
-              IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
+              Style="{StaticResource TitleTextStyle}"
+              IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>
         </StackLayout>
         
         <StackLayout Spacing="0" >

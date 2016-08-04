@@ -149,6 +149,19 @@
         </Setter>
       </Style>
 
+      <Style x:Key="TitleTextStyle" TargetType="Label" BasedOn="{StaticResource LargeTextStyle}">
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="BackgroundColor">
+          <Setter.Value>
+            <OnPlatform x:TypeArguments="Color"
+                        iOS="Default"
+                        Android="Default"
+                        WinPhone="Accent" />
+          </Setter.Value>
+        </Setter>
+      </Style>
+
     </ResourceDictionary>
   </Application.Resources>
 </Application>

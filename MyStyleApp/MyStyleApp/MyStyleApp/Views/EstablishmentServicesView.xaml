@@ -5,10 +5,16 @@
              xmlns:views="clr-namespace:MyStyleApp.Views"
              xmlns:gestures="clr-namespace:MyStyleApp.Views.Gestures"
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls;assembly=MyStyleApp"
-             Padding="{StaticResource PagePadding}">
+             Padding="{StaticResource PagePadding}"
+             Title="{Binding LocalizedStrings[offered_services]}">
 
   <StackLayout Padding="{StaticResource PageContentPadding}">
     
+    <Label
+        Text="{Binding Title}"
+        Style="{StaticResource LargeTextStyle}"
+        HorizontalOptions="Center"
+        IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>
     <StackLayout Orientation="Horizontal" Padding="5,0,5,0">
       <Entry x:Name="SearchEntry" HorizontalOptions="FillAndExpand"
         Placeholder="{Binding LocalizedStrings[search]}"

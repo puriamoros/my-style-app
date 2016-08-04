@@ -18,9 +18,8 @@
         Padding="{StaticResource PageContentPadding}">
         <Label
           Text="{Binding LocalizedStrings[establishment_details]}"
-          Style="{StaticResource LargeTextStyle}"
-          HorizontalOptions="Center"
-          IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
+          Style="{StaticResource TitleTextStyle}"
+          IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>
 
         <StackLayout Padding="0,5,0,10"> 
           <StackLayout>

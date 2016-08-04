@@ -14,9 +14,8 @@
     <StackLayout Padding="{StaticResource PageContentPadding}">
       <Label
         Text="{Binding LocalizedStrings[client_history]}"
-        Style="{StaticResource LargeTextStyle}"
-        HorizontalOptions="Center"
-        IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
+        Style="{StaticResource TitleTextStyle}"
+        IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>
 
       <RelativeLayout>
         <StackLayout

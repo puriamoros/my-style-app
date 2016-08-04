@@ -13,9 +13,8 @@
     <StackLayout Padding="{StaticResource PageContentPadding}">
       <Label
             Text="{Binding LocalizedStrings[results]}"
-            Style="{StaticResource LargeTextStyle}"
-            HorizontalOptions="Center"
-            IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
+            Style="{StaticResource TitleTextStyle}"
+            IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>
       
       <!-- Without HasUnevenRows="True", list items does not render well in Android -->
       <ListView x:Name="EstablishmentsList"

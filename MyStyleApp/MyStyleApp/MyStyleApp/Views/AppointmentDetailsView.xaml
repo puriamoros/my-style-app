@@ -18,9 +18,8 @@
         <StackLayout Padding="0,0,0,10">
           <Label
           Text="{Binding LocalizedStrings[appointment_details]}"
-          Style="{StaticResource LargeTextStyle}"
-          HorizontalOptions="Center"
-          IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!iOS}"/>
+          Style="{StaticResource TitleTextStyle}"
+          IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>
         </StackLayout>
                
         <Grid>

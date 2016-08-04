@@ -13,10 +13,10 @@ namespace MyStyleApp.Views
         public EstablishmentDetailsView()
         {
             InitializeComponent();
-            if(Device.OS == TargetPlatform.Android)
+            /*if(Device.OS == TargetPlatform.Android)
             {
                 this.SizeChanged += OnPageSizeChanged;
-            }
+            }*/
         }
 
         private void OnPageSizeChanged(object sender, EventArgs e)

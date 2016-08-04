@@ -236,6 +236,22 @@ namespace MyStyleApp.ViewModels
             this._validationService.AddValidator(
                 new LengthValidator(this.Address, STRING_ADDRESS, 2, 500));
 
+            // Latitude
+            this._validationService.AddValidator(
+                new RequiredValidator(this.Latitude, STRING_LATITUDE));
+            this._validationService.AddValidator(
+                new RegexValidator(
+                    this.Latitude, RegexConstants.DOUBLE,
+                    "error_number_double", STRING_LATITUDE));
+
+            // Longitude
+            this._validationService.AddValidator(
+                new RequiredValidator(this.Longitude, STRING_LONGITUDE));
+            this._validationService.AddValidator(
+                new RegexValidator(
+                    this.Longitude, RegexConstants.DOUBLE,
+                    "error_number_double", STRING_LONGITUDE));
+
             // Phone
             this._validationService.AddValidator(
                 new RequiredValidator(this.Phone, STRING_PHONE));
@@ -257,22 +273,6 @@ namespace MyStyleApp.ViewModels
                 new RegexValidator(
                     this.Concurrence, RegexConstants.POSITIVE_INT,
                     "error_number_positive_int", STRING_CONCURRENCE));
-
-            // Latitude
-            this._validationService.AddValidator(
-                new RequiredValidator(this.Latitude, STRING_LATITUDE));
-            this._validationService.AddValidator(
-                new RegexValidator(
-                    this.Latitude, RegexConstants.DOUBLE,
-                    "error_number_double", STRING_LATITUDE));
-
-            // Longitude
-            this._validationService.AddValidator(
-                new RequiredValidator(this.Longitude, STRING_LONGITUDE));
-            this._validationService.AddValidator(
-                new RegexValidator(
-                    this.Longitude, RegexConstants.DOUBLE,
-                    "error_number_double", STRING_LONGITUDE));
         }
 
         public string GetValidationError()

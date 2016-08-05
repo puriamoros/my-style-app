@@ -11,10 +11,6 @@
       <StackLayout RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
         Spacing="25" Padding="{StaticResource PageContentPadding}">
       <Label
-              Text="{Binding LocalizedStrings[error]}"
-              Style="{StaticResource TitleTextStyle}"
-              IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>
-      <Label
         Text="{Binding ErrorText}"
         IsVisible="{Binding ErrorText, Converter={StaticResource StringToBoolConverter}}"
         Style="{StaticResource MediumTextStyle}" />

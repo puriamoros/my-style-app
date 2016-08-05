@@ -94,44 +94,81 @@
           <Label
             Text="{Binding LocalizedStrings[hours1]}"
             Style="{StaticResource MediumTextStyle}" />
-          <Entry
-            Placeholder="{Binding LocalizedStrings[concurrence_placeholder]}"
-            Text="{Binding Hours1}"
-            IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
+          <StackLayout Spacing="15" Padding="15,0,0,0" Orientation="Horizontal">
+            <StackLayout Spacing="5" Orientation="Horizontal">
+              <Label VerticalTextAlignment="Center"
+                Text="{Binding LocalizedStrings[from], StringFormat='{0}:'}"
+                Style="{StaticResource SmallTextStyle}" />
+              <TimePicker HorizontalOptions="FillAndExpand"
+                Time="{Binding Hours1Start, Mode=TwoWay}"
+                IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
+            </StackLayout>
+            <StackLayout Spacing="5" Orientation="Horizontal">
+              <Label VerticalTextAlignment="Center"
+                Text="{Binding LocalizedStrings[to], StringFormat='{0}:'}"
+                Style="{StaticResource SmallTextStyle}" />
+              <TimePicker HorizontalOptions="FillAndExpand"
+                Time="{Binding Hours1End, Mode=TwoWay}"
+                IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
+            </StackLayout>
+          </StackLayout>
         </StackLayout>
         
         <StackLayout Spacing="0">
           <Label
             Text="{Binding LocalizedStrings[hours2]}"
             Style="{StaticResource MediumTextStyle}" />
-          <Entry
-            Placeholder="{Binding LocalizedStrings[concurrence_placeholder]}"
-            Text="{Binding Hours2}"
-            IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
+          <StackLayout Spacing="15" Padding="15,0,0,0" Orientation="Horizontal">
+            <StackLayout Spacing="5" Orientation="Horizontal">
+              <Label VerticalTextAlignment="Center"
+                Text="{Binding LocalizedStrings[from], StringFormat='{0}:'}"
+                Style="{StaticResource SmallTextStyle}" />
+              <TimePicker HorizontalOptions="FillAndExpand"
+                Time="{Binding Hours2Start, Mode=TwoWay}"
+                IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
+            </StackLayout>
+            <StackLayout Spacing="5" Orientation="Horizontal">
+              <Label VerticalTextAlignment="Center"
+                Text="{Binding LocalizedStrings[to], StringFormat='{0}:'}"
+                Style="{StaticResource SmallTextStyle}" />
+              <TimePicker HorizontalOptions="FillAndExpand"
+                Time="{Binding Hours2End, Mode=TwoWay}"
+                IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
+            </StackLayout>
+          </StackLayout>
         </StackLayout>
         
         <StackLayout Spacing="0">
           <Label
             Text="{Binding LocalizedStrings[concurrence]}"
             Style="{StaticResource MediumTextStyle}" />
-          <Entry
+          <Entry x:Name="Concurrence"
             Placeholder="{Binding LocalizedStrings[concurrence_placeholder]}"
             Text="{Binding Concurrence}"
             Keyboard="Numeric"
             IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
         </StackLayout>
 
-        <StackLayout Spacing="0">
+        <StackLayout Spacing="10" Orientation="Horizontal">
           <Label Text="{Binding LocalizedStrings[automatic_confirm_type]}" Style="{StaticResource MediumTextStyle}"/>
           <Switch x:Name="ConfirmTypeSwitch"
-            IsToggled="{Binding AutoConfirm}"
+            IsToggled="{Binding AutoConfirm}" Style="{StaticResource SwitchStyle}"
             IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
         </StackLayout>
 
-        <StackLayout Spacing="0">
+        <StackLayout Spacing="10" Orientation="Horizontal">
+          <Label Text="{Binding LocalizedStrings[offered_services]}" Style="{StaticResource MediumTextStyle}"/>
           <controls:CustomButton
-            Text="{Binding LocalizedStrings[offered_services], StringFormat='{0}...'}"
-            Command="{Binding OfferedServicesCommand}"/>
+            Text="{Binding LocalizedStrings[configure], StringFormat='{0}...'}"
+            Command="{Binding OfferedServicesCommand}"
+            HorizontalOptions="FillAndExpand"
+            HeightRequest="{Binding Source={x:Reference Concurrence}, Path=Height}"
+            IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!Win}"/>
+          <controls:CustomButton
+            Text="{Binding LocalizedStrings[configure], StringFormat='{0}...'}"
+            Command="{Binding OfferedServicesCommand}"
+            HorizontalOptions="FillAndExpand"
+            IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>
         </StackLayout>
         
         <StackLayout>

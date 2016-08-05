@@ -368,6 +368,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Configure.
+        /// </summary>
+        internal static string configure {
+            get {
+                return ResourceManager.GetString("configure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
         internal static string confirm {
@@ -602,11 +611,29 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Closing hour must be later than opening hour at &quot;${FIELD_NAME}&quot;.
+        /// </summary>
+        internal static string error_opening_hours {
+            get {
+                return ResourceManager.GetString("error_opening_hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The field &quot;${FIELD_NAME}&quot; is required.
         /// </summary>
         internal static string error_required_field {
             get {
                 return ResourceManager.GetString("error_required_field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price for service &quot;${SERVICE_NAME}&quot; must be a number greater than 0.
+        /// </summary>
+        internal static string error_service_price {
+            get {
+                return ResourceManager.GetString("error_service_price", resourceCulture);
             }
         }
         
@@ -692,6 +719,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to From.
+        /// </summary>
+        internal static string from {
+            get {
+                return ResourceManager.GetString("from", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There has been an error.\nPlease, check your internet connection or try again later..
         /// </summary>
         internal static string generic_error {
@@ -701,7 +737,7 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hours1.
+        ///   Looks up a localized string similar to Opening hours (morning).
         /// </summary>
         internal static string hours1 {
             get {
@@ -710,7 +746,7 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hours2.
+        ///   Looks up a localized string similar to Opening hours (afternoon).
         /// </summary>
         internal static string hours2 {
             get {
@@ -1129,6 +1165,15 @@ namespace MyStyleApp.Localization {
         internal static string surname_placeholder {
             get {
                 return ResourceManager.GetString("surname_placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To.
+        /// </summary>
+        internal static string to {
+            get {
+                return ResourceManager.GetString("to", resourceCulture);
             }
         }
         

@@ -171,6 +171,12 @@
   <data name="error_number_double" xml:space="preserve">
     <value>El campo "${FIELD_NAME}"debe contener un número</value>
   </data>
+  <data name="error_service_price" xml:space="preserve">
+    <value>El precio para el servicio "${SERVICE_NAME}" debe ser un número mayor que 0</value>
+  </data>
+  <data name="error_opening_hours" xml:space="preserve">
+    <value>La hora de cierre debe ser posterior a la hora de apertura en "${FIELD_NAME}"</value>
+  </data>
   <data name="establishments" xml:space="preserve">
     <value>Establecimientos</value>
   </data>
@@ -256,7 +262,7 @@
     <value>Quitar de favoritos</value>
   </data>
   <data name="generic_error" xml:space="preserve">
-    <value>Se ha produciod un error.\nCompruebe que está conectado a internet o inténtelo de nuevo más tarde.</value>
+    <value>Se ha producido un error.\nCompruebe que está conectado a internet o inténtelo de nuevo más tarde.</value>
   </data>
   <data name="booking_data_title" xml:space="preserve">
     <value>Solicitud de reserva</value>
@@ -490,10 +496,16 @@
     <value>Introduce las citas simultáneas</value>
   </data>
   <data name="hours1" xml:space="preserve">
-    <value>Horas1</value>
+    <value>Horario (mañanas)</value>
   </data>
   <data name="hours2" xml:space="preserve">
-    <value>Horas2</value>
+    <value>Horario (tardes)</value>
+  </data>
+  <data name="from" xml:space="preserve">
+    <value>Desde</value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value>Hasta</value>
   </data>
   <data name="automatic_confirm_type" xml:space="preserve">
     <value>Confirmación automática</value>
@@ -506,5 +518,8 @@
   </data>
   <data name="done" xml:space="preserve">
     <value>Hecho</value>
+  </data>
+  <data name="configure" xml:space="preserve">
+    <value>Configurar</value>
   </data>
 </root>

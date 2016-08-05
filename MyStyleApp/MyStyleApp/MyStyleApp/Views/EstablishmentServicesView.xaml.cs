@@ -14,7 +14,8 @@ namespace MyStyleApp.Views
         {
             InitializeComponent();
             
-            this.ClearButton.Clicked += OnClearClicked;
+            this.ClearButton1.Clicked += OnClearClicked;
+            this.ClearButton2.Clicked += OnClearClicked;
         }
 
         private async void OnClearClicked(object sender, System.EventArgs e)

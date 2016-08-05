@@ -57,7 +57,8 @@ namespace MyStyleApp.ViewModels
             }
             catch (Exception ex)
             {
-                await this.PushNavPageAsync<ErrorViewModel>((errorVM) =>
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+                await this.PushNavPageModalAsync<ErrorViewModel>((errorVM) =>
                 {
                     errorVM.ErrorText = this.LocalizedStrings.GetString("generic_error");
                 });

@@ -23,33 +23,6 @@ class Favourites extends ModelWithIdBase
 		
 		// Fields for extra data
 		$this->favouritesExtraField = 'idFavourite';
-		
-        /*$this->table = 'favourites';
-		$this->idClient = 'idClient';
-		$this->idEstablishment = 'idEstablishment';
-		$this->fields = array(
-			'id',
-			$this->idClient,
-			$this->idEstablishment
-		);
-		$this->idField = $this->fields[0];
-		
-		// Establishments related tables
-		// -------------------------------------
-		
-		// Establishments
-		$this->establishmentsTable = 'establishments';
-		$this->establishmentsFields = array(
-			'id',
-			'name',
-			'address',
-			'phone',
-			'idEstablishmentType',
-			'idOwner',
-			'idProvince'
-		);
-		$this->establishmentsIdField = $this->establishmentsFields[0];
-		$this->favouritesExtraField = 'idFavourite';*/
     }
 	
 	public function get($queryArray, $queryParams)

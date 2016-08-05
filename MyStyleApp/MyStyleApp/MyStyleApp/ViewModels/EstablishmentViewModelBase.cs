@@ -41,8 +41,10 @@ namespace MyStyleApp.ViewModels
         private string _name;
         private string _address;
         private string _phone;
-        private DateTime _hours1;
-        private DateTime _hours2;
+        private TimeSpan _hours1Start;
+        private TimeSpan _hours1End;
+        private TimeSpan _hours2Start;
+        private TimeSpan _hours2End;
         private string _concurrence;
         private string _latitude;
         private string _longitude;
@@ -95,7 +97,7 @@ namespace MyStyleApp.ViewModels
              }
             else
             {
-                this.Name = "";
+                /*this.Name = "";
                 this.Address = "";
                 this.Phone = "";
                 //this.Hours1 = establishment.Hours1;
@@ -103,7 +105,16 @@ namespace MyStyleApp.ViewModels
                 this.AutoConfirm = false;
                 this.Concurrence = "";
                 this.Latitude = "";
-                this.Longitude = "";
+                this.Longitude = "";*/
+                this.Name = "aaa";
+                this.Address = "bbb";
+                this.Phone = "123456789";
+                //this.Hours1 = establishment.Hours1;
+                //this.Hours2 = establishment.Hours2;
+                this.AutoConfirm = false;
+                this.Concurrence = "4";
+                this.Latitude = "3.6";
+                this.Longitude = "2.5";
             }
             this.ErrorText = "";
 
@@ -165,16 +176,46 @@ namespace MyStyleApp.ViewModels
                 this.CreateEstablishmentCommand.ChangeCanExecute();
             }
         }
-        public DateTime Hours1
+        public TimeSpan Hours1Start
         {
-            get { return _hours1; }
-            set { SetProperty(ref _hours1, value); }
+            get { return _hours1Start; }
+            set { SetProperty(ref _hours1Start, this.CheckHour(value)); }
         }
 
-        public DateTime Hours2
+        public TimeSpan Hours1End
         {
-            get { return _hours2; }
-            set { SetProperty(ref _hours2, value); }
+            get { return _hours1End; }
+            set { SetProperty(ref _hours1End, this.CheckHour(value)); }
+        }
+
+        public TimeSpan Hours2Start
+        {
+            get { return _hours2Start; }
+            set { SetProperty(ref _hours2Start, this.CheckHour(value)); }
+        }
+
+        public TimeSpan Hours2End
+        {
+            get { return _hours2End; }
+            set { SetProperty(ref _hours2End, this.CheckHour(value)); }
+        }
+
+        private TimeSpan CheckHour(TimeSpan value)
+        {
+            if(value.Minutes != 0 && value.Minutes != 30)
+            {
+                int minutes = (value.Minutes > 0 && value.Minutes < 30) ? 30 : 0;
+                var ts = new TimeSpan(value.Hours, minutes, value.Seconds);
+                if(minutes == 0)
+                {
+                    ts = ts.Add(TimeSpan.FromHours(1));
+                }
+                return ts;
+            }
+            else
+            {
+                return value;
+            }
         }
 
         public string Concurrence
@@ -237,6 +278,7 @@ namespace MyStyleApp.ViewModels
                 new LengthValidator(this.Address, STRING_ADDRESS, 2, 500));
 
             // Latitude
+            this.Latitude = this.Latitude.Replace(',', '.');
             this._validationService.AddValidator(
                 new RequiredValidator(this.Latitude, STRING_LATITUDE));
             this._validationService.AddValidator(
@@ -245,6 +287,7 @@ namespace MyStyleApp.ViewModels
                     "error_number_double", STRING_LATITUDE));
 
             // Longitude
+            this.Longitude = this.Longitude.Replace(',', '.');
             this._validationService.AddValidator(
                 new RequiredValidator(this.Longitude, STRING_LONGITUDE));
             this._validationService.AddValidator(
@@ -265,6 +308,26 @@ namespace MyStyleApp.ViewModels
                 new RegexValidator(
                     this.Phone, RegexConstants.PHONE,
                     "error_invalid_field", STRING_PHONE));
+
+            // Hours1
+            this._validationService.AddValidator(
+                new SimpleValidator<KeyValuePair<TimeSpan, TimeSpan>>(
+                    new KeyValuePair<TimeSpan, TimeSpan>(this.Hours1Start, this.Hours1End),
+                    (hours) => { return hours.Key < hours.Value; },
+                    this.LocalizedStrings.GetString("error_opening_hours", "${FIELD_NAME}", this.LocalizedStrings.GetString("hours1")
+                    )
+                )
+            );
+
+            // Hours2
+            this._validationService.AddValidator(
+                new SimpleValidator<KeyValuePair<TimeSpan, TimeSpan>>(
+                    new KeyValuePair<TimeSpan, TimeSpan>(this.Hours2Start, this.Hours2End),
+                    (hours) => { return hours.Key < hours.Value; },
+                    this.LocalizedStrings.GetString("error_opening_hours", "${FIELD_NAME}", this.LocalizedStrings.GetString("hours2")
+                    )
+                )
+            );
 
             // Concurrence
             this._validationService.AddValidator(

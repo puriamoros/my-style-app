@@ -150,6 +150,9 @@ class Establishments extends ModelWithIdBase
 			$services = $data[$this->servicesExtraField];
 			$id = $result[$this->establishments->id];
 			$this->dbCreateServices($id, $services);
+			
+			// add services
+			$result[$this->servicesExtraField] = $services;
 		}
 		
 		return $result;

@@ -3,15 +3,15 @@ using System;
 
 namespace MyStyleApp.Validators
 {
-    public class SimpleValidator : IValidator
+    public class SimpleValidator<T> : IValidator
     {
-        private string _input;
-        private Func<string, bool> _isValid;
+        private T _input;
+        private Func<T, bool> _isValid;
         private string _error;
 
         public SimpleValidator(
-            string input,
-            Func<string, bool> isValid,
+            T input,
+            Func<T, bool> isValid,
             string error)
         {
             this._input = input;
@@ -26,7 +26,7 @@ namespace MyStyleApp.Validators
 
         public string GetValidationError(LocalizedStringsService localizedStrings)
         {
-            return localizedStrings.GetString( this._error);
+            return this._error;
         }
     }
 }

@@ -92,6 +92,17 @@
                         WinPhone="-35,0,-15,0" />
           </Setter.Value>
         </Setter>
+      </Style>
+
+      <Style x:Key="ScaledSwitchStyle" TargetType="Switch" BasedOn="{StaticResource SwitchStyle}">
+        <Setter Property="Margin">
+          <Setter.Value>
+            <OnPlatform x:TypeArguments="Thickness"
+                        iOS="10,5,0,5"
+                        Android="10,5,0,5"
+                        WinPhone="-35,0,-15,0" />
+          </Setter.Value>
+        </Setter>
         <Setter Property="Scale">
           <Setter.Value>
             <OnPlatform x:TypeArguments="x:Double"

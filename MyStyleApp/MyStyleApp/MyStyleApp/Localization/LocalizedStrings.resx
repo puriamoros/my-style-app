@@ -171,6 +171,12 @@
   <data name="error_number_double" xml:space="preserve">
     <value>The field "${FIELD_NAME}" must be an a number</value>
   </data>
+  <data name="error_service_price" xml:space="preserve">
+    <value>Price for service "${SERVICE_NAME}" must be a number greater than 0</value>
+  </data>
+  <data name="error_opening_hours" xml:space="preserve">
+    <value>Closing hour must be later than opening hour at "${FIELD_NAME}"</value>
+  </data>
   <data name="establishments" xml:space="preserve">
     <value>Establishments</value>
   </data>
@@ -490,10 +496,16 @@
     <value>Enter the simultaneous appointments</value>
   </data>
   <data name="hours1" xml:space="preserve">
-    <value>Hours1</value>
+    <value>Opening hours (morning)</value>
   </data>
   <data name="hours2" xml:space="preserve">
-    <value>Hours2</value>
+    <value>Opening hours (afternoon)</value>
+  </data>
+  <data name="from" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value>To</value>
   </data>
   <data name="automatic_confirm_type" xml:space="preserve">
     <value>Automatic confirmation</value>
@@ -506,5 +518,8 @@
   </data>
   <data name="done" xml:space="preserve">
     <value>Done</value>
+  </data>
+  <data name="configure" xml:space="preserve">
+    <value>Configure</value>
   </data>
 </root>

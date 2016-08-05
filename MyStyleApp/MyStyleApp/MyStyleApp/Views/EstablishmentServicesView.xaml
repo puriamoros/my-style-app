@@ -15,22 +15,32 @@
     </Grid.RowDefinitions>
     <StackLayout Grid.Row="0" Padding="{StaticResource PageContentPadding}">
 
-      <Label
-          Text="{Binding Title}"
-          Style="{StaticResource LargeTextStyle}"
-          HorizontalOptions="Center"
-          IsVisible="False"/>
+      <StackLayout Padding="0,0,0,10"
+        IsVisible="False">
+        <Label
+          Text="{Binding LocalizedStrings[offered_services]}"
+          Style="{StaticResource TitleTextStyle}"/>
+      </StackLayout>
       <StackLayout Orientation="Horizontal" Padding="5,0,5,0">
         <Entry x:Name="SearchEntry" HorizontalOptions="FillAndExpand"
           Placeholder="{Binding LocalizedStrings[search]}"
           HorizontalTextAlignment="Center"
           Text="{Binding SearchText}"/>
-        <Button x:Name="ClearButton"
-          Text="{Binding LocalizedStrings[clear]}"
-          HorizontalOptions="End"
-          IsVisible="{Binding IsClearSearchVisible}"
-          Command="{Binding ClearSearchCommand}"
-          HeightRequest="{Binding Source={x:Reference SearchEntry}, Path=Height}"/>
+        <StackLayout IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}">
+          <Button x:Name="ClearButton1"
+            Text="{Binding LocalizedStrings[clear]}"
+            HorizontalOptions="End"
+            IsVisible="{Binding IsClearSearchVisible}"
+            Command="{Binding ClearSearchCommand}"/>
+        </StackLayout>
+      <StackLayout IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!Win}">
+          <Button x:Name="ClearButton2"
+            Text="{Binding LocalizedStrings[clear]}"
+            HorizontalOptions="End"
+            IsVisible="{Binding IsClearSearchVisible}"
+            Command="{Binding ClearSearchCommand}"
+            HeightRequest="{Binding Source={x:Reference SearchEntry}, Path=Height}"/>
+        </StackLayout>
       </StackLayout>
 
       <ListView x:Name="GroupedServiceList" ItemsSource="{Binding GroupedServiceList}"
@@ -68,7 +78,7 @@
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Switch x:Name="ServiceSwitch" Grid.Column="0"
-                  IsToggled="{Binding Selected}" Style="{StaticResource SwitchStyle}"
+                  IsToggled="{Binding Selected}" Style="{StaticResource ScaledSwitchStyle}"
                   SizeChanged="OnSwitchSizeChanged"/>
 
                 <StackLayout Grid.Column="1">
@@ -110,6 +120,11 @@
     <StackLayout Grid.Row="1"
         Padding="{StaticResource BottomContainerPadding}"
         VerticalOptions="End">
+      <Label
+        Text="{Binding ErrorText}"
+        IsVisible="{Binding ErrorText, Converter={StaticResource StringToBoolConverter}}"
+        TextColor="{StaticResource ErrorColor}"
+        Style="{StaticResource SmallTextStyle}" />
       <controls:CustomButton
         Text="{Binding LocalizedStrings[done]}"
         Command="{Binding SelectionDoneCommand}"/>

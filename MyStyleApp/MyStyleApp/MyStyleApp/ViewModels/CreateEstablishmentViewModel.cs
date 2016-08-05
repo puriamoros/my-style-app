@@ -12,6 +12,7 @@ using MyStyleApp.Services.Backend;
 using MyStyleApp.Exceptions;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace MyStyleApp.ViewModels
 {
@@ -53,14 +54,24 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    Establishment establishment = null;
                     var servicesCategories = await this._serviceCategoriesService.GetServiceCategoriesAsync();
                     var services = await this._servicesService.GetServicesAsync();
 
-                    await this.PushNavPageModalAsync<EstablishmentServicesViewModel>((establishmentServicesVM) =>
+                    // There is a problem with one element of the view when showing page as modal on WinPhone
+                    if(Device.OS == TargetPlatform.Windows || Device.OS == TargetPlatform.WinPhone)
                     {
-                        establishmentServicesVM.Initialize(establishment, servicesCategories, services, this.SetShortenServicesList);
-                    });
+                        await this.PushNavPageAsync<EstablishmentServicesViewModel>((establishmentServicesVM) =>
+                        {
+                            establishmentServicesVM.Initialize(this._shortenServices, servicesCategories, services, this.SetShortenServicesList);
+                        });
+                    }
+                    else
+                    {
+                        await this.PushNavPageModalAsync<EstablishmentServicesViewModel>((establishmentServicesVM) =>
+                        {
+                            establishmentServicesVM.Initialize(this._shortenServices, servicesCategories, services, this.SetShortenServicesList);
+                        });
+                    }
                 });
         }
 
@@ -86,12 +97,12 @@ namespace MyStyleApp.ViewModels
                         IdProvince = this.SelectedProvince.Id,
                         Address = this.Address,
                         Phone = this.Phone,
-                        Hours1 = "",
-                        Hours2 = "",
+                        Hours1 = string.Format("{0}:{1}-{2}:{3}",Hours1Start.Hours, Hours1Start.Minutes, Hours1End.Hours, Hours1Start.Minutes),
+                        Hours2 = string.Format("{0}:{1}-{2}:{3}", Hours2Start.Hours, Hours2Start.Minutes, Hours2End.Hours, Hours2Start.Minutes),
                         ConfirmType = (this.AutoConfirm) ? ConfirmTypeEnum.Automatic : ConfirmTypeEnum.Manual,
                         Concurrence = int.Parse(this.Concurrence),
-                        Latitude = double.Parse(this.Latitude),
-                        Longitude = double.Parse(this.Longitude),
+                        Latitude = double.Parse(this.Latitude, CultureInfo.InvariantCulture),
+                        Longitude = double.Parse(this.Longitude, CultureInfo.InvariantCulture),
                         IdEstablishmentType = (int) this._establishmentType,
                         ShortenServices = this._shortenServices
                     };

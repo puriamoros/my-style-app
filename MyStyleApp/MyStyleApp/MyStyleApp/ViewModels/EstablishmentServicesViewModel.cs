@@ -12,6 +12,9 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Xamarin.Forms;
 using MyStyleApp.Enums;
+using System.Globalization;
+using System.Text.RegularExpressions;
+using MyStyleApp.Constants;
 
 namespace MyStyleApp.ViewModels
 {
@@ -20,8 +23,8 @@ namespace MyStyleApp.ViewModels
         private IEstablishmentsService _establishmentsService;
 
         private string _searchText;
-        private bool _isCancelSearchVisible;
-        private int _idEstablishment;
+        private string _errorText;
+        private bool _isClearSearchVisible;
         private Dictionary<int, EstablishmentTypeEnum> _establishmentTypeByServiceCategory;
         private List<Grouping<string, SelectedService>> _servicesList;
         private Action<EstablishmentTypeEnum, List<ShortenService>> _resultsAction;
@@ -44,14 +47,14 @@ namespace MyStyleApp.ViewModels
         }
 
         public void Initialize(
-            Establishment establishment,
+            IList<ShortenService> shortenServices,
             IList<ServiceCategory> serviceCategories,
             IList<Service> services,
             Action<EstablishmentTypeEnum, List<ShortenService>> resultsAction)
         {
             this._resultsAction = resultsAction;
             this.SearchText = null;
-            this.IsCancelSearchVisible = false;
+            this.IsClearSearchVisible = false;
 
             // Services of each service category: IdServiceCategory -> service list
             Dictionary<int, List<Service>> establismentServices = new Dictionary<int, List<Service>>();
@@ -66,15 +69,9 @@ namespace MyStyleApp.ViewModels
 
             // Price of each offered service: IdService -> price
             Dictionary<int, float> establismentOfferedServices = new Dictionary<int, float>();
-            if (establishment == null)
+            if (shortenServices != null)
             {
-                this._idEstablishment = 0;
-            }
-            else
-            {
-                this._idEstablishment = establishment.Id;
-
-                foreach (var shortenService in establishment.ShortenServices)
+                foreach (var shortenService in shortenServices)
                 {
                     establismentOfferedServices.Add(shortenService.Id, shortenService.Price);
                 }
@@ -97,7 +94,7 @@ namespace MyStyleApp.ViewModels
                         EstablismentType = serviceCategory.EstablishmentType,
                         Duration = service.Duration,
                         Price = servicePrice,
-                        PriceStr = (servicePrice != 0) ? servicePrice.ToString("0.00") : "",
+                        PriceStr = (servicePrice != 0) ? servicePrice.ToString("0.00").Replace(',','.') : "",
                         Selected = (servicePrice != 0),
                         IsVisible = true,
                         HeightRequest = -1,
@@ -126,6 +123,12 @@ namespace MyStyleApp.ViewModels
             set { SetProperty(ref _groupedServiceList, value); }
         }
 
+        public string ErrorText
+        {
+            get { return _errorText; }
+            set { SetProperty(ref _errorText, value); }
+        }
+
         public string SearchText
         {
             get { return _searchText; }
@@ -136,10 +139,10 @@ namespace MyStyleApp.ViewModels
             }
         }
 
-        public bool IsCancelSearchVisible
+        public bool IsClearSearchVisible
         {
-            get { return _isCancelSearchVisible; }
-            set { SetProperty(ref _isCancelSearchVisible, value); }
+            get { return _isClearSearchVisible; }
+            set { SetProperty(ref _isClearSearchVisible, value); }
         }
 
         private void OnSearchTextChanged()
@@ -147,7 +150,7 @@ namespace MyStyleApp.ViewModels
             if (this.GroupedServiceList != null && this.SearchText != null)
             {
                 var text = this.SearchText.ToLower();
-                this.IsCancelSearchVisible = text.Length > 0;
+                this.IsClearSearchVisible = text.Length > 0;
                 foreach(var grouping in this.GroupedServiceList)
                 {
                     foreach (var service in grouping)
@@ -175,44 +178,73 @@ namespace MyStyleApp.ViewModels
             {
                 this.SearchText = "";
             }
-            this.IsCancelSearchVisible = false;
+            this.IsClearSearchVisible = false;
         }
 
         private async void SelectionDone()
         {
+            this.ErrorText = "";
+
             if(this._resultsAction != null)
             {
-                EstablishmentTypeEnum establishmentType = EstablishmentTypeEnum.Unknown;
-                List<ShortenService> shortenServices = new List<ShortenService>();
-                foreach (var grouping in this._servicesList)
+                try
                 {
-                    var result =
-                        from item in grouping
-                        where item.Selected
-                        select new ShortenService()
-                        {
-                            Id = item.Id,
-                            Price = float.Parse(item.PriceStr)
-                        };
-
-                    if (result.Count() > 0)
+                    EstablishmentTypeEnum establishmentType = EstablishmentTypeEnum.Unknown;
+                    List<ShortenService> shortenServices = new List<ShortenService>();
+                    foreach (var grouping in this._servicesList)
                     {
-                        var groupEstablishmentType = this._establishmentTypeByServiceCategory[grouping[0].IdServiceCategory];
-                        if (establishmentType == EstablishmentTypeEnum.Unknown)
+                        bool hasServiceSelected = false;
+                        foreach (var service in grouping)
                         {
-                            establishmentType = groupEstablishmentType;
+                            if (service.Selected)
+                            {
+                                service.PriceStr = service.PriceStr.Replace(',', '.');
+
+                                float price;
+                                if (!float.TryParse(service.PriceStr, out price) || price <= 0)
+                                {
+                                    throw new FormatException(this.LocalizedStrings.GetString("error_service_price", "${SERVICE_NAME}", service.Name));
+                                }
+
+                                hasServiceSelected = true;
+                                var shortenService = new ShortenService()
+                                {
+                                    Id = service.Id,
+                                    Price = float.Parse(service.PriceStr, CultureInfo.InvariantCulture)
+                                };
+                                shortenServices.Add(shortenService);
+                            }
                         }
-                        else if(establishmentType != groupEstablishmentType)
+
+                        if (hasServiceSelected)
                         {
-                            establishmentType = EstablishmentTypeEnum.HairdresserAndAesthetics;
+                            var groupEstablishmentType = this._establishmentTypeByServiceCategory[grouping[0].IdServiceCategory];
+                            if (establishmentType == EstablishmentTypeEnum.Unknown)
+                            {
+                                establishmentType = groupEstablishmentType;
+                            }
+                            else if (establishmentType != groupEstablishmentType)
+                            {
+                                establishmentType = EstablishmentTypeEnum.HairdresserAndAesthetics;
+                            }
                         }
                     }
-                    shortenServices.AddRange(result);
+
+                    this._resultsAction(establishmentType, shortenServices);
+
+                    if (Device.OS == TargetPlatform.Windows || Device.OS == TargetPlatform.WinPhone)
+                    {
+                        await this.PopNavPageAsync();
+                    }
+                    else
+                    {
+                        await this.PopNavPageModalAsync();
+                    }
                 }
-
-                this._resultsAction(establishmentType, shortenServices);
-
-                await this.PopNavPageModalAsync();
+                catch (FormatException ex)
+                {
+                    this.ErrorText = ex.Message;
+                }
             }
         }
     }

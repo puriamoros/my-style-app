@@ -74,20 +74,12 @@ namespace MyStyleApp.Services.Backend
         {
             string credentials = await this.HttpService.GetApiKeyAuthorizationAsync();
 
-            // Do not create establishment with services. Create the establishment and then use the
-            // method to update the its services (UpdateEstablishmentServicesAsync)
-            IList<ShortenService> services = establishment.ShortenServices;
-            establishment.ShortenServices = null;
-
             var newEstablishment = await this.HttpService.InvokeWithContentAsync<Establishment, Establishment>(
                    HttpMethod.Post,
                    BackendConstants.ESTABLISHMENTS_URL,
                    credentials,
                    establishment,
                    null);
-
-            // Restore establishment services
-            establishment.ShortenServices = services;
 
             return newEstablishment;
         }
@@ -96,20 +88,12 @@ namespace MyStyleApp.Services.Backend
         {
             string credentials = await this.HttpService.GetApiKeyAuthorizationAsync();
 
-            // Do not update establishment services since there is another
-            // method to do that (UpdateEstablishmentServicesAsync)
-            IList<ShortenService> services = establishment.ShortenServices;
-            establishment.ShortenServices = null;
-
             await this.HttpService.InvokeWithContentAsync<Establishment>(
                    HttpMethod.Put,
                    BackendConstants.ESTABLISHMENTS_URL,
                    credentials,
                    establishment,
                    new object[] { establishment.Id });
-
-            // Restore establishment services
-            establishment.ShortenServices = services;
         }
 
         public async Task UpdateEstablishmentServicesAsync(Establishment establishment)

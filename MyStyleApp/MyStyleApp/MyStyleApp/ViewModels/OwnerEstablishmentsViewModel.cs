@@ -11,6 +11,7 @@ using MyStyleApp.Models;
 using Xamarin.Forms;
 using MyStyleApp.Services.Backend;
 using System.Collections.Specialized;
+using MyStyleApp.Enums;
 
 namespace MyStyleApp.ViewModels
 {
@@ -34,7 +35,33 @@ namespace MyStyleApp.ViewModels
 
             this._establishmentsService = establishmentsService;
 
-            this.InitializeAsync();
+            this.SubscribeToMessages();
+        }
+
+        private void SubscribeToMessages()
+        {
+            MessagingCenter.Subscribe<string>(this, "userLogin", (userType) =>
+            {
+                if (userType == UserTypeEnum.Owner.ToString())
+                {
+                    MessagingCenter.Subscribe<Establishment>(this, "establishmentModified", this.OnEstablishmentModified);
+                }
+            });
+            MessagingCenter.Subscribe<string>(this, "userLogout", (userType) =>
+            {
+                if (userType == UserTypeEnum.Owner.ToString())
+                {
+                    MessagingCenter.Unsubscribe<Establishment>(this, "establishmentModified");
+                }
+            });
+
+            // Need to subscribe on ctor as well since first userLogin message is delivered before this object is created
+            MessagingCenter.Subscribe<Establishment>(this, "establishmentModified", this.OnEstablishmentModified);
+        }
+
+        private void OnEstablishmentModified(Establishment establishment)
+        {
+
         }
 
         public async void InitializeAsync()

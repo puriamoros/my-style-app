@@ -18,11 +18,6 @@ namespace MyStyleApp.ViewModels
 {
     public class CreateEstablishmentViewModel : EstablishmentViewModelBase
     {
-        IUsersService _usersService;
-        private IEstablishmentsService _establishmentsService;
-        private IServicesService _servicesService;
-        private IServiceCategoriesService _serviceCategoriesService;
-
         public CreateEstablishmentViewModel(
             INavigator navigator,
             IUserNotificator userNotificator,
@@ -30,16 +25,12 @@ namespace MyStyleApp.ViewModels
             ProvincesService provincesService,
             ValidationService validationService,
             IUsersService usersService,
-            IEstablishmentsService establishmentsService,
             IServicesService servicesService,
-            IServiceCategoriesService serviceCategoriesService) :
-            base(navigator, userNotificator, localizedStringsService, provincesService, validationService, usersService, servicesService, serviceCategoriesService)
+            IServiceCategoriesService serviceCategoriesService,
+            IEstablishmentsService establishmentsService) :
+            base(navigator, userNotificator, localizedStringsService, provincesService, 
+                validationService, usersService, servicesService, serviceCategoriesService, establishmentsService)
         {
-            this._usersService = usersService;
-            this._establishmentsService = establishmentsService;
-            this._servicesService = servicesService;
-            this._serviceCategoriesService = serviceCategoriesService;
-
             this.Title = this.LocalizedStrings.GetString("create_establishment");
         }
 
@@ -63,34 +54,11 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    Establishment establishment = new Establishment()
-                    {
-                        IdOwner = this._usersService.LoggedUser.Id,
-                        Name = this.Name,
-                        IdProvince = this.SelectedProvince.Id,
-                        Address = this.Address,
-                        Phone = this.Phone,
-                        Hours1 = (this.Hours1Selected) ?
-                            string.Format("{0}:{1}-{2}:{3}", Hours1Start.Hours, Hours1Start.Minutes, Hours1End.Hours, Hours1Start.Minutes) :
-                            "",
-                        Hours2 = (this.Hours2Selected) ?
-                            string.Format("{0}:{1}-{2}:{3}", Hours2Start.Hours, Hours2Start.Minutes, Hours2End.Hours, Hours2Start.Minutes) :
-                            "",
-                        ConfirmType = (this.AutoConfirm) ? ConfirmTypeEnum.Automatic : ConfirmTypeEnum.Manual,
-                        Concurrence = int.Parse(this.Concurrence),
-                        Latitude = (string.IsNullOrWhiteSpace(this.Latitude)) ? 0 : 
-                            double.Parse(this.Latitude, CultureInfo.InvariantCulture),
-                        Longitude = (string.IsNullOrWhiteSpace(this.Longitude)) ? 0 : 
-                            double.Parse(this.Longitude, CultureInfo.InvariantCulture),
-                        IdEstablishmentType = (int) this._establishmentType,
-                        ShortenServices = this._shortenServices
-                    };
+                    var establishment = this.CreateEstablishmentFromData();
 
                     var newEstablishment = await this._establishmentsService.CreateEstablishmentAsync(establishment);
 
-                    this.IsBusy = false;
-
-                    // mandar mensaje a lista de establecimientos
+                    MessagingCenter.Send<Establishment>(newEstablishment, "establishmentModified");
 
                     await this.PopNavPageAsync();
                 });

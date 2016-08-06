@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System;
 using System.Collections.Generic;
 using MyStyleApp.Utils;
+using System.Globalization;
 
 namespace MyStyleApp.ViewModels
 {
@@ -27,6 +28,8 @@ namespace MyStyleApp.ViewModels
 
         private IServicesService _servicesService;
         private IServiceCategoriesService _serviceCategoriesService;
+        private IUsersService _usersService;
+        protected IEstablishmentsService _establishmentsService;
 
         public Command CreateEstablishmentCommand { get; private set; }
         public Command EditEstablishmentCommand { get; private set; }
@@ -40,7 +43,8 @@ namespace MyStyleApp.ViewModels
         private string _errorText;
         private ObservableCollection<Province> _provinceList;
         private Province _selectedProvince;
-
+        
+        protected Establishment _establishment;
         private string _name;
         private string _address;
         private string _phone;
@@ -68,13 +72,16 @@ namespace MyStyleApp.ViewModels
             ValidationService validationService,
             IUsersService usersService,
             IServicesService servicesService,
-            IServiceCategoriesService serviceCategoriesService) :
+            IServiceCategoriesService serviceCategoriesService,
+            IEstablishmentsService establishmentsService) :
             base(navigator, userNotificator, localizedStringsService)
         {
             this._provincesService = provincesService;
             this._validationService = validationService;
+            this._usersService = usersService;
             this._servicesService = servicesService;
             this._serviceCategoriesService = serviceCategoriesService;
+            this._establishmentsService = establishmentsService;
 
             this.CreateEstablishmentCommand = new Command(this.CreateEstablishmentAsync, this.CanSaveOrCreateEstablishment);            
             this.EditEstablishmentCommand = new Command(this.EditEstablishment);
@@ -89,7 +96,7 @@ namespace MyStyleApp.ViewModels
 
         protected void Initialize(Establishment establishment, BaseModeEnum mode)
         {
-            
+            this._establishment = establishment;
             this._establishmentType = EstablishmentTypeEnum.Unknown;
 
             if (establishment != null)
@@ -493,6 +500,36 @@ namespace MyStyleApp.ViewModels
                 });
         }
 
+        protected Establishment CreateEstablishmentFromData()
+        {
+            Establishment establishment = new Establishment()
+            {
+                Id = (this._establishment == null) ? 0 : this._establishment.Id,
+                IdOwner = this._usersService.LoggedUser.Id,
+                Name = this.Name,
+                IdProvince = this.SelectedProvince.Id,
+                ProvinceName = this.SelectedProvince.Name,
+                Address = this.Address,
+                Phone = this.Phone,
+                Hours1 = (this.Hours1Selected) ?
+                    string.Format("{0:00}:{1:00}-{2:00}:{3:00}", Hours1Start.Hours, Hours1Start.Minutes, Hours1End.Hours, Hours1Start.Minutes) :
+                    "",
+                Hours2 = (this.Hours2Selected) ?
+                    string.Format("{0:00}:{1:00}-{2:00}:{3:00}", Hours2Start.Hours, Hours2Start.Minutes, Hours2End.Hours, Hours2Start.Minutes) :
+                    "",
+                ConfirmType = (this.AutoConfirm) ? ConfirmTypeEnum.Automatic : ConfirmTypeEnum.Manual,
+                Concurrence = int.Parse(this.Concurrence),
+                Latitude = (string.IsNullOrWhiteSpace(this.Latitude)) ? 0 :
+                                        double.Parse(this.Latitude, CultureInfo.InvariantCulture),
+                Longitude = (string.IsNullOrWhiteSpace(this.Longitude)) ? 0 :
+                                        double.Parse(this.Longitude, CultureInfo.InvariantCulture),
+                IdEstablishmentType = (int)this._establishmentType,
+                ShortenServices = this._shortenServices
+            };
+
+            return establishment;
+        }
+        
         private bool CanSaveOrCreateEstablishment()
         {
             return !string.IsNullOrEmpty(this.Name) && !string.IsNullOrEmpty(this.Address) && !string.IsNullOrEmpty(this.Phone)

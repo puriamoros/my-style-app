@@ -17,8 +17,8 @@
         public const string SERVICE_CATEGORIES_URL = "servicecategories?lang={0}";
         public const string SERVICES_URL = "services?lang={0}";
         public const string ESTABLISHMENTS_URL = "establishments";
+        public const string ESTABLISHMENT_URL = "establishments/{0}";
         public const string GET_ESTABLISHMENTS_URL = "establishments?idProvince={0}&idService={1}&idClient={2}";
-        public const string GET_ESTABLISHMENT_URL = "establishments/{0}";
         public const string GET_OWNER_ESTABLISHMENTS_URL = "establishments?idOwner={0}";
         public const string ESTABLISHMENT_SERVICES_URL = "establishments/{0}/services";
         public const string GET_FAVOURITES_URL = "favourites?idClient={0}";

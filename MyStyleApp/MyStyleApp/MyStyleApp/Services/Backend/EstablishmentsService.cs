@@ -48,7 +48,7 @@ namespace MyStyleApp.Services.Backend
 
            Establishment establishment = await this.HttpService.InvokeAsync<Establishment>(
                    HttpMethod.Get,
-                   BackendConstants.GET_ESTABLISHMENT_URL,
+                   BackendConstants.ESTABLISHMENT_URL,
                    credentials,
                    new object[] { id });
 
@@ -90,7 +90,7 @@ namespace MyStyleApp.Services.Backend
 
             await this.HttpService.InvokeWithContentAsync<Establishment>(
                    HttpMethod.Put,
-                   BackendConstants.ESTABLISHMENTS_URL,
+                   BackendConstants.ESTABLISHMENT_URL,
                    credentials,
                    establishment,
                    new object[] { establishment.Id });

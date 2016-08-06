@@ -16,7 +16,7 @@ namespace MyStyleApp.Services.Backend
         Task UpdatePlatformAsync(UserPlatform userPlatform);
         Task<User> GetUserAsync(int idUser);
 
-        Task<IList<Staff>> GetStaffAsync(Establishment establishment);
+        Task<List<Staff>> GetStaffAsync(Establishment establishment);
         Task UpdateStaffAsync(Staff staff);
         Task<Staff> CreateStaffAsync(Staff staff);
         Task DeleteStaffAsync(Staff staff);

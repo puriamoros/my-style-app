@@ -6,6 +6,6 @@ namespace MyStyleApp.Services.Backend
 {
     public interface IServicesService
     {
-        Task<IList<Service>> GetServicesAsync();
+        Task<List<Service>> GetServicesAsync();
     }
 }

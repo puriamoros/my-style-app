@@ -71,9 +71,9 @@ namespace MyStyleApp.Services.Backend.Mocks
             return user;
         }
 
-        public async Task<IList<Staff>> GetStaffAsync(Establishment establishment)
+        public async Task<List<Staff>> GetStaffAsync(Establishment establishment)
         {
-            IList<Staff> listStaff = new List<Staff>();
+            List<Staff> listStaff = new List<Staff>();
 
             listStaff.Add(new Staff()
             {

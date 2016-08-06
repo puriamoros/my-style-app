@@ -7,7 +7,7 @@ namespace MyStyleApp.Services
     public class ValidationService
     {
         private LocalizedStringsService _localizedStrings;
-        private IList<IValidator> _validators;
+        private List<IValidator> _validators;
 
         public ValidationService(LocalizedStringsService localizedStrings)
         {

@@ -49,7 +49,7 @@ namespace MyStyleApp.Models
         public double Longitude { get; set; }
 
         [JsonProperty(Required = Required.Default, PropertyName = "services")]
-        public IList<ShortenService> ShortenServices { get; set; }
+        public List<ShortenService> ShortenServices { get; set; }
 
         [JsonIgnore]
         public string ProvinceName { get; set; }

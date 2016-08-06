@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using MyStyleApp.Utils;
 using System.Globalization;
+using System.Threading.Tasks;
 
 namespace MyStyleApp.ViewModels
 {
@@ -59,7 +60,7 @@ namespace MyStyleApp.ViewModels
         private bool _hours1Selected;
         private bool _hours2Selected;
 
-        protected IList<ShortenService> _shortenServices;
+        protected List<ShortenService> _shortenServices;
         protected EstablishmentTypeEnum _establishmentType;
 
         private BaseModeEnum _mode;
@@ -94,7 +95,7 @@ namespace MyStyleApp.ViewModels
             this.Mode = BaseModeEnum.View;           
         }
 
-        protected void Initialize(Establishment establishment, BaseModeEnum mode)
+        protected async void InitializeAsync(Establishment establishment, BaseModeEnum mode)
         {
             this._establishment = establishment;
             this._establishmentType = EstablishmentTypeEnum.Unknown;
@@ -151,20 +152,21 @@ namespace MyStyleApp.ViewModels
                 this.Latitude = "";
                 this.Longitude = "";
                 this.SelectedProvince = null;
-                //this.Name = "aaa";
-                //this.Address = "bbb";
-                //this.Phone = "123456789";
-                //this.Hours1 = establishment.Hours1;
-                //this.Hours2 = establishment.Hours2;
-                //this.AutoConfirm = false;
-                //this.Concurrence = "4";
-                //this.Latitude = "3.6";
-                //this.Longitude = "2.5";
                 this._shortenServices = null;
             }
             this.ErrorText = "";
 
-            this.Mode = mode;
+            if(Device.OS == TargetPlatform.Android && mode == BaseModeEnum.View)
+            {
+                // Hack to solve an strange behaviour with CheckBoxImage on Android
+                this.Mode = BaseModeEnum.Edit;
+                await Task.Delay(100);
+                this.Mode = BaseModeEnum.View;
+            }
+            else
+            {
+                this.Mode = mode;
+            }
         }
 
         private TimeSpan[] GetOpeningHours(string hours)
@@ -508,7 +510,6 @@ namespace MyStyleApp.ViewModels
                 IdOwner = this._usersService.LoggedUser.Id,
                 Name = this.Name,
                 IdProvince = this.SelectedProvince.Id,
-                ProvinceName = this.SelectedProvince.Name,
                 Address = this.Address,
                 Phone = this.Phone,
                 Hours1 = (this.Hours1Selected) ?

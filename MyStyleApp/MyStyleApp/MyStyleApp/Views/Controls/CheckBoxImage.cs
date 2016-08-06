@@ -15,6 +15,7 @@ namespace MyStyleApp.Views.Controls
         public CheckBoxImage()
         {
             this._initialized = false;
+            this.Aspect = Aspect.AspectFit;
 
             this.GestureRecognizers.Add(
                 new TapGestureRecognizer()

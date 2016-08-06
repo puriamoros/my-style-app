@@ -31,7 +31,7 @@ namespace MyStyleApp.Services.Backend
             }
         }
 
-        public IList<EstablishmentType> GetEstablishmentTypes()
+        public List<EstablishmentType> GetEstablishmentTypes()
         {
             return this._establismentTypeList;
         }

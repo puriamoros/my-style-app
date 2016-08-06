@@ -30,7 +30,7 @@ namespace MyStyleApp.Services.Backend
             }
         }
 
-        public IList<Province> GetProvinces()
+        public List<Province> GetProvinces()
         {
             return this._provinceList;
         }

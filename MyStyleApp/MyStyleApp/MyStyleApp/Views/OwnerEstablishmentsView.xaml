@@ -62,6 +62,9 @@
                 <MenuItem Text="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.LocalizedStrings[view_details]}"
                   Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.ViewDetailsCommand}"
                   CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
+                <MenuItem Text="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.LocalizedStrings[view_details]}"
+                  Command="{Binding Source={x:Reference EstablishmentsList}, Path=BindingContext.ViewDetailsCommand}"
+                  CommandParameter="{Binding Source={x:Reference Establishment}, Path=BindingContext}" />
               </ViewCell.ContextActions>
             </ViewCell>
           </DataTemplate>

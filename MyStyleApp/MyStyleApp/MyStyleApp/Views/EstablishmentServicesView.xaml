@@ -118,7 +118,7 @@
       </ListView>
     </StackLayout>
     <StackLayout Grid.Row="1"
-        Padding="{StaticResource BottomContainerPadding}"
+        Padding="{StaticResource PageContentEndPadding}"
         VerticalOptions="End">
       <Label
         Text="{Binding ErrorText}"

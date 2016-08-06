@@ -36,7 +36,7 @@ namespace MyStyleApp.ViewModels
 
         public void Initialize(Establishment establishment)
         {
-            base.Initialize(establishment, BaseModeEnum.View);
+            base.InitializeAsync(establishment, BaseModeEnum.View);
         }
 
         protected override async void SaveEstablishmentAsync()
@@ -57,6 +57,7 @@ namespace MyStyleApp.ViewModels
 
                     await this._establishmentsService.UpdateEstablishmentAsync(establishment);
 
+                    establishment.ProvinceName = SelectedProvince.Name;
                     MessagingCenter.Send<Establishment>(establishment, "establishmentModified");
 
                     await this.PopNavPageAsync();

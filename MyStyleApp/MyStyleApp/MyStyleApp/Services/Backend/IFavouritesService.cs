@@ -9,7 +9,7 @@ namespace MyStyleApp.Services.Backend
 {
     public interface IFavouritesService
     {
-        Task<IList<Establishment>> GetFavouritesAsync();
+        Task<List<Establishment>> GetFavouritesAsync();
         Task<Establishment> AddFavouriteAsync(Establishment favourite);
         Task DeleteFavouriteAsync(Establishment favourite);
     }

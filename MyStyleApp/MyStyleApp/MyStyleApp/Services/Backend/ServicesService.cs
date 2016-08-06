@@ -12,7 +12,7 @@ namespace MyStyleApp.Services.Backend
         private const string LANGUAGE_CODE_TOKEN = "language_code";
         private DateTime _lastUpdate;
         private string _lastLanguaje;
-        private IList<Service> _serviceList;
+        private List<Service> _serviceList;
         private LocalizedStringsService _localizedStrings;
 
         public ServicesService(
@@ -23,7 +23,7 @@ namespace MyStyleApp.Services.Backend
             this._localizedStrings = localizedStrings;
         }
 
-        public async Task<IList<Service>> GetServicesAsync()
+        public async Task<List<Service>> GetServicesAsync()
         {
             // Check if there is a better way to get the current app language (without using LocalizedStringsService)
             string language = this._localizedStrings.GetString(LANGUAGE_CODE_TOKEN);
@@ -33,7 +33,7 @@ namespace MyStyleApp.Services.Backend
             {
                 string credentials = await this.HttpService.GetApiKeyAuthorizationAsync();
 
-                this._serviceList = await this.HttpService.InvokeAsync<IList<Service>>(
+                this._serviceList = await this.HttpService.InvokeAsync<List<Service>>(
                     HttpMethod.Get,
                     BackendConstants.SERVICES_URL,
                     credentials,

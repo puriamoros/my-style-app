@@ -47,9 +47,9 @@ namespace MyStyleApp.ViewModels
         }
 
         public void Initialize(
-            IList<ShortenService> shortenServices,
-            IList<ServiceCategory> serviceCategories,
-            IList<Service> services,
+            List<ShortenService> shortenServices,
+            List<ServiceCategory> serviceCategories,
+            List<Service> services,
             Action<EstablishmentTypeEnum, List<ShortenService>> resultsAction)
         {
             this._resultsAction = resultsAction;

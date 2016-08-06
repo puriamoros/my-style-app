@@ -7,6 +7,6 @@ namespace MyStyleApp.Models
     public class ShortenServiceListContainer
     {
         [JsonProperty(Required = Required.Default, PropertyName = "services")]
-        public IList<ShortenService> ShortenServices { get; set; }
+        public List<ShortenService> ShortenServices { get; set; }
     }
 }

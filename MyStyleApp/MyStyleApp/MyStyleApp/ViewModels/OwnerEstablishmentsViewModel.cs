@@ -61,7 +61,33 @@ namespace MyStyleApp.ViewModels
 
         private void OnEstablishmentModified(Establishment establishment)
         {
+            var establishments = from item in this.EstablishmentsList
+                                 where item.Id == establishment.Id
+                                 select item;
 
+            if (establishments.Count() > 0)
+            {
+                // Replace modified establishment
+                this.EstablishmentsList.Remove(establishments.ElementAt(0));
+                this.EstablishmentsList.Add(establishment);
+            }
+            else
+            {
+                // Add new establishment
+                this.EstablishmentsList.Add(establishment);
+            }
+
+            this.RefreshEstablishmentList();
+        }
+
+        private void RefreshEstablishmentList()
+        {
+            var establishments = new List<Establishment>(this.EstablishmentsList);
+            establishments.Sort((one, other) =>
+            {
+                return one.Name.CompareTo(other.Name);
+            });
+            this.EstablishmentsList = new ObservableCollection<Establishment>(establishments);
         }
 
         public async void InitializeAsync()
@@ -70,7 +96,10 @@ namespace MyStyleApp.ViewModels
                 async () =>
                 {
                     var establishments = await this._establishmentsService.GetOwnerEstablishmentsAsync();
-                    
+                    establishments.Sort((one, other) =>
+                    {
+                        return one.Name.CompareTo(other.Name);
+                    });
                     this.EstablishmentsList = new ObservableCollection<Establishment> (establishments);
                 });
 
@@ -84,8 +113,7 @@ namespace MyStyleApp.ViewModels
 
         private async void ViewDetailsAsync(Establishment establishment)
         {
-            await this.ExecuteBlockingUIAsync(
-(Func<Task>)(async () =>
+            await this.ExecuteBlockingUIAsync(async () =>
                 {
                     // Get establishment details from BE
                     var establishmentDetails = await this._establishmentsService.GetEstablishmentAsync(establishment.Id);
@@ -94,7 +122,7 @@ namespace MyStyleApp.ViewModels
                     {
                         ownerEstablishmentDetailsVM.Initialize(establishmentDetails);
                     });
-                }));
+                });
         }
 
         private async void NewEstablishmentAsync()

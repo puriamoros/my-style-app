@@ -24,11 +24,11 @@ namespace MyStyleApp.Services.Backend
             this._userService = userService;
         }
 
-        public async Task<IList<Establishment>> SearchEstablishmentsAsync(Province province, Service service)
+        public async Task<List<Establishment>> SearchEstablishmentsAsync(Province province, Service service)
         {
             string credentials = await this.HttpService.GetApiKeyAuthorizationAsync();
 
-            IList<Establishment> list = await this.HttpService.InvokeAsync<IList<Establishment>>(
+            List<Establishment> list = await this.HttpService.InvokeAsync<List<Establishment>>(
                    HttpMethod.Get,
                    BackendConstants.GET_ESTABLISHMENTS_URL,
                    credentials,
@@ -57,11 +57,11 @@ namespace MyStyleApp.Services.Backend
             return establishment;
         }
 
-        public async Task<IList<Establishment>> GetOwnerEstablishmentsAsync()
+        public async Task<List<Establishment>> GetOwnerEstablishmentsAsync()
         {
             string credentials = await this.HttpService.GetApiKeyAuthorizationAsync();
 
-            IList<Establishment> list = await this.HttpService.InvokeAsync<IList<Establishment>>(
+            List<Establishment> list = await this.HttpService.InvokeAsync<List<Establishment>>(
                    HttpMethod.Get,
                    BackendConstants.GET_OWNER_ESTABLISHMENTS_URL,
                    credentials,

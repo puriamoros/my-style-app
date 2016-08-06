@@ -169,11 +169,11 @@ namespace MyStyleApp.Services.Backend
             return user;
         }
 
-        public async Task<IList<Staff>> GetStaffAsync(Establishment establishment)
+        public async Task<List<Staff>> GetStaffAsync(Establishment establishment)
         {
             string authorization = await this.HttpService.GetApiKeyAuthorizationAsync();
 
-            IList<Staff> staffList = await this.HttpService.InvokeAsync<IList<Staff>>(
+            List<Staff> staffList = await this.HttpService.InvokeAsync<List<Staff>>(
                     HttpMethod.Get,
                     BackendConstants.GET_STAFF_URL,
                     authorization,

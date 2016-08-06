@@ -90,7 +90,7 @@
             Keyboard="Numeric"
             IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}" />
         </StackLayout>
-               
+        
         <StackLayout Spacing="5">
           <StackLayout Spacing="0" Orientation="Horizontal">
             <controls:CheckBoxImage CheckedSource="CheckedCheckbox.png"
@@ -187,10 +187,10 @@
             IsVisible="{Binding ErrorText, Converter={StaticResource StringToBoolConverter}}"
             TextColor="{StaticResource ErrorColor}"
             Style="{StaticResource SmallTextStyle}" />
-        </StackLayout>
+        </StackLayout> 
       </StackLayout>
       
-      <StackLayout Grid.Row="1"
+       <StackLayout Grid.Row="1"
         Padding="{StaticResource PageContentEndPadding}"
         Spacing="5"
         VerticalOptions="End">

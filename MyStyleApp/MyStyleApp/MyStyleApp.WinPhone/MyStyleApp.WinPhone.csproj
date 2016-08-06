@@ -110,9 +110,11 @@
     <Content Include="Assets\WideLogo.scale-240.png" />
     <Content Include="Calendar.png" />
     <Content Include="Cancelled.png" />
+    <Content Include="CheckedCheckbox.png" />
     <Content Include="Email.png" />
     <Content Include="Establishment.png" />
     <Content Include="Phone.png" />
+    <Content Include="UncheckedCheckbox.png" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Client.png" />
     <Content Include="Mirror.png" />

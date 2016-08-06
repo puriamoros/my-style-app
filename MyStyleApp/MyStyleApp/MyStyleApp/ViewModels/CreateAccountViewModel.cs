@@ -36,6 +36,9 @@ namespace MyStyleApp.ViewModels
 
         protected override void ConfigureValidationService()
         {
+            this.Password = this.Password.Trim();
+            this.RepeatPassword = this.RepeatPassword.Trim();
+
             base.ConfigureValidationService();
 
             // Password

@@ -21,7 +21,10 @@ namespace MyStyleApp.Views.Controls
                 {
                     Command = new Command((o) =>
                     {
-                        this.IsChecked = !this.IsChecked;
+                        if(this.IsEnabled)
+                        {
+                            this.IsChecked = !this.IsChecked;
+                        }
                     })
                 });
         }
@@ -41,15 +44,6 @@ namespace MyStyleApp.Views.Controls
                     this._initialized = true;
                 }
             }
-        }
-
-        public static readonly BindableProperty NameProperty =
-            BindableProperty.Create("Name", typeof(string), typeof(CheckBoxImage), "");
-
-        public string Name
-        {
-            get { return (string)GetValue(NameProperty); }
-            set { SetValue(NameProperty, value); }
         }
 
         public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(

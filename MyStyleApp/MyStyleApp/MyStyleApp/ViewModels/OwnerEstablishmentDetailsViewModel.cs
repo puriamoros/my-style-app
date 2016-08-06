@@ -16,14 +16,14 @@ using System.Globalization;
 
 namespace MyStyleApp.ViewModels
 {
-    public class CreateEstablishmentViewModel : EstablishmentViewModelBase
+    public class OwnerEstablishmentDetailsViewModel : EstablishmentViewModelBase
     {
         IUsersService _usersService;
         private IEstablishmentsService _establishmentsService;
         private IServicesService _servicesService;
         private IServiceCategoriesService _serviceCategoriesService;
 
-        public CreateEstablishmentViewModel(
+        public OwnerEstablishmentDetailsViewModel(
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
@@ -43,13 +43,12 @@ namespace MyStyleApp.ViewModels
             this.Title = this.LocalizedStrings.GetString("create_establishment");
         }
 
-        public void Initialize()
+        public void Initialize(Establishment establishment)
         {
-            base.Initialize(null, BaseModeEnum.Create);
-            this.SelectedProvince = null;
+            base.Initialize(establishment, BaseModeEnum.View);
         }
 
-        protected override async void CreateEstablishmentAsync()
+        protected override async void SaveEstablishmentAsync()
         {
             string validationError = this.GetValidationError();
             if (validationError != null)
@@ -70,23 +69,17 @@ namespace MyStyleApp.ViewModels
                         IdProvince = this.SelectedProvince.Id,
                         Address = this.Address,
                         Phone = this.Phone,
-                        Hours1 = (this.Hours1Selected) ?
-                            string.Format("{0}:{1}-{2}:{3}", Hours1Start.Hours, Hours1Start.Minutes, Hours1End.Hours, Hours1Start.Minutes) :
-                            "",
-                        Hours2 = (this.Hours2Selected) ?
-                            string.Format("{0}:{1}-{2}:{3}", Hours2Start.Hours, Hours2Start.Minutes, Hours2End.Hours, Hours2Start.Minutes) :
-                            "",
+                        Hours1 = string.Format("{0}:{1}-{2}:{3}",Hours1Start.Hours, Hours1Start.Minutes, Hours1End.Hours, Hours1Start.Minutes),
+                        Hours2 = string.Format("{0}:{1}-{2}:{3}", Hours2Start.Hours, Hours2Start.Minutes, Hours2End.Hours, Hours2Start.Minutes),
                         ConfirmType = (this.AutoConfirm) ? ConfirmTypeEnum.Automatic : ConfirmTypeEnum.Manual,
                         Concurrence = int.Parse(this.Concurrence),
-                        Latitude = (string.IsNullOrWhiteSpace(this.Latitude)) ? 0 : 
-                            double.Parse(this.Latitude, CultureInfo.InvariantCulture),
-                        Longitude = (string.IsNullOrWhiteSpace(this.Longitude)) ? 0 : 
-                            double.Parse(this.Longitude, CultureInfo.InvariantCulture),
+                        Latitude = double.Parse(this.Latitude, CultureInfo.InvariantCulture),
+                        Longitude = double.Parse(this.Longitude, CultureInfo.InvariantCulture),
                         IdEstablishmentType = (int) this._establishmentType,
                         ShortenServices = this._shortenServices
                     };
 
-                    var newEstablishment = await this._establishmentsService.CreateEstablishmentAsync(establishment);
+                    await this._establishmentsService.UpdateEstablishmentAsync(establishment);
 
                     this.IsBusy = false;
 
@@ -94,6 +87,17 @@ namespace MyStyleApp.ViewModels
 
                     await this.PopNavPageAsync();
                 });
+        }
+
+        protected override void EditEstablishment()
+        {
+            this.Mode = BaseModeEnum.Edit;
+        }
+
+        protected override void Cancel()
+        {
+            //this.Initialize(this.);
+            this.Mode = BaseModeEnum.View;
         }
 
     }

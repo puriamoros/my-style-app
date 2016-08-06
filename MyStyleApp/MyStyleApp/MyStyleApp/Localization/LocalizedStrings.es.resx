@@ -522,4 +522,7 @@
   <data name="configure" xml:space="preserve">
     <value>Configurar</value>
   </data>
+  <data name="updated_establishment" xml:space="preserve">
+    <value>Establecimiento actualizado</value>
+  </data>
 </root>

@@ -15,7 +15,7 @@
       </Grid.RowDefinitions>
       <StackLayout Grid.Row="0"
         Padding="{StaticResource PageContentPadding}"
-        Spacing="15">
+        Spacing="20">
         <StackLayout Spacing="0"
           IsVisible="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=Create}">
           <Label
@@ -54,7 +54,8 @@
             ItemsSource="{Binding ProvinceList}"
             DisplayProperty="Name"
             SelectedItem="{Binding SelectedProvince}"
-            Title="{Binding ChooseItemPlaceholder}"/>
+            Title="{Binding ChooseItemPlaceholder}"
+            IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
         </StackLayout>
         
         <StackLayout Spacing="0">
@@ -90,47 +91,55 @@
             IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}" />
         </StackLayout>
                
-        <StackLayout Spacing="0">
-          <Label
-            Text="{Binding LocalizedStrings[hours1]}"
-            Style="{StaticResource MediumTextStyle}" />
-          <StackLayout Spacing="15" Padding="15,0,0,0" Orientation="Horizontal">
+        <StackLayout Spacing="5">
+          <StackLayout Spacing="0" Orientation="Horizontal">
+            <controls:CheckBoxImage CheckedSource="CheckedCheckbox.png"
+                UncheckedSource="UncheckedCheckbox.png"
+                IsChecked="{Binding Hours1Selected}"
+                HeightRequest="{Binding Source={x:Reference Concurrence}, Path=Height}"
+                WidthRequest="{Binding Source={x:Reference Concurrence}, Path=Height}" 
+                IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
+            <Label VerticalTextAlignment="Center"
+              Text="{Binding LocalizedStrings[hours1]}"
+              Style="{StaticResource MediumTextStyle}" />
+          </StackLayout>
+          <StackLayout Spacing="0" Orientation="Horizontal"
+            IsVisible="{Binding Hours1Selected}">
             <StackLayout Spacing="5" Orientation="Horizontal">
-              <Label VerticalTextAlignment="Center"
-                Text="{Binding LocalizedStrings[from], StringFormat='{0}:'}"
-                Style="{StaticResource SmallTextStyle}" />
               <TimePicker HorizontalOptions="FillAndExpand"
                 Time="{Binding Hours1Start, Mode=TwoWay}"
                 IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
-            </StackLayout>
-            <StackLayout Spacing="5" Orientation="Horizontal">
               <Label VerticalTextAlignment="Center"
-                Text="{Binding LocalizedStrings[to], StringFormat='{0}:'}"
-                Style="{StaticResource SmallTextStyle}" />
+                Text="-"
+                Style="{StaticResource LargeTextStyle}" />
               <TimePicker HorizontalOptions="FillAndExpand"
                 Time="{Binding Hours1End, Mode=TwoWay}"
                 IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
             </StackLayout>
           </StackLayout>
         </StackLayout>
-        
-        <StackLayout Spacing="0">
-          <Label
-            Text="{Binding LocalizedStrings[hours2]}"
-            Style="{StaticResource MediumTextStyle}" />
-          <StackLayout Spacing="15" Padding="15,0,0,0" Orientation="Horizontal">
+
+        <StackLayout Spacing="5">
+          <StackLayout Spacing="0" Orientation="Horizontal">
+            <controls:CheckBoxImage CheckedSource="CheckedCheckbox.png" 
+                UncheckedSource="UncheckedCheckbox.png" 
+                IsChecked="{Binding Hours2Selected}"
+                HeightRequest="{Binding Source={x:Reference Concurrence}, Path=Height}"
+                WidthRequest="{Binding Source={x:Reference Concurrence}, Path=Height}"
+                IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
+            <Label VerticalTextAlignment="Center"
+              Text="{Binding LocalizedStrings[hours2]}"
+              Style="{StaticResource MediumTextStyle}" />
+          </StackLayout>
+          <StackLayout Spacing="0" Orientation="Horizontal"
+            IsVisible="{Binding Hours2Selected}">
             <StackLayout Spacing="5" Orientation="Horizontal">
-              <Label VerticalTextAlignment="Center"
-                Text="{Binding LocalizedStrings[from], StringFormat='{0}:'}"
-                Style="{StaticResource SmallTextStyle}" />
               <TimePicker HorizontalOptions="FillAndExpand"
                 Time="{Binding Hours2Start, Mode=TwoWay}"
                 IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
-            </StackLayout>
-            <StackLayout Spacing="5" Orientation="Horizontal">
               <Label VerticalTextAlignment="Center"
-                Text="{Binding LocalizedStrings[to], StringFormat='{0}:'}"
-                Style="{StaticResource SmallTextStyle}" />
+                Text="-"
+                Style="{StaticResource LargeTextStyle}" />
               <TimePicker HorizontalOptions="FillAndExpand"
                 Time="{Binding Hours2End, Mode=TwoWay}"
                 IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
@@ -168,7 +177,8 @@
             Text="{Binding LocalizedStrings[configure], StringFormat='{0}...'}"
             Command="{Binding OfferedServicesCommand}"
             HorizontalOptions="FillAndExpand"
-            IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>
+            IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"
+            IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}" />
         </StackLayout>
         
         <StackLayout>

@@ -29,7 +29,7 @@ namespace MyStyleApp.ViewModels
             IEstablishmentsService establishmentsService) : 
             base(navigator, userNotificator, localizedStringsService)
         {
-            //this.ViewDetailsCommand = new Command<Establishment>(this.ViewDetailsAsync);
+            this.ViewDetailsCommand = new Command<Establishment>(this.ViewDetailsAsync);
             this.NewEstablishmentCommand = new Command(this.NewEstablishmentAsync);
 
             this._establishmentsService = establishmentsService;
@@ -57,16 +57,17 @@ namespace MyStyleApp.ViewModels
 
         private async void ViewDetailsAsync(Establishment establishment)
         {
-            //await this.ExecuteBlockingUIAsync(
-            //    async () =>
-            //    {
-            //        //await this.PushNavPageAsync<EstablishmentDetailsViewModel>(async (myEstablishmentDetailsVM) =>
-            //        //{
-            //        //    // Get establishment details from BE
-            //        //    var myEstablishmentDetails = await this._establishmentsService.GetEstablishmentAsync(establishment.Id);
-            //        //}
-            //        //);
-            //    });
+            await this.ExecuteBlockingUIAsync(
+(Func<Task>)(async () =>
+                {
+                    // Get establishment details from BE
+                    var establishmentDetails = await this._establishmentsService.GetEstablishmentAsync(establishment.Id);
+    
+                    await this.PushNavPageAsync<OwnerEstablishmentDetailsViewModel>((ownerEstablishmentDetailsVM) =>
+                    {
+                        ownerEstablishmentDetailsVM.Initialize(establishmentDetails);
+                    });
+                }));
         }
 
         private async void NewEstablishmentAsync()

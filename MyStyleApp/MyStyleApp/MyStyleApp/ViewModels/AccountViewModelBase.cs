@@ -239,7 +239,8 @@ namespace MyStyleApp.ViewModels
             this._validationService.AddValidator(
                 new LengthValidator(this.Surname, STRING_SURNAME, 2, 100));
 
-            // Phone 
+            // Phone
+            this.Phone = this.Phone.Trim();
             this._validationService.AddValidator(
                 new RequiredValidator(this.Phone, STRING_PHONE));
             this._validationService.AddValidator(
@@ -254,6 +255,7 @@ namespace MyStyleApp.ViewModels
                     "error_invalid_field", STRING_PHONE));
 
             // Email
+            this.Email = this.Email.Trim();
             this._validationService.AddValidator(
                 new RequiredValidator(this.Email, STRING_EMAIL));
             this._validationService.AddValidator(
@@ -266,6 +268,7 @@ namespace MyStyleApp.ViewModels
                     "error_invalid_field", STRING_EMAIL));
 
             // RepeatEmail
+            this.RepeatEmail = this.RepeatEmail.Trim();
             this._validationService.AddValidator(
                 new RequiredValidator(this.RepeatEmail, STRING_EMAIL));
             this._validationService.AddValidator(

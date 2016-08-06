@@ -1178,6 +1178,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Updated establishment.
+        /// </summary>
+        internal static string updated_establishment {
+            get {
+                return ResourceManager.GetString("updated_establishment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User type.
         /// </summary>
         internal static string user_type {

@@ -2,7 +2,7 @@
 using MvvmCore;
 using MyStyleApp.Validators;
 using MyStyleApp.Constants;
-using System.Windows.Input;
+using System.Linq;
 using Xamarin.Forms;
 using MyStyleApp.Enums;
 using MyStyleApp.Models;
@@ -24,6 +24,9 @@ namespace MyStyleApp.ViewModels
         //private const string STRING_HOURS2 = "hours2";
         private const string STRING_LATITUDE = "latitude";
         private const string STRING_LONGITUDE = "longitude";
+
+        private IServicesService _servicesService;
+        private IServiceCategoriesService _serviceCategoriesService;
 
         public Command CreateEstablishmentCommand { get; private set; }
         public Command EditEstablishmentCommand { get; private set; }
@@ -49,8 +52,10 @@ namespace MyStyleApp.ViewModels
         private string _latitude;
         private string _longitude;
         private bool _autoConfirm;
+        private bool _hours1Selected;
+        private bool _hours2Selected;
 
-        protected List<ShortenService> _shortenServices;
+        protected IList<ShortenService> _shortenServices;
         protected EstablishmentTypeEnum _establishmentType;
 
         private BaseModeEnum _mode;
@@ -61,11 +66,15 @@ namespace MyStyleApp.ViewModels
             LocalizedStringsService localizedStringsService,
             ProvincesService provincesService,
             ValidationService validationService,
-            IUsersService usersService) :
+            IUsersService usersService,
+            IServicesService servicesService,
+            IServiceCategoriesService serviceCategoriesService) :
             base(navigator, userNotificator, localizedStringsService)
         {
             this._provincesService = provincesService;
             this._validationService = validationService;
+            this._servicesService = servicesService;
+            this._serviceCategoriesService = serviceCategoriesService;
 
             this.CreateEstablishmentCommand = new Command(this.CreateEstablishmentAsync, this.CanSaveOrCreateEstablishment);            
             this.EditEstablishmentCommand = new Command(this.EditEstablishment);
@@ -80,7 +89,7 @@ namespace MyStyleApp.ViewModels
 
         protected void Initialize(Establishment establishment, BaseModeEnum mode)
         {
-            this._shortenServices = null;
+            
             this._establishmentType = EstablishmentTypeEnum.Unknown;
 
             if (establishment != null)
@@ -88,37 +97,102 @@ namespace MyStyleApp.ViewModels
                 this.Name = establishment.Name;
                 this.Address = establishment.Address;
                 this.Phone = establishment.Phone;
-                //this.Hours1 = establishment.Hours1;
-                //this.Hours2 = establishment.Hours2;
+
+                this.Hours1Selected = !string.IsNullOrEmpty(establishment.Hours1);
+                var openingHours = this.GetOpeningHours(establishment.Hours1);
+                this.Hours1Start = openingHours[0];
+                this.Hours1End = openingHours[1];
+
+                this.Hours2Selected = !string.IsNullOrEmpty(establishment.Hours2);
+                openingHours = this.GetOpeningHours(establishment.Hours2);
+                this.Hours2Start = openingHours[0];
+                this.Hours2End = openingHours[1];
+
                 this.AutoConfirm = (establishment.ConfirmType == ConfirmTypeEnum.Automatic);
                 this.Concurrence = establishment.Concurrence.ToString();
                 this.Latitude = establishment.Latitude.ToString();
                 this.Longitude = establishment.Longitude.ToString();
+
+                var result = from item in this.ProvinceList
+                             where item.Id == establishment.IdProvince
+                             select item;
+
+                if(result.Count() > 0)
+                {
+                    this.SelectedProvince = result.ElementAt(0);
+                }  
+                else
+                {
+                    this.SelectedProvince = null;
+                }
+
+                this._shortenServices = establishment.ShortenServices;      
              }
             else
             {
-                /*this.Name = "";
+                this.Name = "";
                 this.Address = "";
                 this.Phone = "";
-                //this.Hours1 = establishment.Hours1;
-                //this.Hours2 = establishment.Hours2;
+                this.Hours1Selected = false;
+                this.Hours1Start = new TimeSpan();
+                this.Hours1End = new TimeSpan();
+                this.Hours2Selected = false;
+                this.Hours2Start = new TimeSpan();
+                this.Hours2End = new TimeSpan();
                 this.AutoConfirm = false;
                 this.Concurrence = "";
                 this.Latitude = "";
-                this.Longitude = "";*/
-                this.Name = "aaa";
-                this.Address = "bbb";
-                this.Phone = "123456789";
+                this.Longitude = "";
+                this.SelectedProvince = null;
+                //this.Name = "aaa";
+                //this.Address = "bbb";
+                //this.Phone = "123456789";
                 //this.Hours1 = establishment.Hours1;
                 //this.Hours2 = establishment.Hours2;
-                this.AutoConfirm = false;
-                this.Concurrence = "4";
-                this.Latitude = "3.6";
-                this.Longitude = "2.5";
+                //this.AutoConfirm = false;
+                //this.Concurrence = "4";
+                //this.Latitude = "3.6";
+                //this.Longitude = "2.5";
+                this._shortenServices = null;
             }
             this.ErrorText = "";
 
             this.Mode = mode;
+        }
+
+        private TimeSpan[] GetOpeningHours(string hours)
+        {
+            TimeSpan[] hoursTs = new TimeSpan[2];
+            hoursTs[0] = new TimeSpan();
+            hoursTs[1] = new TimeSpan();
+
+            string [] openingHours = hours.Split(new char[] { '-' });
+            if(openingHours.Length == 2)
+            {
+                string openingStart = openingHours[0];
+                string openingEnd = openingHours[1];
+
+                hoursTs[0] = GetOpeningHour(openingStart);
+                hoursTs[1] = GetOpeningHour(openingEnd);
+            }
+
+            return hoursTs;
+        }
+
+        private TimeSpan GetOpeningHour(string hour)
+        {
+            TimeSpan hourTs;
+
+            string[] openingHour = hour.Split(new char[] { ':' });
+            if (openingHour.Length == 2)
+            {
+                int hours, minutes;
+                if (int.TryParse(openingHour[0], out hours) && int.TryParse(openingHour[1], out minutes))
+                {
+                    hourTs = new TimeSpan(hours, minutes, 0);
+                }
+            }
+            return hourTs;
         }
 
         protected void SetShortenServicesList(EstablishmentTypeEnum establishmentType, List<ShortenService> shortenServices)
@@ -140,6 +214,7 @@ namespace MyStyleApp.ViewModels
             {
                 SetProperty(ref _selectedProvince, value);
                 this.CreateEstablishmentCommand.ChangeCanExecute();
+                this.SaveEstablishmentCommand.ChangeCanExecute();
             }
         }
 
@@ -156,6 +231,7 @@ namespace MyStyleApp.ViewModels
             {
                 SetProperty(ref _name, value);
                 this.CreateEstablishmentCommand.ChangeCanExecute();
+                this.SaveEstablishmentCommand.ChangeCanExecute();
             }
         }
         public string Address
@@ -165,6 +241,7 @@ namespace MyStyleApp.ViewModels
             {
                 SetProperty(ref _address, value);
                 this.CreateEstablishmentCommand.ChangeCanExecute();
+                this.SaveEstablishmentCommand.ChangeCanExecute();
             }
         }
         public string Phone
@@ -174,6 +251,7 @@ namespace MyStyleApp.ViewModels
             {
                 SetProperty(ref _phone, value);
                 this.CreateEstablishmentCommand.ChangeCanExecute();
+                this.SaveEstablishmentCommand.ChangeCanExecute();
             }
         }
         public TimeSpan Hours1Start
@@ -198,6 +276,18 @@ namespace MyStyleApp.ViewModels
         {
             get { return _hours2End; }
             set { SetProperty(ref _hours2End, this.CheckHour(value)); }
+        }
+
+        public bool Hours1Selected
+        {
+            get { return _hours1Selected; }
+            set { SetProperty(ref _hours1Selected, value); }
+        }
+
+        public bool Hours2Selected
+        {
+            get { return _hours2Selected; }
+            set { SetProperty(ref _hours2Selected, value); }
         }
 
         private TimeSpan CheckHour(TimeSpan value)
@@ -225,6 +315,7 @@ namespace MyStyleApp.ViewModels
             {
                 SetProperty(ref _concurrence, value);
                 this.CreateEstablishmentCommand.ChangeCanExecute();
+                this.SaveEstablishmentCommand.ChangeCanExecute();
             }
         }
 
@@ -277,25 +368,31 @@ namespace MyStyleApp.ViewModels
             this._validationService.AddValidator(
                 new LengthValidator(this.Address, STRING_ADDRESS, 2, 500));
 
+
             // Latitude
-            this.Latitude = this.Latitude.Replace(',', '.');
-            this._validationService.AddValidator(
-                new RequiredValidator(this.Latitude, STRING_LATITUDE));
-            this._validationService.AddValidator(
-                new RegexValidator(
-                    this.Latitude, RegexConstants.DOUBLE,
-                    "error_number_double", STRING_LATITUDE));
+            if(!string.IsNullOrWhiteSpace(this.Latitude))
+            {
+                this.Latitude = this.Latitude.Replace(',', '.').Trim();
+                this._validationService.AddValidator(
+                    new RegexValidator(
+                        this.Latitude, RegexConstants.DOUBLE,
+                        "error_number_double", STRING_LATITUDE));
+            }
+            
 
             // Longitude
-            this.Longitude = this.Longitude.Replace(',', '.');
-            this._validationService.AddValidator(
-                new RequiredValidator(this.Longitude, STRING_LONGITUDE));
-            this._validationService.AddValidator(
-                new RegexValidator(
-                    this.Longitude, RegexConstants.DOUBLE,
-                    "error_number_double", STRING_LONGITUDE));
+            if (!string.IsNullOrWhiteSpace(this.Longitude))
+            {
+                this.Longitude = this.Longitude.Replace(',', '.').Trim();
+                this._validationService.AddValidator(
+                    new RegexValidator(
+                        this.Longitude, RegexConstants.DOUBLE,
+                        "error_number_double", STRING_LONGITUDE));
+            }
+
 
             // Phone
+            this.Phone = this.Phone.Trim();
             this._validationService.AddValidator(
                 new RequiredValidator(this.Phone, STRING_PHONE));
             this._validationService.AddValidator(
@@ -309,27 +406,36 @@ namespace MyStyleApp.ViewModels
                     this.Phone, RegexConstants.PHONE,
                     "error_invalid_field", STRING_PHONE));
 
+
             // Hours1
-            this._validationService.AddValidator(
-                new SimpleValidator<KeyValuePair<TimeSpan, TimeSpan>>(
-                    new KeyValuePair<TimeSpan, TimeSpan>(this.Hours1Start, this.Hours1End),
-                    (hours) => { return hours.Key < hours.Value; },
-                    this.LocalizedStrings.GetString("error_opening_hours", "${FIELD_NAME}", this.LocalizedStrings.GetString("hours1")
+            if (this.Hours1Selected)
+            {
+                this._validationService.AddValidator(
+                    new SimpleValidator<KeyValuePair<TimeSpan, TimeSpan>>(
+                        new KeyValuePair<TimeSpan, TimeSpan>(this.Hours1Start, this.Hours1End),
+                        (hours) => { return hours.Key < hours.Value; },
+                        this.LocalizedStrings.GetString("error_opening_hours", "${FIELD_NAME}", this.LocalizedStrings.GetString("hours1")
+                        )
                     )
-                )
-            );
+                );
+            }
+
 
             // Hours2
-            this._validationService.AddValidator(
-                new SimpleValidator<KeyValuePair<TimeSpan, TimeSpan>>(
-                    new KeyValuePair<TimeSpan, TimeSpan>(this.Hours2Start, this.Hours2End),
-                    (hours) => { return hours.Key < hours.Value; },
-                    this.LocalizedStrings.GetString("error_opening_hours", "${FIELD_NAME}", this.LocalizedStrings.GetString("hours2")
+            if (this.Hours2Selected)
+            {
+                this._validationService.AddValidator(
+                    new SimpleValidator<KeyValuePair<TimeSpan, TimeSpan>>(
+                        new KeyValuePair<TimeSpan, TimeSpan>(this.Hours2Start, this.Hours2End),
+                        (hours) => { return hours.Key < hours.Value; },
+                        this.LocalizedStrings.GetString("error_opening_hours", "${FIELD_NAME}", this.LocalizedStrings.GetString("hours2")
+                        )
                     )
-                )
-            );
+                );
+            }
 
             // Concurrence
+            this.Concurrence = this.Concurrence.Trim();
             this._validationService.AddValidator(
                 new RequiredValidator(this.Concurrence, STRING_CONCURRENCE));
             this._validationService.AddValidator(
@@ -361,16 +467,37 @@ namespace MyStyleApp.ViewModels
         {
         }
 
-        protected virtual void OfferedServices()
+        protected virtual async void OfferedServices()
         {
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    var servicesCategories = await this._serviceCategoriesService.GetServiceCategoriesAsync();
+                    var services = await this._servicesService.GetServicesAsync();
+
+                    // There is a problem with one element of the view when showing page as modal on WinPhone
+                    if (Device.OS == TargetPlatform.Windows || Device.OS == TargetPlatform.WinPhone)
+                    {
+                        await this.PushNavPageAsync<EstablishmentServicesViewModel>((establishmentServicesVM) =>
+                        {
+                            establishmentServicesVM.Initialize(this._shortenServices, servicesCategories, services, this.SetShortenServicesList);
+                        });
+                    }
+                    else
+                    {
+                        await this.PushNavPageModalAsync<EstablishmentServicesViewModel>((establishmentServicesVM) =>
+                        {
+                            establishmentServicesVM.Initialize(this._shortenServices, servicesCategories, services, this.SetShortenServicesList);
+                        });
+                    }
+                });
         }
 
-        protected virtual bool CanSaveOrCreateEstablishment()
+        private bool CanSaveOrCreateEstablishment()
         {
             return !string.IsNullOrEmpty(this.Name) && !string.IsNullOrEmpty(this.Address) && !string.IsNullOrEmpty(this.Phone)
                 && this.SelectedProvince != null && !string.IsNullOrEmpty(this.Concurrence);
         }
-
     }
 }
 

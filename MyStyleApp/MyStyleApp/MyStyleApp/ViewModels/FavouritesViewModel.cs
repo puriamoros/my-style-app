@@ -83,7 +83,7 @@ namespace MyStyleApp.ViewModels
         private async void ViewDetailsAsync(Establishment establishment)
         {
             await this.ExecuteBlockingUIAsync(
-                async () =>
+(Func<Task>)(async () =>
                 {
                     // Get establishment details from BE
                     var establishmentDetails = await this._establishmentsService.GetEstablishmentAsync(establishment.Id);
@@ -117,7 +117,7 @@ namespace MyStyleApp.ViewModels
                     {
                         await establishmentDetailsVM.InitilizeAsync(establishmentDetails, 0, 0);
                     });
-                });
+                }));
         }
 
         private async void DeleteFavouriteAsync(Establishment establishment)

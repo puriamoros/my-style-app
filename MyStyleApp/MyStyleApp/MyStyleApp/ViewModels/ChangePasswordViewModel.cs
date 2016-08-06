@@ -88,6 +88,10 @@ namespace MyStyleApp.ViewModels
 
         private string GetValidationError()
         {
+            this.NewPassword = this.NewPassword.Trim();
+            this.NewPasswordRepeated = this.NewPasswordRepeated.Trim();
+            this.OldPassword = this.OldPassword.Trim();
+
             // Alwais clear validators before adding
             this._validationService.ClearValidators();
 

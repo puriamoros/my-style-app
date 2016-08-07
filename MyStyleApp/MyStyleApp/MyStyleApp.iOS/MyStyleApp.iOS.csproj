@@ -27,7 +27,7 @@
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
     <CodesignKey>iPhone Developer: helio.huete@gmail.com (73M24TJJH2)</CodesignKey>
-    <CodesignProvision>550b089f-e6f8-496f-9b52-c90a7d0b9d6f</CodesignProvision>
+    <CodesignProvision>8bf6eac7-cba9-4796-bb7c-e74ed43d4653</CodesignProvision>
     <CodesignEntitlements />
     <CodesignResourceRules />
     <CodesignExtraArgs />
@@ -189,16 +189,16 @@
     <BundleResource Include="Resources\UserFilled%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\CalendarFilled%402x.png" />
+    <BundleResource Include="Resources\AppointmentsFilled%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Calendar.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Calendar%402x.png" />
+    <BundleResource Include="Resources\Appointments%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\CalendarFilled.png" />
+    <BundleResource Include="Resources\AppointmentsFilled.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Favourite.png" />

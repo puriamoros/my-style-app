@@ -280,7 +280,7 @@
     <value>Booking Requested</value>
   </data>
   <data name="booking_requested_body" xml:space="preserve">
-    <value>The booking request has been saved. You can see it in the Appointments section. Remember that you will receive a confirmation email when your request is accepted</value>
+    <value>The booking request has been saved. You can see it in the Appointments section. Remember that you will receive a notification when your request is accepted</value>
   </data>
   <data name="booking_auto_confirmed_title" xml:space="preserve">
     <value>Booking accepted and confirmed</value>
@@ -442,10 +442,16 @@
     <value>Map</value>
   </data>
   <data name="staff_account" xml:space="preserve">
+    <value>Staff details</value>
+  </data>
+  <data name="staff_account" xml:space="preserve">
     <value>Staff account</value>
   </data>
-  <data name="modified_account" xml:space="preserve">
-    <value>Modified account</value>
+  <data name="account_modified" xml:space="preserve">
+    <value>Account modified</value>
+  </data>
+  <data name="account_modified_body" xml:space="preserve">
+    <value>Account data successfully modified</value>
   </data>
   <data name="price" xml:space="preserve">
     <value>price</value>
@@ -524,5 +530,11 @@
   </data>
   <data name="updated_establishment" xml:space="preserve">
     <value>Updated establishment</value>
+  </data>
+  <data name="staff_account_modified_body" xml:space="preserve">
+    <value>Your permissions have been modified by the establishment's owner.\nPlease, log in again.</value>
+  </data>
+  <data name="logout_confirmation_body" xml:space="preserve">
+    <value>You are about to disconnect. Do you want to continue?</value>
   </data>
 </root>

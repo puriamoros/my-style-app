@@ -113,6 +113,44 @@
         </Setter>
       </Style>
 
+      <!-- Editor -->
+      <Style x:Key="EditorBorderStyle" TargetType="StackLayout">
+        <Setter Property="BackgroundColor">
+          <Setter.Value>
+            <OnPlatform x:TypeArguments="Color"
+                        iOS="#BDBEC2"
+                        Android="Default"
+                        WinPhone="Default" />
+          </Setter.Value>
+        </Setter>
+        <Setter Property="Padding">
+          <Setter.Value>
+            <OnPlatform x:TypeArguments="Thickness"
+                        iOS="2"
+                        Android="0"
+                        WinPhone="0" />
+          </Setter.Value>
+        </Setter>
+      </Style>
+      <Style x:Key="EditorStyle" TargetType="Editor">
+        <Setter Property="BackgroundColor">
+          <Setter.Value>
+            <OnPlatform x:TypeArguments="Color"
+                        iOS="Default"
+                        Android="White"
+                        WinPhone="Default" />
+          </Setter.Value>
+        </Setter>
+        <Setter Property="TextColor">
+          <Setter.Value>
+            <OnPlatform x:TypeArguments="Color"
+                        iOS="Default"
+                        Android="Black"
+                        WinPhone="Default" />
+          </Setter.Value>
+        </Setter>
+      </Style>
+
       <!-- Font sizes -->
       <Style x:Key="TextStyle" TargetType="Label">
         <Setter Property="FontFamily" Value="SegoeWP-Light" />
@@ -164,7 +202,12 @@
         </Setter>
       </Style>
 
-      <Style x:Key="TitleTextStyle" TargetType="Label" BasedOn="{StaticResource LargeTextStyle1}">
+      <Style x:Key="TitleTextStyle" TargetType="Label" BasedOn="{StaticResource TextStyle}">
+        <Setter Property="FontSize">
+          <Setter.Value>
+            <OnPlatform x:TypeArguments="x:Double" iOS="18" Android="26" WinPhone="30" />
+          </Setter.Value>
+        </Setter>
         <Setter Property="HorizontalOptions" Value="FillAndExpand" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
         <Setter Property="BackgroundColor">

@@ -129,12 +129,18 @@ namespace MyStyleApp.ViewModels
                                 mainVM.Initialize();
                             });
                         }
-                        else if (this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.Owner ||
-                            this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.LimitedStaff ||
+                        else if (this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.Owner)
+                        {
+                            await this.SetMainPageNavPageAsync<MainOwnerViewModel>((mainVM) =>
+                            {
+                                mainVM.Initialize();
+                            });
+                        }
+                        else if (this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.LimitedStaff ||
                             this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.Staff ||
                             this._usersService.LoggedUser.UserType == Enums.UserTypeEnum.AuthorizedStaff)
                         {
-                            await this.SetMainPageNavPageAsync<MainOwnerViewModel>((mainVM) =>
+                            await this.SetMainPageNavPageAsync<MainStaffViewModel>((mainVM) =>
                             {
                                 mainVM.Initialize();
                             });

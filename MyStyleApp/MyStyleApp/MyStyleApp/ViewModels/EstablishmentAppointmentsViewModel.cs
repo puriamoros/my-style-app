@@ -28,7 +28,8 @@ namespace MyStyleApp.ViewModels
         private ObservableCollection<Appointment> _appointmentList;
         private ObservableCollection<Establishment> _establishmentList;
         private Establishment _selectedEstablishment;
-
+        private bool _isEstablishmentSelectionEnabled;
+        
         public Command CancelCommand { get; private set; }
         public Command ConfirmCommand { get; private set; }
         public Command<Appointment> AppointmentDetailsCommand { get; private set; }
@@ -53,8 +54,6 @@ namespace MyStyleApp.ViewModels
             this.ConfirmCommand = new Command<Appointment>(this.ConfirmAsync, this.CanConfirm);
             this.AppointmentDetailsCommand = new Command<Appointment>(this.AppointmentDetailsAsync);
             this.ClientHistorytCommand = new Command<Appointment>(this.ClientHistorytAsync);
-
-            this.InitializeAsync();
 
             this.SubscribeToMessages();
         }
@@ -119,9 +118,20 @@ namespace MyStyleApp.ViewModels
             await this.ExecuteBlockingUIAsync(
                 async () =>
                 {
-                    var establishments = await this._establishmentsService.GetOwnerEstablishmentsAsync();
-
-                    this.EstablishmentList = new ObservableCollection<Establishment>(establishments);
+                    if (this._userService.LoggedUser.UserType == UserTypeEnum.Owner)
+                    {
+                        var establishments = await this._establishmentsService.GetOwnerEstablishmentsAsync();
+                        this.EstablishmentList = new ObservableCollection<Establishment>(establishments);
+                        this.IsEstablishmentSelectionEnabled = true;
+                    }
+                    else if(this._userService.LoggedUser.StaffInfo != null)
+                    {
+                        int idEstablishment = this._userService.LoggedUser.StaffInfo.IdEstablishment;
+                        var establishment = await this._establishmentsService.GetEstablishmentAsync(idEstablishment);
+                        this.EstablishmentList = new ObservableCollection<Establishment>(new Establishment[] { establishment });
+                        this.SelectedEstablishment = establishment;
+                        this.IsEstablishmentSelectionEnabled = false;
+                    }
                 });
         }
 
@@ -167,6 +177,12 @@ namespace MyStyleApp.ViewModels
                 SetProperty(ref _selectedEstablishment, value);
                 this.OnDataChanged();
             }
+        }
+
+        public bool IsEstablishmentSelectionEnabled
+        {
+            get { return _isEstablishmentSelectionEnabled; }
+            set { SetProperty(ref _isEstablishmentSelectionEnabled, value); }
         }
 
         private async void OnDataChanged()
@@ -254,7 +270,9 @@ namespace MyStyleApp.ViewModels
         {
             if(appointment != null)
             {
-                return appointment.Status != AppointmentStatusEnum.Cancelled;
+                return (appointment.Status != AppointmentStatusEnum.Cancelled) && 
+                    (this._userService.LoggedUser.UserType == UserTypeEnum.AuthorizedStaff || 
+                    this._userService.LoggedUser.UserType == UserTypeEnum.Owner);
             }
             return false;
         }
@@ -303,7 +321,9 @@ namespace MyStyleApp.ViewModels
         {
             if (appointment != null)
             {
-                return appointment.Status == AppointmentStatusEnum.Pending;
+                return (appointment.Status == AppointmentStatusEnum.Pending) &&
+                    (this._userService.LoggedUser.UserType == UserTypeEnum.AuthorizedStaff ||
+                    this._userService.LoggedUser.UserType == UserTypeEnum.Owner);
             }
             return false;
         }

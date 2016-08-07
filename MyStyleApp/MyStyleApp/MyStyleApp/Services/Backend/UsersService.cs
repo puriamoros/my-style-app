@@ -50,7 +50,7 @@ namespace MyStyleApp.Services.Backend
             }
         }
 
-        public User LoggedUser { get; private set; }
+        public LoggedUserInfo LoggedUser { get; private set; }
 
         public async Task LoginAsync(string email, string password, bool rememberLogin)
         {
@@ -82,7 +82,7 @@ namespace MyStyleApp.Services.Backend
             MessagingCenter.Send<string>(userType.ToString(), "userLogout");
         }
 
-        public async Task<User> MeAsync()
+        public async Task<LoggedUserInfo> MeAsync()
         {
             int oldLoggedUserId = (this.LoggedUser != null) ? this.LoggedUser.Id : - 1;
 
@@ -92,7 +92,7 @@ namespace MyStyleApp.Services.Backend
                 throw new Exception("ApiKey not found. User is not logged in.");
             }
 
-            this.LoggedUser = await this.HttpService.InvokeAsync<User>(
+            this.LoggedUser = await this.HttpService.InvokeAsync<LoggedUserInfo>(
                 HttpMethod.Get,
                 BackendConstants.ME_URL,
                 apiKey,
@@ -105,7 +105,7 @@ namespace MyStyleApp.Services.Backend
                 this._pushNotificationsService.RegisterDevice();
             }
 
-            return LoggedUser;
+            return this.LoggedUser;
         }
 
         public async Task<ApiKey> RegisterUserAsync(User user)

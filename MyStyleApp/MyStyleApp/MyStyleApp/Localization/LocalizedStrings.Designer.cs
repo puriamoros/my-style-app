@@ -62,6 +62,24 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account modified.
+        /// </summary>
+        internal static string account_modified {
+            get {
+                return ResourceManager.GetString("account_modified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account data successfully modified.
+        /// </summary>
+        internal static string account_modified_body {
+            get {
+                return ResourceManager.GetString("account_modified_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add to favourites.
         /// </summary>
         internal static string add_to_favourites {
@@ -269,7 +287,7 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The booking request has been saved. You can see it in the Appointments section. Remember that you will receive a confirmation email when your request is accepted.
+        ///   Looks up a localized string similar to The booking request has been saved. You can see it in the Appointments section. Remember that you will receive a notification when your request is accepted.
         /// </summary>
         internal static string booking_requested_body {
             get {
@@ -818,6 +836,15 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are about to disconnect. Do you want to continue?.
+        /// </summary>
+        internal static string logout_confirmation_body {
+            get {
+                return ResourceManager.GetString("logout_confirmation_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GPS Longitude.
         /// </summary>
         internal static string longitude {
@@ -841,15 +868,6 @@ namespace MyStyleApp.Localization {
         internal static string map {
             get {
                 return ResourceManager.GetString("map", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Modified account.
-        /// </summary>
-        internal static string modified_account {
-            get {
-                return ResourceManager.GetString("modified_account", resourceCulture);
             }
         }
         
@@ -1147,6 +1165,15 @@ namespace MyStyleApp.Localization {
         internal static string staff_account {
             get {
                 return ResourceManager.GetString("staff_account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your permissions have been modified by the establishment&apos;s owner.\nPlease, log in again..
+        /// </summary>
+        internal static string staff_account_modified_body {
+            get {
+                return ResourceManager.GetString("staff_account_modified_body", resourceCulture);
             }
         }
         

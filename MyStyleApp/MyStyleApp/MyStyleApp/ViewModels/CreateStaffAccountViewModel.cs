@@ -31,7 +31,9 @@ namespace MyStyleApp.ViewModels
             this._establishmentsService = establishmentsService;
             this._usersService = usersService;
 
-            this.Title = this.LocalizedStrings.GetString("staff_account");
+            this.Title = this.LocalizedStrings.GetString("new_staff");
+            this.IsTitleVisible = true;
+            this.IsOwnerOptionVisible = false;
 
             this.UserTypeList = new ObservableCollection<UserType>();
             foreach (UserTypeEnum userType in Enum.GetValues(typeof(UserTypeEnum)))
@@ -50,6 +52,8 @@ namespace MyStyleApp.ViewModels
 
         public async Task Initialize()
         {
+            this.IsOwnerOptionVisible = (this._usersService.LoggedUser.UserType == UserTypeEnum.Owner);
+
             base.Initialize();
 
             this.SelectedEstablishment = null;

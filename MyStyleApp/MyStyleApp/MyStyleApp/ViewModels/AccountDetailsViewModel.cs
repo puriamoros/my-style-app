@@ -24,6 +24,8 @@ namespace MyStyleApp.ViewModels
             base(navigator, userNotificator, localizedStringsService, validationService, usersService)
         {
             this.Title = this.LocalizedStrings.GetString("my_account");
+            this.IsTitleVisible = false;
+            this.IsOwnerOptionVisible = false;
 
             this.SubscribeToMessages();
         }
@@ -150,14 +152,23 @@ namespace MyStyleApp.ViewModels
 
         protected override async void LogOutAsync()
         {
-            await this.ExecuteBlockingUIAsync(
-                async () =>
-                {
-                    // Logout
-                    await this._usersService.LogoutAsync();
+            bool result = await this.UserNotificator.DisplayAlert(
+                this.LocalizedStrings.GetString("logout"),
+                this.LocalizedStrings.GetString("logout_confirmation_body"),
+                this.LocalizedStrings.GetString("yes"),
+                this.LocalizedStrings.GetString("no"));
 
-                    await this.SetMainPageNavPageAsync<LoginViewModel>();
-                });
+            if (result)
+            {
+                await this.ExecuteBlockingUIAsync(
+                    async () =>
+                    {
+                        // Logout
+                        await this._usersService.LogoutAsync();
+
+                        await this.SetMainPageNavPageAsync<LoginViewModel>();
+                    });
+            }
         }
     }
 }

@@ -134,7 +134,6 @@
 
               <ViewCell.ContextActions>
                 <MenuItem Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[view_details]}"
-                  IsDestructive="True"
                   Command="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.AppointmentDetailsCommand}"
                   CommandParameter="{Binding Source={x:Reference Appointment}, Path=BindingContext}" />
               </ViewCell.ContextActions>

@@ -16,8 +16,10 @@ namespace MyStyleApp.ViewModels
     public class AppointmentDetailsViewModel : NavigableViewModelBase
     {
         private IAppointmentsService _appointmentsService;
+        private IUsersService _userService;
         private Appointment _appointment;
         private string _notes;
+        private bool _isNotesEnabled;
 
         public ICommand SaveNotesCommand { get; private set; }
 
@@ -26,12 +28,11 @@ namespace MyStyleApp.ViewModels
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService,
             IUsersService userService,
-            IServicesService servicesService,
-            IAppointmentsService appointmentsService,
-            IEstablishmentsService establishmentsService) :
+            IAppointmentsService appointmentsService) :
             base(navigator, userNotificator, localizedStringsService)
         {
             this._appointmentsService = appointmentsService;
+            this._userService = userService;
 
             this.SaveNotesCommand = new Command(this.SaveNotesAsync);
         }
@@ -40,6 +41,7 @@ namespace MyStyleApp.ViewModels
         {
             this.Appointment = appointment;
             this.Notes = appointment.Notes;
+            this.IsNotesEnabled = (this._userService.LoggedUser.UserType != UserTypeEnum.LimitedStaff);
         }
 
         public Appointment Appointment
@@ -52,6 +54,12 @@ namespace MyStyleApp.ViewModels
         {
             get { return _notes; }
             set { SetProperty(ref _notes, value); }
+        }
+        
+        public bool IsNotesEnabled
+        {
+            get { return _isNotesEnabled; }
+            set { SetProperty(ref _isNotesEnabled, value); }
         }
 
         public async void SaveNotesAsync()

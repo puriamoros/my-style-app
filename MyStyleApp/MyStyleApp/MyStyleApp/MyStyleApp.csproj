@@ -61,6 +61,8 @@
     <Compile Include="Exceptions\BackendException.cs" />
     <Compile Include="Models\AppointmentNotes.cs" />
     <Compile Include="Models\GenericStatus.cs" />
+    <Compile Include="Models\LoggedStaffInfo.cs" />
+    <Compile Include="Models\LoggedUserInfo.cs" />
     <Compile Include="Models\SelectedService.cs" />
     <Compile Include="Models\UserType.cs" />
     <Compile Include="Models\ShortenServiceListContainer.cs" />
@@ -145,6 +147,7 @@
     <Compile Include="Validators\RegexValidator.cs" />
     <Compile Include="Validators\RequiredValidator.cs" />
     <Compile Include="Validators\SimpleValidator.cs" />
+    <Compile Include="ViewModels\MainStaffViewModel.cs" />
     <Compile Include="ViewModels\OwnerEstablishmentDetailsViewModel.cs" />
     <Compile Include="ViewModels\CreateEstablishmentViewModel.cs" />
     <Compile Include="ViewModels\EstablishmentViewModelBase.cs" />
@@ -175,6 +178,7 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainClientViewModel.cs" />
     <Compile Include="Views\CreateEstablishmentView.cs" />
+    <Compile Include="Views\MainStaffView.cs" />
     <Compile Include="Views\OwnerEstablishmentDetailsView.cs" />
     <Compile Include="Views\EstablishmentViewBase.xaml.cs">
       <DependentUpon>EstablishmentViewBase.xaml</DependentUpon>
@@ -289,7 +293,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\LocalizedStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LocalizedStrings.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\NonLocalizedStrings.resx">

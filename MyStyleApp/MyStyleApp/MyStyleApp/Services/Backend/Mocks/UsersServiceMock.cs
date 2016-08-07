@@ -7,7 +7,7 @@ namespace MyStyleApp.Services.Backend.Mocks
 {
     public class UsersServiceMock : IUsersService
     {
-        public User LoggedUser { get; private set; }
+        public LoggedUserInfo LoggedUser { get; private set; }
 
         public async Task LoginAsync(string email, string password, bool rememberLogin)
         {
@@ -19,7 +19,7 @@ namespace MyStyleApp.Services.Backend.Mocks
                 throw new Exception("User or password does not match.");
             }
 
-            this.LoggedUser = new User()
+            this.LoggedUser = new LoggedUserInfo()
             {
                 Name = "Puri",
                 Surname = "Amoros",
@@ -33,10 +33,10 @@ namespace MyStyleApp.Services.Backend.Mocks
             this.LoggedUser = null;
         }
 
-        public async Task<User> MeAsync()
+        public async Task<LoggedUserInfo> MeAsync()
         {
             await Task.Delay(1000);
-            this.LoggedUser = new User()
+            this.LoggedUser = new LoggedUserInfo()
             {
                 Name = "Puri",
                 Surname = "Amoros",

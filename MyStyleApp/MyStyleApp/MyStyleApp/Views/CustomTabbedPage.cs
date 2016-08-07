@@ -6,15 +6,16 @@ namespace MyStyleApp.Views
     {
         private const string CURRENT_TOKEN = "Filled";
 
+        public CustomTabbedPage()
+        {
+            NavigationPage.SetHasNavigationBar(this, false);
+        }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
-            // We just want a navigation bar on iOS
-            if (Device.OS != TargetPlatform.iOS)
-            {
-                NavigationPage.SetHasNavigationBar(this, false);
-            }
+            NavigationPage.SetHasNavigationBar(this, false);
         }
 
         protected void AddNavigationChild(Page view, string titleBinding, string icon)

@@ -27,6 +27,8 @@ namespace MyStyleApp.ViewModels
             base(navigator, userNotificator, localizedStringsService, validationService, usersService)
         {
             this.Title = this.LocalizedStrings.GetString("create_account");
+            this.IsTitleVisible = true;
+            this.IsOwnerOptionVisible = false;
         }
 
         public void Initialize()

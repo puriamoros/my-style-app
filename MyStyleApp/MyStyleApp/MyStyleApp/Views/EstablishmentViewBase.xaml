@@ -16,13 +16,10 @@
       <StackLayout Grid.Row="0"
         Padding="{StaticResource PageContentPadding}"
         Spacing="20">
-        <StackLayout Spacing="0"
-          IsVisible="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=Create}">
-          <Label
-              Text="{Binding Title}"
-              Style="{StaticResource TitleTextStyle}"
-              IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>
-        </StackLayout>
+        <Label
+            Text="{Binding Title}"
+            Style="{StaticResource TitleTextStyle}"
+            IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>
         
         <StackLayout Spacing="0" >
           <Label

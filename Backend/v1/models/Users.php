@@ -14,6 +14,9 @@ class Users extends ModelWithIdBase
 		// Users table data
 		$this->users = Tables::getInstance()->users;
 		
+		// Staff table data
+		$this->staff = Tables::getInstance()->staff;
+		
 		// Users private fields
 		$this->privateFields = array(
 			$this->users->password,
@@ -22,6 +25,9 @@ class Users extends ModelWithIdBase
 			$this->users->pushToken,
 			$this->users->languageCode
 		);
+		
+		// Fields for extra data
+		$this->staffInfo = 'staffInfo';	
 		
 		// Call parent ctor
 		parent::__construct($this->users->table, $this->users->fields, $this->users->id);
@@ -119,7 +125,21 @@ class Users extends ModelWithIdBase
 		// Get id from apiKey
 		$id = Authorization::authorizeApiKey()[$this->users->id];
 
-		return $this->getElement($id);
+		$result = $this->getElement($id);
+		
+		if($result[$this->users->userType] == USER_TYPE_LIMITED_STAFF ||
+			$result[$this->users->userType] == USER_TYPE_STAFF ||
+			$result[$this->users->userType] == USER_TYPE_AUTHORIZED_STAFF) {
+			
+			$staff = DBCommands::dbGetOne($this->staff->table, [$this->staff->idEstablishment], $this->staff->idUser, $id);
+			if(!is_null($staff)) {
+				$result[$this->staffInfo] = array(
+					$this->staff->idEstablishment => $staff[$this->staff->idEstablishment]
+				);
+			}
+		}
+		
+		return $result;
 	}
 	
 	protected function getElement($id)

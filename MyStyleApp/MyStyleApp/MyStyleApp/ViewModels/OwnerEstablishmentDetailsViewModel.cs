@@ -31,7 +31,7 @@ namespace MyStyleApp.ViewModels
             base(navigator, userNotificator, localizedStringsService, provincesService, 
                 validationService, usersService, servicesService, serviceCategoriesService, establishmentsService)
         {
-            this.Title = this.LocalizedStrings.GetString("create_establishment");
+            this.Title = this.LocalizedStrings.GetString("establishment_details");
         }
 
         public void Initialize(Establishment establishment)

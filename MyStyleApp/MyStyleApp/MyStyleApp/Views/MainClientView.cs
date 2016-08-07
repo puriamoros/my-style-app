@@ -18,7 +18,7 @@
             this._establishmentSearchView = establishmentSearchView;
             this._accountDetailsView = accountDetailsView;
 
-            this.AddChild(this._clientAppointmentsView, "LocalizedStrings[appointments]", "Calendar.png");
+            this.AddChild(this._clientAppointmentsView, "LocalizedStrings[appointments]", "Appointments.png");
             this.AddChild(this._favouritesView, "LocalizedStrings[favourites]", "Star.png");
             this.AddChild(this._establishmentSearchView, "LocalizedStrings[establishments]", "Barbershop.png");
             this.AddChild(this._accountDetailsView, "LocalizedStrings[my_account]", "User.png");

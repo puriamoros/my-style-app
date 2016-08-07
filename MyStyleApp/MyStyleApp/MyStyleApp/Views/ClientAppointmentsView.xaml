@@ -7,10 +7,16 @@
              xmlns:views="clr-namespace:MyStyleApp.Views"
              xmlns:mvvmcorebehaviors="clr-namespace:MvvmCore.Behaviors"
              Padding="{StaticResource PagePadding}"
-             Title="{Binding LocalizedStrings[appointments]}" Icon="Calendar.png">
+             Title="{Binding LocalizedStrings[appointments]}" Icon="Appointments.png">
 
   <Grid RowSpacing="0">
     <StackLayout Padding="{StaticResource TabContentPadding}">
+      <StackLayout Padding="0,10,0,10"
+        IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=iOS}">
+        <Label
+          Text="{Binding LocalizedStrings[appointments]}"
+          Style="{StaticResource TitleTextStyle}"/>
+      </StackLayout>
       <!-- Without HasUnevenRows="True", list items does not render well in Android -->
       <ListView x:Name="AppointmentList"
         ItemsSource="{Binding AppointmentList}"

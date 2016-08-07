@@ -17,7 +17,7 @@
         Padding="{StaticResource TabContentPadding}"
         Spacing="15">
         <StackLayout Spacing="0"
-          IsVisible="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=Create}">
+          IsVisible="{Binding IsTitleVisible}">
           <Label
               Text="{Binding Title}"
               Style="{StaticResource TitleTextStyle}"
@@ -101,7 +101,7 @@
         
         <!--Onwer only-->
         <StackLayout Padding="0,0,0,10" Spacing="0"
-          IsVisible="{Binding Parent, Converter={StaticResource ObjectToBoolConverter}, ConverterParameter=!}">
+          IsVisible="{Binding IsOwnerOptionVisible}">
           <Label
             Text="{Binding LocalizedStrings[user_type]}"
             Style="{StaticResource MediumTextStyle}"/>
@@ -113,7 +113,7 @@
         </StackLayout>
 
         <StackLayout Padding="0,0,0,10" Spacing="0"
-          IsVisible="{Binding Parent, Converter={StaticResource ObjectToBoolConverter}, ConverterParameter=!}">
+          IsVisible="{Binding IsOwnerOptionVisible}">
           <Label
             Text="{Binding LocalizedStrings[establishment]}"
             Style="{StaticResource MediumTextStyle}"/>

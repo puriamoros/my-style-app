@@ -164,10 +164,10 @@ namespace MyStyleApp.ViewModels
         private async void DeleteStaffAsync(Staff staff)
         {
             bool result = await this.UserNotificator.DisplayAlert(
-                                    this.LocalizedStrings.GetString("delete_staff"),
-                                    this.LocalizedStrings.GetString("delete_staff_body"),
-                                    this.LocalizedStrings.GetString("ok"),
-                                    this.LocalizedStrings.GetString("cancel"));
+                this.LocalizedStrings.GetString("delete_staff"),
+                this.LocalizedStrings.GetString("delete_staff_body"),
+                this.LocalizedStrings.GetString("ok"),
+                this.LocalizedStrings.GetString("cancel"));
 
             if(result)
             {

@@ -22,8 +22,6 @@ namespace MyStyleApp.ViewModels
         private const string STRING_ADDRESS = "addres";
         private const string STRING_PHONE = "phone";
         private const string STRING_CONCURRENCE = "concurrence";
-        //private const string STRING_HOURS1 = "hours1";
-        //private const string STRING_HOURS2 = "hours2";
         private const string STRING_LATITUDE = "latitude";
         private const string STRING_LONGITUDE = "longitude";
 

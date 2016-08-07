@@ -129,9 +129,17 @@ class Staff extends Users
 		if(isset($data[$this->staff->idEstablishment])){
 			DBCommands::dbUpdate($this->staff->table, $this->staff->fields, $this->staff->idUser, $id, $data);
 		}
-		
-		if((isset($data[$this->user->userType]) && $oldData[$this->user->userType] != $data[$this->user->userType]) ||
+
+		if((isset($data[$this->users->userType]) && $oldData[$this->users->userType] != $data[$this->users->userType]) ||
 			(isset($data[$this->staff->idEstablishment]) && $oldData[$this->staff->idEstablishment] != $data[$this->staff->idEstablishment])) {
+			$this->sendAccountModifiedNotification($id);
+		}
+				
+		return $result;
+	}
+	
+	private function sendAccountModifiedNotification($id)
+	{
 			$idKeyMap = array(
 				63 => 'title',
 				64 => 'body'
@@ -143,15 +151,13 @@ class Staff extends Users
 				$translationsMap,
 				'staffModified'
 			);
-		}
-				
-		return $result;
 	}
 	
 	protected function dbDelete($id)
 	{
 		$result = parent::dbDelete($id);
 		DBCommands::dbDelete($this->staff->table, $this->staff->idUser, $id);
+		$this->sendAccountModifiedNotification($id);
 		
 		return $result;
 	}

@@ -139,7 +139,7 @@
     <value>Email</value>
   </data>
   <data name="email_placeholder" xml:space="preserve">
-    <value>Introduce tu correo electrónico</value>
+    <value>Introduce tu email</value>
   </data>
   <data name="error" xml:space="preserve">
     <value>Error</value>
@@ -280,7 +280,7 @@
     <value>Reserva solicitada</value>
   </data>
   <data name="booking_requested_body" xml:space="preserve">
-    <value>Su solicitud de reserva ha sido guardada. Puede verla en la sección de citas. Recuerde que recibirá un email de confirmación cuando su solicitud sea aceptada</value>
+    <value>Su solicitud de reserva ha sido guardada. Puede verla en la sección de citas. Recuerde que recibirá una notificación cuando su solicitud sea aceptada</value>
   </data>
   <data name="booking_auto_confirmed_title" xml:space="preserve">
     <value>Reserva aceptada y confirmada</value>
@@ -322,7 +322,7 @@
     <value>Los campos "${FIELD_NAME_1}" y "${FIELD_NAME_2}" deben ser iguales</value>
   </data>
   <data name="repeat_email" xml:space="preserve">
-    <value>Repite tu dirección de correo electrónico</value>
+    <value>Repite tu email</value>
   </data>
   <data name="change_password" xml:space="preserve">
     <value>Cambiar contraseña</value>
@@ -355,7 +355,7 @@
     <value>Por favor inicia sesión</value>
   </data>
   <data name="error_duplicated_email" xml:space="preserve">
-    <value>Error: la dirección de correo electrónico introducida ya está registrada</value>
+    <value>Error: la dirección de email introducida ya está registrada</value>
   </data>
   <data name="date" xml:space="preserve">
     <value>Fecha</value>
@@ -442,10 +442,13 @@
     <value>Mapa</value>
   </data>
   <data name="staff_account" xml:space="preserve">
-    <value>Cuenta de empleado</value>
+    <value>Detalles de empleado</value>
   </data>
-  <data name="modified_account" xml:space="preserve">
+  <data name="account_modified" xml:space="preserve">
     <value>Cuenta modificada</value>
+  </data>
+  <data name="account_modified_body" xml:space="preserve">
+    <value>Los datos de la cuenta se han modificado correctamente</value>
   </data>
   <data name="price" xml:space="preserve">
     <value>precio</value>
@@ -524,5 +527,11 @@
   </data>
   <data name="updated_establishment" xml:space="preserve">
     <value>Establecimiento actualizado</value>
+  </data>
+  <data name="staff_account_modified_body" xml:space="preserve">
+    <value>Sus permisos han sido modificados por el dueño del establecimiento.\nPor favor, identifíquese de nuevo.</value>
+  </data>
+  <data name="logout_confirmation_body" xml:space="preserve">
+    <value>Estás a punto de desconectarte. ¿Desea continuar?</value>
   </data>
 </root>

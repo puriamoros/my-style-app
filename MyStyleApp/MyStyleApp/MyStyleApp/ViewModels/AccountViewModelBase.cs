@@ -38,6 +38,9 @@ namespace MyStyleApp.ViewModels
         private string _repeatPassword;
         private string _errorText;
 
+        private bool _isTitleVisible;
+        private bool _isOwnerOptionVisible;
+
         private ObservableCollection<UserType> _userTypeList;
         private UserType _selectedUserType;
 
@@ -212,6 +215,18 @@ namespace MyStyleApp.ViewModels
         {
             get { return _errorText; }
             set { SetProperty(ref _errorText, value); }
+        }
+
+        public bool IsTitleVisible
+        {
+            get { return _isTitleVisible; }
+            set { SetProperty(ref _isTitleVisible, value); }
+        }
+
+        public bool IsOwnerOptionVisible
+        {
+            get { return _isOwnerOptionVisible; }
+            set { SetProperty(ref _isOwnerOptionVisible, value); }
         }
 
         protected virtual void ConfigureValidationService()

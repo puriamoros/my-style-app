@@ -6,10 +6,10 @@ namespace MyStyleApp.Services.Backend
 {
     public interface IUsersService
     {
-        User LoggedUser { get; }
+        LoggedUserInfo LoggedUser { get; }
         Task LoginAsync(string email, string password, bool rememberLogin);
         Task LogoutAsync();
-        Task<User> MeAsync();
+        Task<LoggedUserInfo> MeAsync();
         Task<ApiKey> RegisterUserAsync(User user);
         Task UpdateUserAsync(User user);
         Task UpdatePasswordAsync(int id, string oldPassword, string newPassword);

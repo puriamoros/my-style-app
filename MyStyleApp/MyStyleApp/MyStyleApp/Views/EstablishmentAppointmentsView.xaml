@@ -7,12 +7,13 @@
              xmlns:views="clr-namespace:MyStyleApp.Views"
              xmlns:mvvmcorebehaviors="clr-namespace:MvvmCore.Behaviors"
              Padding="{StaticResource PagePadding}"
-             Title="{Binding LocalizedStrings[appointments]}" Icon="Calendar.png">
+             Title="{Binding LocalizedStrings[appointments]}" Icon="Appointments.png">
 
   <Grid RowSpacing="0">
     <StackLayout Padding="{StaticResource TabContentPadding}">
 
-      <StackLayout Padding="0,0,0,10" Spacing="0">
+      <StackLayout Padding="0,0,0,10" Spacing="0"
+        IsVisible="{Binding IsEstablishmentSelectionEnabled}">
         <Label
           Text="{Binding LocalizedStrings[establishment]}"
           Style="{StaticResource MediumTextStyle}"/>

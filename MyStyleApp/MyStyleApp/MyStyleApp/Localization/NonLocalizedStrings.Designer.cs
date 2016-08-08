@@ -62,11 +62,20 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to My Style App.
+        ///   Looks up a localized string similar to MyStyleApp.
         /// </summary>
         internal static string app_name {
             get {
                 return ResourceManager.GetString("app_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MyStyleApp es una aplicación desarrollada como Trabajo de Fin de Grado de Ingeniería Informática de la Universidad de Granada. El trabajo ha sido tutorizado por la profesora Rosana Montes Soldado del departamento de Lenguajes y Sistemas Informáticos.\nLa aplicación está dirigida tanto a clientes como a propietarios y empleados de peluquerías y centros de estética. Facilita al cliente la búsqueda de servicios ofertados y la solicitud de citas para los mismos, y al propietario y los empleados, la gestión de c [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string information_text {
+            get {
+                return ResourceManager.GetString("information_text", resourceCulture);
             }
         }
         

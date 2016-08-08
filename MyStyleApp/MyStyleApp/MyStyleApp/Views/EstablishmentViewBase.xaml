@@ -62,7 +62,7 @@
           <Entry
             Placeholder="{Binding LocalizedStrings[latitude_placeholder]}"
             Text="{Binding Latitude}"
-            Keyboard="Numeric"
+            Keyboard="Telephone"
             IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
         </StackLayout>
 
@@ -73,7 +73,7 @@
           <Entry
             Placeholder="{Binding LocalizedStrings[longitude_placeholder]}"
             Text="{Binding Longitude}"
-            Keyboard="Numeric"
+            Keyboard="Telephone"
             IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
         </StackLayout>
         

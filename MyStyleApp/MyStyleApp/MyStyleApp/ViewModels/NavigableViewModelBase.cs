@@ -12,6 +12,7 @@ namespace MyStyleApp.ViewModels
         private LocalizedStringsService _localizedStringsService;
         private INavigator _navigator;
         private IUserNotificator _userNotificator;
+        public Command OpenUrlCommand { get; private set; }
 
         public NavigableViewModelBase(
             INavigator navigator,
@@ -21,6 +22,12 @@ namespace MyStyleApp.ViewModels
             this._navigator = navigator;
             this._userNotificator = userNotificator;
             this._localizedStringsService = localizedStringsService;
+            this.OpenUrlCommand = new Command<string>(this.OpenUrl);
+        }
+
+        private void OpenUrl(string url)
+        {
+            Device.OpenUri(new Uri(url));
         }
 
         public bool IsBusy

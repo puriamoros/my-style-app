@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:CustomContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyStyleApp.Views.InformationView"
+             xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
+             xmlns:gestures="clr-namespace:MyStyleApp.Views.Gestures"
+             xmlns:views="clr-namespace:MyStyleApp.Views"
+             Padding="{StaticResource PagePadding}">
+  <ScrollView>
+      <StackLayout 
+        Spacing="15" Padding="{StaticResource PageContentPadding}">      
+        <Label
+          Text="{Binding LocalizedStrings[information_text]}"
+          Style="{StaticResource SmallTextStyle}" />
+
+        <!--<Image Aspect="AspectFit" Source="Ugr.png"></Image>
+        <Image Aspect="AspectFit" Source="LogoLSI.png"></Image>-->
+        <StackLayout>
+          <Label
+          Text="Promovido por"
+          Style="{StaticResource SmallTextStyle}" />
+
+          <RelativeLayout BackgroundColor="White">
+            <Image Aspect="AspectFit" Source="Ugr.png"
+              RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.05}"
+              RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.277}"
+              RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.9}"
+              gestures:TappedGesture.Command="{Binding OpenUrlCommand}"
+              gestures:TappedGesture.CommandParameter="http://www.ugr.es"/>
+          </RelativeLayout>
+
+          <RelativeLayout BackgroundColor="White">
+            <Image Aspect="AspectFit" Source="LogoLSI.png"
+              RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.1}"
+              RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.228}"
+              RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.8}"
+              gestures:TappedGesture.Command="{Binding OpenUrlCommand}"
+              gestures:TappedGesture.CommandParameter="http://lsi.ugr.es"/>
+          </RelativeLayout>         
+        </StackLayout>
+      
+        <Label
+          Text="Desarrollado por"
+          Style="{StaticResource SmallTextStyle}" />
+        <Label
+          Text="Purificación Amorós Molina puri.amoros@gmail.com"
+          Style="{StaticResource SmallTextStyle}" />
+        
+        <Label
+            Text="Tutorizado por"
+            Style="{StaticResource SmallTextStyle}" />
+        <Label
+            Text="Rosana Montes Soldado rosana@ugr.es"
+            Style="{StaticResource SmallTextStyle}" />
+      </StackLayout>     
+  </ScrollView>
+</views:CustomContentPage>

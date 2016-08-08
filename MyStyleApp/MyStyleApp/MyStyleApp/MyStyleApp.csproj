@@ -147,6 +147,7 @@
     <Compile Include="Validators\RegexValidator.cs" />
     <Compile Include="Validators\RequiredValidator.cs" />
     <Compile Include="Validators\SimpleValidator.cs" />
+    <Compile Include="ViewModels\InformationViewModel.cs" />
     <Compile Include="ViewModels\MainStaffViewModel.cs" />
     <Compile Include="ViewModels\OwnerEstablishmentDetailsViewModel.cs" />
     <Compile Include="ViewModels\CreateEstablishmentViewModel.cs" />
@@ -178,6 +179,9 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainClientViewModel.cs" />
     <Compile Include="Views\CreateEstablishmentView.cs" />
+    <Compile Include="Views\InformationView.xaml.cs">
+      <DependentUpon>InformationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainStaffView.cs" />
     <Compile Include="Views\OwnerEstablishmentDetailsView.cs" />
     <Compile Include="Views\EstablishmentViewBase.xaml.cs">
@@ -425,6 +429,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\EstablishmentViewBase.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\InformationView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -3,61 +3,82 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyStyleApp.Views.LoginView"
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
+             xmlns:gestures="clr-namespace:MyStyleApp.Views.Gestures"
              xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}">
   <ScrollView>
     <Grid RowSpacing="0">
-      <StackLayout 
-        Spacing="15" Padding="{StaticResource PageContentPadding}">
-        <Label
-          Text="{Binding LocalizedStrings[login]}"
-          Style="{StaticResource LargeTextStyle2}" />
-        <StackLayout Spacing="0" >
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <StackLayout Grid.Row="0" Spacing="15" Padding="{StaticResource PageContentPadding}">
           <Label
-            Text="{Binding LocalizedStrings[email]}"
-            Style="{StaticResource MediumTextStyle}" />
-          <Entry
-            Placeholder="{Binding LocalizedStrings[email_placeholder]}"
-            Text="{Binding Email}"
-            Keyboard="Email"/>
+            Text="{Binding LocalizedStrings[app_name]}"
+            Style="{StaticResource LargeTextStyle2}" 
+            HorizontalTextAlignment="Center"/>
+          
+          <StackLayout Spacing="0" >
+            <Label
+              Text="{Binding LocalizedStrings[email]}"
+              Style="{StaticResource MediumTextStyle}" />
+            <Entry
+              Placeholder="{Binding LocalizedStrings[email_placeholder]}"
+              Text="{Binding Email}"
+              Keyboard="Email"/>
+          </StackLayout>
+          <StackLayout Spacing="0" >
+            <Label
+              Text="{Binding LocalizedStrings[password]}"
+              Style="{StaticResource MediumTextStyle}" />
+            <Entry
+              IsPassword="True"
+              Placeholder="{Binding LocalizedStrings[password_placeholder]}"
+              Text="{Binding Password}" />
+          </StackLayout>
+          <!-- We will always remember the user, but we leave the code as it is to make things easier if we had to go back-->
+          <StackLayout Spacing="0" IsVisible="False">
+            <Label
+              Text="{Binding LocalizedStrings[remember_me]}"
+              Style="{StaticResource MediumTextStyle}" />
+            <Switch
+              HorizontalOptions="Start"
+              IsToggled="{Binding RememberMe}"/>
+          </StackLayout>
+          <StackLayout Spacing="5">
+            <controls:CustomButton
+              Text="{Binding LocalizedStrings[do_login]}"
+              Command="{Binding LoginCommand}" />
+            <Label
+              Text="{Binding ErrorText}"
+              IsVisible="{Binding ErrorText, Converter={StaticResource StringToBoolConverter}}"
+              TextColor="{StaticResource ErrorColor}"
+              Style="{StaticResource SmallTextStyle}" />
+          </StackLayout>
+          <StackLayout Spacing="0" Padding="0,30,0,0">
+            <Label
+              Text="{Binding LocalizedStrings[no_account]}"
+              Style="{StaticResource MediumTextStyle}" />
+            <controls:CustomButton
+              Text="{Binding LocalizedStrings[create_account]}"
+              Command="{Binding NewAccountCommand}" />
+          </StackLayout>
         </StackLayout>
-        <StackLayout Spacing="0" >
-          <Label
-            Text="{Binding LocalizedStrings[password]}"
-            Style="{StaticResource MediumTextStyle}" />
-          <Entry
-            IsPassword="True"
-            Placeholder="{Binding LocalizedStrings[password_placeholder]}"
-            Text="{Binding Password}" />
+        
+        <StackLayout Grid.Row="1" Padding="{StaticResource PageContentEndPadding}">
+          <RelativeLayout>
+            <Image Aspect="AspectFit" Source="Information.png" 
+              RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
+              RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.08}"
+              RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.92}"
+              gestures:TappedGesture.Command="{Binding ViewInformationCommand}"/>
+          </RelativeLayout>
+          
         </StackLayout>
-        <!-- We will always remember the user, but we leave the code as it is to make things easier if we had to go back-->
-        <StackLayout Spacing="0" IsVisible="False">
-          <Label
-            Text="{Binding LocalizedStrings[remember_me]}"
-            Style="{StaticResource MediumTextStyle}" />
-          <Switch
-            HorizontalOptions="Start"
-            IsToggled="{Binding RememberMe}"/>
-        </StackLayout>
-        <StackLayout Spacing="5">
-          <controls:CustomButton
-            Text="{Binding LocalizedStrings[do_login]}"
-            Command="{Binding LoginCommand}" />
-          <Label
-            Text="{Binding ErrorText}"
-            IsVisible="{Binding ErrorText, Converter={StaticResource StringToBoolConverter}}"
-            TextColor="{StaticResource ErrorColor}"
-            Style="{StaticResource SmallTextStyle}" />
-        </StackLayout>
-        <StackLayout Spacing="0" Padding="0,30,0,0">
-          <Label
-           Text="{Binding LocalizedStrings[no_account]}"
-           Style="{StaticResource MediumTextStyle}" />
-          <controls:CustomButton
-            Text="{Binding LocalizedStrings[create_account]}"
-            Command="{Binding NewAccountCommand}" />
-        </StackLayout>
-      </StackLayout>
+      </Grid>
+      
       <controls:WaitingOverlayControl
         RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
         RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}"

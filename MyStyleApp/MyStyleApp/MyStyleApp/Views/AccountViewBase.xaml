@@ -137,16 +137,17 @@
         Padding="{StaticResource TabContentEndPadding}"
         Spacing="5"
         VerticalOptions="End">
-        <controls:CustomButton
-          IsVisible="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=Create}"
-          Text="{Binding LocalizedStrings[create_account]}"
-          Command="{Binding CreateAccountCommand}"/>
 
-        <StackLayout IsVisible="{Binding Parent, Converter={StaticResource ObjectToBoolConverter}}">
+        <controls:CustomButton
+            IsVisible="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=Create}"
+            Text="{Binding LocalizedStrings[create_account]}"
+            Command="{Binding CreateAccountCommand}"/>
+        
+        <StackLayout IsVisible="{Binding IsOwnerOptionVisible, Converter={StaticResource NegateConverter}}">  
           <controls:CustomButton x:Name="EditButton"
-          IsVisible="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=View}"
-          Text="{Binding LocalizedStrings[edit]}"
-          Command="{Binding EditAccountCommand}"/>
+            IsVisible="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=View}"
+            Text="{Binding LocalizedStrings[edit]}"
+            Command="{Binding EditAccountCommand}"/>
        
           <controls:CustomButton
             IsVisible="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=View}"
@@ -164,10 +165,12 @@
           Text="{Binding LocalizedStrings[save_changes]}"
           Command="{Binding SaveAccountCommand}"/>
 
-        <controls:CustomButton
-          IsVisible="{Binding Parent, Converter={StaticResource ObjectToBoolConverter}, ConverterParameter=!}"
-          Text="{Binding LocalizedStrings[save_changes]}"
-          Command="{Binding SaveAccountCommand}"/>
+        <StackLayout IsVisible="{Binding IsOwnerOptionVisible}">
+          <controls:CustomButton
+            IsVisible="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=View}"
+            Text="{Binding LocalizedStrings[save_changes]}"
+            Command="{Binding SaveAccountCommand}"/>
+        </StackLayout>
         
         <controls:CustomButton
           IsVisible="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=Edit}"

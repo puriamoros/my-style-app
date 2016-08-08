@@ -20,7 +20,8 @@ namespace MyStyleApp.ViewModels
 
         public ICommand LoginCommand { get; private set; }
         public ICommand NewAccountCommand { get; private set; }
-
+        public ICommand ViewInformationCommand { get; private set; }
+        
         private IUsersService _usersService;
         private ValidationService _validationService;
 
@@ -41,6 +42,7 @@ namespace MyStyleApp.ViewModels
             this._validationService = validationService;
             this.LoginCommand = new Command(this.LoginAsync);
             this.NewAccountCommand = new Command(this.NewAccountAsync);
+            this.ViewInformationCommand = new Command(this.ViewInformationAsync);
 
             // We will always remember the user, but we leave the code as it is to
             // make things easier if we had to go back
@@ -166,6 +168,15 @@ namespace MyStyleApp.ViewModels
                     {
                         accountVM.Initialize();
                     });
+                });
+        }
+
+        private async void ViewInformationAsync()
+        {
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    await this.PushNavPageAsync<InformationViewModel>();
                 });
         }
     }

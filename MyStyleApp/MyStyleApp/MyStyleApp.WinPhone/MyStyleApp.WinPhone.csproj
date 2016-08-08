@@ -113,7 +113,10 @@
     <Content Include="CheckedCheckbox.png" />
     <Content Include="Email.png" />
     <Content Include="Establishment.png" />
+    <Content Include="Information.png" />
+    <Content Include="LogoLSI.png" />
     <Content Include="Phone.png" />
+    <Content Include="Ugr.png" />
     <Content Include="UncheckedCheckbox.png" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Client.png" />

@@ -156,20 +156,23 @@
         </StackLayout>
 
         <StackLayout Spacing="10" Orientation="Horizontal">
-          <Label Text="{Binding LocalizedStrings[automatic_confirm_type]}" Style="{StaticResource MediumTextStyle}"/>
+          <Label Text="{Binding LocalizedStrings[automatic_confirm_type]}"
+            Style="{StaticResource MediumTextStyle}" VerticalTextAlignment="Center"/>
           <Switch x:Name="ConfirmTypeSwitch"
             IsToggled="{Binding AutoConfirm}" Style="{StaticResource SwitchStyle}"
             IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
         </StackLayout>
 
         <StackLayout Spacing="10" Orientation="Horizontal">
-          <Label Text="{Binding LocalizedStrings[offered_services]}" Style="{StaticResource MediumTextStyle}"/>
+          <Label Text="{Binding LocalizedStrings[offered_services]}"
+            Style="{StaticResource MediumTextStyle}" VerticalTextAlignment="Center"/>
           <controls:CustomButton
             Text="{Binding LocalizedStrings[configure], StringFormat='{0}...'}"
             Command="{Binding OfferedServicesCommand}"
             HorizontalOptions="FillAndExpand"
             HeightRequest="{Binding Source={x:Reference Concurrence}, Path=Height}"
-            IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!Win}"/>
+            IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=!Win}"
+            IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
           <controls:CustomButton
             Text="{Binding LocalizedStrings[configure], StringFormat='{0}...'}"
             Command="{Binding OfferedServicesCommand}"

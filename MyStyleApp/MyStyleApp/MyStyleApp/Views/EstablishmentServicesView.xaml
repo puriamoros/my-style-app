@@ -81,7 +81,7 @@
                   IsToggled="{Binding Selected}" Style="{StaticResource ScaledSwitchStyle}"
                   SizeChanged="OnSwitchSizeChanged"/>
 
-                <StackLayout Grid.Column="1">
+                <StackLayout Grid.Column="1" VerticalOptions="Center">
                   <Label Text="{Binding Name}" Style="{StaticResource SmallTextStyle}"
                     SizeChanged="OnLabelSizeChanged" VerticalTextAlignment="Center"/>
                 </StackLayout>

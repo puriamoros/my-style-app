@@ -11,7 +11,7 @@
 
   <Grid RowSpacing="0">
     <StackLayout Padding="{StaticResource TabContentPadding}">
-      <StackLayout Padding="0,10,0,11" Spacing="10"
+      <StackLayout Padding="0,10,0,10" Spacing="10"
         IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=iOS}">
         <Label
           Text="{Binding LocalizedStrings[appointments]}"

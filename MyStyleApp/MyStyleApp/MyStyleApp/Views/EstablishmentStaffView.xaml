@@ -17,7 +17,7 @@
     </Grid.RowDefinitions>
         
     <StackLayout Grid.Row="0" Padding="{StaticResource TabContentPadding}">
-      <StackLayout Padding="0,10,0,11" Spacing="10"
+      <StackLayout Padding="0,10,0,10" Spacing="10"
         IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=iOS}">
         <Label
           Text="{Binding LocalizedStrings[staff]}"
@@ -50,7 +50,18 @@
                   <StackLayout Padding="5,5,5,5">
                     <StackLayout>
                       <Label Style="{StaticResource MediumTextStyle}" FontAttributes="Bold"
-                        Text="{Binding StaffName}" />
+                        Text="{Binding StaffName}" SizeChanged="OnLabelSizeChanged"/>
+                    </StackLayout>
+                    <StackLayout>
+                      <Label Style="{StaticResource SmallTextStyle}"
+                        Text="{Binding Source={x:Reference StaffList}, Path=BindingContext.LocalizedStrings[user_type_2]}"
+                        IsVisible="{Binding UserType, Converter={StaticResource UserTypeToBoolConverter}, ConverterParameter=LimitedStaff}" />
+                      <Label Style="{StaticResource SmallTextStyle}"
+                        Text="{Binding Source={x:Reference StaffList}, Path=BindingContext.LocalizedStrings[user_type_3]}"
+                        IsVisible="{Binding UserType, Converter={StaticResource UserTypeToBoolConverter}, ConverterParameter=Staff}" />
+                      <Label Style="{StaticResource SmallTextStyle}"
+                        Text="{Binding Source={x:Reference StaffList}, Path=BindingContext.LocalizedStrings[user_type_4]}"
+                        IsVisible="{Binding UserType, Converter={StaticResource UserTypeToBoolConverter}, ConverterParameter=AuthorizedStaff}" />
                     </StackLayout>                 
                   </StackLayout>                   
                 </Grid>

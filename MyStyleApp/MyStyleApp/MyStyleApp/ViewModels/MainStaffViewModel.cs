@@ -70,8 +70,6 @@ namespace MyStyleApp.ViewModels
         {
             this._establishmentAppointmentsViewModel.InitializeAsync();
             this._accountDetailsViewModel.Initialize(this._userService.LoggedUser);
-
-            this.SetMainPageTabAsync<EstablishmentAppointmentsViewModel>();
         }
 
         public EstablishmentAppointmentsViewModel EstablishmentAppointmentsViewModel

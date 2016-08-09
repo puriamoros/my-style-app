@@ -59,6 +59,14 @@ namespace MvvmCore
             {
                 TViewModel viewModel;
                 var view = _viewFactory.Resolve<TViewModel>(out viewModel, setStateAction);
+                if(view is TabbedPage)
+                {
+                    TabbedPage tabbed = view as TabbedPage;
+                    if(tabbed.Children.Count > 0)
+                    {
+                        tabbed.CurrentPage = tabbed.Children[0];
+                    }
+                }
                 Application.Current.MainPage = new NavigationPage(view);
 
                 tcs.SetResult(viewModel);
@@ -73,6 +81,14 @@ namespace MvvmCore
             _deviceService.BeginInvokeOnMainThread(() =>
             {
                 var view = _viewFactory.Resolve(viewModel);
+                if (view is TabbedPage)
+                {
+                    TabbedPage tabbed = view as TabbedPage;
+                    if (tabbed.Children.Count > 0)
+                    {
+                        tabbed.CurrentPage = tabbed.Children[0];
+                    }
+                }
                 Application.Current.MainPage = new NavigationPage(view);
                 tcs.SetResult(viewModel);
             });

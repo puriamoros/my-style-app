@@ -2,6 +2,7 @@
 using MvvmCore;
 using MyStyleApp.Services.Backend;
 using MyStyleApp.Enums;
+using System.Threading.Tasks;
 
 namespace MyStyleApp.ViewModels
 {
@@ -42,8 +43,6 @@ namespace MyStyleApp.ViewModels
             this._ownerEstablishmentsViewModel.InitializeAsync();
             this._establishmentStaffViewModel.InitializeAsync();
             this._accountDetailsViewModel.Initialize(this._userService.LoggedUser);
-
-            this.SetMainPageTabAsync<EstablishmentAppointmentsViewModel>();
         }
 
         public EstablishmentAppointmentsViewModel EstablishmentAppointmentsViewModel

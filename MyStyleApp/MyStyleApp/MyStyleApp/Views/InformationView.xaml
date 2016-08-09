@@ -5,16 +5,22 @@
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
              xmlns:gestures="clr-namespace:MyStyleApp.Views.Gestures"
              xmlns:views="clr-namespace:MyStyleApp.Views"
-             Padding="{StaticResource PagePadding}">
+             Padding="{StaticResource PagePadding}"
+             Title="{Binding Title}">
+  
   <ScrollView>
       <StackLayout 
-        Spacing="15" Padding="{StaticResource PageContentPadding}">      
+        Spacing="15" Padding="{StaticResource PageContentPadding}">
+        <Label
+          Text="{Binding Title}"
+          Style="{StaticResource TitleTextStyle}"
+          IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>
+        
         <Label
           Text="{Binding LocalizedStrings[information_text]}"
           Style="{StaticResource SmallTextStyle}" />
 
-        <!--<Image Aspect="AspectFit" Source="Ugr.png"></Image>
-        <Image Aspect="AspectFit" Source="LogoLSI.png"></Image>-->
+        <BoxView HeightRequest="1" BackgroundColor="Gray" />
         <StackLayout>
           <Label
           Text="Promovido por"
@@ -38,20 +44,16 @@
               gestures:TappedGesture.CommandParameter="http://lsi.ugr.es"/>
           </RelativeLayout>         
         </StackLayout>
-      
+
+        <BoxView HeightRequest="1" BackgroundColor="Gray" />
         <Label
-          Text="Desarrollado por"
+          Text="{Binding LocalizedStrings[developed_by_text]}"
           Style="{StaticResource SmallTextStyle}" />
+        <BoxView HeightRequest="1" BackgroundColor="Gray" />
         <Label
-          Text="Purificación Amorós Molina puri.amoros@gmail.com"
-          Style="{StaticResource SmallTextStyle}" />
-        
-        <Label
-            Text="Tutorizado por"
+            Text="{Binding LocalizedStrings[mentored_by_text]}"
             Style="{StaticResource SmallTextStyle}" />
-        <Label
-            Text="Rosana Montes Soldado rosana@ugr.es"
-            Style="{StaticResource SmallTextStyle}" />
+        <BoxView HeightRequest="1" BackgroundColor="Gray" />
       </StackLayout>     
   </ScrollView>
 </views:CustomContentPage>

@@ -71,11 +71,29 @@ namespace MyStyleApp.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MyStyleApp es una aplicación desarrollada como Trabajo de Fin de Grado de Ingeniería Informática de la Universidad de Granada. El trabajo ha sido tutorizado por la profesora Rosana Montes Soldado del departamento de Lenguajes y Sistemas Informáticos.\nLa aplicación está dirigida tanto a clientes como a propietarios y empleados de peluquerías y centros de estética. Facilita al cliente la búsqueda de servicios ofertados y la solicitud de citas para los mismos, y al propietario y los empleados, la gestión de c [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Desarrollado por:\n  Purificación Amorós Molina\n  puri.amoros@gmail.com.
+        /// </summary>
+        internal static string developed_by_text {
+            get {
+                return ResourceManager.GetString("developed_by_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MyStyleApp es una aplicación desarrollada como Trabajo de Fin de Grado de Ingeniería Informática de la Universidad de Granada. El trabajo ha sido tutorizado por la profesora Rosana Montes Soldado del departamento de Lenguajes y Sistemas Informáticos.\n\nMyStyleApp está dirigida tanto a clientes como a propietarios y empleados de peluquerías y centros de estética. Facilita al cliente la búsqueda de servicios ofertados y la solicitud de citas para los mismos, y al propietario y los empleados, la gestión de ci [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string information_text {
             get {
                 return ResourceManager.GetString("information_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tutorizado por:\n  Rosana Montes Soldado\n  rosana@ugr.es.
+        /// </summary>
+        internal static string mentored_by_text {
+            get {
+                return ResourceManager.GetString("mentored_by_text", resourceCulture);
             }
         }
         
@@ -526,6 +544,123 @@ namespace MyStyleApp.Localization {
         internal static string province_9 {
             get {
                 return ResourceManager.GetString("province_9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1. Descripción del servicio.
+        /// </summary>
+        internal static string terms_of_use_1 {
+            get {
+                return ResourceManager.GetString("terms_of_use_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MyStyleApp es una aplicación para la gestión para peluquerías y centros de estética que permite la búsqueda de servicios y reserva de citas por parte de clientes y la aceptación o rechazo de estas por parte de los propietarios y/o empleados de los establecimientos desarrollada como Trabajo de Fin de Grado de Ingeniería Informática de la Universidad de Granada..
+        /// </summary>
+        internal static string terms_of_use_1_body {
+            get {
+                return ResourceManager.GetString("terms_of_use_1_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2. Prestación del servicio.
+        /// </summary>
+        internal static string terms_of_use_2 {
+            get {
+                return ResourceManager.GetString("terms_of_use_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La Organización no se hace responsable de la interrupción de cualquier servicio o del acceso a la app sin previo aviso, ya sea por motivos de seguridad, técnicos o causados por un tercero.\nAsimismo, la Organización se reserva la capacidad de modificar las presentes condiciones de uso así como las condiciones particulares que, en su caso, se puedan incluir..
+        /// </summary>
+        internal static string terms_of_use_2_body {
+            get {
+                return ResourceManager.GetString("terms_of_use_2_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3. Registro de usuarios.
+        /// </summary>
+        internal static string terms_of_use_3 {
+            get {
+                return ResourceManager.GetString("terms_of_use_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El acceso a la app se realiza previa creación de cuenta de usuario y aceptados los términos de uso. Una vez aceptado y realizado el registro, la persona usuaria se compromete a hacer un uso adecuado de los contenidos y servicios que se ofrecen en la app. la persona usuaria será responsable de aportar datos veraces y lícitos, no atentar contra los derechos de intimidad, privacidad, imagen, de propiedad intelectual o industrial, que correspondan a terceros, mantener la información de contacto correcta y actua [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string terms_of_use_3_body {
+            get {
+                return ResourceManager.GetString("terms_of_use_3_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4. Derecho de exclusión.
+        /// </summary>
+        internal static string terms_of_use_4 {
+            get {
+                return ResourceManager.GetString("terms_of_use_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La Organización se reserva el derecho a dar de baja o denegar el acceso a la app, sin previo aviso, a aquellas personas usuarias que no cumplan las presentes condiciones generales de uso, o las condiciones específicas que se señalen en su caso..
+        /// </summary>
+        internal static string terms_of_use_4_body {
+            get {
+                return ResourceManager.GetString("terms_of_use_4_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5. Baja voluntaria del usuario.
+        /// </summary>
+        internal static string terms_of_use_5 {
+            get {
+                return ResourceManager.GetString("terms_of_use_5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Si llegado un momento la persona usuaria desea darse de baja de la app, puede hacerlo enviando un correo electrónico a alguna de las siguientes direcciones: puri.amoros@gmail.com, rosana@ugr.es.
+        /// </summary>
+        internal static string terms_of_use_5_body {
+            get {
+                return ResourceManager.GetString("terms_of_use_5_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 6. Cancelación de los datos del usuario.
+        /// </summary>
+        internal static string terms_of_use_6 {
+            get {
+                return ResourceManager.GetString("terms_of_use_6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to En caso de que se produzca la baja voluntaria del usuario en el servicio, o esta se lleve a cabo por otros motivos, como el incumplimiento de las condiciones de uso, sus datos pasarán a ser cancelados de acuerdo a lo establecido en la Ley Orgánica de Protección de Datos..
+        /// </summary>
+        internal static string terms_of_use_6_body {
+            get {
+                return ResourceManager.GetString("terms_of_use_6_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aquí va el texto de los términos de uso.
+        /// </summary>
+        internal static string terms_of_use_text {
+            get {
+                return ResourceManager.GetString("terms_of_use_text", resourceCulture);
             }
         }
     }

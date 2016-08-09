@@ -28,6 +28,8 @@ namespace MyStyleApp.ViewModels
         public Command CancelCommand { get; private set; }
         public Command ChangePasswordAccountCommand { get; private set; }
         public Command LogOutCommand { get; private set; }
+        public Command ViewTermsOfUseCommand { get; private set; }
+        
 
         private string _name;
         private string _surname;
@@ -40,6 +42,7 @@ namespace MyStyleApp.ViewModels
 
         private bool _isTitleVisible;
         private bool _isOwnerOptionVisible;
+        private bool _termsOfUseAcepted;
 
         private ObservableCollection<UserType> _userTypeList;
         private UserType _selectedUserType;
@@ -68,6 +71,7 @@ namespace MyStyleApp.ViewModels
             this.CancelCommand = new Command(this.Cancel);
             this.ChangePasswordAccountCommand = new Command(this.ChangePasswordAccountAsync);
             this.LogOutCommand = new Command(this.LogOutAsync);
+            this.ViewTermsOfUseCommand = new Command(this.ViewTermsOfUseAsync);
             
             this.Mode = BaseModeEnum.View;
             
@@ -96,6 +100,7 @@ namespace MyStyleApp.ViewModels
             this.ErrorText = "";
 
             this.Mode = mode;
+            this.TermsOfUseAcepted = false;
         }
 
         public BaseModeEnum Mode
@@ -229,6 +234,12 @@ namespace MyStyleApp.ViewModels
             set { SetProperty(ref _isOwnerOptionVisible, value); }
         }
 
+        public bool TermsOfUseAcepted
+        {
+            get { return _termsOfUseAcepted; }
+            set { SetProperty(ref _termsOfUseAcepted, value); }
+        }
+       
         protected virtual void ConfigureValidationService()
         {
             // Alwais clear validators before adding
@@ -323,6 +334,10 @@ namespace MyStyleApp.ViewModels
         protected virtual async void LogOutAsync()
         {
         }
+        protected virtual async void ViewTermsOfUseAsync()
+        {
+        }
+        
 
         protected virtual bool CanSaveAccount()
         {
@@ -334,7 +349,7 @@ namespace MyStyleApp.ViewModels
         {
             return !string.IsNullOrEmpty(this.Name) && !string.IsNullOrEmpty(this.Surname) && !string.IsNullOrEmpty(this.Phone) 
                 && !string.IsNullOrEmpty(this.Email) && !string.IsNullOrEmpty(this.RepeatEmail) 
-                && !string.IsNullOrEmpty(this.Password) && !string.IsNullOrEmpty(this.RepeatPassword);
+                && !string.IsNullOrEmpty(this.Password) && !string.IsNullOrEmpty(this.RepeatPassword) && this.TermsOfUseAcepted;
         }
 
     }

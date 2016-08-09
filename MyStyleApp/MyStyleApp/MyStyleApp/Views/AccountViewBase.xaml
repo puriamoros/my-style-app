@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyStyleApp.Views.AccountViewBase"
              xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
+             xmlns:gestures="clr-namespace:MyStyleApp.Views.Gestures"
              xmlns:views="clr-namespace:MyStyleApp.Views"
              Padding="{StaticResource PagePadding}"
              Title="{Binding Title}" Icon="User.png">
@@ -37,7 +38,7 @@
           <Label
             Text="{Binding LocalizedStrings[name]}"
             Style="{StaticResource MediumTextStyle}" />
-          <Entry
+          <Entry x:Name="Name"
             Placeholder="{Binding LocalizedStrings[name_placeholder]}"
             Text="{Binding Name}"
             Keyboard="Text"
@@ -133,6 +134,25 @@
             Title="{Binding ChooseItemPlaceholder}"/>
         </StackLayout>
         <!--Onwer-->
+
+        <Grid IsVisible="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=Create}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <controls:CheckBoxImage Grid.Column="0"
+            CheckedSource="CheckedCheckbox.png"
+            UncheckedSource="UncheckedCheckbox.png"
+            IsChecked="{Binding TermsOfUseAcepted}"
+            HeightRequest="{Binding Source={x:Reference Name}, Path=Height}"
+            WidthRequest="{Binding Source={x:Reference Name}, Path=Height}"/>
+          <StackLayout Grid.Column="1">
+            <Label VerticalTextAlignment="Center" VerticalOptions="FillAndExpand"
+              Text="{Binding LocalizedStrings[terms_of_use]}"
+              Style="{StaticResource SmallTextStyle}"
+              gestures:TappedGesture.Command="{Binding ViewTermsOfUseCommand}"/>
+          </StackLayout>
+        </Grid>
         
         <StackLayout>
           <Label

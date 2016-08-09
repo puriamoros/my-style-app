@@ -9,15 +9,15 @@ using MvvmCore;
 
 namespace MyStyleApp.ViewModels
 {
-    public class InformationViewModel : NavigableViewModelBase
+    public class TermsOfUseViewModel : NavigableViewModelBase
     {
-        public InformationViewModel(
+        public TermsOfUseViewModel(
             INavigator navigator,
             IUserNotificator userNotificator,
             LocalizedStringsService localizedStringsService) :
             base(navigator, userNotificator, localizedStringsService)
         {
-            this.Title = this.LocalizedStrings.GetString("information");
+            this.Title = this.LocalizedStrings.GetString("terms_of_use_title");
         }      
     }
 }

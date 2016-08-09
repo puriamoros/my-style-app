@@ -540,4 +540,13 @@
   <data name="logout_confirmation_body" xml:space="preserve">
     <value>Estás a punto de desconectarte. ¿Desea continuar?</value>
   </data>
+  <data name="information" xml:space="preserve">
+    <value>Información</value>
+  </data>
+  <data name="terms_of_use" xml:space="preserve">
+    <value>He leído y acepto los términos de uso (ver)</value>
+  </data>
+  <data name="terms_of_use_title" xml:space="preserve">
+    <value>Términos de uso</value>
+  </data>
 </root>

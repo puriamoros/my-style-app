@@ -110,9 +110,16 @@ namespace MyStyleApp.ViewModels
                        this.LocalizedStrings.GetString("ok"));
 
                     await this.PopNavPageAsync();
-                });
+                });           
+        }
 
-            
+        protected override async void ViewTermsOfUseAsync()
+        {
+            await this.ExecuteBlockingUIAsync(
+                async () =>
+                {
+                    await this.PushNavPageAsync<TermsOfUseViewModel>();
+                });
         }
 
     }

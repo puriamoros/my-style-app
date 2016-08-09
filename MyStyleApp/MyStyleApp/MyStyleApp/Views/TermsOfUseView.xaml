@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:CustomContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyStyleApp.Views.TermsOfUseView"
+             xmlns:controls="clr-namespace:MyStyleApp.Views.Controls"
+             xmlns:gestures="clr-namespace:MyStyleApp.Views.Gestures"
+             xmlns:views="clr-namespace:MyStyleApp.Views"
+             Padding="{StaticResource PagePadding}"
+             Title="{Binding Title}">
+  
+  <ScrollView>
+      <StackLayout 
+        Spacing="15" Padding="{StaticResource PageContentPadding}">
+        <Label
+          Text="{Binding Title}"
+          Style="{StaticResource TitleTextStyle}"
+          IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>
+        
+        <StackLayout>
+          <Label
+          Text="{Binding LocalizedStrings[terms_of_use_1]}"
+          Style="{StaticResource MicroTextStyle}" 
+          FontAttributes="Bold"/>
+          <Label
+            Text="{Binding LocalizedStrings[terms_of_use_1_body]}"
+            Style="{StaticResource MicroTextStyle}" />
+        </StackLayout>
+        <StackLayout>
+          <Label
+          Text="{Binding LocalizedStrings[terms_of_use_2]}"
+          Style="{StaticResource MicroTextStyle}"
+          FontAttributes="Bold"/>
+          <Label
+            Text="{Binding LocalizedStrings[terms_of_use_2_body]}"
+            Style="{StaticResource MicroTextStyle}" />
+        </StackLayout>
+        <StackLayout>
+          <Label
+          Text="{Binding LocalizedStrings[terms_of_use_3]}"
+          Style="{StaticResource MicroTextStyle}"
+          FontAttributes="Bold"/>
+          <Label
+            Text="{Binding LocalizedStrings[terms_of_use_3_body]}"
+            Style="{StaticResource MicroTextStyle}" />
+        </StackLayout>
+        <StackLayout>
+          <Label
+          Text="{Binding LocalizedStrings[terms_of_use_4]}"
+          Style="{StaticResource MicroTextStyle}"
+          FontAttributes="Bold"/>
+          <Label
+            Text="{Binding LocalizedStrings[terms_of_use_4_body]}"
+            Style="{StaticResource MicroTextStyle}" />
+        </StackLayout>
+        <StackLayout>
+          <Label
+          Text="{Binding LocalizedStrings[terms_of_use_5]}"
+          Style="{StaticResource MicroTextStyle}"
+          FontAttributes="Bold"/>
+          <Label
+            Text="{Binding LocalizedStrings[terms_of_use_5_body]}"
+            Style="{StaticResource MicroTextStyle}" />
+        </StackLayout>
+        <StackLayout>
+          <Label
+          Text="{Binding LocalizedStrings[terms_of_use_6]}"
+          Style="{StaticResource MicroTextStyle}"
+          FontAttributes="Bold"/>
+          <Label
+            Text="{Binding LocalizedStrings[terms_of_use_6_body]}"
+            Style="{StaticResource MicroTextStyle}" />
+        </StackLayout>
+
+      </StackLayout>     
+  </ScrollView>
+</views:CustomContentPage>

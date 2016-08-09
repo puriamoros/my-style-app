@@ -448,9 +448,6 @@
     <value>Map</value>
   </data>
   <data name="staff_account" xml:space="preserve">
-    <value>Staff details</value>
-  </data>
-  <data name="staff_account" xml:space="preserve">
     <value>Staff account</value>
   </data>
   <data name="account_modified" xml:space="preserve">
@@ -542,5 +539,14 @@
   </data>
   <data name="logout_confirmation_body" xml:space="preserve">
     <value>You are about to disconnect. Do you want to continue?</value>
+  </data>
+  <data name="information" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="terms_of_use" xml:space="preserve">
+    <value>I have read and accept the terms of use (view)</value>
+  </data>
+  <data name="terms_of_use_title" xml:space="preserve">
+    <value>Terms of use</value>
   </data>
 </root>

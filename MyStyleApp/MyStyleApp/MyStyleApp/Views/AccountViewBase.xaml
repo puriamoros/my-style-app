@@ -16,12 +16,21 @@
       <StackLayout Grid.Row="0"
         Padding="{StaticResource TabContentPadding}"
         Spacing="15">
-        <StackLayout Spacing="0"
-          IsVisible="{Binding IsTitleVisible}">
+        <StackLayout Spacing="0" IsVisible="{Binding IsTitleVisible}">
           <Label
               Text="{Binding Title}"
               Style="{StaticResource TitleTextStyle}"
               IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>
+        </StackLayout>
+        <StackLayout Spacing="0" IsVisible="{Binding IsTitleVisible, Converter={StaticResource NegateConverter}}">
+          <StackLayout Padding="0,10,0,10" Spacing="10"
+            IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=iOS}">
+            <Label
+              Text="{Binding Title}"
+              Style="{StaticResource TitleTextStyle}"
+              FontAttributes="Bold"/>
+            <BoxView HeightRequest="0.25" BackgroundColor="{StaticResource IOSGrayColor}" />
+          </StackLayout>
         </StackLayout>
         
         <StackLayout Spacing="0" >

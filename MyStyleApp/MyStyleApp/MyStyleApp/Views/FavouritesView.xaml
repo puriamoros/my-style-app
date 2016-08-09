@@ -10,66 +10,76 @@
   
   <Grid RowSpacing="0">
     <Grid Padding="{StaticResource TabContentPadding}" RowSpacing="0">
-      <!-- Without HasUnevenRows="True", list items does not render well in Android -->
-      <ListView x:Name="FavouritesList"
-        ItemsSource="{Binding FavouritesList}"
-        HasUnevenRows="True"
-        gestures:ListViewItemTapped.Command="{Binding ViewDetailsCommand}"
-        ItemSelected="OnItemListSelection">
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <ViewCell x:Name="Favourite">
-              <StackLayout Padding="{StaticResource ListViewItemPadding}">
-                <StackLayout>
-                  <Label Text="{Binding Name}" Style="{StaticResource LargeTextStyle}" FontAttributes="Bold"/>
-                </StackLayout>
-
-                <Grid>
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="7*" />
-                    <ColumnDefinition Width="93*" />
-                  </Grid.ColumnDefinitions>
-                  <RelativeLayout Grid.Column="0">
-                    <Image Aspect="AspectFit" Source="Marker.png"
-                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
-                      RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.1}"
-                      gestures:TappedGesture.Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.ShowMapCommand}"
-                      gestures:TappedGesture.CommandParameter="{Binding Source={x:Reference Favourite}, Path=BindingContext}"/>
-                  </RelativeLayout>
-                  <StackLayout Grid.Column="1">
-                    <Label Text="{Binding Address}" Style="{StaticResource MediumTextStyle}" SizeChanged="OnLabelSizeChanged"/>
+      <StackLayout>
+        <StackLayout Padding="0,10,0,10" Spacing="10"
+          IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=iOS}">
+          <Label
+            Text="{Binding LocalizedStrings[favourites]}"
+            Style="{StaticResource TitleTextStyle}"
+            FontAttributes="Bold"/>
+          <BoxView HeightRequest="0.25" BackgroundColor="{StaticResource IOSGrayColor}" />
+        </StackLayout>
+        <!-- Without HasUnevenRows="True", list items does not render well in Android -->
+        <ListView x:Name="FavouritesList"
+          ItemsSource="{Binding FavouritesList}"
+          HasUnevenRows="True"
+          gestures:ListViewItemTapped.Command="{Binding ViewDetailsCommand}"
+          ItemSelected="OnItemListSelection">
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell x:Name="Favourite">
+                <StackLayout Padding="{StaticResource ListViewItemPadding}">
+                  <StackLayout>
+                    <Label Text="{Binding Name}" Style="{StaticResource LargeTextStyle}" FontAttributes="Bold"/>
                   </StackLayout>
-                </Grid>
-                  
-                <StackLayout>
-                  <Label Text="{Binding ProvinceName}" Style="{StaticResource MediumTextStyle}" />
+
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="7*" />
+                      <ColumnDefinition Width="93*" />
+                    </Grid.ColumnDefinitions>
+                    <RelativeLayout Grid.Column="0">
+                      <Image Aspect="AspectFit" Source="Marker.png"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.1}"
+                        gestures:TappedGesture.Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.ShowMapCommand}"
+                        gestures:TappedGesture.CommandParameter="{Binding Source={x:Reference Favourite}, Path=BindingContext}"/>
+                    </RelativeLayout>
+                    <StackLayout Grid.Column="1">
+                      <Label Text="{Binding Address}" Style="{StaticResource MediumTextStyle}" SizeChanged="OnLabelSizeChanged"/>
+                    </StackLayout>
+                  </Grid>
+
+                  <StackLayout>
+                    <Label Text="{Binding ProvinceName}" Style="{StaticResource MediumTextStyle}" />
+                  </StackLayout>
+
+                  <BoxView HeightRequest="1" BackgroundColor="Gray"
+                    IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}" />
+
                 </StackLayout>
 
-                <BoxView HeightRequest="1" BackgroundColor="Gray"
-                  IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}" />
-                
-              </StackLayout>
-                
-             <ViewCell.ContextActions>
-                <MenuItem Text="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.LocalizedStrings[view_details]}"
-                  Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.ViewDetailsCommand}"
-                  CommandParameter="{Binding Source={x:Reference Favourite}, Path=BindingContext}" />
-                <MenuItem Text="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.LocalizedStrings[delete_favourite]}"
-                  IsDestructive="True"
-                  Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.DeleteFavouriteCommand}"
-                  CommandParameter="{Binding Source={x:Reference Favourite}, Path=BindingContext}" />
-              </ViewCell.ContextActions>
-            </ViewCell>
-            
-            
-          </DataTemplate>
-        </ListView.ItemTemplate>
+                <ViewCell.ContextActions>
+                  <MenuItem Text="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.LocalizedStrings[view_details]}"
+                    Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.ViewDetailsCommand}"
+                    CommandParameter="{Binding Source={x:Reference Favourite}, Path=BindingContext}" />
+                  <MenuItem Text="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.LocalizedStrings[delete_favourite]}"
+                    IsDestructive="True"
+                    Command="{Binding Source={x:Reference FavouritesList}, Path=BindingContext.DeleteFavouriteCommand}"
+                    CommandParameter="{Binding Source={x:Reference Favourite}, Path=BindingContext}" />
+                </ViewCell.ContextActions>
+              </ViewCell>
 
-        <ListView.Footer>
-          <Label />
-        </ListView.Footer>
-        
-      </ListView>
+
+            </DataTemplate>
+          </ListView.ItemTemplate>
+
+          <ListView.Footer>
+            <Label />
+          </ListView.Footer>
+
+        </ListView>
+      </StackLayout>
     </Grid>
     <controls:WaitingOverlayControl
       IsVisible="{Binding IsBusy}"

@@ -11,11 +11,13 @@
 
   <Grid RowSpacing="0">
     <StackLayout Padding="{StaticResource TabContentPadding}">
-      <StackLayout Padding="0,10,0,10"
+      <StackLayout Padding="0,10,0,10" Spacing="10"
         IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=iOS}">
         <Label
           Text="{Binding LocalizedStrings[appointments]}"
-          Style="{StaticResource TitleTextStyle}"/>
+          Style="{StaticResource TitleTextStyle}"
+          FontAttributes="Bold"/>
+        <BoxView HeightRequest="0.25" BackgroundColor="{StaticResource IOSGrayColor}" />
       </StackLayout>
       <!-- Without HasUnevenRows="True", list items does not render well in Android -->
       <ListView x:Name="AppointmentList"

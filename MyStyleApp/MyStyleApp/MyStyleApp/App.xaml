@@ -81,6 +81,7 @@
                   iOS="Default"
                   Android="Default"
                   WinPhone="Accent" />
+      <Color x:Key="IOSGrayColor">#BDBEC2</Color>
 
       <!-- Switch -->
       <Style x:Key="SwitchStyle" TargetType="Switch">

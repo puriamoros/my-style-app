@@ -109,7 +109,7 @@
           </Frame.Padding>
           <Frame.OutlineColor>
             <OnPlatform x:TypeArguments="Color"
-                        iOS="#BDBEC2"
+                        iOS="{StaticResource IOSGrayColor}"
                         Android="Gray"
                         WinPhone="Transparent" />
           </Frame.OutlineColor>

@@ -2,6 +2,7 @@
 
 How to add a new language:
 - Add a new resx resource named LocalizedStrings.<lang code>.resx to MyStyleApp\Localization.
+- Open its properties and clear "Custom Tool" field.
 - Add the new language code to MyStyleApp.iOS -> Info.plist (open it with a text editor).
 - Add the new language code to MyStyleApp.WinPhone -> Package.appxmanifest (open it with a text editor).
 

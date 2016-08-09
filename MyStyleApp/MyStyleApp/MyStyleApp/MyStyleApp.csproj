@@ -106,21 +106,6 @@
     <Compile Include="Services\ICalendarService.cs" />
     <Compile Include="Services\IFileStorageService.cs" />
     <Compile Include="Services\ILocalizationService.cs" />
-    <Compile Include="Localization\LocalizedStrings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LocalizedStrings.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Localization\LocalizedStrings.es.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LocalizedStrings.es.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Localization\NonLocalizedStrings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>NonLocalizedStrings.resx</DependentUpon>
-    </Compile>
     <Compile Include="Services\Backend\IUsersService.cs" />
     <Compile Include="Services\IPushNotificationsService.cs" />
     <Compile Include="Services\LocalizedStringsService.cs" />
@@ -295,18 +280,13 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Localization\LocalizedStrings.es.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LocalizedStrings.es.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\LocalizedStrings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>LocalizedStrings1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\NonLocalizedStrings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>NonLocalizedStrings.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\LoginView.xaml">

@@ -11,13 +11,13 @@
   <Grid RowSpacing="0">
     <Grid Padding="{StaticResource TabContentPadding}" RowSpacing="0">
       <StackLayout>
-        <StackLayout Padding="0,10,0,10" Spacing="10"
+        <StackLayout Padding="0,10,0,11" Spacing="10"
           IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=iOS}">
           <Label
             Text="{Binding LocalizedStrings[favourites]}"
             Style="{StaticResource TitleTextStyle}"
             FontAttributes="Bold"/>
-          <BoxView HeightRequest="0.25" BackgroundColor="{StaticResource IOSGrayColor}" />
+          <BoxView HeightRequest="0.5" BackgroundColor="{StaticResource IOSGrayColor}" />
         </StackLayout>
         <!-- Without HasUnevenRows="True", list items does not render well in Android -->
         <ListView x:Name="FavouritesList"

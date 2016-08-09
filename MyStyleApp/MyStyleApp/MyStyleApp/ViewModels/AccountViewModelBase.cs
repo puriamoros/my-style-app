@@ -74,7 +74,6 @@ namespace MyStyleApp.ViewModels
             this.ViewTermsOfUseCommand = new Command(this.ViewTermsOfUseAsync);
             
             this.Mode = BaseModeEnum.View;
-            
         }
 
         protected void Initialize(User user, BaseModeEnum mode)
@@ -239,7 +238,7 @@ namespace MyStyleApp.ViewModels
             get { return _termsOfUseAcepted; }
             set { SetProperty(ref _termsOfUseAcepted, value); }
         }
-       
+
         protected virtual void ConfigureValidationService()
         {
             // Alwais clear validators before adding

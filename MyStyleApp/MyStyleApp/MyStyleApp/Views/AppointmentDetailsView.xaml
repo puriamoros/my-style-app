@@ -100,7 +100,7 @@
         <Label Grid.Row="0"
             Style="{StaticResource MediumTextStyle}" FontAttributes="Bold"
             Text="{Binding LocalizedStrings[notes]}"/>
-        <Frame Grid.Row="1">
+        <Frame Grid.Row="1" HasShadow="False">
           <Frame.Padding>
             <OnPlatform x:TypeArguments="Thickness"
                         iOS="5"

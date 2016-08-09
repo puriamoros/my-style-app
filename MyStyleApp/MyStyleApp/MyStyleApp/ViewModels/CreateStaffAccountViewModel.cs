@@ -31,7 +31,7 @@ namespace MyStyleApp.ViewModels
             this._establishmentsService = establishmentsService;
             this._usersService = usersService;
 
-            this.Title = this.LocalizedStrings.GetString("new_staff");
+            this.Title = this.LocalizedStrings.GetString("create_staff");
             this.IsTitleVisible = true;
             this.IsOwnerOptionVisible = false;
 

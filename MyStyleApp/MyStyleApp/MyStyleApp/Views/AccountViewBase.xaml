@@ -24,13 +24,13 @@
               IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=Win}"/>
         </StackLayout>
         <StackLayout Spacing="0" IsVisible="{Binding IsTitleVisible, Converter={StaticResource NegateConverter}}">
-          <StackLayout Padding="0,10,0,10" Spacing="10"
+          <StackLayout Padding="0,10,0,11" Spacing="10"
             IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=iOS}">
             <Label
               Text="{Binding Title}"
               Style="{StaticResource TitleTextStyle}"
               FontAttributes="Bold"/>
-            <BoxView HeightRequest="0.25" BackgroundColor="{StaticResource IOSGrayColor}" />
+            <BoxView HeightRequest="0.5" BackgroundColor="{StaticResource IOSGrayColor}" />
           </StackLayout>
         </StackLayout>
         
@@ -169,7 +169,7 @@
 
         <controls:CustomButton
             IsVisible="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=Create}"
-            Text="{Binding LocalizedStrings[create_account]}"
+            Text="{Binding Title}"
             Command="{Binding CreateAccountCommand}"/>
         
         <StackLayout IsVisible="{Binding IsOwnerOptionVisible, Converter={StaticResource NegateConverter}}">  

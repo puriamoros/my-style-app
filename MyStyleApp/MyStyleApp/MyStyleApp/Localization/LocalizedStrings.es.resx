@@ -414,8 +414,8 @@
   <data name="staff" xml:space="preserve">
     <value>Empleados</value>
   </data>
-  <data name="new_staff" xml:space="preserve">
-    <value>Nuevo empleado</value>
+  <data name="create_staff" xml:space="preserve">
+    <value>Crear empleado</value>
   </data>
   <data name="user_type" xml:space="preserve">
     <value>Tipo de usuario</value>

@@ -414,8 +414,8 @@
   <data name="staff" xml:space="preserve">
     <value>Staff</value>
   </data>
-  <data name="new_staff" xml:space="preserve">
-    <value>New staff</value>
+  <data name="create_staff" xml:space="preserve">
+    <value>Create staff</value>
   </data>
   <data name="user_type" xml:space="preserve">
     <value>User type</value>

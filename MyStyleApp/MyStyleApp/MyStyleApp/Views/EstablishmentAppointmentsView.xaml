@@ -17,7 +17,7 @@
           Text="{Binding LocalizedStrings[appointments]}"
           Style="{StaticResource TitleTextStyle}"
           FontAttributes="Bold"/>
-        <BoxView HeightRequest="0.25" BackgroundColor="{StaticResource IOSGrayColor}" />
+        <BoxView HeightRequest="0.5" BackgroundColor="{StaticResource IOSGrayColor}" />
       </StackLayout>
       <StackLayout Padding="0,0,0,10" Spacing="0"
         IsVisible="{Binding IsEstablishmentSelectionEnabled}">

@@ -17,13 +17,13 @@
     </Grid.RowDefinitions>
         
     <StackLayout Grid.Row="0" Padding="{StaticResource TabContentPadding}">
-      <StackLayout Padding="0,10,0,10" Spacing="10"
+      <StackLayout Padding="0,10,0,11" Spacing="10"
         IsVisible="{Binding Converter={StaticResource PlatformToBoolConverter}, ConverterParameter=iOS}">
         <Label
           Text="{Binding LocalizedStrings[staff]}"
           Style="{StaticResource TitleTextStyle}"
           FontAttributes="Bold"/>
-        <BoxView HeightRequest="0.25" BackgroundColor="{StaticResource IOSGrayColor}" />
+        <BoxView HeightRequest="0.5" BackgroundColor="{StaticResource IOSGrayColor}" />
       </StackLayout>
       <StackLayout Padding="0,0,0,10" Spacing="0">
         <Label
@@ -83,7 +83,7 @@
         Padding="{StaticResource TabContentEndPadding}"
         VerticalOptions="End">
       <controls:CustomButton
-        Text="{Binding LocalizedStrings[new_staff]}"
+        Text="{Binding LocalizedStrings[create_staff]}"
         Command="{Binding NewStaffCommand}"/>
     </StackLayout>
     

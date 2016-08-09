@@ -74,7 +74,10 @@ namespace MyStyleApp.ViewModels
                         await this._appointmentsService.UpdateAppointmentNotesAsync(this.Appointment, this.Notes);
                         this.Appointment.Notes = this.Notes;
 
-                        //TODO: avisar al usuario de que las notas se han actualizado
+                        await this.UserNotificator.DisplayAlert(
+                            this.LocalizedStrings.GetString("notes_modified"),
+                            this.LocalizedStrings.GetString("notes_modified_body"),
+                            this.LocalizedStrings.GetString("ok"));
                     });
         }
 

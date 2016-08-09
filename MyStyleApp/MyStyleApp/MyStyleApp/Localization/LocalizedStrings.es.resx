@@ -438,6 +438,12 @@
   <data name="notes" xml:space="preserve">
     <value>Notas</value>
   </data>
+  <data name="notes_modified" xml:space="preserve">
+    <value>Notas modificadas</value>
+  </data>
+  <data name="notes_modified_body" xml:space="preserve">
+    <value>Las notas de la cita han sido modificadas correctamente</value>
+  </data>
   <data name="map" xml:space="preserve">
     <value>Mapa</value>
   </data>

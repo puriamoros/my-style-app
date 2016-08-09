@@ -298,6 +298,7 @@
     <EmbeddedResource Include="Localization\LocalizedStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>LocalizedStrings1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\NonLocalizedStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>

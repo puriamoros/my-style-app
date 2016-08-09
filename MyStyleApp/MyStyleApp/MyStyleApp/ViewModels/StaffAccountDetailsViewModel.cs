@@ -117,9 +117,6 @@ namespace MyStyleApp.ViewModels
 
                             MessagingCenter.Send<Staff>(staff, "staffChanged");
 
-                            // TODO:
-                            // habría que mandar un push al empleado que se ha cambiado para que haga logout y entre con sus nuevos permisos
-
                             await this.UserNotificator.DisplayAlert(
                                this.LocalizedStrings.GetString("account_modified"),
                                this.LocalizedStrings.GetString("account_modified_body"),

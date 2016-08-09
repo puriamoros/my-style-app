@@ -158,7 +158,9 @@ class Users extends ModelWithIdBase
 		$data = $this->getBodyData();
 		$data[$this->users->password] = $this->encryptPassword($data[$this->users->password]);
 		$data[$this->users->apiKey] = $this->generateApiKey();
-		//throw new ApiException(STATE_DB_ERROR, $data);
+		$data[$this->users->platform] = '';
+		$data[$this->users->pushToken] = '';
+		$data[$this->users->languageCode] = '';
 
 		// TODO: Validate fields
 		

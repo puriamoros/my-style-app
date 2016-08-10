@@ -232,14 +232,7 @@ namespace MyStyleApp.ViewModels
 
                     this._resultsAction(establishmentType, shortenServices);
 
-                    if (Device.OS == TargetPlatform.Windows || Device.OS == TargetPlatform.WinPhone)
-                    {
-                        await this.PopNavPageAsync();
-                    }
-                    else
-                    {
-                        await this.PopNavPageModalAsync();
-                    }
+                    await this.PopNavPageAsync();
                 }
                 catch (FormatException ex)
                 {

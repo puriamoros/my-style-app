@@ -482,21 +482,10 @@ namespace MyStyleApp.ViewModels
                     var servicesCategories = await this._serviceCategoriesService.GetServiceCategoriesAsync();
                     var services = await this._servicesService.GetServicesAsync();
 
-                    // There is a problem with one element of the view when showing page as modal on WinPhone
-                    if (Device.OS == TargetPlatform.Windows || Device.OS == TargetPlatform.WinPhone)
+                    await this.PushNavPageAsync<EstablishmentServicesViewModel>((establishmentServicesVM) =>
                     {
-                        await this.PushNavPageAsync<EstablishmentServicesViewModel>((establishmentServicesVM) =>
-                        {
-                            establishmentServicesVM.Initialize(this._shortenServices, servicesCategories, services, this.SetShortenServicesList);
-                        });
-                    }
-                    else
-                    {
-                        await this.PushNavPageModalAsync<EstablishmentServicesViewModel>((establishmentServicesVM) =>
-                        {
-                            establishmentServicesVM.Initialize(this._shortenServices, servicesCategories, services, this.SetShortenServicesList);
-                        });
-                    }
+                        establishmentServicesVM.Initialize(this._shortenServices, servicesCategories, services, this.SetShortenServicesList);
+                    });
                 });
         }
 

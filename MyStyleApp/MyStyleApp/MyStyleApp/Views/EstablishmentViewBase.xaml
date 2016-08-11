@@ -90,58 +90,100 @@
         
         <StackLayout Spacing="5">
           <StackLayout Spacing="0" Orientation="Horizontal">
-            <controls:CheckBoxImage CheckedSource="CheckedCheckbox.png"
-                UncheckedSource="UncheckedCheckbox.png"
-                IsChecked="{Binding Hours1Selected}"
-                HeightRequest="{Binding Source={x:Reference Concurrence}, Path=Height}"
-                WidthRequest="{Binding Source={x:Reference Concurrence}, Path=Height}" 
-                IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
             <Label VerticalTextAlignment="Center"
               Text="{Binding LocalizedStrings[hours1]}"
               Style="{StaticResource MediumTextStyle}" />
+          <Switch HorizontalOptions="EndAndExpand"
+              IsToggled="{Binding Hours1Selected}" Style="{StaticResource SwitchEndStyle}"
+              IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
           </StackLayout>
-          <StackLayout Spacing="0" Orientation="Horizontal"
-            IsVisible="{Binding Hours1Selected}">
-            <StackLayout Spacing="5" Orientation="Horizontal">
-              <TimePicker HorizontalOptions="FillAndExpand"
-                Time="{Binding Hours1Start, Mode=TwoWay}"
-                IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
-              <Label VerticalTextAlignment="Center"
-                Text="-"
-                Style="{StaticResource LargeTextStyle}" />
-              <TimePicker HorizontalOptions="FillAndExpand"
-                Time="{Binding Hours1End, Mode=TwoWay}"
-                IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
-            </StackLayout>
-          </StackLayout>
+          <Grid IsVisible="{Binding Hours1Selected}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition>
+                <ColumnDefinition.Width>
+                    <OnPlatform x:TypeArguments="GridLength"
+                      iOS="25*"
+                      Android="Auto"
+                      WinPhone="Auto" />
+                  </ColumnDefinition.Width>
+              </ColumnDefinition>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition>
+                <ColumnDefinition.Width>
+                    <OnPlatform x:TypeArguments="GridLength"
+                      iOS="25*"
+                      Android="Auto"
+                      WinPhone="Auto" />
+                  </ColumnDefinition.Width>
+              </ColumnDefinition>
+              <ColumnDefinition>
+                <ColumnDefinition.Width>
+                    <OnPlatform x:TypeArguments="GridLength"
+                      iOS="50*"
+                      Android="Auto"
+                      WinPhone="Auto" />
+                  </ColumnDefinition.Width>
+              </ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TimePicker Grid.Column="0" HorizontalOptions="FillAndExpand"
+              Time="{Binding Hours1Start, Mode=TwoWay}"
+              IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
+            <Label Grid.Column="1" HorizontalOptions="FillAndExpand"
+              Text="-" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
+              Style="{StaticResource LargeTextStyle}" />
+            <TimePicker Grid.Column="2" HorizontalOptions="FillAndExpand"
+              Time="{Binding Hours1End, Mode=TwoWay}"
+              IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
+          </Grid>
         </StackLayout>
 
         <StackLayout Spacing="5">
           <StackLayout Spacing="0" Orientation="Horizontal">
-            <controls:CheckBoxImage CheckedSource="CheckedCheckbox.png" 
-                UncheckedSource="UncheckedCheckbox.png" 
-                IsChecked="{Binding Hours2Selected}"
-                HeightRequest="{Binding Source={x:Reference Concurrence}, Path=Height}"
-                WidthRequest="{Binding Source={x:Reference Concurrence}, Path=Height}"
-                IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
             <Label VerticalTextAlignment="Center"
               Text="{Binding LocalizedStrings[hours2]}"
               Style="{StaticResource MediumTextStyle}" />
+            <Switch HorizontalOptions="EndAndExpand"
+              IsToggled="{Binding Hours2Selected}" Style="{StaticResource SwitchEndStyle}"
+              IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
           </StackLayout>
-          <StackLayout Spacing="0" Orientation="Horizontal"
-            IsVisible="{Binding Hours2Selected}">
-            <StackLayout Spacing="5" Orientation="Horizontal">
-              <TimePicker HorizontalOptions="FillAndExpand"
-                Time="{Binding Hours2Start, Mode=TwoWay}"
-                IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
-              <Label VerticalTextAlignment="Center"
-                Text="-"
-                Style="{StaticResource LargeTextStyle}" />
-              <TimePicker HorizontalOptions="FillAndExpand"
-                Time="{Binding Hours2End, Mode=TwoWay}"
-                IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
-            </StackLayout>
-          </StackLayout>
+          <Grid IsVisible="{Binding Hours2Selected}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition>
+                <ColumnDefinition.Width>
+                    <OnPlatform x:TypeArguments="GridLength"
+                      iOS="25*"
+                      Android="Auto"
+                      WinPhone="Auto" />
+                  </ColumnDefinition.Width>
+              </ColumnDefinition>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition>
+                <ColumnDefinition.Width>
+                    <OnPlatform x:TypeArguments="GridLength"
+                      iOS="25*"
+                      Android="Auto"
+                      WinPhone="Auto" />
+                  </ColumnDefinition.Width>
+              </ColumnDefinition>
+              <ColumnDefinition>
+                <ColumnDefinition.Width>
+                    <OnPlatform x:TypeArguments="GridLength"
+                      iOS="50*"
+                      Android="Auto"
+                      WinPhone="Auto" />
+                  </ColumnDefinition.Width>
+              </ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TimePicker Grid.Column="0" HorizontalOptions="FillAndExpand"
+              Time="{Binding Hours2Start, Mode=TwoWay}"
+              IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
+            <Label Grid.Column="1" HorizontalOptions="FillAndExpand"
+              Text="-" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
+              Style="{StaticResource LargeTextStyle}" />
+            <TimePicker Grid.Column="2" HorizontalOptions="FillAndExpand"
+              Time="{Binding Hours2End, Mode=TwoWay}"
+              IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
+          </Grid>
         </StackLayout>
         
         <StackLayout Spacing="0">
@@ -156,10 +198,15 @@
         </StackLayout>
 
         <StackLayout Spacing="10" Orientation="Horizontal">
+          <!--<Label Text="{Binding LocalizedStrings[automatic_confirm_type]}"
+            Style="{StaticResource MediumTextStyle}" VerticalTextAlignment="Center"/>
+          <Switch
+            IsToggled="{Binding AutoConfirm}" Style="{StaticResource SwitchStyle}"
+            IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>-->
           <Label Text="{Binding LocalizedStrings[automatic_confirm_type]}"
             Style="{StaticResource MediumTextStyle}" VerticalTextAlignment="Center"/>
-          <Switch x:Name="ConfirmTypeSwitch"
-            IsToggled="{Binding AutoConfirm}" Style="{StaticResource SwitchStyle}"
+          <Switch HorizontalOptions="EndAndExpand"
+            IsToggled="{Binding AutoConfirm}" Style="{StaticResource SwitchEndStyle}"
             IsEnabled="{Binding Mode, Converter={StaticResource BaseModeToBoolConverter}, ConverterParameter=!View}"/>
         </StackLayout>
 

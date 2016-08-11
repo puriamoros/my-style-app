@@ -73,8 +73,22 @@
                 Padding="{StaticResource ListGroupCellPadding}">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="74*" />
-                  <ColumnDefinition Width="26*" />
+                  <ColumnDefinition>
+                    <ColumnDefinition.Width>
+                      <OnPlatform x:TypeArguments="GridLength"
+                        iOS="70*"
+                        Android="74*"
+                        WinPhone="74*" />
+                    </ColumnDefinition.Width>
+                  </ColumnDefinition>
+                  <ColumnDefinition>
+                    <ColumnDefinition.Width>
+                      <OnPlatform x:TypeArguments="GridLength"
+                        iOS="30*"
+                        Android="26*"
+                        WinPhone="26*" />
+                    </ColumnDefinition.Width>
+                  </ColumnDefinition>
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Switch x:Name="ServiceSwitch" Grid.Column="0"
@@ -94,7 +108,7 @@
                     IsVisible="{Binding Source={x:Reference ServiceSwitch}, Path=IsToggled}"/>
                 </StackLayout>
 
-                <StackLayout Grid.Column="3" Padding="0,0,2,0">
+                <StackLayout Grid.Column="3" Padding="0,0,2,0" VerticalOptions="Center">
                   <Label Text="€" HorizontalTextAlignment="Center"
                     Style="{StaticResource MediumTextStyle}"
                     IsVisible="{Binding Source={x:Reference ServiceSwitch}, Path=IsToggled}"/>

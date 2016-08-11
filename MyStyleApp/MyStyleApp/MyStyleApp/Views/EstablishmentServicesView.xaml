@@ -76,7 +76,7 @@
                   <ColumnDefinition>
                     <ColumnDefinition.Width>
                       <OnPlatform x:TypeArguments="GridLength"
-                        iOS="70*"
+                        iOS="65*"
                         Android="74*"
                         WinPhone="74*" />
                     </ColumnDefinition.Width>
@@ -84,7 +84,7 @@
                   <ColumnDefinition>
                     <ColumnDefinition.Width>
                       <OnPlatform x:TypeArguments="GridLength"
-                        iOS="30*"
+                        iOS="35*"
                         Android="26*"
                         WinPhone="26*" />
                     </ColumnDefinition.Width>
@@ -101,7 +101,7 @@
                 </StackLayout>
 
                 <StackLayout Grid.Column="2">
-                  <Entry
+                  <Entry VerticalOptions="CenterAndExpand"
                     Placeholder="{Binding Source={x:Reference GroupedServiceList}, Path=BindingContext.LocalizedStrings[price]}"
                     Text="{Binding PriceStr}"
                     Keyboard="Numeric"

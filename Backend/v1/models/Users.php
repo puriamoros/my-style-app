@@ -168,7 +168,7 @@ class Users extends ModelWithIdBase
 		$result = $this->dbCreate($data);
 		
 		// Print response
-		http_response_code(200);
+		http_response_code(201);
 		return array(
 			$this->users->apiKey => $result[$this->users->apiKey]
 		);

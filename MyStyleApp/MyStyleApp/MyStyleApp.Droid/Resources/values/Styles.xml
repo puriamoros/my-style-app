@@ -5,4 +5,7 @@
       <item name="android:windowTitleSize">0dp</item>
       <item name="android:windowBackground">@drawable/SplashScreen</item>
     </style>
+    <style name="Theme.Activity" parent="android:Theme.DeviceDefault">
+      <item name="android:colorLongPressedHighlight">@color/LongPressedHighlight</item>
+    </style>
   </resources>

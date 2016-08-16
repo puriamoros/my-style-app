@@ -481,13 +481,13 @@
     <value>Create establishment</value>
   </data>
   <data name="latitude" xml:space="preserve">
-    <value>GPS Latitude</value>
+    <value>GPS Latitude (optional)</value>
   </data>
   <data name="latitude_placeholder" xml:space="preserve">
     <value>Enter the GPS latitude</value>
   </data>
   <data name="longitude" xml:space="preserve">
-    <value>GPS Longitude</value>
+    <value>GPS Longitude (optional)</value>
   </data>
   <data name="longitude_placeholder" xml:space="preserve">
     <value>Enter the GPS lontitude </value>

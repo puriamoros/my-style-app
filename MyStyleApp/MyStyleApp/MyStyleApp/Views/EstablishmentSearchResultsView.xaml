@@ -20,7 +20,7 @@
       <ListView x:Name="EstablishmentsList"
         ItemsSource="{Binding EstablishmentsList}"
         HasUnevenRows="True"
-        gestures:ListViewItemTapped.Command="{Binding ViewDetailsCommand}"
+        gestures:ListViewItemTapped.Command="{Binding BookCommand}"
         ItemSelected="OnItemListSelection">
         <ListView.ItemTemplate>
           <DataTemplate>

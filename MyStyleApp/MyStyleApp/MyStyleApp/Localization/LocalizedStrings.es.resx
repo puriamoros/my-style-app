@@ -481,13 +481,13 @@
     <value>Crear un establecimiento</value>
   </data>
   <data name="latitude" xml:space="preserve">
-    <value>Latitud GPS</value>
+    <value>Latitud GPS (opcional)</value>
   </data>
   <data name="latitude_placeholder" xml:space="preserve">
     <value>Introduce la latitud GPS</value>
   </data>
   <data name="longitude" xml:space="preserve">
-    <value>Longitud GPS</value>
+    <value>Longitud GPS (opcional)</value>
   </data>
   <data name="longitude_placeholder" xml:space="preserve">
     <value>Introduce la longitud GPS</value>

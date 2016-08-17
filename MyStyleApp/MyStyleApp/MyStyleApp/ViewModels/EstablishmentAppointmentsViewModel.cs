@@ -29,7 +29,8 @@ namespace MyStyleApp.ViewModels
         private ObservableCollection<Establishment> _establishmentList;
         private Establishment _selectedEstablishment;
         private bool _isEstablishmentSelectionEnabled;
-        
+        private bool _isStaffAuthorized;
+
         public Command CancelCommand { get; private set; }
         public Command ConfirmCommand { get; private set; }
         public Command<Appointment> AppointmentDetailsCommand { get; private set; }
@@ -114,6 +115,9 @@ namespace MyStyleApp.ViewModels
             this.MinimumDate = DateTime.Today;
             this.MaximumDate = DateTime.Today.AddMonths(3);
             this.Date = DateTime.Today;
+            this.IsStaffAuthorized =
+                (this._userService.LoggedUser.UserType == UserTypeEnum.Owner ||
+                this._userService.LoggedUser.UserType == UserTypeEnum.AuthorizedStaff);
 
             await this.ExecuteBlockingUIAsync(
                 async () =>
@@ -122,6 +126,7 @@ namespace MyStyleApp.ViewModels
                     {
                         var establishments = await this._establishmentsService.GetOwnerEstablishmentsAsync();
                         this.EstablishmentList = new ObservableCollection<Establishment>(establishments);
+                        this.SelectedEstablishment = null;
                         this.IsEstablishmentSelectionEnabled = true;
                     }
                     else if(this._userService.LoggedUser.StaffInfo != null)
@@ -183,6 +188,12 @@ namespace MyStyleApp.ViewModels
         {
             get { return _isEstablishmentSelectionEnabled; }
             set { SetProperty(ref _isEstablishmentSelectionEnabled, value); }
+        }
+
+        public bool IsStaffAuthorized
+        {
+            get { return _isStaffAuthorized; }
+            set { SetProperty(ref _isStaffAuthorized, value); }
         }
 
         private async void OnDataChanged()

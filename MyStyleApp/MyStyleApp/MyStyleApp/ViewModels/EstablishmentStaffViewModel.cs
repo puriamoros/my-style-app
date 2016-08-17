@@ -71,6 +71,7 @@ namespace MyStyleApp.ViewModels
                     var establishments = await this._establishmentsService.GetOwnerEstablishmentsAsync();
 
                     this.EstablishmentList = new ObservableCollection<Establishment>(establishments);
+                    this.SelectedEstablishment = null;
                 });
         }
 

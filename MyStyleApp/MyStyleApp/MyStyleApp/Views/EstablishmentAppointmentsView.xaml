@@ -51,7 +51,7 @@
                     
         <ListView.ItemTemplate>
           <DataTemplate>
-            <ViewCell x:Name="Appointment">
+            <ViewCell x:Name="Appointment" Appearing="OnViewCellAppearing">
               <StackLayout Padding="{StaticResource ListViewItemPadding}">                                                  
                 <Grid>
                   <Grid.ColumnDefinitions>
@@ -149,12 +149,12 @@
               </StackLayout>
             
               <ViewCell.ContextActions>
-                <MenuItem Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[cancel]}"
+                <MenuItem ClassId="AuthorizedOnly" Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[cancel]}"
                   IsDestructive="True"
                   Command="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.CancelCommand}"
                   CommandParameter="{Binding Source={x:Reference Appointment}, Path=BindingContext}" />
-                
-                <MenuItem Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[confirm]}"
+
+                <MenuItem ClassId="AuthorizedOnly" Text="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.LocalizedStrings[confirm]}"
                   Command="{Binding Source={x:Reference AppointmentList}, Path=BindingContext.ConfirmCommand}"
                   CommandParameter="{Binding Source={x:Reference Appointment}, Path=BindingContext}" />
                 

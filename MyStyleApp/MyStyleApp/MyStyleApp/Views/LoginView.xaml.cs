@@ -15,13 +15,6 @@ namespace MyStyleApp.Views
             InitializeComponent();
         }
 
-        //protected override bool OnBackButtonPressed()
-        //{
-        //    // Disable hardware back button
-        //    return true;
-        //    //return base.OnBackButtonPressed();
-        //}
-
         protected override void OnAppearing()
         {
             base.OnAppearing();

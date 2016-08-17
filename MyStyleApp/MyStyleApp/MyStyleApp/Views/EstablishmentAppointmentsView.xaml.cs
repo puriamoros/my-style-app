@@ -14,5 +14,33 @@ namespace MyStyleApp.Views
         {
             InitializeComponent();
         }
+
+        private void OnViewCellAppearing(object sender, EventArgs e)
+        {
+            if(sender is ViewCell &&
+                this.AppointmentList.BindingContext is ViewModels.EstablishmentAppointmentsViewModel)
+            {
+                ViewCell viewCell = sender as ViewCell;
+                ViewModels.EstablishmentAppointmentsViewModel viewModel =
+                    this.AppointmentList.BindingContext as ViewModels.EstablishmentAppointmentsViewModel;
+
+                if (!viewModel.IsStaffAuthorized)
+                {
+                    // Remove context actions for authorized staff only
+                    List<MenuItem> removeList = new List<MenuItem>();
+                    foreach (var menuItem in viewCell.ContextActions)
+                    {
+                        if (menuItem.ClassId == "AuthorizedOnly")
+                        {
+                            removeList.Add(menuItem);
+                        }
+                    }
+                    foreach (var menuItem in removeList)
+                    {
+                        viewCell.ContextActions.Remove(menuItem);
+                    }
+                }
+            }
+        }
     }
 }

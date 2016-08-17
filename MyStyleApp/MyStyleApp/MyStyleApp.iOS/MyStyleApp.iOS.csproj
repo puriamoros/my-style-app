@@ -55,7 +55,7 @@
     <CodesignKey>iPhone Developer: helio.huete@gmail.com (73M24TJJH2)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>5c1ff0dd-3088-443a-b6c6-c817432a5671</CodesignProvision>
+    <CodesignProvision>9eb69dcc-03fb-4323-8b7b-010274a83771</CodesignProvision>
     <CodesignResourceRules />
     <CodesignExtraArgs />
   </PropertyGroup>

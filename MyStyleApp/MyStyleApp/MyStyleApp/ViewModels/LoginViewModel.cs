@@ -47,15 +47,6 @@ namespace MyStyleApp.ViewModels
             // We will always remember the user, but we leave the code as it is to
             // make things easier if we had to go back
             this._rememberMe = true;
-
-            // REMOVE!!!
-            FillWithMockData();
-        }
-
-        private void FillWithMockData()
-        {
-            this.Email = "puri.amoros@gmail.com";
-            this.Password = "puri";
         }
 
         public string Email

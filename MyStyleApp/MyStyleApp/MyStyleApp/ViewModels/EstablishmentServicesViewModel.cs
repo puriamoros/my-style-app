@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using MvvmCore;
 using MyStyleApp.Services;
 using MyStyleApp.Models;
-using MyStyleApp.Utils;
 using MyStyleApp.Services.Backend;
 using System.Collections.ObjectModel;
 using System.Windows.Input;

@@ -12,36 +12,44 @@ namespace MyStyleApp.Droid.Services
     public class CalendarService : MyStyleApp.Services.ICalendarService
     {
         private const string UTC_TIME_ZONE = "UTC";
+        private const int CALENDAR_ID = 1;
         private DateTime _epoch;
+        private ContentResolver _resolver;
 
         public CalendarService()
         {
-            _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            this._epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            this._resolver = ((Activity)Forms.Context).ContentResolver;
         }
 
-        public async Task<bool> AddAppointmentAsync(CalendarAppointment appointment)
+        public async Task<string> AddAppointmentAsync(CalendarAppointment calendarAppointment)
         {
-            Intent intent = new Intent(Intent.ActionInsert);
+            ContentValues contentValues = new ContentValues();
 
-            //intent.PutExtra(CalendarContract.Events.InterfaceConsts.CalendarId, _calId);
-            intent.PutExtra(CalendarContract.Events.InterfaceConsts.Title, appointment.Title);
-            intent.PutExtra(CalendarContract.Events.InterfaceConsts.Description, appointment.Description);
+            contentValues.Put(CalendarContract.Events.InterfaceConsts.CalendarId, CALENDAR_ID); // Default calendar
+            contentValues.Put(CalendarContract.Events.InterfaceConsts.Title, calendarAppointment.Title);
+            contentValues.Put(CalendarContract.Events.InterfaceConsts.Description, calendarAppointment.Description);
 
-            intent.PutExtra(CalendarContract.Events.InterfaceConsts.Dtstart, GetDateTimeMS(appointment.Date));
-            intent.PutExtra(CalendarContract.Events.InterfaceConsts.Dtend, GetDateTimeMS(appointment.Date.Add(appointment.Duration)));
-            intent.PutExtra(CalendarContract.ExtraEventBeginTime, GetDateTimeMS(appointment.Date));
-            intent.PutExtra(CalendarContract.ExtraEventEndTime, GetDateTimeMS(appointment.Date.Add(appointment.Duration)));
+            contentValues.Put(CalendarContract.Events.InterfaceConsts.Dtstart, GetDateTimeMS(calendarAppointment.Date));
+            contentValues.Put(CalendarContract.Events.InterfaceConsts.Dtend, GetDateTimeMS(calendarAppointment.Date.Add(calendarAppointment.Duration)));
 
-            intent.PutExtra(CalendarContract.Events.InterfaceConsts.EventTimezone, UTC_TIME_ZONE);
-            intent.PutExtra(CalendarContract.Events.InterfaceConsts.EventEndTimezone, UTC_TIME_ZONE);
-            intent.SetData(CalendarContract.Events.ContentUri);
-            ((Activity)Forms.Context).StartActivity(intent);
-            return true;
+            contentValues.Put(CalendarContract.Events.InterfaceConsts.EventTimezone, UTC_TIME_ZONE);
+            contentValues.Put(CalendarContract.Events.InterfaceConsts.EventEndTimezone, UTC_TIME_ZONE);
+
+            var eventUri = this._resolver.Insert(CalendarContract.Events.ContentUri, contentValues);
+            return eventUri.LastPathSegment;
         }
 
-        public long GetDateTimeMS(DateTime dt)
+        private long GetDateTimeMS(DateTime dt)
         {
             return (long) dt.ToUniversalTime().Subtract(this._epoch).TotalMilliseconds;
+        }
+
+        public async Task<bool> DeleteAppointmentAsync(string calendarAppointmentId)
+        {
+            long eventId = long.Parse(calendarAppointmentId);
+            this._resolver.Delete(ContentUris.WithAppendedId(CalendarContract.Events.ContentUri, eventId), null, null);
+            return true;
         }
     }
 }

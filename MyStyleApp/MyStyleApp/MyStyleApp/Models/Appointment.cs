@@ -34,7 +34,7 @@ namespace MyStyleApp.Models
         public float ServicePrice { get; set; }
 
         [JsonProperty(Required = Required.Default, PropertyName = "serviceDuration")]
-        public float ServiceDuration { get; set; }
+        public int ServiceDuration { get; set; }
 
         [JsonIgnore]
         public string ServiceName { get; set; }

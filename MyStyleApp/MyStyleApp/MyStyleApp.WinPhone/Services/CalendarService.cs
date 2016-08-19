@@ -9,25 +9,25 @@ namespace MyStyleApp.WinPhone.Services
 {
     class CalendarService : MyStyleApp.Services.ICalendarService
     {
-        public async Task<bool> AddAppointmentAsync(Models.CalendarAppointment appointment)
+        public async Task<string> AddAppointmentAsync(Models.CalendarAppointment calendarAppointment)
         {
             var appointmentRcd = new Appointment();
 
             // StartTime
-            var date = appointment.Date;
+            var date = calendarAppointment.Date;
             var timeZoneOffset = TimeZoneInfo.Local.GetUtcOffset(date);
             date.Add(timeZoneOffset);
             var startTime = new DateTimeOffset(date);
             appointmentRcd.StartTime = startTime;
 
             // Subject
-            appointmentRcd.Subject =  appointment.Title;
+            appointmentRcd.Subject =  calendarAppointment.Title;
             // Location
             appointmentRcd.Location = "";
             // Details
-            appointmentRcd.Details = appointment.Description;
+            appointmentRcd.Details = calendarAppointment.Description;
             // Duration          
-            appointmentRcd.Duration = appointment.Duration;
+            appointmentRcd.Duration = calendarAppointment.Duration;
             // All Day
             appointmentRcd.AllDay = false;
             //Busy Status
@@ -38,10 +38,16 @@ namespace MyStyleApp.WinPhone.Services
             // var rect = GetElementRect(sender as FrameworkElement);
             Rect rect = new Rect(new Windows.Foundation.Point(10, 10), new Windows.Foundation.Size(100, 200));
 
-            string retVal = await AppointmentManager.ShowAddAppointmentAsync(
+            string appointmentId = await AppointmentManager.ShowAddAppointmentAsync(
                 appointmentRcd, rect, Windows.UI.Popups.Placement.Default);
 
-            return !string.IsNullOrEmpty(retVal);
+            return string.IsNullOrEmpty(appointmentId) ? null : appointmentId;
+        }
+
+        public async Task<bool> DeleteAppointmentAsync(string calendarAppointmentId)
+        {
+            Rect rect = new Rect(new Windows.Foundation.Point(10, 10), new Windows.Foundation.Size(100, 200));
+            return await AppointmentManager.ShowRemoveAppointmentAsync(calendarAppointmentId, rect);
         }
     }
 }

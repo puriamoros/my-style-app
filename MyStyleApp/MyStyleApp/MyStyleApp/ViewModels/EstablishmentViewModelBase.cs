@@ -10,7 +10,6 @@ using MyStyleApp.Services.Backend;
 using System.Collections.ObjectModel;
 using System;
 using System.Collections.Generic;
-using MyStyleApp.Utils;
 using System.Globalization;
 using System.Threading.Tasks;
 

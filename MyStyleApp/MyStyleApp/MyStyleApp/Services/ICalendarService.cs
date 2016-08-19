@@ -9,6 +9,7 @@ namespace MyStyleApp.Services
 {
     public interface ICalendarService
     {
-        Task<bool> AddAppointmentAsync(CalendarAppointment appointment);
+        Task<string> AddAppointmentAsync(CalendarAppointment calendarAppointment);
+        Task<bool> DeleteAppointmentAsync(string calendarAppointmentId);
     }
 }

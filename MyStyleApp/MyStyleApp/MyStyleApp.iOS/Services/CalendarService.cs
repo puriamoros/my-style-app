@@ -15,10 +15,10 @@ namespace MyStyleApp.iOS.Services
 
         public CalendarService()
         {
-            _eventStore = new EKEventStore();
+            this._eventStore = new EKEventStore();
         }
 
-        public async Task<bool> AddAppointmentAsync(CalendarAppointment appointment)
+        public async Task<string> AddAppointmentAsync(CalendarAppointment calendarAppointment)
         {
             var granted = await _eventStore.RequestAccessAsync(EKEntityType.Event);//, (bool granted, NSError e) =>
 
@@ -28,22 +28,24 @@ namespace MyStyleApp.iOS.Services
                 // set the alarm for 10 minutes from now
                 //newEvent.AddAlarm(EKAlarm.FromDate((NSDate)appointment.));
                 // make the event start 20 minutes from now and last 30 minutes
-                newEvent.StartDate = DateTimeToNSDate(appointment.Date);
-                newEvent.EndDate = DateTimeToNSDate(appointment.Date.Add(appointment.Duration));
-                newEvent.Title = appointment.Title;
-                newEvent.Notes = appointment.Description;
+                newEvent.StartDate = DateTimeToNSDate(calendarAppointment.Date);
+                newEvent.EndDate = DateTimeToNSDate(calendarAppointment.Date.Add(calendarAppointment.Duration));
+                newEvent.Title = calendarAppointment.Title;
+                newEvent.Notes = calendarAppointment.Description;
                 newEvent.Calendar = _eventStore.DefaultCalendarForNewEvents;
                 NSError e;
-                _eventStore.SaveEvent(newEvent, EKSpan.ThisEvent, out e);
-                return true;
+                this._eventStore.SaveEvent(newEvent, EKSpan.ThisEvent, out e);
+                return newEvent.EventIdentifier;
             }
             else
-                new UIAlertView("Access Denied", "User Denied Access to Calendar Data", null, "ok", null).Show();
+            {
+                //new UIAlertView("Access Denied", "User Denied Access to Calendar Data", null, "ok", null).Show();
+            }
             // });
 
-            return false;
+            return null;
         }
-        public DateTime NSDateToDateTime(NSDate date)
+        private DateTime NSDateToDateTime(NSDate date)
         {
             // NSDate has a wider range than DateTime, so clip
             // the converted date to DateTime.Min|MaxValue.
@@ -55,11 +57,22 @@ namespace MyStyleApp.iOS.Services
             return (DateTime)date;
         }
 
-        public NSDate DateTimeToNSDate(DateTime date)
+        private NSDate DateTimeToNSDate(DateTime date)
         {
             if (date.Kind == DateTimeKind.Unspecified)
                 date = DateTime.SpecifyKind(date, DateTimeKind.Utc);// or DateTimeKind.Local, this depends on each app
             return (NSDate)date;
+        }
+
+        public async Task<bool> DeleteAppointmentAsync(string calendarAppointmentId)
+        {
+            var eventToRemove = this._eventStore.EventFromIdentifier(calendarAppointmentId);
+            if(eventToRemove != null)
+            {
+                NSError e;
+                this._eventStore.RemoveEvent(eventToRemove, EKSpan.ThisEvent, true, out e);
+            }
+            return true;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace MyStyleApp.Utils
+namespace MyStyleApp.Models
 {
     public class Grouping<K, T> : ObservableCollection<T>
     {

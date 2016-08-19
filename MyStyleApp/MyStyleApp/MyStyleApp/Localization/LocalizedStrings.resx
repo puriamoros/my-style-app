@@ -549,4 +549,16 @@
   <data name="terms_of_use_title" xml:space="preserve">
     <value>Terms of use</value>
   </data>
+  <data name="update_calendar_title" xml:space="preserve">
+    <value>Update calendar?</value>
+  </data>
+  <data name="update_calendar_body" xml:space="preserve">
+    <value>You have updated appointments. Do you want to update your device calendar?</value>
+  </data>
+  <data name="calendar_appointment_title" xml:space="preserve">
+    <value>Appointment at ${ESTABLISHMENT_NAME}</value>
+  </data>
+  <data name="calendar_appointment_body" xml:space="preserve">
+    <value>Service: ${SERVICE_NAME}.\nEstimate duration: ${SERVICE_DURATION} minutes.</value>
+  </data>
 </root>

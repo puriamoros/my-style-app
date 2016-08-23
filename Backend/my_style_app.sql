@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-07-2016 a las 00:32:43
+-- Tiempo de generación: 23-08-2016 a las 11:12:17
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.21
 
@@ -42,9 +42,20 @@ CREATE TABLE `appointments` (
 --
 
 INSERT INTO `appointments` (`id`, `idClient`, `idEstablishment`, `idService`, `date`, `status`, `notes`) VALUES
-(1, 1, 1, 1, '2016-07-28 10:00:00', 2, ''),
-(2, 1, 1, 1, '2016-07-24 11:00:00', 0, ''),
-(3, 1, 1, 1, '2016-07-28 11:00:00', 2, '');
+(1, 1, 1, 40, '2016-07-29 10:00:00', 0, 'Notas de la cita....'),
+(2, 1, 1, 1, '2016-07-30 11:00:00', 0, 'Notas de la cita...'),
+(3, 1, 1, 1, '2016-07-29 11:00:00', 1, ''),
+(4, 1, 1, 4, '2016-08-01 11:30:00', 0, ''),
+(5, 1, 1, 40, '2016-08-03 11:30:00', 0, ''),
+(6, 1, 1, 1, '2016-08-07 12:00:00', 0, 'Probando a introducir notas de la cita'),
+(7, 1, 1, 4, '2016-08-10 17:30:00', 0, ''),
+(8, 1, 4, 1, '2016-08-21 17:00:00', 2, ''),
+(9, 1, 1, 4, '2016-08-13 11:00:00', 0, ''),
+(10, 1, 1, 5, '2016-08-19 11:00:00', 2, ''),
+(11, 1, 4, 1, '2016-08-18 17:30:00', 1, ''),
+(15, 1, 1, 40, '2016-08-19 17:00:00', 1, ''),
+(17, 1, 1, 1, '2016-08-19 11:30:00', 0, ''),
+(18, 1, 4, 1, '2016-08-16 18:30:00', 1, '');
 
 -- --------------------------------------------------------
 
@@ -74,12 +85,13 @@ CREATE TABLE `establishments` (
 --
 
 INSERT INTO `establishments` (`id`, `name`, `address`, `phone`, `idEstablishmentType`, `idOwner`, `idProvince`, `concurrence`, `hours1`, `hours2`, `confirmType`, `latitude`, `longitude`) VALUES
-(1, 'Peluquería 1', 'C/ Pintor Fernando Belda nº1, Bajo C', '958111111', 1, 19, 1, 1, '10:00-14:00', '16:00-20:00', 0, 37.1877284, -3.6328434),
-(2, 'Peluquería 2', 'C/ Trajano nº2', '951357357', 2, 19, 1, 2, '08:00-20:00', '', 0, 0, 0),
-(3, 'Peluquería 3', 'C/ Camino de Ronda nº3', '357159486', 1, 19, 2, 3, '06:00-15:00', '', 0, 0, 0),
-(4, 'Peluquería 4', 'Carretera de Murcia nº4, bajo izq bajo bajo', '123456789', 3, 19, 1, 4, '16:00-00:00', '', 1, 0, 0),
-(5, 'peluquería 5', 'C/. tururu nº4', '958123456', 3, 2, 1, 4, '08:00-20:00', '', 1, 0, 0),
-(6, 'peluquería 6', 'C/. tururu nº4', '958123456', 3, 2, 1, 4, '08:00-20:00', '', 1, 0, 0);
+(1, 'La pelu del We', 'C/ Pintor Fernando Belda s/n. 18015 Granada', '958111122', 0, 19, 18, 1, '10:00-14:00', '16:00-20:00', 0, 37.1877284, -3.6328434),
+(2, 'Santiago Del Río Peluqueros', 'C/ Solarillo de Gracia, 3. 18002 Granada', '951357357', 2, 19, 18, 2, '08:00-20:00', '', 0, 37.1724467, -3.6032983999999715),
+(3, 'Peluquería Ganivet', 'C/ Ángel Ganivet, 9. 18009 Granada', '357159486', 1, 19, 18, 3, '06:00-15:00', '', 0, 37.172963, -3.5980157999999847),
+(4, 'Peluquería Ascensión Alcaide Estilistas', 'C/ Espronceda, 3 Bajo. 18007 Granada', '123456789', 3, 19, 18, 4, '16:00-00:00', '', 1, 37.1586039, -3.6010854999999538),
+(5, 'Pipe''s Peluqueros', 'C/ Tórtola, 14. 18014 Granada', '958123456', 3, 2, 18, 4, '08:00-20:00', '', 1, 37.18562, -3.610490000000027),
+(6, 'Centro Bucle', 'C/ Carretera Antigua de Málaga, 43. 18015 Granada', '958123456', 3, 2, 18, 4, '08:00-20:00', '', 1, 37.189259, -3.6251835000000483),
+(11, 'Dolce Capello', 'C/ Pintor Manuel Maldonado, 16. 18007 Granada', '123456789', 0, 19, 18, 3, '08:00-20:00', '', 1, 37.1557, -3.5968900000000303);
 
 -- --------------------------------------------------------
 
@@ -144,9 +156,14 @@ CREATE TABLE `offer` (
 --
 
 INSERT INTO `offer` (`idEstablishment`, `idService`, `price`) VALUES
+(0, 1, 12.5),
+(0, 4, 25.5),
+(0, 5, 16),
+(0, 40, 100.5),
 (1, 1, 12.5),
 (1, 4, 25.5),
 (1, 5, 16),
+(1, 40, 100.5),
 (2, 22, 12.5),
 (2, 23, 25.5),
 (2, 24, 16),
@@ -175,7 +192,8 @@ INSERT INTO `offer` (`idEstablishment`, `idService`, `price`) VALUES
 (6, 22, 25.5),
 (6, 23, 16),
 (6, 24, 25.5),
-(6, 25, 16);
+(6, 25, 16),
+(11, 17, 12.5);
 
 -- --------------------------------------------------------
 
@@ -358,9 +376,9 @@ CREATE TABLE `staff` (
 --
 
 INSERT INTO `staff` (`idUser`, `idEstablishment`) VALUES
-(20, 2),
-(21, 2),
-(23, 1);
+(25, 1),
+(26, 1),
+(27, 1);
 
 -- --------------------------------------------------------
 
@@ -471,11 +489,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `apiKey`, `userType`, `phone`, `platform`, `pushToken`, `languageCode`) VALUES
-(1, 'Helio', 'Huete López de las Huertas', 'helio.huete@gmail.com', '$2y$10$HcPK6svqWeNqsMlcGNx.Ce0GR0mvq/QvfUTH0nXUwpR.jc660MSa6', 'cc06c9f321e156c2468669728e2be8b8', 1, '123456789', '', '', ''),
-(19, 'Puri', 'Amorós', 'puri.amoros@gmail.com', '$2y$10$AZfna1yNJg.NEjPjpNU/mefD4XuNoVD4k2cc7ojv0W5MIafTk8rV.', '3bc23b47841173b7027d911bc055d113', 5, '987654321', 'Windows', 'https://db5.notify.windows.com/?token=AwYAAABHpNv3eQyO18G%2fOtIpk0F1ycmAL6gFnDEKnX7tJBQrhik5HzflzCqRuBTt20njJXVi%2byWNQJeF0ll0z6utc9zmer3ef78fq8W7FTBu9oVQI5jhklsB%2bHhEu4ZQ3ZzUuRM%3d', 'es'),
-(20, 'Marta', 'Asdf', 'marta@gmail.com', '$2y$10$r1NGrTmPIZqvjaO.3nGaQO8g4ovt.EiX3TKcSHh1Yh4PQAEh2Ef/W', 'f166df0a695856c42e1827a31f90f947', 2, '123456789', '', '', ''),
-(21, 'sdfasdf', 'asdfasdfdf', 'piunchi@gmail.com', '$2y$10$W.nmnDfq4A.fyoLz89d9U.R2eWcbdQ7WabRNYz5RlZ2tgSVDbLFnq', 'cb96faa601c5951c670e7894502267e3', 3, '123456789', '', '', ''),
-(23, 'Antonio', 'Perez', 'antonio1.perez23@gmail.com', '$2y$10$yVus9HtHwcC152DGkB0PdeCPG5GTC10O9qHLtuud.0AQpyHt3lBWe', 'c0d99b5c244bb84712560dfaa56e5f7e', 2, '958123456', '', '', '');
+(1, 'Carolina', 'Pérez López', 'client@gmail.com', '$2y$10$SAarEGRugtS6M1LW24CljOWfkyoD1C9Onkdnbqf79J7Mizp98F/Ay', 'cc06c9f321e156c2468669728e2be8b8', 1, '123456789', 'Windows', 'https://db5.notify.windows.com/?token=AwYAAACZ4DZha8H0FF2ntZ3uWWQvQ6PVfgU%2bO4EKriGPwSOG7%2f0WUnThpL17%2bW3K%2bI1v%2bpnsKDhFgZyhdar5TjcNEX9ZWbTpdW%2ft2dOrgJtXSWEBKloAqbFWvkWNptDdohKpxe8%3d', 'es'),
+(19, 'Olivia', 'Hurtado García', 'owner@gmail.com', '$2y$10$qbUCgbvQv608ZR6SRVCrjejCDtccPaBtK8KGC92tJosYHGxIK2M1m', '3bc23b47841173b7027d911bc055d113', 5, '987654321', '', '', ''),
+(25, 'Lucas', 'Sánchez Pérez', 'limited@gmail.com', '$2y$10$Iw5OTXDcMVhoMiG.PAcujOoamgEQK.y48lYIVdFmwpAIw63V7HYA.', '21e290d556dfd625b41a86b2cc5de548', 2, '958123456', '', '', ''),
+(26, 'Noelia', 'Zafra Alarcón', 'normal@gmail.com', '$2y$10$HzmbUE03WtxDZgJyhwJpn.rl3WHG3v1ZNBdtvjkU9gR3OQ6ddg1.C', 'f0b87b2f0327821272a4204c5cc40b9b', 3, '958123456', '', '', ''),
+(27, 'Antonio', 'García García', 'aut@gmail.com', '$2y$10$NsfmbwvNBcu14RYfXhh77ODg/S3OyZR7GI9Bwoz0YBJmyL/FIBMxu', '8bc20fc443c6c46751167ae08fc287ba', 4, '958123456', '', '', '');
 
 --
 -- Índices para tablas volcadas
@@ -558,12 +576,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT de la tabla `establishments`
 --
 ALTER TABLE `establishments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `establishment_types`
 --
@@ -593,7 +611,7 @@ ALTER TABLE `service_categories`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

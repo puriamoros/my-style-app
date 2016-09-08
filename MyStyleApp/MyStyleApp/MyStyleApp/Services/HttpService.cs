@@ -15,6 +15,7 @@ namespace MyStyleApp.Services
 {
     public class HttpService
     {
+        private const string AUTHORIZATION_HEADER = "Authorization";
         private const string API_KEY_FILE_NAME = "apikey.xml";
         private const string API_KEY_AUTHORIZATION = "ApiKey {0}";
         private ObjectStorageService<string> _apiKeyStorageService;
@@ -46,7 +47,7 @@ namespace MyStyleApp.Services
             
             if(credentials != null)
             {
-                client.DefaultRequestHeaders.Add("Authorization", credentials);
+                client.DefaultRequestHeaders.Add(AUTHORIZATION_HEADER, credentials);
             }
 
             return client;

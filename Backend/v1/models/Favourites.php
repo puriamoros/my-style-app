@@ -56,7 +56,7 @@ class Favourites extends ModelWithIdBase
 				[new Condition($this->favourites->table . "." . $this->favourites->idEstablishment, '=', $this->establishments->table . "." . $this->establishments->id, false)]
 			],
 			['INNER'],
-			$mixedFields, [$this->favourites->idClient], $queryParams);
+			$mixedFields, [$this->favourites->idClient], $queryParams, null, null);
 		
 		// restore original field names
 		for ($i = 0; $i < count($result); $i++) {

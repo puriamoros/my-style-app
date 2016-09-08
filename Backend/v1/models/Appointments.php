@@ -76,7 +76,7 @@ class Appointments extends ModelWithIdBase
 		
 		// DELETE THIS SINCE CLIENTS NEED TO ASK FOR ESTABLISHMENTS APPOINTMENTS TO BE ABLE TO BOOK
 		/*if(isset($queryParams[$this->appointments->idEstablishment])) {
-			$establishments = DBCommands::dbGet($this->establishments->table, [$this->establishments->id], [$this->establishments->idOwner], [$this->establishments->idOwner => $user[$this->users->id]]);
+			$establishments = DBCommands::dbGet($this->establishments->table, [$this->establishments->id], [$this->establishments->idOwner], [$this->establishments->idOwner => $user[$this->users->id]], null, null);
 			$found = false;
 			for($i = 0; $i < count($establishments) && !$found; $i++) {
 				if($establishments[$i][$this->establishments->id] == $queryParams[$this->appointments->idEstablishment]) {
@@ -133,7 +133,7 @@ class Appointments extends ModelWithIdBase
 				[new Condition($this->offer->table . '.' . $this->offer->idService, '=', $this->services->table . '.' . $this->services->id, false)]
 			],
 			['INNER', 'INNER', 'INNER', 'INNER'],
-			$mixedFields, $mixedFields, $queryParams, $additionalConditions);
+			$mixedFields, $mixedFields, $queryParams, $additionalConditions, null);
 		
 		for ($i = 0; $i < count($result); $i++) {
 			// restore original field names
@@ -416,7 +416,7 @@ class Appointments extends ModelWithIdBase
 				[new Condition($this->appointments->table . '.' . $this->appointments->idService, '=', $this->services->table . '.' . $this->services->id, false)]
 			],
 			['INNER'],
-			$fields, $this->appointments->fields, $queryParams, $additionalConditions);
+			$fields, $this->appointments->fields, $queryParams, $additionalConditions, null);
 			
 		$appointmentMap = array();
 		foreach($appointments as $appointment) {

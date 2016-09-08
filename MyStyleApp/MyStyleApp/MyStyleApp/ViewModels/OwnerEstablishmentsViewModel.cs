@@ -22,6 +22,7 @@ namespace MyStyleApp.ViewModels
         
         public ICommand ViewDetailsCommand { get; private set; }
         public ICommand NewEstablishmentCommand { get; private set; }
+        public ICommand RefreshCommand { get; private set; }
 
         public OwnerEstablishmentsViewModel(
             INavigator navigator, 
@@ -32,6 +33,7 @@ namespace MyStyleApp.ViewModels
         {
             this.ViewDetailsCommand = new Command<Establishment>(this.ViewDetailsAsync);
             this.NewEstablishmentCommand = new Command(this.NewEstablishmentAsync);
+            this.RefreshCommand = new Command(this.InitializeAsync);
 
             this._establishmentsService = establishmentsService;
 
@@ -101,6 +103,8 @@ namespace MyStyleApp.ViewModels
                         return one.Name.CompareTo(other.Name);
                     });
                     this.EstablishmentsList = new ObservableCollection<Establishment> (establishments);
+
+                    MessagingCenter.Send<string>("", "ownerEstablishmentsRefreshed");
                 });
 
         }

@@ -43,7 +43,9 @@
         ItemsSource="{Binding SlotList}"
         HasUnevenRows="True"
         gestures:ListViewItemTapped.Command="{Binding BookCommand}"
-        ItemSelected="OnItemListSelection">
+        ItemSelected="OnItemListSelection"
+        IsPullToRefreshEnabled="True"
+        RefreshCommand="{Binding RefreshCommand}">
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell x:Name="Slot">

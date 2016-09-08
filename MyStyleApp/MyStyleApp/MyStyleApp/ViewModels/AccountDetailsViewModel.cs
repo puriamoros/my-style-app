@@ -109,7 +109,10 @@ namespace MyStyleApp.ViewModels
                         catch
                         {
                             await this._usersService.LogoutAsync();
-                            await this.SetMainPageNavPageAsync<LoginViewModel>();
+                            await this.SetMainPageNavPageAsync<LoginViewModel>((loginVM) =>
+                            {
+                                loginVM.Initialize();
+                            });
                         }
                     });
             }
@@ -166,7 +169,10 @@ namespace MyStyleApp.ViewModels
                         // Logout
                         await this._usersService.LogoutAsync();
 
-                        await this.SetMainPageNavPageAsync<LoginViewModel>();
+                        await this.SetMainPageNavPageAsync<LoginViewModel>((loginVM) =>
+                        {
+                            loginVM.Initialize();
+                        });
                     });
             }
         }

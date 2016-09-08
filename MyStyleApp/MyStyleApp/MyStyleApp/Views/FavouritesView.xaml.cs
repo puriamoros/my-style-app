@@ -13,8 +13,10 @@ namespace MyStyleApp.Views
         public FavouritesView()
         {
             InitializeComponent();
-
-            var asdf = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+            MessagingCenter.Subscribe<string>(this, "favouritesRefreshed", (ignored) =>
+            {
+                this.FavouritesList.IsRefreshing = false;
+            });
         }
     }
 }

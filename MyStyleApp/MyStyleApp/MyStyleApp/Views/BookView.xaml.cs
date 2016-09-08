@@ -14,6 +14,10 @@ namespace MyStyleApp.Views
         public BookView()
         {
             InitializeComponent();
+            MessagingCenter.Subscribe<string>(this, "slotsRefreshed", (ignored) =>
+            {
+                this.SlotList.IsRefreshing = false;
+            });
         }
     }
 }

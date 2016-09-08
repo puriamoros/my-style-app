@@ -13,6 +13,10 @@ namespace MyStyleApp.Views
         public EstablishmentAppointmentsView()
         {
             InitializeComponent();
+            MessagingCenter.Subscribe<string>(this, "establishmentAppointmentsRefreshed", (ignored) =>
+            {
+                this.AppointmentList.IsRefreshing = false;
+            });
         }
 
         private void OnViewCellAppearing(object sender, EventArgs e)

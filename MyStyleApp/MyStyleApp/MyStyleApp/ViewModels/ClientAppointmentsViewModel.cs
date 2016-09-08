@@ -25,6 +25,7 @@ namespace MyStyleApp.ViewModels
         private ObservableCollection<Appointment> _appointmentList;
 
         public Command CancelCommand { get; private set; }
+        public Command RefreshCommand { get; private set; }
 
         public ClientAppointmentsViewModel(
             INavigator navigator,
@@ -44,6 +45,7 @@ namespace MyStyleApp.ViewModels
             this._calendarService = calendarService;
 
             this.CancelCommand = new Command<Appointment>(this.CancelAsync, this.CanCancel);
+            this.RefreshCommand = new Command(this.InitializeAsync);
 
             this.SubscribeToMessages();
         }
@@ -107,6 +109,8 @@ namespace MyStyleApp.ViewModels
                     });
 
                     this.AppointmentList = new ObservableCollection<Appointment>(appointments);
+
+                    MessagingCenter.Send<string>("", "clientAppointmentsRefreshed");
 
                     await this.UpdateStoredAppointments();
                 });

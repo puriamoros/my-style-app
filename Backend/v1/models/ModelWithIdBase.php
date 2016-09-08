@@ -181,7 +181,7 @@ abstract class ModelWithIdBase
 	
 	protected function dbGet($queryParams)
 	{
-		return DBCommands::dbGet($this->table, $this->fields, $this->fields, $queryParams);
+		return DBCommands::dbGet($this->table, $this->fields, $this->fields, $queryParams, null, null);
 	}
 	
 	protected function dbGetOne($id)

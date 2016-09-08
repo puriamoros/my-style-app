@@ -202,7 +202,7 @@ class Users extends ModelWithIdBase
 	{
 		// Check if another user with same email already exists
 		if(isset($data[$this->users->email]) &&
-			count(DBCommands::dbGet($this->users->table, [$this->users->id], [$this->users->email], [$this->users->email => $data[$this->users->email]])) > 0) {
+			count(DBCommands::dbGet($this->users->table, [$this->users->id], [$this->users->email], [$this->users->email => $data[$this->users->email]], null, null)) > 0) {
 			throw new ApiException(STATE_DUPLICATED_KEY_ERROR, "Duplicated key");
 		}
 		return parent::dbCreate($data);
@@ -254,7 +254,7 @@ class Users extends ModelWithIdBase
 	{
 		// Check if another user with same email already exists
 		if(isset($data[$this->users->email])) {
-			$result = DBCommands::dbGet($this->users->table, [$this->users->id], [$this->users->email], [$this->users->email => $data[$this->users->email]]);
+			$result = DBCommands::dbGet($this->users->table, [$this->users->id], [$this->users->email], [$this->users->email => $data[$this->users->email]], null, null);
 			if(count($result) > 0 && $result[0][$this->users->id] !== $id) {
 				throw new ApiException(STATE_DUPLICATED_KEY_ERROR, "Duplicated key");
 			}

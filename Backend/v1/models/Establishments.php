@@ -65,7 +65,7 @@ class Establishments extends ModelWithIdBase
 					new Condition($this->favourites->table . '.' . $this->favourites->idClient, '=', $queryParams[$this->favourites->idClient], true)]
 				],
 				['INNER', 'LEFT'],
-				$mixedFields, $searchFields, $queryParams);
+				$mixedFields, $searchFields, $queryParams, null, null);
 				
 			// restore original field names
 			for ($i = 0; $i < count($result); $i++) {
@@ -215,7 +215,7 @@ class Establishments extends ModelWithIdBase
 			$this->offer->idEstablishment
 		);
 		
-		return DBCommands::dbGet($this->offer->table, $servicesFieldsButId, $searchFields, $queryParams);
+		return DBCommands::dbGet($this->offer->table, $servicesFieldsButId, $searchFields, $queryParams, null, null);
 	}
 	
 	private function dbCreateServices($idEstablishment, $services)

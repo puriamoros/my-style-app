@@ -49,6 +49,12 @@ namespace MyStyleApp.ViewModels
             this._rememberMe = true;
         }
 
+        public void Initialize()
+        {
+            this.Email = "";
+            this.Password = "";
+        }
+
         public string Email
         {
             get { return _email; }

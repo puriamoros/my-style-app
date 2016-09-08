@@ -130,7 +130,10 @@ namespace MyStyleApp.ViewModels
                     catch (Exception)
                     {
                         // There is no logged user, go to login view
-                        await this.SetMainPageNavPageAsync<LoginViewModel>();
+                        await this.SetMainPageNavPageAsync<LoginViewModel>((loginVM) =>
+                        {
+                            loginVM.Initialize();
+                        });
                     }
                 });
         }

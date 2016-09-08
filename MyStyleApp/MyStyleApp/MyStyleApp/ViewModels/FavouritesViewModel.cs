@@ -22,6 +22,7 @@ namespace MyStyleApp.ViewModels
         public ICommand ViewDetailsCommand { get; private set; }
         public ICommand DeleteFavouriteCommand { get; private set; }
         public ICommand ShowMapCommand { get; private set; }
+        public ICommand RefreshCommand { get; private set; }
 
         public FavouritesViewModel(
             INavigator navigator,
@@ -34,6 +35,8 @@ namespace MyStyleApp.ViewModels
             this.ViewDetailsCommand = new Command<Establishment>(this.ViewDetailsAsync);
             this.DeleteFavouriteCommand = new Command<Establishment>(this.DeleteFavouriteAsync);
             this.ShowMapCommand = new Command<Establishment>(this.ShowMapAsync);
+            this.RefreshCommand = new Command(this.InitializeAsync);
+
             this._favouritesService = favouritesService;
             this._establishmentsService = establishmentsService;
 
@@ -71,6 +74,8 @@ namespace MyStyleApp.ViewModels
                 {
                     var list = await this._favouritesService.GetFavouritesAsync();
                     this.FavouritesList = new ObservableCollection<Establishment>(list);
+
+                    MessagingCenter.Send<string>("", "favouritesRefreshed");
                 });
         }
 

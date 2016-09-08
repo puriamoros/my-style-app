@@ -47,7 +47,9 @@
         ItemsSource="{Binding AppointmentList}"
         HasUnevenRows="True"
         gestures:ListViewItemTapped.Command="{Binding AppointmentDetailsCommand}"
-        ItemSelected="OnItemListSelection"> 
+        ItemSelected="OnItemListSelection"
+        IsPullToRefreshEnabled="True"
+        RefreshCommand="{Binding RefreshCommand}"> 
                     
         <ListView.ItemTemplate>
           <DataTemplate>

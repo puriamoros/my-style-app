@@ -37,7 +37,8 @@ namespace MyStyleApp.ViewModels
         private List<OpeningHour> _openingHours;
 
         public ICommand BookCommand { get; private set; }
-        
+        public ICommand RefreshCommand { get; private set; }
+
         public BookViewModel(
             INavigator navigator,
             IUserNotificator userNotificator,
@@ -50,6 +51,7 @@ namespace MyStyleApp.ViewModels
             this._appointmentsService = appointmentsService;
 
             this.BookCommand = new Command<Slot>(this.BookAsync);
+            this.RefreshCommand = new Command(this.Refresh);
         }
 
         public override void OnPushed()
@@ -165,6 +167,7 @@ namespace MyStyleApp.ViewModels
         private async void OnDateChanged(DateTime dateTime)
         {
             await RefreshAppointmentsAsync(dateTime);
+            MessagingCenter.Send<string>("", "slotsRefreshed");
         }
 
         private async Task RefreshAppointmentsAsync(DateTime dateTime)
@@ -347,6 +350,11 @@ namespace MyStyleApp.ViewModels
                     }
                 }
             }
+        }
+
+        private void Refresh()
+        {
+            this.OnDateChanged(this.Date);
         }
 
         private async void OnAppointmentCancelled(Appointment appointment)

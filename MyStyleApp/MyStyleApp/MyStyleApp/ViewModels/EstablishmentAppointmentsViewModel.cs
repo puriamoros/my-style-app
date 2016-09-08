@@ -35,6 +35,7 @@ namespace MyStyleApp.ViewModels
         public Command ConfirmCommand { get; private set; }
         public Command<Appointment> AppointmentDetailsCommand { get; private set; }
         public Command ClientHistorytCommand { get; private set; }
+        public Command RefreshCommand { get; private set; }
 
         public EstablishmentAppointmentsViewModel(
             INavigator navigator,
@@ -55,6 +56,7 @@ namespace MyStyleApp.ViewModels
             this.ConfirmCommand = new Command<Appointment>(this.ConfirmAsync, this.CanConfirm);
             this.AppointmentDetailsCommand = new Command<Appointment>(this.AppointmentDetailsAsync);
             this.ClientHistorytCommand = new Command<Appointment>(this.ClientHistorytAsync);
+            this.RefreshCommand = new Command(this.Refresh);
 
             this.SubscribeToMessages();
         }
@@ -233,6 +235,7 @@ namespace MyStyleApp.ViewModels
                             this.AppointmentList.Clear();
                         }                      
                     }
+                    MessagingCenter.Send<string>("", "establishmentAppointmentsRefreshed");
                 });
         }
 
@@ -360,6 +363,11 @@ namespace MyStyleApp.ViewModels
             {
                 clientHistoryVM.Initialize(appointment);
             });
+        }
+
+        private void Refresh()
+        {
+            this.OnDataChanged();
         }
     }
 }

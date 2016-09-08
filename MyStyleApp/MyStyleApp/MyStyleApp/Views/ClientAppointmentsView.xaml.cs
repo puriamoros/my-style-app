@@ -13,6 +13,10 @@ namespace MyStyleApp.Views
         public ClientAppointmentsView()
         {
             InitializeComponent();
+            MessagingCenter.Subscribe<string>(this, "clientAppointmentsRefreshed", (ignored) =>
+            {
+                this.AppointmentList.IsRefreshing = false;
+            });
         }
     }
 }

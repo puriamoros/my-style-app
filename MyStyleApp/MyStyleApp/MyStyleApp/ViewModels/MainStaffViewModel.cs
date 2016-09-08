@@ -62,7 +62,10 @@ namespace MyStyleApp.ViewModels
                     this.LocalizedStrings.GetString("ok"));
 
                 await this._userService.LogoutAsync();
-                await this.SetMainPageNavPageAsync<LoginViewModel>();
+                await this.SetMainPageNavPageAsync<LoginViewModel>((loginVM) =>
+                {
+                    loginVM.Initialize();
+                });
             }
         }
 

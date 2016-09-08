@@ -13,6 +13,10 @@ namespace MyStyleApp.Views
         public OwnerEstablishmentsView()
         {
             InitializeComponent();
+            MessagingCenter.Subscribe<string>(this, "ownerEstablishmentsRefreshed", (ignored) =>
+            {
+                this.EstablishmentsList.IsRefreshing = false;
+            });
         }
     }
 }

@@ -75,7 +75,7 @@ class Staff extends Users
 				[new Condition($this->users->table . '.' . $this->users->id, '=',  $this->staff->table . '.' . $this->staff->idUser, false)]
 			],
 			['INNER'],
-			$mixedFields, [$this->staff->idEstablishment], $queryParams);
+			$mixedFields, [$this->staff->idEstablishment], $queryParams, null, null);
 		
 		for($i=0; $i<count($result); $i++){
 			$result[$i][$this->staffName] = $result[$i][$this->users->name] . ' ' . $result[$i][$this->users->surname]; 
@@ -169,7 +169,9 @@ class Staff extends Users
 			Tables::getInstance()->staff->table,
 			[Tables::getInstance()->staff->idUser],
 			[Tables::getInstance()->staff->idEstablishment],
-			[Tables::getInstance()->staff->idEstablishment => $establishment[Tables::getInstance()->establishments->id]]);
+			[Tables::getInstance()->staff->idEstablishment => $establishment[Tables::getInstance()->establishments->id]],
+			null,
+			null);
 		array_push($staff, array(Tables::getInstance()->staff->idUser => $idOwner));
 		
 		$staffIds = array();
@@ -186,7 +188,7 @@ class Staff extends Users
 		$additionalConditions = array(
 			new Condition(Tables::getInstance()->users->id, 'in', '(' . implode(',', $staffIds) . ')', false));
 			
-		return DBCommands::dbGet(Tables::getInstance()->users->table, $fields, [], [], $additionalConditions);
+		return DBCommands::dbGet(Tables::getInstance()->users->table, $fields, [], [], $additionalConditions, null);
 	}
 }
 	

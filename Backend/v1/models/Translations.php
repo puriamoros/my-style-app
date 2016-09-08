@@ -40,7 +40,7 @@ class Translations
 	
 		$additionalConditions = array(
 			new Condition($this->translations->id, 'in', '(' . implode(',', $ids) . ')', false));
-		$results = DBCommands::dbGet($this->translations->table, $this->translations->fields, [], [], $additionalConditions);
+		$results = DBCommands::dbGet($this->translations->table, $this->translations->fields, [], [], $additionalConditions, null);
 		
 		$translatedMap = array();
 		foreach($results as $result) {
@@ -78,7 +78,7 @@ class Translations
 				[new Condition($table . '.' . $idTranslation, '=',  $this->translations->table. '.' . $this->translations->id, false)]
 			],
 			['INNER'],
-			$mixedFields, $mixedFields, $queryParams);
+			$mixedFields, $mixedFields, $queryParams, null, null);
 		
 		for ($i = 0; $i < count($result); $i++) {
 			if($sameIdField) {

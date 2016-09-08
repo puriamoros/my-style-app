@@ -76,7 +76,7 @@ namespace MyStyleApp.ViewModels
         private async void ViewDetailsAsync(Establishment establishment)
         {
             await this.ExecuteBlockingUIAsync(
-(Func<Task>)(async () =>
+                async () =>
                 {
                     await this.PushNavPageAsync<EstablishmentDetailsViewModel>(async (establishmentDetailsVM) =>
                     {
@@ -85,7 +85,7 @@ namespace MyStyleApp.ViewModels
                         await establishmentDetailsVM.InitilizeAsync(establishmentDetails, this.SelectedService.IdServiceCategory, this.SelectedService.Id);
                     }
                     );
-                }));
+                });
         }
 
         private async void BookAsync(Establishment establishment)

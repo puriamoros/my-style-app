@@ -24,7 +24,9 @@
           ItemsSource="{Binding FavouritesList}"
           HasUnevenRows="True"
           gestures:ListViewItemTapped.Command="{Binding ViewDetailsCommand}"
-          ItemSelected="OnItemListSelection">
+          ItemSelected="OnItemListSelection"
+          IsPullToRefreshEnabled="True"
+          RefreshCommand="{Binding RefreshCommand}">
           <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell x:Name="Favourite">

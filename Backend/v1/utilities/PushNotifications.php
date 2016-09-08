@@ -68,48 +68,54 @@ class PushNotifications {
 		
 	private static function android($clientToken, $title, $body, $context)
 	{
-		$url = 'https://gcm-http.googleapis.com/gcm/send';
-		$message = array(
-			'to' => $clientToken,
-			'data' => array(
-				'title' => $title,
-				'body' => $body,
-				'context' => $context
-			)
-		);
-		
-		$json = json_encode($message);
-		$headers = array(
-			'Authorization: key=' . ANDROID_SERVER_API_KEY,
-			'Content-Type: application/json',
-			'Content-Length: ' . strlen($json)
-		);
+		try {
+			$url = 'https://gcm-http.googleapis.com/gcm/send';
+			$message = array(
+				'to' => $clientToken,
+				'data' => array(
+					'title' => $title,
+					'body' => $body,
+					'context' => $context
+				)
+			);
+			
+			$json = json_encode($message);
+			$headers = array(
+				'Authorization: key=' . ANDROID_SERVER_API_KEY,
+				'Content-Type: application/json',
+				'Content-Length: ' . strlen($json)
+			);
 
-		return self::useCurl($url, $headers, $json);
+			return self::useCurl($url, $headers, $json);
+		} catch (Exception $e) {
+		}
 	}
 	
 	private static function windows($clientUri, $title, $body, $context)
 	{
-		$toastNotification ='<?xml version="1.0" encoding="utf-16"?>'.
-		'<toast launch="'. $context .'">'.
-			'<visual lang="en-US">'.
-				'<binding template="ToastText02">'.
-					  '<text id="1">' . $title . '</text>'.
-					  '<text id="2">' . $body . '</text>'.
-				'</binding>'.
-			'</visual>'.
-			'<context>' . $context . '</context>'.
-		'</toast>';
-            
-		$token= self::getWindowsToken();
-		$headers = array(
-			'Content-Type: text/xml',
-			'Content-Length: ' . strlen($toastNotification),
-			'X-WNS-Type: wns/toast',
-			'Authorization: Bearer ' . $token
-		);
-		
-		$json = self::useCurl($clientUri, $headers, $toastNotification);
+		try {
+			$toastNotification ='<?xml version="1.0" encoding="utf-16"?>'.
+			'<toast launch="'. $context .'">'.
+				'<visual lang="en-US">'.
+					'<binding template="ToastText02">'.
+						  '<text id="1">' . $title . '</text>'.
+						  '<text id="2">' . $body . '</text>'.
+					'</binding>'.
+				'</visual>'.
+				'<context>' . $context . '</context>'.
+			'</toast>';
+				
+			$token= self::getWindowsToken();
+			$headers = array(
+				'Content-Type: text/xml',
+				'Content-Length: ' . strlen($toastNotification),
+				'X-WNS-Type: wns/toast',
+				'Authorization: Bearer ' . $token
+			);
+			
+			$json = self::useCurl($clientUri, $headers, $toastNotification);
+		} catch (Exception $e) {
+		}
 	}
 	 
 	private static function getWindowsToken()

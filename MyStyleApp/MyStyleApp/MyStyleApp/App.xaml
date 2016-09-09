@@ -18,6 +18,7 @@
       <converters:UserTypeToBoolConverter x:Key="UserTypeToBoolConverter" />
       <converters:ObjectToBoolConverter x:Key="ObjectToBoolConverter" />
       <converters:NumberToStringConverter x:Key="NumberToStringConverter" />
+      <converters:OpeningHoursToStringConverter x:Key="OpeningHoursToStringConverter" />
 
       <!-- iOS needs 20px top padding to avoid overlapping the status bar -->
       <OnPlatform x:Key="PagePadding"

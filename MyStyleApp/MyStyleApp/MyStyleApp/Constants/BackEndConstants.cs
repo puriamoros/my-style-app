@@ -5,7 +5,7 @@
         public const long TIMEOUT_MS = 5000;
         public const string DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
         public static string BASE_URL = "http://piur-tfg.esy.es/v1/";
-        //public static string BASE_URL = "http://192.168.1.40/api.mystyleapp.com/v1/";
+        //public static string BASE_URL = "http://192.168.1.36/api.mystyleapp.com/v1/";
         public const string LOGIN_URL = "login";
         public const string REGISTER_URL = "register";
         public const string USERS_URL = "users";

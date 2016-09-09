@@ -8,6 +8,7 @@ MyStyleApp/MyStyleApp/MyStyleApp.iOS/bin
 MyStyleApp/MyStyleApp/MyStyleApp.iOS/obj
 MyStyleApp/MyStyleApp/MyStyleApp.WinPhone/bin
 MyStyleApp/MyStyleApp/MyStyleApp.WinPhone/obj
+MyStyleApp/MyStyleApp/MyStyleApp.WinPhone/AppPackages
 *.csproj.user
 Thumbs.db
 Backend/v1/data/PushConstants.php

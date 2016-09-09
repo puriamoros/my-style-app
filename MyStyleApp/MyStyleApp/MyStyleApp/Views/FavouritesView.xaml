@@ -34,7 +34,7 @@
                   <StackLayout>
                     <Label Text="{Binding Name}" Style="{StaticResource LargeTextStyle}" FontAttributes="Bold"/>
                   </StackLayout>
-
+                  
                   <Grid>
                     <Grid.ColumnDefinitions>
                       <ColumnDefinition Width="7*" />

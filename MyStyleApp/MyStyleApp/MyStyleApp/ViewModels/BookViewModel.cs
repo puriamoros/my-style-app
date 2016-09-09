@@ -8,19 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace MyStyleApp.ViewModels
 {
-    class OpeningHour
-    {
-        public int Hour { get; set; }
-        public int Minute { get; set; }
-    }
-
     public class BookViewModel : NavigableViewModelBase
     {
         private const string HOURS_ERROR = "Backend data for establishment's hours are erroneous";
@@ -74,11 +67,17 @@ namespace MyStyleApp.ViewModels
             this._service = service;
             this.ProcessEstablishmentOpeningHours();
 
-            this.MinimumDate = DateTime.Today;
+            // Mininum date:
+            // - Automatic confirmation: today
+            // - Manual confirmation: tomorrow (manual confirmations and cancellations needs 1 day margin)
+            this.MinimumDate =
+                (establishment.ConfirmType == ConfirmTypeEnum.Automatic) ? DateTime.Today : DateTime.Today.AddDays(1);
+
+            // MaximumDate date: today + 3 months
             this.MaximumDate = DateTime.Today.AddMonths(3);
 
             // Do it at the end of the method, since it launches OnDateChanged
-            this.Date = DateTime.Today;
+            this.Date = this.MinimumDate;
         }
 
         private void ProcessEstablishmentOpeningHours()
@@ -251,7 +250,22 @@ namespace MyStyleApp.ViewModels
 
             slots.Sort((one, other) => { return one.Date.CompareTo(other.Date); });
 
-            this.SlotList = new ObservableCollection<Slot>(slots);
+            // Limit date:
+            // - Automatic confirmation: now + 1 hour
+            // - Manual confirmation: now + 1 day + 1 hour (manual confirmations and cancellations needs 1 day margin)
+            DateTime limitDate =(this._establishment.ConfirmType == ConfirmTypeEnum.Automatic) ?
+                DateTime.Now.AddHours(1) : DateTime.Now.AddDays(1).AddHours(1);
+
+            List<Slot> validSlots = new List<Slot>();
+            foreach(Slot slot in slots)
+            {
+                if(slot.Date > limitDate)
+                {
+                    validSlots.Add(slot);
+                }
+            }
+
+            this.SlotList = new ObservableCollection<Slot>(validSlots);
         }
 
         private async void BookAsync(Slot slot)
@@ -288,30 +302,25 @@ namespace MyStyleApp.ViewModels
                     Notes = ""
                 };
 
-                bool success = false;
+                Appointment createdAppointment = null;
                 await this.ExecuteBlockingUIAsync(
                     async () =>
                     {
                         try
                         {
                             // Create appointment
-                            Appointment createdAppointment = await this._appointmentsService.CreateAppointmentAsync(appointment);
-
-                            // Appointment created sucessfuly
-                            success = true;
+                            createdAppointment = await this._appointmentsService.CreateAppointmentAsync(appointment);
 
                             // Complete created appointment data
                             createdAppointment.EstablishmentName = _establishment.Name;
                             createdAppointment.ServiceName = _service.Name;
                             createdAppointment.ServicePrice = _service.Price;
                             createdAppointment.ServiceDuration = _service.Duration;
-
-                            // Send an appointmentCreated message
-                            MessagingCenter.Send<Appointment>(createdAppointment, "appointmentCreated");
                         }
                         catch (BackendException ex)
                         {
-                            if(ex.BackendError.State == (int) BackendStatusCodeEnum.StateEstablishmentClosed ||
+                            createdAppointment = null;
+                            if (ex.BackendError.State == (int) BackendStatusCodeEnum.StateEstablishmentClosed ||
                                 ex.BackendError.State == (int)BackendStatusCodeEnum.StateEstablishmentFull)
                             {
                                 await this.UserNotificator.DisplayAlert(
@@ -331,7 +340,7 @@ namespace MyStyleApp.ViewModels
                         }
                     });
 
-                if(success)
+                if(createdAppointment != null)
                 {
                     // Show result ok to user
                     if (this._establishment.ConfirmType == ConfirmTypeEnum.Automatic)
@@ -348,6 +357,9 @@ namespace MyStyleApp.ViewModels
                            this.LocalizedStrings.GetString("booking_requested_body"),
                            this.LocalizedStrings.GetString("ok"));
                     }
+
+                    // Send an appointmentCreated message
+                    MessagingCenter.Send<Appointment>(createdAppointment, "appointmentCreated");
                 }
             }
         }

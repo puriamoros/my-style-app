@@ -35,19 +35,32 @@ namespace MyStyleApp.WinPhone.Services
             // Sensitivity
             appointmentRcd.Sensitivity = AppointmentSensitivity.Public;
 
-            // var rect = GetElementRect(sender as FrameworkElement);
-            Rect rect = new Rect(new Windows.Foundation.Point(10, 10), new Windows.Foundation.Size(100, 200));
+            var tcs = new TaskCompletionSource<string>();
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                Rect rect = new Rect(new Windows.Foundation.Point(10, 10), new Windows.Foundation.Size(100, 200));
+                string result = await AppointmentManager.ShowAddAppointmentAsync(
+                    appointmentRcd, rect, Windows.UI.Popups.Placement.Default);
 
-            string appointmentId = await AppointmentManager.ShowAddAppointmentAsync(
-                appointmentRcd, rect, Windows.UI.Popups.Placement.Default);
+                tcs.SetResult(result);
+            });
 
+            string appointmentId = await tcs.Task;
             return string.IsNullOrEmpty(appointmentId) ? null : appointmentId;
         }
 
         public async Task<bool> DeleteAppointmentAsync(string calendarAppointmentId)
         {
-            Rect rect = new Rect(new Windows.Foundation.Point(10, 10), new Windows.Foundation.Size(100, 200));
-            return await AppointmentManager.ShowRemoveAppointmentAsync(calendarAppointmentId, rect);
+            var tcs = new TaskCompletionSource<bool>();
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                Rect rect = new Rect(new Windows.Foundation.Point(10, 10), new Windows.Foundation.Size(100, 200));
+                bool result = await AppointmentManager.ShowRemoveAppointmentAsync(calendarAppointmentId, rect);
+
+                tcs.SetResult(result);
+            });
+
+            return await tcs.Task;
         }
     }
 }

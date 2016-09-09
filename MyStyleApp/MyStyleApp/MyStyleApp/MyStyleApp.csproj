@@ -48,6 +48,7 @@
     <Compile Include="Converters\ItemTappedEventArgsConverter.cs" />
     <Compile Include="Converters\NumberToStringConverter.cs" />
     <Compile Include="Converters\ObjectToBoolConverter.cs" />
+    <Compile Include="Converters\OpeningHoursToStringConverter.cs" />
     <Compile Include="Converters\PlatformToBoolConverter.cs" />
     <Compile Include="Converters\StringToBoolConverter.cs" />
     <Compile Include="Converters\UserTypeToBoolConverter.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Models\GenericStatus.cs" />
     <Compile Include="Models\LoggedStaffInfo.cs" />
     <Compile Include="Models\LoggedUserInfo.cs" />
+    <Compile Include="Models\OpeningHour.cs" />
     <Compile Include="Models\SelectedService.cs" />
     <Compile Include="Models\StoredAppointment.cs" />
     <Compile Include="Models\UserType.cs" />

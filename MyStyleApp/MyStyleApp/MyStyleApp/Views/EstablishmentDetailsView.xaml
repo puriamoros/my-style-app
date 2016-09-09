@@ -59,6 +59,34 @@
                 Text="{Binding Establishment.Phone}"/> 
             </StackLayout>
           </Grid>
+
+          <Grid IsVisible="{Binding Establishment.Hours1, Converter={StaticResource StringToBoolConverter}}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="7*" />
+              <ColumnDefinition Width="93*" />
+            </Grid.ColumnDefinitions>
+            <RelativeLayout Grid.Column="0" VerticalOptions="Center">
+              <Image Aspect="AspectFit" Source="Clock.png"
+                RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+            </RelativeLayout>
+            <Label Grid.Column="1"
+              Text="{Binding Establishment.Hours1, Converter={StaticResource OpeningHoursToStringConverter}}"
+              Style="{StaticResource MediumTextStyle}"/>
+          </Grid>
+
+          <Grid IsVisible="{Binding Establishment.Hours2, Converter={StaticResource StringToBoolConverter}}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="7*" />
+              <ColumnDefinition Width="93*" />
+            </Grid.ColumnDefinitions>
+            <RelativeLayout Grid.Column="0" VerticalOptions="Center">
+              <Image Aspect="AspectFit" Source="Clock.png"
+                RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"/>
+            </RelativeLayout>
+            <Label Grid.Column="1"
+              Text="{Binding Establishment.Hours2, Converter={StaticResource OpeningHoursToStringConverter}}"
+              Style="{StaticResource MediumTextStyle}"/>
+          </Grid>
         </StackLayout>
         
         <StackLayout Padding="0,0,0,10" Spacing="0">

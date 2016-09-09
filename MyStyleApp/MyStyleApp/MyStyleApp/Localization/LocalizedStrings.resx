@@ -265,7 +265,7 @@
     <value>There has been an error.\nPlease, check your internet connection or try again later.</value>
   </data>
   <data name="booking_data_title" xml:space="preserve">
-    <value>Booking Reaquest</value>
+    <value>Booking Request</value>
   </data>
   <data name="booking_data_body" xml:space="preserve">
     <value>You are about to request a booking with the following data:\n- Establishment: ${ESTABLISMENT_NAME}\n- Service: ${SERVICE_NAME}\n- Date: ${DATE}\n\nDo you want to continue with the request?</value>
@@ -560,5 +560,8 @@
   </data>
   <data name="calendar_appointment_body" xml:space="preserve">
     <value>Service: ${SERVICE_NAME}.\nEstimate duration: ${SERVICE_DURATION} minutes.</value>
+  </data>
+  <data name="and" xml:space="preserve">
+    <value>and</value>
   </data>
 </root>

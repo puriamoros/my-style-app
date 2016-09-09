@@ -561,4 +561,7 @@
   <data name="calendar_appointment_body" xml:space="preserve">
     <value>Servicio: ${SERVICE_NAME}.\nDuración aproximada: ${SERVICE_DURATION} minutos.</value>
   </data>
+  <data name="and" xml:space="preserve">
+    <value>y</value>
+  </data>
 </root>

@@ -6,20 +6,18 @@ using System.Collections.Generic;
 
 namespace MyStyleApp.Services
 {
-    /// <summary>
-    /// This class is an alternative to Xamarin stardard localization.
-    ///
-    /// To use it, just add it to your ViewModels. Example
-    /// public LocalizedStringsService LocalizedStrings { get { return _localizedStringsService; } }
-    ///
-    /// To bind some text to your ui component, use a binding. Example:
-    /// Text="{Binding LocalizedStrings[put_the_string_key_inside_the_brackets]}"
-    ///
-    /// To manage long texts that are refused by makepri.exe, it is possible to split the long text in
-    /// smaller parts in the language files (Resources.resw). To do that, just split the text in some parts
-    /// and name the keys in the following way: "long_text_key_0", ..., "long_text_key_n". To use this feature
-    /// you must assure that no key named "long_text_key" exists or it has an empty value.
-    /// </summary>
+    // This class is an alternative to Xamarin stardard localization.
+    //
+    // To use it, just add it to your ViewModels. Example
+    // public LocalizedStringsService LocalizedStrings { get { return _localizedStringsService; } }
+    //
+    // To bind some text to your ui component, use a binding. Example:
+    // Text="{Binding LocalizedStrings[put_the_string_key_inside_the_brackets]}"
+    //
+    // To manage long texts that are refused by makepri.exe, it is possible to split the long text in
+    // smaller parts in the language files (Resources.resw). To do that, just split the text in some parts
+    // and name the keys in the following way: "long_text_key_0", ..., "long_text_key_n". To use this feature
+    // you must assure that no key named "long_text_key" exists or it has an empty value.
     public class LocalizedStringsService
     {
         private const string LOCALIZED_STRINGS_RESOURCE_ID = "MyStyleApp.Localization.LocalizedStrings";
@@ -36,18 +34,8 @@ namespace MyStyleApp.Services
             this._ci = this._localizationService.GetCurrentCultureInfo();
 
             var assembly = typeof(LocalizedStringsService).GetTypeInfo().Assembly;
-
-            //foreach (var res in assembly.GetManifestResourceNames())
-            //    System.Diagnostics.Debug.WriteLine("found resource: " + res);
         }
 
-        /// <summary>
-        /// Gets a string resource from the current language file as it is.
-        /// </summary>
-        /// <param name="key">The key of the string resource</param>
-        /// <returns>
-        /// The string resource or an empty string if the string resource does not exist
-        /// </returns>
         public string this[string key]
         {
             get
@@ -56,13 +44,6 @@ namespace MyStyleApp.Services
             }
         }
 
-        /// <summary>
-        /// Gets a string resource from the current language file as it is.
-        /// </summary>
-        /// <param name="key">The key of the string resource</param>
-        /// <returns>
-        /// The string resource or an empty string if the string resource does not exist
-        /// </returns>
         private string GetRawString(string key)
         {
             // Late initilization needed for WinPhone ResourceManager hack (see WindowsRuntimeResourceManager)
@@ -119,14 +100,6 @@ namespace MyStyleApp.Services
             return value;
         }
 
-        /// <summary>
-        /// Gets a list of token pairs found in a string.
-        /// It will look for tokens (format: ${another_string_resource_key})
-        /// </summary>
-        /// <param name="value">The base string</param>
-        /// <returns>
-        /// The list of token pairs
-        /// </returns>
         private List<KeyValuePair<string, string>> GetTokenPairs(string value)
         {
             // Look for tokens (Format: ${...})
@@ -146,15 +119,6 @@ namespace MyStyleApp.Services
             return tokenPairs;
         }
 
-        /// <summary>
-        /// Compose a string with some given tokens.
-        /// It will look for tokens (format: ${another_string_resource_key}) and replace the them
-        /// </summary>
-        /// <param name="value">The base string</param>
-        /// <param name="tokenPairs">A list of string key-value pairs (key: token, value: value to replace the token with)</param>
-        /// <returns>
-        /// The composed string
-        /// </returns>
         private string ComposeStringWithTokenPairs(string value, List<KeyValuePair<string, string>> tokenPairs)
         {
             string composed = value;
@@ -169,14 +133,6 @@ namespace MyStyleApp.Services
             return composed;
         }
 
-        /// <summary>
-        /// Gets a string resource from the current language file composed with other string resources.
-        /// It will look for tokens (format: ${another_string_resource_key}) and replace the them
-        /// </summary>
-        /// <param name="key">The key of the string resource</param>
-        /// <returns>
-        /// The composed string resource or an empty string if the string resource does not exist
-        /// </returns>
         public string GetString(string key)
         {
             // Get value
@@ -191,15 +147,6 @@ namespace MyStyleApp.Services
             return value;
         }
 
-        /// <summary>
-        /// Gets a string resource from the current language file composed with some given tokens.
-        /// It will look for tokens (format: ${another_string_resource_key}) and replace the them
-        /// </summary>
-        /// <param name="key">The key of the string resource</param>
-        /// <param name="tokenPairs">A list of string key-value pairs (key: token, value: value to replace the token with)</param>
-        /// <returns>
-        /// The composed string resource or an empty string if the string resource does not exist
-        /// </returns>
         public string GetString(string key, List<KeyValuePair<string, string>> tokenPairs)
         {
             string value = this.GetRawString(key);
@@ -216,16 +163,6 @@ namespace MyStyleApp.Services
             return value;
         }
 
-        /// <summary>
-        /// Gets a string resource from the current language file composed with some given tokens.
-        /// It will look for tokens (format: ${another_string_resource_key}) and replace the them
-        /// </summary>
-        /// <param name="key">The key of the string resource</param>
-        /// <param name="token">A token</param>
-        /// <param name="value">A value to replace the token with</param>
-        /// <returns>
-        /// The composed string resource or an empty string if the string resource does not exist
-        /// </returns>
         public string GetString(string key,
             string token, string value)
         {
@@ -235,18 +172,6 @@ namespace MyStyleApp.Services
             return this.GetString(key, tokenPairs);
         }
 
-        /// <summary>
-        /// Gets a string resource from the current language file composed with some given tokens.
-        /// It will look for tokens (format: ${another_string_resource_key}) and replace the them
-        /// </summary>
-        /// <param name="key">The key of the string resource</param>
-        /// <param name="token1">The first token</param>
-        /// <param name="value1">The value to replace the first token with</param>
-        /// <param name="token2">The second token</param>
-        /// <param name="value2">The value to replace the second token with</param>
-        /// <returns>
-        /// The composed string resource or an empty string if the string resource does not exist
-        /// </returns>
         public string GetString(string key,
             string token1, string value1,
             string token2, string value2)
@@ -258,20 +183,6 @@ namespace MyStyleApp.Services
             return this.GetString(key, tokenPairs);
         }
 
-        /// <summary>
-        /// Gets a string resource from the current language file composed with some given tokens.
-        /// It will look for tokens (format: ${another_string_resource_key}) and replace the them
-        /// </summary>
-        /// <param name="key">The key of the string resource</param>
-        /// <param name="token1">The first token</param>
-        /// <param name="value1">The value to replace the first token with</param>
-        /// <param name="token2">The second token</param>
-        /// <param name="value2">The value to replace the second token with</param>
-        /// <param name="token3">The third token</param>
-        /// <param name="value3">The value to replace the third token with</param>
-        /// <returns>
-        /// The composed string resource or an empty string if the string resource does not exist
-        /// </returns>
         public string GetString(string key,
             string token1, string value1,
             string token2, string value2,
